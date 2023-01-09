@@ -30,10 +30,6 @@ class GameCharacter {
         return this.#sprite;
     }
 
-    getInventory() {
-        return this.inventory;
-    }
-
     getCoins() {
         return this.coins;
     }
