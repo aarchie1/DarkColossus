@@ -5,21 +5,25 @@ class Hero extends GameCharacter {
         this.hpCost = 1;
         this.attackCost = 1;
         this.speedCost = 1;
-
+        this.currency = 0;
+        this.currencySpent = 0;
     }
 
     increaseHP() {
         super.hp++;
+        this.currencySpent += this.hpCost;
         this.hpCost++;
     }
 
     increaseAttack() {
         super.attack++;
+        this.currencySpent += this.attackCost;
         this.attackCost++;
     }
 
     increaseSpeed() {
         super.speed++;
+        this.currencySpent += this.speedCost;
         this.speedCost++;
     }
 
@@ -33,5 +37,11 @@ class Hero extends GameCharacter {
 
     getSpeedCost() {
         return this.speedCost;
+    }
+
+    setHeroToDefault() {
+        this.currency = this.currencySpent;
+        this.currencySpent = 0;
+
     }
 }
