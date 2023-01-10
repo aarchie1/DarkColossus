@@ -7,6 +7,7 @@ ASSET_MANAGER.downloadAll(() => {
 	const ctx = canvas.getContext("2d");
 
 	gameEngine.init(ctx);
+	gameEngine.addEntity(new GameCharacter(10,10,10,"Hero",null,0,gameEngine));
 
 	gameEngine.start();
 });
