@@ -14,12 +14,24 @@ class GameCharacter {
     };
 
     update(){
+        if(gameEngine.keys['s'] && !gameEngine.keys['w']) {
+            this.y += 2;
+        } else if(gameEngine.keys['s'] && gameEngine.keys['d'] && !gameEngine.keys['w']) {
+            this.y += 2;
+            this.x += 2;
+        } else if(gameEngine.keys['w'] && !gameEngine.keys['s']) {
+            this.y -= 2;
+        } else if(gameEngine.keys['a'] && !gameEngine.keys['d']) {
+            this.x -= 2;
+        } else if(gameEngine.keys['d'] && !gameEngine.keys['a']) {
+            this.x += 2;
+        }
         
     }
 
     draw(ctx) {
         ctx.beginPath();
-        ctx.arc(0,0,40,0,2*Math.PI);
+        ctx.arc(this.x,this.y,40,0,2*Math.PI);
         ctx.stroke();
     };
 }
