@@ -13,39 +13,13 @@ class GameCharacter {
         this.y = 0;
     };
 
-    update() {
+    update(){
         
-    };
+    }
 
     draw(ctx) {
         ctx.beginPath();
-        ctx.arc(95,50,40,0,2*Math.PI);
+        ctx.arc(0,0,40,0,2*Math.PI);
         ctx.stroke();
     };
-
-    getHP() {
-        return this.hp;
-    };
-
-    getAttack() {
-        return this.attack;
-    };
-
-    getSpeed() {
-        return this.speed;
-    };
-
-    getName() {
-        return this.name;
-    };
-
-    getSprite() {
-        return this.#sprite;
-    };
-
-    getCoins() {
-        return this.coins;
-    };
-
-
 }
