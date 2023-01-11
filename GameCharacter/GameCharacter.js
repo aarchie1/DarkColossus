@@ -4,6 +4,10 @@ class GameCharacter {
     CEILING_BOUNDARY = 40;
     LEFT_BOUNDARY = 40;
     RIGHT_BOUNDARY = 984;
+    JUMP_HEIGHT = 100;
+    JUMP_SPEED = 10;
+    FALL_SPEED = 5;
+    RUN_SPEED = 2;
 
 
     constructor(theHP, theAttack, theSpeed, theName, theSprite, theCoins, theGame) {
@@ -14,32 +18,40 @@ class GameCharacter {
         this.name = theName;
         this.sprite = theSprite;
         this.coins = theCoins;
-        this.x = 100;
-        this.y = 100;
+        this.x = 40;
+        this.y = 728;
         this.moveRight = true;
         this.moveLeft = true;
         this.moveUp = true;
         this.moveDown = true;
+        this.jumping = false;
+        this.jumpCharge = 1;
     };
 
     update(){
         if(gameEngine.keys['a'] && !gameEngine.keys['d'] && this.moveLeft) {
-            this.x -= 2;
+            this.x -= this.RUN_SPEED;
         } else if(gameEngine.keys['d'] && !gameEngine.keys['a'] && this.moveRight) {
-            this.x += 2;
+            this.x += this.RUN_SPEED;
         }
 
-        if(gameEngine.keys[' '] && !this.moveDown) {
-            this.y = 628;
+        if(gameEngine.keys[' ']) {
+            this.jumping = true;
+        } else {
+            this.jumping = false;
         }
 
-        if(this.y < this.FLOOR_BOUNDARY) {
-            this.y += 1;
+        if(this.jumping) {
+            this.y -= this.JUMP_SPEED;
+        } else if(!this.jumping && this.y < this.FLOOR_BOUNDARY) {
+            this.y += this.FALL_SPEED;
         }
 
-        if(this.y == this.FLOOR_BOUNDARY) {
+        if(this.y >= this.FLOOR_BOUNDARY) {
+            this.onGround = true;
             this.moveDown = false;
         } else {
+            this.onGround = false;
             this.moveDown = true;
         }
         
