@@ -38,10 +38,8 @@ class GameCharacter {
         }
 
         if(gameEngine.keys[' '] && this.onGround) {
-            let time = TICK;
-            let timeDone = time - 60;
-            for(let i = time; i > timeDone; i--) {
-                this.y -= this.JUMP_SPEED*TICK;
+            while(this.y < 5) {
+                
             }
         }
 
