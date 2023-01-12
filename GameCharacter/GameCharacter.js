@@ -5,9 +5,9 @@ class GameCharacter {
     LEFT_BOUNDARY = 40;
     RIGHT_BOUNDARY = 984;
     JUMP_HEIGHT = 100;
-    JUMP_SPEED = 10;
-    FALL_SPEED = 5;
-    RUN_SPEED = 2;
+    JUMP_SPEED = 500;
+    FALL_SPEED = 100;
+    RUN_SPEED = 5;
 
 
     constructor(theHP, theAttack, theSpeed, theName, theSprite, theCoins, theGame) {
@@ -29,22 +29,24 @@ class GameCharacter {
     };
 
     update(){
+        const TICK = this.game.clockTick;
+
         if(gameEngine.keys['a'] && !gameEngine.keys['d'] && this.moveLeft) {
             this.x -= this.RUN_SPEED;
         } else if(gameEngine.keys['d'] && !gameEngine.keys['a'] && this.moveRight) {
             this.x += this.RUN_SPEED;
         }
 
-        if(gameEngine.keys[' ']) {
-            this.jumping = true;
-        } else {
-            this.jumping = false;
+        if(gameEngine.keys[' '] && this.onGround) {
+            let time = TICK;
+            let timeDone = time - 60;
+            for(let i = time; i > timeDone; i--) {
+                this.y -= this.JUMP_SPEED*TICK;
+            }
         }
 
-        if(this.jumping) {
-            this.y -= this.JUMP_SPEED;
-        } else if(!this.jumping && this.y < this.FLOOR_BOUNDARY) {
-            this.y += this.FALL_SPEED;
+        if(!this.jumping && this.y < this.FLOOR_BOUNDARY) {
+            this.y += this.FALL_SPEED*TICK;
         }
 
         if(this.y >= this.FLOOR_BOUNDARY) {
@@ -61,7 +63,7 @@ class GameCharacter {
             this.moveUp = true;
         }
 
-        if(this.x == this.RIGHT_BOUNDARY) {
+        if(this.x >= this.RIGHT_BOUNDARY) {
             this.moveRight = false;
         } else {
             this.moveRight = true;
