@@ -1,0 +1,10 @@
+The spritesheets are to be mapped 256px apart on the sprite sheets.
+
+EXCEPT for the following:
+
+reaper_strong_attack.png = 320px 
+
+
+
+If a sprite looks weird I either added an unfinished version on accident
+or got the width wrong.
