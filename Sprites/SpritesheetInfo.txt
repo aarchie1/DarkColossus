@@ -6,7 +6,10 @@ Player
     player_idle_right = 256x256
     player_running_left = 320x256
     player_running_right = 320x256
-
+    player_jump_left = 512x564
+    player_jump_right = 512x564
+    player_falling_left = 512x564
+    player_falling_right = 512x564
 
 Reaper
     reaper_normal = 256x256
