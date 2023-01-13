@@ -1,7 +1,7 @@
-# DarkColossus
+# DarkColossus  
 
-Kevin Kulman
-Stephen Vanluven
-AJ Garcia
-Anthony Archie
+Kevin Kulman  
+Stephen Vanluven  
+AJ Garcia  
+Anthony Archie  
 
