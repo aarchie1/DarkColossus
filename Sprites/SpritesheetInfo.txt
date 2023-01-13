@@ -1,10 +1,30 @@
-The spritesheets are to be mapped 256px apart on the sprite sheets.
-
-EXCEPT for the following:
-
-reaper_strong_attack.png = 320px 
-
-
-
 If a sprite looks weird I either added an unfinished version on accident
-or got the width wrong.
+or got the size wrong.
+
+Player
+    player_idle_left = 256x256
+    player_idle_right = 256x256
+    player_running_left = 320x256
+    player_running_right = 320x256
+
+
+Reaper
+    reaper_normal = 256x256
+    reaper_strong = 256x256
+    reaper_weak = 256x256
+    reaper_strong_attack = 320x256 
+
+Molecules
+    molecule_full = 256x256
+    molecule_half = 256x256
+    molecule_low = 256x256
+
+LevelAssets
+    background = 2100x1350
+    floating_platform_small = 256x256
+
+    Hazards
+        hazard_growth_short = 256x256
+        hazard_growth_tall = 256x512
+
+
