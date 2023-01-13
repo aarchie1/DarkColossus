@@ -4,11 +4,11 @@ class GameCharacter {
     CEILING_BOUNDARY = 40;
     LEFT_BOUNDARY = 40;
     RIGHT_BOUNDARY = 984;
-    JUMP_ACC = -600;
+    JUMP_ACC = -400;
     FALL_ACC = 450;
     STOP_FALL = 1575;
-    MIN_WALK = 100;
-    MAX_WALK = 1000;
+    MIN_WALK = 50;
+    MAX_WALK = 200;
     RUN_ACC = 100;
 
 
@@ -37,14 +37,15 @@ class GameCharacter {
     update(){
         const TICK = this.game.clockTick;
 
-        if(!this.onGround) {
-            this.y += this.FALL_ACC*TICK;
+        if(this.state === 2 && this.moveDown) {
+            this.velocityY += this.FALL_ACC*TICK;
         }
 
         if(this.y >= this.FLOOR_BOUNDARY) {
             this.state = 0;
             this.onGround = true;
             this.moveDown = false;
+            this.velocityY = 0;
         } else {
             this.state = 2;
             this.onGround = false;
@@ -105,7 +106,21 @@ class GameCharacter {
             }
         }
 
-        if(this.velocityX > this.MAX_WALK) {this.velocityX = this.MAX_WALK};
+        if(Math.abs(this.velocityX) > this.MAX_WALK) {
+            if(this.velocityX < 0) {
+                this.velocityX = -1 * this.MAX_WALK;
+            } else {
+                this.velocityX = this.MAX_WALK;
+            }
+        }
+
+        if(Math.abs(this.velocityX) > 0 && this.state == 0) {
+            if(this.velocityX < 0) {
+                this.velocityX += 100 * TICK;
+            } else {
+                this.velocityX -= 100 * TICK;
+            }
+        }
 
         this.x += this.velocityX * TICK;
         this.y += this.velocityY * TICK;
@@ -122,5 +137,9 @@ class GameCharacter {
 
         ctx.font = "50px Arial";
         ctx.fillText("STATE: " + this.state, 10, 50);
+        ctx.fillText("XVeloc: " + this.velocityX, 10, 100);
+        ctx.fillText("YVeloc: " + this.velocityY, 10, 150);
+        ctx.fillText("Xpos: " + this.x, 10, 200);
+        ctx.fillText("Ypos: " + this.y, 10, 250);
     };
 }
