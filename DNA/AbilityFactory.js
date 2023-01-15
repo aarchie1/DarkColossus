@@ -3,24 +3,24 @@
 //AbilityFactory follows the singleton and factory pattern
 class AbilityFactory {
 
-    getAbility(abilityType) {
+    static getAbility(abilityType) {
         switch (abilityType) {
             case 'sigma':
-                return searchAbilityPool('sigma');
+                return this.searchAbilityPool('sigma');
             case 'alpha':
-                return searchAbilityPool('alpha');
+                return this.searchAbilityPool('alpha');
             case 'beta':
-                return searchAbilityPool('beta');
+                return this.searchAbilityPool('beta');
             case 'epsilon':
                 //The Episilon ability is a random ability from the other three OR nothing
                 let random = Math.round(Math.random() * 3) + 1;
                 switch (random) {
                     case 1:
-                        return searchAbilityPool('sigma');
+                        return this.searchAbilityPool('sigma');
                     case 2:
-                        return searchAbilityPool('alpha');
+                        return this.searchAbilityPool('alpha');
                     case 3:
-                        return searchAbilityPool('beta');
+                        return this.searchAbilityPool('beta');
                     case 4:
                         return null;
                 }
@@ -30,7 +30,7 @@ class AbilityFactory {
         }
     }
 
-    searchAbilityPool(abilityPool) {
+    static searchAbilityPool(abilityPool) {
         //PUT ALL ABILITIES HERE
         let sigmaAbilityPool = [MockAbility];
         let alphaAbilityPool = [MockAbility];
@@ -50,11 +50,13 @@ class AbilityFactory {
                 return null;
         }
 
-        let abilityIndex = Math.round(Math.random() * abilityPool.length);
-        return new abilityPool[abilityIndex](getRarity(), getRarity());
+
+        let abilityIndex = Math.max(Math.round(Math.random() * abilityPool.length) - 1, 0);
+        console.log("abilityIndex: " + abilityIndex);
+        return new abilityPool[abilityIndex](this.getRarity(), this.getRarity());
     }
 
-    getRarity() {
+    static getRarity() {
         let random = Math.random();
         if (random < 0.5) {
             return 1; //basic 50%
