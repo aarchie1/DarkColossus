@@ -2,7 +2,8 @@
 class DnaTester {
     constructor() {
         this.testResults = [];
-        for (let i = 0; i < 10; i++) {
+        this.numberOfTests = 1;
+        for (let i = 0; i < this.numberOfTests; i++) {
             console.log('Test ' + i);
             this.createTwoRandomDnaThenCreateAChild();
         }
@@ -31,9 +32,9 @@ class DnaTester {
 
     draw(ctx) {
         //draw all the test results in testResults
-        for (let i = 0; i < this.testResults.length; i++) {
-            ctx.font = "18px Arial";
-            ctx.fillText(this.testResults[i], 10, 10 + (i * 20));
-        }
+        // for (let i = 0; i < this.testResults.length; i++) {
+        //     ctx.font = "18px Arial";
+        //     ctx.fillText(this.testResults[i], 10, 100 + (i * 20));
+        // }
     }
 }
