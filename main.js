@@ -8,6 +8,7 @@ ASSET_MANAGER.downloadAll(() => {
 
 	gameEngine.init(ctx);
 	gameEngine.addEntity(new GameCharacter(10,10,10,"Hero",null,0,gameEngine));
+	gameEngine.addEntity(new DnaTester());
 
 	gameEngine.start();
 });
