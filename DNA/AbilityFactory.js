@@ -1,29 +1,26 @@
+
+//AbilityFactory produces random abilities
+//AbilityFactory follows the singleton and factory pattern
 class AbilityFactory {
-    constructor() {
-        //Put all the abilities here as we make em
-        this.sigmaAbilityPool = [MockAbility];
-        this.alphaAbilityPool = [MockAbility];
-        this.betaAbilityPool = [MockAbility];
-    }
 
     getAbility(abilityType) {
         switch (abilityType) {
             case 'sigma':
-                return this.searchAbilityPool(this.sigmaAbilityPool);
+                return searchAbilityPool('sigma');
             case 'alpha':
-                return this.searchAbilityPool(this.alphaAbilityPool);
+                return searchAbilityPool('alpha');
             case 'beta':
-                return this.searchAbilityPool(this.betaAbilityPool);
+                return searchAbilityPool('beta');
             case 'epsilon':
                 //The Episilon ability is a random ability from the other three OR nothing
                 let random = Math.round(Math.random() * 3) + 1;
                 switch (random) {
                     case 1:
-                        return this.searchAbilityPool(this.sigmaAbilityPool);
+                        return searchAbilityPool('sigma');
                     case 2:
-                        return this.searchAbilityPool(this.alphaAbilityPool);
+                        return searchAbilityPool('alpha');
                     case 3:
-                        return this.searchAbilityPool(this.betaAbilityPool);
+                        return searchAbilityPool('beta');
                     case 4:
                         return null;
                 }
@@ -34,21 +31,39 @@ class AbilityFactory {
     }
 
     searchAbilityPool(abilityPool) {
-        let abilityIndex = Math.round(Math.random() * abilityPool.length);
-        return new abilityPool[abilityIndex](this.getRarity(), this.getRarity());
-    }
+        //PUT ALL ABILITIES HERE
+        let sigmaAbilityPool = [MockAbility];
+        let alphaAbilityPool = [MockAbility];
+        let betaAbilityPool = [MockAbility];
+        switch (abilityPool) {
+            case 'sigma':
+                abilityPool = sigmaAbilityPool;
+                break;
+            case 'alpha':
+                abilityPool = alphaAbilityPool;
+                break;
+            case 'beta':
+                abilityPool = betaAbilityPool;
+                break;
+            default:
+                console.log('Ability pool not found');
+                return null;
+        }
 
+        let abilityIndex = Math.round(Math.random() * abilityPool.length);
+        return new abilityPool[abilityIndex](getRarity(), getRarity());
+    }
 
     getRarity() {
         let random = Math.random();
         if (random < 0.5) {
-            return 1; //basic
+            return 1; //basic 50%
         } else if (random < 0.8) {
-            return 2; //uncommon
+            return 2; //uncommon 30%
         } else if (random < 0.95) {
-            return 3; //rare
+            return 3; //rare 15%
         } else {
-            return 4; //godly
+            return 4; //godly 5%
         }
     }
 }

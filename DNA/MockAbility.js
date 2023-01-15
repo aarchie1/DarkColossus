@@ -17,7 +17,7 @@ class MockAbility {
 
         this.icon = 'mockAbilityIcon';
         this.animation = 'mockAbilityAnimation';
-        this.isDominantTrait = false;
+        this.dominant = false;
 
         console.log('Mock Ability created');
         console.log('Cooldown Rarity: ' + cooldownRarity);
