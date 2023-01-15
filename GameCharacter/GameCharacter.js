@@ -8,23 +8,16 @@ class GameCharacter {
     FALL_ACC = 450;
     STOP_FALL = 1575;
     MIN_WALK = 50;
-    MAX_WALK = 200;
-    RUN_ACC = 500;
-    DEC_SKID = 500;
-    DEC_REL = 600;
+    MAX_WALK = 450;
+    RUN_ACC = 800;
+    DEC_SKID = 5000;
+    DEC_REL = 1500;
     MAX_FALL = 270;
 
 
-    constructor(theHP, theAttack, theSpeed, theName, theSprite, theCoins, theGame) {
-        this.game = theGame;
-        this.hp = theHP;
-        this.attack = theAttack;
-        this.speed = theSpeed;
-        this.name = theName;
-        this.sprite = theSprite;
-        this.coins = theCoins;
-        this.x = 100;
-        this.y = 0;
+    constructor(game, x, y) {
+        Object.assign(this, { game, x, y });
+    
         
         // State variables
       
@@ -33,7 +26,7 @@ class GameCharacter {
 
         this.velocity = { x: 0, y: 0 };
         this.fallAcc = 450
-        this.inAir = true;
+        this.inAir = false;
 
         // this.velocityX = 0;
         // this.velocityY = 0;
@@ -142,15 +135,15 @@ class GameCharacter {
             }
             
             // Update vertical velocity
-            this.velocity.y += this.FALL_ACC * TICK;
+            //this.velocity.y += this.FALL_ACC * TICK;
 
             // Jump Physics
-            if(this.game.keys.Space && !this.inAir) {
-                this.velocity.y = this.STOP_JUMP;
-                this.fallAcc = this.STOP_FALL;
-                this.state = 2;
-                this.animations[this.state][this.facing].elapsedTime = 0;
-            }
+            // if(this.game.keys.Space && !this.inAir) {
+            //     this.velocity.y = this.STOP_JUMP;
+            //     this.fallAcc = this.STOP_FALL;
+            //     this.state = 2;
+            //     this.animations[this.state][this.facing].elapsedTime = 0;
+            // }
         } else {
             // Air Physics (need to implement horizontal aspect)
             if (this.velocity.y > 0 && !this.game.keys.Space) {
@@ -177,27 +170,25 @@ class GameCharacter {
         // }
 
         // Update Velocity
-        this.velocity.y += this.FALL_ACC * TICK;
+        // this.velocity.y += this.FALL_ACC * TICK;
 
-        if (this.velocity.y >= this.MAX_FALL)
-            this.velocity.y = this.MAX_FALL;
-        if (this.velocity.y <= -this.MAX_FALL)
-            this.velocity.y = -this.MAX_FALL;
-        if (this.velocity.x >= this.MAX_WALK && !this.game.keys.KeyK)
-            this.velocity.x = this.MAX_WALK;
-        if (this.velocity.x <= -this.MAX_WALK && !this.game.keys.KeyK)
-            this.velocity.x = -this.MAX_WALK;
+        // if (this.velocity.y >= this.MAX_FALL) this.velocity.y = this.MAX_FALL;
+        // if (this.velocity.y <= -this.MAX_FALL) this.velocity.y = -this.MAX_FALL;
+        
+        
+        if (this.velocity.x >= this.MAX_WALK && !this.game.keys.KeyK) this.velocity.x = this.MAX_WALK;
+        if (this.velocity.x <= -this.MAX_WALK && !this.game.keys.KeyK) this.velocity.x = -this.MAX_WALK;
         
             // Update Position
         this.x += this.velocity.x * TICK;
-        this.y += this.velocity.y * TICK;   
+        //this.y += this.velocity.y * TICK;   
         
         // Update State
-        if (this.state !== 0 && 
+        if (this.state !== 4 && 
             this.state !== 2 && 
             this.state !== 3)
         {
-            if (Math.abs(this.velocity.x >= this.MIN_WALK)) {
+            if (Math.abs(this.velocity.x) >= this.MIN_WALK) {
                 this.state = 1;
             } else {
                 this.state = 0;
@@ -229,13 +220,13 @@ class GameCharacter {
         this.animations[0][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_idle_right.png"), 0, 0, 256, 256, 8, .2, 0, true);
 
         // facing left = 1
-        this.animations[0][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_idle_elft.png"), 0, 0, 256, 256, 8, .2, 0, true);
+        this.animations[0][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_idle_left.png"), 0, 0, 256, 256, 8, .2, 0, true);
 
         // Walking Animation state = 1
         // facing right = 0
         this.animations[1][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_running_right.png"), 0, 0, 320, 256, 5, .2, 0, true);
 
-        // facing left = 0
+        // facing left = 1
         this.animations[1][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_running_left.png"), 0, 0, 320, 256, 5, .2, 0, true);
 
 
@@ -264,7 +255,7 @@ class GameCharacter {
         ctx.fillText("STATE: " + this.state, 10, 50);
         ctx.fillText("XVeloc: " + this.velocity.x, 10, 100);
         ctx.fillText("YVeloc: " + this.velocity.y, 10, 150);
-        ctx.fillText("Xpos: " + this.x, 10, 200);
+        ctx.fillText("Xpos: " + Math.round(this.x), 10, 200);
         ctx.fillText("Ypos: " + this.y, 10, 250);
     };
 }
