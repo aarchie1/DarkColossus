@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Dark Colossus</title>
-  
+    <script type="text/javascript" src="./animator.js"></script>
     <script type="text/javascript" src="./GameCharacter/GameCharacter.js"></script>
     <!--DNA files-->
     <script type="text/javascript" src="./DNA/Dna.js"></script>
@@ -21,5 +21,10 @@
 </head>
 <body style="text-align: center; background-color: #330000; padding-top: 1.5%;">
     <canvas id="gameWorld" width="1400" height="900" style="background: white; border: 1px solid hsl(0, 0%, 0%)" tabindex="0" autofocus></canvas>
+
+    <div>
+        <br />
+        <input type="checkbox" id="debug"> Debug <input type="checkbox" id="mute" > Mute <input type="range" id="volume" min="0" max="1" value="0.1" step="0.05" > Volume
+    </div>
 </body>
 </html>
