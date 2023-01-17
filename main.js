@@ -35,6 +35,7 @@ ASSET_MANAGER.downloadAll(() => {
 		ASSET_MANAGER.playAssest("./Music/testmusic.mp3");
 	};
 	
+	gameEngine.addEntity(new DnaTester());
 
 	gameEngine.start();
 });
