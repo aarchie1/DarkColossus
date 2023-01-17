@@ -179,7 +179,7 @@ class GameCharacter {
         if (this.velocity.x >= this.MAX_WALK && !this.game.keys.KeyK) this.velocity.x = this.MAX_WALK;
         if (this.velocity.x <= -this.MAX_WALK && !this.game.keys.KeyK) this.velocity.x = -this.MAX_WALK;
         
-            // Update Position
+        // Update Position
         this.x += this.velocity.x * TICK;
         //this.y += this.velocity.y * TICK;   
         

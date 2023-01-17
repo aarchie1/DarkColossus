@@ -81,7 +81,7 @@ class AssetManager {
     playAssest(path) {
         let audio = this.cache[path];
         audio.currentTime = 0;
-        audio.play();
+        promisePlay = audio.play();
     }
 
     muteAudio(mute) {
