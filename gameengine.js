@@ -22,6 +22,17 @@ class GameEngine {
             Space: false,
         };
 
+        // Information on gamepad controller input
+        this.controllerButtonLeft = false;
+        this.controllerButtonRight = false;
+        this.controllerButtonUp = false;
+        this.controllerButtonDown = false;
+        this.controllerButtonA = false;
+        this.controllerButtonB = false;
+        this.controllerButtonX = false;
+        this.controllerButtonY = false;
+        this.gamepad = null;
+
         // Options and the Details
         this.options = options || {
             debugging: false,
@@ -98,8 +109,29 @@ class GameEngine {
         }
     };
 
+    gamepadUpdate() {
+        this.gamepad = navigator.getGamepads()[0];
+        let gamepad = this.gamepad;
+        if (gamepad != null) {
+
+            this.controllerButtonA = gamepad.buttons[0].pressed;
+            this.controllerButtonB = gamepad.buttons[1].pressed;
+            this.controllerButtonX = gamepad.buttons[2].pressed;
+            this.controllerButtonY = gamepad.buttons[3].pressed;
+
+            this.controllerButtonUp = gamepad.buttons[12].pressed || gamepad.axes[0] < -0.3;
+            this.controllerButtonDown = gamepad.buttons[13].pressed || gamepad.axes[0] > 0.3;
+            this.controllerButtonLeft = gamepad.buttons[14].pressed || gamepad.axes[0] < -0.3;
+            this.controllerButtonRight = gamepad.buttons[15].pressed || gamepad.axes[0] > 0.3;
+
+        }
+    }
+
     update() {
         let entitiesCount = this.entities.length;
+
+        this.gamepadUpdate();
+
 
         for (let i = 0; i < entitiesCount; i++) {
             let entity = this.entities[i];
