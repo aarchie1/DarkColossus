@@ -90,11 +90,11 @@ class GameCharacter {
                 this.velocity.x = 0;
                 this.state = 0;
                 // Moving left
-                if (this.game.keys.KeyA) {
+                if (this.game.keys.KeyA || this.game.controllerButtonLeft) {
                     this.velocity.x -= this.MIN_WALK;
                 }
                 //  Moving right
-                if(this.game.keys.KeyD) {
+                if(this.game.keys.KeyD || this.game.controllerButtonRight) {
                     this.velocity.x += this.MIN_WALK;
                 }
             } else if (
@@ -103,12 +103,12 @@ class GameCharacter {
                 // Facing right
                 if (this.facing === 0) {
                     // If facing right and pressing the D key we need to accelerate
-                    if (this.game.keys.KeyD && !this.game.keys.KeyA) {
+                    if ((this.game.keys.KeyD || this.game.controllerButtonRight) && (!this.game.keys.KeyA || this.game.controllerButtonLeft)) {
                         this.velocity.x += this.RUN_ACC * TICK;
                     }
                     // Deceleration Logic
                     // If facing right and pressing the A key, we need to slow down our character
-                    else if (this.game.keys.KeyA && !this.game.keys.KeyD) {
+                    else if ((this.game.keys.KeyA || this.game.controllerButtonLeft) && (!this.game.keys.KeyD || !this.game.controllerButtonRight)) {
                         this.velocity.x -= this.DEC_SKID * TICK;
                     }
                     // If facing right and not pressing a key, we need to slow down our character
@@ -119,12 +119,12 @@ class GameCharacter {
                 // Facing left
                 if (this.facing === 1) {
                     // If facing left and pressing the A key we need to accelerate
-                    if (this.game.keys.KeyA && !this.game.keys.KeyD) {
+                    if ((this.game.keys.KeyA || this.game.controllerButtonLeft) && (!this.game.keys.KeyD || !this.game.controllerButtonRight)) {
                         this.velocity.x -= this.RUN_ACC * TICK;;
                     }
                      // Deceleration Logic
                     // If facing left and pressing the D key, we need to slow down our character
-                    else if (this.game.keys.KeyD && !this.game.keys.KeyA) {
+                    else if ((this.game.keys.KeyD || this.game.controllerButtonRight) && (!this.game.keys.KeyA || this.game.controllerButtonLeft)) {
                         this.velocity.x += this.DEC_SKID * TICK;
                     }
                     // If facing left and not pressing a key, we need to slow down our character
