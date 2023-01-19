@@ -1,9 +1,5 @@
 class GameCharacter {
     #sprite;
-    FLOOR_BOUNDARY = 728;
-    CEILING_BOUNDARY = 40;
-    LEFT_BOUNDARY = 40;
-    RIGHT_BOUNDARY = 984;
     BLOCKWIDTH = 256;
     
 
@@ -22,6 +18,9 @@ class GameCharacter {
         this.dead = false;
         this.updateBB();
 
+
+        this.animationXOffset = 0;
+        this.animationYOffset = 0;
         // Animations
         this.animations = [];
         this.loadAnimations();
@@ -29,11 +28,11 @@ class GameCharacter {
 
     updateBB() {
         this.lastBB = this.BB;
-        this.BB = new BoundingBox(this.x, this.y, 40, 50);
+        this.BB = new BoundingBox(this.x, this.y, 256, 256);
     }
 
     update(){
-        const JUMP_ACC = -15000;
+        const JUMP_ACC = -240;
         const MIN_RUN = 50;
         const MAX_RUN = 450;
         const RUN_ACC = 800;
@@ -45,6 +44,8 @@ class GameCharacter {
         
         // Ground Physics
         if (this.state < 2) {
+            this.animationXOffset = 0;
+            this.animationYOffset = 0;
             if (Math.abs(this.velocity.x) < MIN_RUN) {
                 this.velocity.x = 0;
                 this.state = 0;
@@ -61,9 +62,12 @@ class GameCharacter {
             ) {
                 // Facing right
                 if (this.facing === 0) {
+                    this.animationYOffset = -35;
                     // If facing right and pressing the D key we need to accelerate
                     if ((this.game.keys.KeyD || this.game.controllerButtonRight) && (!this.game.keys.KeyA || this.game.controllerButtonLeft)) {
                         this.velocity.x += RUN_ACC * TICK;
+                        this.animationXOffset = 0;
+                        
                     }
                     // Deceleration Logic
                     // If facing right and pressing the A key, we need to slow down our character
@@ -77,6 +81,7 @@ class GameCharacter {
                 }
                 // Facing left
                 if (this.facing === 1) {
+                    this.animationYOffset = -35;
                     // If facing left and pressing the A key we need to accelerate
                     if ((this.game.keys.KeyA || this.game.controllerButtonLeft) && (!this.game.keys.KeyD || !this.game.controllerButtonRight)) {
                         this.velocity.x -= RUN_ACC * TICK;;
@@ -100,9 +105,12 @@ class GameCharacter {
                 this.fallAcc = STOP_FALL;
                 this.state = 3;
                 this.animations[this.state][this.facing].elapsedTime = 0;
+                this.animationXOffset = 257;
+                this.animationYOffset = 300;
             }
-        } else {
+        } else { 
             // Air Physics (need to implement horizontal aspect)
+            this.state = 2;
             this.velocity.y += this.fallAcc * TICK;
             if (this.game.keys.KeyD && !this.game.keys.KeyA) {
                this.velocity.x += RUN_ACC * TICK;
@@ -134,10 +142,11 @@ class GameCharacter {
                 if (this.velocity.y > 0) { 
                     if ((entity instanceof Platform) //landing
                         && (this.lastBB.bottom) <= entity.BB.top) { // was above last tick
-                        this.y = entity.BB.top - BLOCKWIDTH; 
+                        this.y = entity.BB.top - this.BB.height; 
+                        this.velocity.y = 0
                     }
                     this.velocity.y === 0;
-                    if (this.state === 2) this.state = 0;
+                    if (this.state === 2 || this.state === 3) this.state = 0;
                     this.updateBB();
                 }  
             }
@@ -200,23 +209,26 @@ class GameCharacter {
 
         // Jumping Animation state = 3
         // facing right = 0
-        this.animations[3][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_right.png"), 0, 0, 512, 564, 5, .3, 0, true);
+        this.animations[3][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_right.png"), 0, 0, 512, 564, 3, .25, 0, false);
 
         // facing left = 1
-        this.animations[3][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_left.png"), 0, 0, 512, 564, 5, .2, 0, true);
+        this.animations[3][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_left.png"), 0, 0, 512, 564, 3, .25, 0, false);
 
     }
     draw(ctx) {
         // ctx.beginPath();
         // ctx.arc(this.x,this.y,40,0,2*Math.PI);
         // ctx.stroke();
-        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1 / 2);
+        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset, this.y-this.animationYOffset, 1);
 
         ctx.font = "50px Arial";
         ctx.fillText("STATE: " + this.state, 10, 50);
-        ctx.fillText("XVeloc: " + this.velocity.x, 10, 100);
-        ctx.fillText("YVeloc: " + this.velocity.y, 10, 150);
+        ctx.fillText("XVeloc: " + Math.round(this.velocity.x), 10, 100);
+        ctx.fillText("YVeloc: " + Math.round(this.velocity.y), 10, 150);
         ctx.fillText("Xpos: " + Math.round(this.x), 10, 200);
-        ctx.fillText("Ypos: " + this.y, 10, 250);
+        ctx.fillText("Ypos: " + Math.round(this.y), 10, 250);
+
+        ctx.strokeStyle = 'Red';
+         ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
     };
 }
