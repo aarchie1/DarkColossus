@@ -1,18 +1,19 @@
 class Platform {
-    BLOCKWIDTH = 256;
-    constructor(game, x, y, w) {
-        Object.assign(this, {game, x, y, w}); 
-        this.spritesheet = ASSET_MANAGER.getAsset("./Sprites/LevelAssets/floating_platform_small.png");
-        this.BB = new BoundingBox(this.x, this.y+37, this.w, this.BLOCKWIDTH /2);
-    };
-
-    update() { 
-    };
+    constructor(startX, startY, endX, endY, sprite) {
+        this.startX = startX;
+        this.startY = startY;
+        this.endX = endX;
+        this.endY = endY;
+        this.sprite = sprite;
+        this.width = endX - startX;
+        this.height = endY - startY;
+    }
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet, this.x, this.y, this.w, this.BLOCKWIDTH);
-        ctx.strokeStyle = 'Red';
-        ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+        ctx.drawImage(this.sprite, this.startX, this.startY, this.width, this.height);
+    }
+
+    update() {
         
-    };
-};
+    }
+}

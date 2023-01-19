@@ -32,7 +32,7 @@ class GameCharacter {
     }
 
     update(){
-        const JUMP_ACC = -240;
+        const JUMP_ACC = -10000;
         const MIN_RUN = 50;
         const MAX_RUN = 450;
         const RUN_ACC = 800;
@@ -140,7 +140,7 @@ class GameCharacter {
             if (entity.BB && this.BB.collide(entity.BB)) {
                 //falling
                 if (this.velocity.y > 0) { 
-                    if ((entity instanceof Platform) //landing
+                    if ((entity instanceof SmallPlatform) //landing
                         && (this.lastBB.bottom) <= entity.BB.top) { // was above last tick
                         this.y = entity.BB.top - this.BB.height; 
                         this.velocity.y = 0

@@ -13,6 +13,7 @@ ASSET_MANAGER.queueDownload("./Sprites/Player/player_falling_right.png");
 ASSET_MANAGER.queueDownload("./Sprites/Player/player_falling_left.png");
 
 //Level/Platforms
+
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/floating_platform_small.png");
 
 
@@ -31,13 +32,13 @@ ASSET_MANAGER.downloadAll(() => {
 	const ctx = canvas.getContext("2d");
 	
 	gameEngine.init(ctx);
-	gameEngine.addEntity(new Platform(gameEngine, -50, 800, 256));
-	gameEngine.addEntity(new Platform(gameEngine, 160, 800, 256));
-	gameEngine.addEntity(new Platform(gameEngine, 370, 800, 256));
-	gameEngine.addEntity(new Platform(gameEngine, 580, 800, 256));
-	gameEngine.addEntity(new Platform(gameEngine, 790, 800, 256));
-	gameEngine.addEntity(new Platform(gameEngine, 1000, 800, 256));
-	gameEngine.addEntity(new Platform(gameEngine, 1210, 800, 256));
+	gameEngine.addEntity(new SmallPlatform(gameEngine, -50, 800, 256));
+	gameEngine.addEntity(new SmallPlatform(gameEngine, 160, 800, 256));
+	gameEngine.addEntity(new SmallPlatform(gameEngine, 370, 800, 256));
+	gameEngine.addEntity(new SmallPlatform(gameEngine, 580, 800, 256));
+	gameEngine.addEntity(new SmallPlatform(gameEngine, 790, 800, 256));
+	gameEngine.addEntity(new SmallPlatform(gameEngine, 1000, 800, 256));
+	gameEngine.addEntity(new SmallPlatform(gameEngine, 1210, 800, 256));
 	gameEngine.addEntity(new GameCharacter(gameEngine, 0, 0));
 	
 	// Janky way of getting music to start, you have to interact with the volume bar first
