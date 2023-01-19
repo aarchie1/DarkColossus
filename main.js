@@ -12,6 +12,11 @@ ASSET_MANAGER.queueDownload("./Sprites/Player/player_jump_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Player/player_falling_right.png");
 ASSET_MANAGER.queueDownload("./Sprites/Player/player_falling_left.png");
 
+//Level/Platforms
+ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/floating_platform_small.png");
+
+
+
 // music
 ASSET_MANAGER.queueDownload("./Music/testmusic.mp3");
 
@@ -22,11 +27,18 @@ ASSET_MANAGER.downloadAll(() => {
 
 	ASSET_MANAGER.autoRepeat("./Music/testmusic.mp3");
 	
-	const canvas = document.getElementById("gameWorld");
+	const canvas = document.getElementById("gameWorld"); 
 	const ctx = canvas.getContext("2d");
 	
 	gameEngine.init(ctx);
-	gameEngine.addEntity(new GameCharacter(gameEngine, 100, 100));
+	gameEngine.addEntity(new Platform(gameEngine, -50, 800, 256));
+	gameEngine.addEntity(new Platform(gameEngine, 160, 800, 256));
+	gameEngine.addEntity(new Platform(gameEngine, 370, 800, 256));
+	gameEngine.addEntity(new Platform(gameEngine, 580, 800, 256));
+	gameEngine.addEntity(new Platform(gameEngine, 790, 800, 256));
+	gameEngine.addEntity(new Platform(gameEngine, 1000, 800, 256));
+	gameEngine.addEntity(new Platform(gameEngine, 1210, 800, 256));
+	gameEngine.addEntity(new GameCharacter(gameEngine, 0, 0));
 	
 	// Janky way of getting music to start, you have to interact with the volume bar first
 	var l = document.getElementById('volume');
