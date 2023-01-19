@@ -4,15 +4,8 @@ class GameCharacter {
     CEILING_BOUNDARY = 40;
     LEFT_BOUNDARY = 40;
     RIGHT_BOUNDARY = 984;
-    // JUMP_ACC = -400;
-    FALL_ACC = 450;
-    STOP_FALL = 1575;
-    MIN_WALK = 50;
-    MAX_WALK = 450;
-    RUN_ACC = 800;
-    DEC_SKID = 5000;
-    DEC_REL = 1500;
-    MAX_FALL = 270;
+    BLOCKWIDTH = 256;
+    
 
 
     constructor(game, x, y) {
@@ -20,184 +13,153 @@ class GameCharacter {
     
         
         // State variables
-      
+        
         this.facing = 0 // 0 = right, 1 == left
         this.state = 0; //0 = idle, 1 = running, 2 = falling 3 = jumping, 4 = attacking
 
         this.velocity = { x: 0, y: 0 };
         this.fallAcc = 450
-        this.inAir = false;
-
-        // this.velocityX = 0;
-        // this.velocityY = 0;
-        // this.moveRight = true;
-        // this.moveLeft = true;
-        // this.moveUp = true;
-        // this.moveDown = true;
-        // this.jumping = false;
-
-        
+        this.dead = false;
+        this.updateBB();
 
         // Animations
         this.animations = [];
         this.loadAnimations();
     };
 
+    updateBB() {
+        this.lastBB = this.BB;
+        this.BB = new BoundingBox(this.x, this.y, 40, 50);
+    }
+
     update(){
+        const JUMP_ACC = -15000;
+        const MIN_RUN = 50;
+        const MAX_RUN = 450;
+        const RUN_ACC = 800;
+        const DEC_SKID = 5000;
+        const DEC_REL = 1500;
+        const STOP_FALL = 200;
+        const MAX_FALL = 270;
         const TICK = this.game.clockTick;
-
-        // Gravity 
-        // if(this.state === 2 && this.moveDown) {
-        //     this.velocityY += this.FALL_ACC*TICK;
-        // }
-
-        // if(this.y >= this.FLOOR_BOUNDARY) {
-        //     this.state = 0;
-        //     //this.onGround = true;
-        //     //this.moveDown = false;
-        //     //this.velocityY = 0;
-        // } else {
-        //     this.state = 2;
-        //     //this.onGround = false;
-        //     //this.moveDown = true;
-        // }
         
-
-        // Boundaries
-        // if(this.y == this.CEILING_BOUNDARY) {
-        //     this.moveUp = false;
-        // } else {
-        //     this.moveUp = true;
-        // }
-
-        // if(this.x >= this.RIGHT_BOUNDARY) {
-        //     this.moveRight = false;
-        // } else {
-        //     this.moveRight = true;
-        // }
-
-        // if(this.x <= this.LEFT_BOUNDARY) {
-        //     this.moveLeft = false;
-        // } else {
-        //     this.moveLeft = true;
-        // }
-
-        
-
         // Ground Physics
-        if(this.state != 2) {
-            if(Math.abs(this.velocity.x) < this.MIN_WALK) {
+        if (this.state < 2) {
+            if (Math.abs(this.velocity.x) < MIN_RUN) {
                 this.velocity.x = 0;
                 this.state = 0;
                 // Moving left
                 if (this.game.keys.KeyA || this.game.controllerButtonLeft) {
-                    this.velocity.x -= this.MIN_WALK;
+                    this.velocity.x -= MIN_RUN;
                 }
                 //  Moving right
-                if(this.game.keys.KeyD || this.game.controllerButtonRight) {
-                    this.velocity.x += this.MIN_WALK;
+                if (this.game.keys.KeyD || this.game.controllerButtonRight) {
+                    this.velocity.x += MIN_RUN;
                 }
             } else if (
-                Math.abs(this.velocity.x) >= this.MIN_WALK
+                Math.abs(this.velocity.x) >= MIN_RUN
             ) {
                 // Facing right
                 if (this.facing === 0) {
                     // If facing right and pressing the D key we need to accelerate
                     if ((this.game.keys.KeyD || this.game.controllerButtonRight) && (!this.game.keys.KeyA || this.game.controllerButtonLeft)) {
-                        this.velocity.x += this.RUN_ACC * TICK;
+                        this.velocity.x += RUN_ACC * TICK;
                     }
                     // Deceleration Logic
                     // If facing right and pressing the A key, we need to slow down our character
                     else if ((this.game.keys.KeyA || this.game.controllerButtonLeft) && (!this.game.keys.KeyD || !this.game.controllerButtonRight)) {
-                        this.velocity.x -= this.DEC_SKID * TICK;
+                        this.velocity.x -= DEC_SKID * TICK;
                     }
                     // If facing right and not pressing a key, we need to slow down our character
                     else {
-                        this.velocity.x -= this.DEC_REL * TICK;
+                        this.velocity.x -= DEC_REL * TICK;
                     }
                 }
                 // Facing left
                 if (this.facing === 1) {
                     // If facing left and pressing the A key we need to accelerate
                     if ((this.game.keys.KeyA || this.game.controllerButtonLeft) && (!this.game.keys.KeyD || !this.game.controllerButtonRight)) {
-                        this.velocity.x -= this.RUN_ACC * TICK;;
+                        this.velocity.x -= RUN_ACC * TICK;;
                     }
-                     // Deceleration Logic
+                    // Deceleration Logic
                     // If facing left and pressing the D key, we need to slow down our character
                     else if ((this.game.keys.KeyD || this.game.controllerButtonRight) && (!this.game.keys.KeyA || this.game.controllerButtonLeft)) {
-                        this.velocity.x += this.DEC_SKID * TICK;
+                        this.velocity.x += DEC_SKID * TICK;
                     }
                     // If facing left and not pressing a key, we need to slow down our character
                     else {
-                        this.velocity.x += this.DEC_REL * TICK;
+                        this.velocity.x += DEC_REL * TICK;
                     }
                 }
             }
+            this.velocity.y += this.fallAcc * TICK;
             
-            // Update vertical velocity
-            //this.velocity.y += this.FALL_ACC * TICK;
-
             // Jump Physics
-            // if(this.game.keys.Space && !this.inAir) {
-            //     this.velocity.y = this.STOP_JUMP;
-            //     this.fallAcc = this.STOP_FALL;
-            //     this.state = 2;
-            //     this.animations[this.state][this.facing].elapsedTime = 0;
-            // }
+            if (this.game.keys.Space) {
+                this.velocity.y = JUMP_ACC;
+                this.fallAcc = STOP_FALL;
+                this.state = 3;
+                this.animations[this.state][this.facing].elapsedTime = 0;
+            }
         } else {
             // Air Physics (need to implement horizontal aspect)
-            if (this.velocity.y > 0 && !this.game.keys.Space) {
-                this.state = 2;
-                this.inAir = true;
+            this.velocity.y += this.fallAcc * TICK;
+            if (this.game.keys.KeyD && !this.game.keys.KeyA) {
+               this.velocity.x += RUN_ACC * TICK;
+            } else if (this.game.keys.KeyA && !this.game.keys.keyD) {
+                this.velocity.x -= RUN_ACC * TICK;
+            } else {
+                //do nothing.
             }
         }
-
-        // Deceleration
-        // if(Math.abs(this.velocityX) > this.MAX_WALK) {
-        //     if(this.velocityX < 0) {
-        //         this.velocityX = -1 * this.MAX_WALK;
-        //     } else {
-        //         this.velocityX = this.MAX_WALK;
-        //     }
-        // }
-
-        // if(Math.abs(this.velocityX) > 0 && this.state == 0) {
-        //     if(this.velocityX < 0) {
-        //         this.velocityX += 100 * TICK;
-        //     } else {
-        //         this.velocityX -= 100 * TICK;
-        //     }
-        // }
-
-        // Update Velocity
-        // this.velocity.y += this.FALL_ACC * TICK;
-
-        // if (this.velocity.y >= this.MAX_FALL) this.velocity.y = this.MAX_FALL;
-        // if (this.velocity.y <= -this.MAX_FALL) this.velocity.y = -this.MAX_FALL;
         
-        
-        if (this.velocity.x >= this.MAX_WALK && !this.game.keys.KeyK) this.velocity.x = this.MAX_WALK;
-        if (this.velocity.x <= -this.MAX_WALK && !this.game.keys.KeyK) this.velocity.x = -this.MAX_WALK;
+
+        // Update Velocity/ Max speed calculation
+        if (this.velocity.y >= MAX_FALL) this.velocity.y = MAX_FALL;
+        if (this.velocity.y <= -MAX_FALL) this.velocity.y = -MAX_FALL;
+
+        if (this.velocity.x >= MAX_RUN) this.velocity.x = MAX_RUN;
+        if (this.velocity.x <= -MAX_RUN) this.velocity.x = -MAX_RUN;
         
         // Update Position
         this.x += this.velocity.x * TICK;
-        //this.y += this.velocity.y * TICK;   
+        this.y += this.velocity.y * TICK;   
         
+
+        //Collision
+        this.game.entities.forEach((entity) => {
+            // Collisions with players bounding box
+            if (entity.BB && this.BB.collide(entity.BB)) {
+                //falling
+                if (this.velocity.y > 0) { 
+                    if ((entity instanceof Platform) //landing
+                        && (this.lastBB.bottom) <= entity.BB.top) { // was above last tick
+                        this.y = entity.BB.top - BLOCKWIDTH; 
+                    }
+                    this.velocity.y === 0;
+                    if (this.state === 2) this.state = 0;
+                    this.updateBB();
+                }  
+            }
+        })
+
+
         // Update State
         if (this.state !== 4 && 
             this.state !== 2 && 
             this.state !== 3)
         {
-            if (Math.abs(this.velocity.x) >= this.MIN_WALK) {
+            if (Math.abs(this.velocity.x) >= MIN_RUN) {
                 this.state = 1;
             } else {
                 this.state = 0;
             }
         }
-        // Jumping or Falling
-        else if (this.velocity.y > 0 || this.velocity.y < 0) {
+        // Falling
+        else if (this.velocity.y > 0) {
             this.state = 2;
-            this.inAir = true;
+        } else if (this.velocity.y < 0) {
+            this.state = 3;
         }
 
         // Update Facing direction
@@ -205,7 +167,6 @@ class GameCharacter {
         if (this.velocity.x > 0) this.facing = 0;
 
     }
-
 
     loadAnimations() {
         for (let i = 0; i < 4; i++) { // 5 states (Havent implemented attacking) debug for running rn set back to 4
@@ -239,7 +200,7 @@ class GameCharacter {
 
         // Jumping Animation state = 3
         // facing right = 0
-        this.animations[3][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_right.png"), 0, 0, 512, 564, 5, .2, 0, true);
+        this.animations[3][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_right.png"), 0, 0, 512, 564, 5, .3, 0, true);
 
         // facing left = 1
         this.animations[3][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_left.png"), 0, 0, 512, 564, 5, .2, 0, true);
