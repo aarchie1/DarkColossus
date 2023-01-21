@@ -2,32 +2,37 @@ If a sprite looks weird I either added an unfinished version on accident
 or got the size wrong.
 
 Player
-    player_idle_left = 256x256
-    player_idle_right = 256x256
-    player_running_left = 320x256
-    player_running_right = 320x256
-    player_jump_left = 512x564
-    player_jump_right = 512x564
-    player_falling_left = 512x564
-    player_falling_right = 512x564
+    player_idle_left        256x256     8frames
+    player_idle_right       256x256     8frames
+    player_running_left     320x256     5frames
+    player_running_right    320x256     5frames
+    player_jump_left        512x564     3frames
+    player_jump_right       512x564     3frames
+    player_falling_left     512x564     5frames
+    player_falling_right    512x564     5frames
 
 Reaper
-    reaper_normal = 256x256
-    reaper_strong = 256x256
-    reaper_weak = 256x256
-    reaper_strong_attack = 320x256 
+    reaper_normal           256x256     6frames
+    reaper_strong           256x256     6frames
+    reaper_weak             256x256     6frames
+    reaper_attack           320x256     6frames
 
 Molecules
-    molecule_full = 256x256
-    molecule_half = 256x256
-    molecule_low = 256x256
+    molecule_full           256x256     6frames
+    molecule_half           256x256     6frames
+    molecule_low            256x256     6frames
 
 LevelAssets
-    background = 2100x1350
-    floating_platform_small = 256x256
+    background              2100x1350   1frame
+    platform_tiny           184x184     1frame
+    platform_small          256x256     1frame
+    platform_large          884x496     1frame
+    platform_ground         700x256     1frame
+    portal                  364x364     4frames
+    hazard_growth_short     256x256     7frames
+    hazard_growth_tall      256x512     9frames
 
-    Hazards
-        hazard_growth_short = 256x256
-        hazard_growth_tall = 256x512
+Abilities
+    cosmic_blade            1200x1164   4frames
 
 
