@@ -3,6 +3,19 @@ function getLevel(levelNumber) {
     let sections = [steppingStonesSection, hordeFightSection, uSection, sSection, verticalSection, dnaPickupSection, bossSection, checkpointSection];
     let view = {x: 1400, y: 900};
 
+    //ENUMS
+    const NO_MODIFER = 0;
+    const REAPERS_ONLY = 1;
+    const MOLECULES_ONLY = 2;
+    const NO_ENEMIES = 3;
+    const HALF_HP = 4;
+    const DOUBLE_REWARDS = 5;
+    const NO_FIGHTS = 6;
+    const ENEMIES_FASTER = 7;
+    const REAPERS_DOUBLE_HP = 8;
+    const PROJECTILES_DOUBLE_DAMAGE = 9;
+    const PHYSICAL_DOUBLE_DAMAGE = 10;
+
     const platformSmall = {w: 256, h: 256};
     const platformTiny = {w: 184, h: 284};
     const platformLarge = {w: 884, h: 496};
@@ -38,13 +51,54 @@ function getLevel(levelNumber) {
 
     const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
+    //BUILD LEVEL
     for(let i = 0; i < numberOfSections; i++) {
-        //Generate a section
-        //pick a random section from the list of sections
-        let section = sections[Math.floor(Math.random() * sections.length)];
-        //call the section function
-        section();
+        let buildSection = sections[Math.floor(Math.random() * sections.length)];
+        buildSection();
     }
+
+    //Filter level after its been built based off level modifier
+    switch(levelModifier) {
+        case NO_MODIFER:
+            break;
+        case REAPERS_ONLY:
+            level.molecule = [];
+            break;
+        case MOLECULES_ONLY:
+            level.reaper = [];
+            break;
+        case NO_ENEMIES:
+            level.molecule = [];
+            level.reaper = [];
+            break;
+        case NO_FIGHTS:
+            level.reaper = [];
+            level.molecule = [];
+            break;
+        case ENEMIES_FASTER:
+            level.reaper.forEach(reaper => reaper.speed = reaper.speed * 2);
+            level.molecule.forEach(molecule => molecule.speed = molecule.speed * 2);
+            break;
+        case REAPERS_DOUBLE_HP:
+            level.reaper.forEach(reaper => reaper.hp = reaper.hp * 2);
+            break;
+        case PROJECTILES_DOUBLE_DAMAGE:
+            level.reaper.forEach(reaper => reaper.projectileDamage = reaper.projectileDamage * 2);
+            level.molecule.forEach(molecule => molecule.projectileDamage = molecule.projectileDamage * 2);
+            break;
+        case PHYSICAL_DOUBLE_DAMAGE:
+            level.reaper.forEach(reaper => reaper.physicalDamage = reaper.physicalDamage * 2);
+            level.molecule.forEach(molecule => molecule.physicalDamage = molecule.physicalDamage * 2);
+            break;
+        case HALF_HP:
+            level.reaper.forEach(reaper => reaper.hp = reaper.hp / 2);
+            break;
+        case DOUBLE_REWARDS:
+            level.reaper.forEach(reaper => reaper.reward = reaper.reward * 2);
+            level.molecule.forEach(molecule => molecule.reward = molecule.reward * 2);
+            break;
+    }
+    return level;
 
     //create a function to choose which type of platform to generate
     function choosePlatformType(tinyOnly = false) {
@@ -79,7 +133,7 @@ function getLevel(levelNumber) {
                 level.reaper.push({x: startX + platformType.w/2 - reaper.w/2, y: startY - platformType.h - reaper.h});
                 numberOfReapers--;
             }
-            
+
             if (numberOfMolecules > 0) {
                 level.molecule.push({x: startX + platformType.w - molecule.w/2, y: startY - platformType.h - molecule.h});
                 numberOfMolecules--;
@@ -116,10 +170,6 @@ function getLevel(levelNumber) {
     function checkpointSection() {
 
     }
-
-
-    //Filter level based off level modifier
-    return level;
 }
 
 
