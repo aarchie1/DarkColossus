@@ -1,5 +1,5 @@
 const gameEngine = new GameEngine();
-
+const LoadLevel = new LevelManager();
 const ASSET_MANAGER = new AssetManager();
 
 // Sprites
@@ -30,6 +30,7 @@ ASSET_MANAGER.downloadAll(() => {
 	const ctx = canvas.getContext("2d");
 	
 	gameEngine.init(ctx);
+	/*
 	gameEngine.addEntity(new SmallPlatform(gameEngine, -50, 800, 256));
 	gameEngine.addEntity(new SmallPlatform(gameEngine, 160, 800, 256));
 	gameEngine.addEntity(new SmallPlatform(gameEngine, 370, 800, 256));
@@ -38,6 +39,7 @@ ASSET_MANAGER.downloadAll(() => {
 	gameEngine.addEntity(new SmallPlatform(gameEngine, 1000, 800, 256));
 	gameEngine.addEntity(new SmallPlatform(gameEngine, 1210, 800, 256));
 	gameEngine.addEntity(new GameCharacter(gameEngine, 0, 0));
+	*/
 	
 	// Janky way of getting music to start, you have to interact with the volume bar first
 	var l = document.getElementById('volume');
@@ -49,6 +51,8 @@ ASSET_MANAGER.downloadAll(() => {
 	//TEST ENTITIES
 	gameEngine.addEntity(new DnaTester());
 	gameEngine.addEntity(new LevelFactoryTester());
+
+	new SceneManager(gameEngine);
 
 	gameEngine.start();
 });
