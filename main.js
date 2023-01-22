@@ -14,9 +14,7 @@ ASSET_MANAGER.queueDownload("./Sprites/Player/player_falling_left.png");
 
 //Level/Platforms
 
-ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/floating_platform_small.png");
-
-
+ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/platform_small.png");
 
 // music
 ASSET_MANAGER.queueDownload("./Music/testmusic.mp3");
@@ -48,7 +46,9 @@ ASSET_MANAGER.downloadAll(() => {
 		ASSET_MANAGER.playAssest("./Music/testmusic.mp3");
 	};
 	
+	//TEST ENTITIES
 	gameEngine.addEntity(new DnaTester());
+	gameEngine.addEntity(new LevelFactoryTester());
 
 	gameEngine.start();
 });

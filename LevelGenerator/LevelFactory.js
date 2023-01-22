@@ -1,6 +1,5 @@
 function getLevel(levelNumber) {
-    //PUT SECTIONS HERE
-    let sections = [steppingStonesSection, hordeFightSection, uSection, sSection, verticalSection, dnaPickupSection, bossSection, checkpointSection];
+    let sections = [steppingStonesSection, hordeFightSection, verticalSection, dnaPickupSection, flatSection, checkpointSection];
     let view = {x: 1400, y: 900};
 
     //ENUMS
@@ -15,16 +14,21 @@ function getLevel(levelNumber) {
     const REAPERS_DOUBLE_HP = 8;
     const PROJECTILES_DOUBLE_DAMAGE = 9;
     const PHYSICAL_DOUBLE_DAMAGE = 10;
+    const levelModifier = Math.floor(Math.random() * 11); //num between 0 and 10
 
-    const platformSmall = {w: 256, h: 256};
-    const platformTiny = {w: 184, h: 284};
-    const platformLarge = {w: 884, h: 496};
-    const hazardGrowthShort = {w: 256, h: 256};
-    const hazardGrowthTall = {w: 256, h: 512};
-    const portal = {w: 364, h: 364};
-    const reaper = {w: 256, h: 256};
-    const molecule = {w: 256, h: 256};
-    const player = {w: 256, h: 256};
+    const PLATFORM_SMALL = {w: 256, h: 256};
+    const PLATFORM_TINY = {w: 184, h: 284};
+    const PLATFORM_LARGE = {w: 884, h: 496};
+    const HAZARD_GROWTH_SHORT = {w: 256, h: 256};
+    const HAZARD_GROWTH_TALL = {w: 256, h: 512};
+    const PORTAL = {w: 364, h: 364};
+    const REAPER = {w: 256, h: 256};
+    const MOLECULE = {w: 256, h: 256};
+    const PLAYER = {w: 256, h: 256};
+
+    const randomNumberInRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    const vertical = () => (Math.random() < 0.5) ? -1 : 1;
+
 
     let level = {
         levelNumber: levelNumber,
@@ -41,15 +45,26 @@ function getLevel(levelNumber) {
         player: [{x: view.x/2, y: view.y - 256}],
     }
 
+    level.toString = function() {
+        let levelString = "Level " + this.levelNumber + ":\n"
+        for (let key in this) {
+            if (this.hasOwnProperty(key)) {
+                if (key != "toString") {
+                    levelString += key + ": ";
+                    for (let i = 0; i < this[key].length; i++) {
+                        levelString += "(" + this[key][i].x + ", " + this[key][i].y + ") ";
+                    }
+                    levelString += "\n";
+                }
+            }
+        }
+        return levelString;
+    }
+
     let startX = view.x;
     let startY = view.y;
 
-    //Generate the level environment
-
-    //Number of sections per level increases as the level number increases
     let numberOfSections = 3 + levelNumber;
-
-    const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
     //BUILD LEVEL
     for(let i = 0; i < numberOfSections; i++) {
@@ -98,61 +113,76 @@ function getLevel(levelNumber) {
             level.molecule.forEach(molecule => molecule.reward = molecule.reward * 2);
             break;
     }
-    return level;
 
-    //create a function to choose which type of platform to generate
     function choosePlatformType(tinyOnly = false) {
         let platform = Math.floor(Math.random() * 3);
-        if (tinyOnly) return platformTiny;
+        if (tinyOnly) return PLATFORM_TINY;
         switch(platform) {
             case 0:
-                return platformSmall;
+                return PLATFORM_SMALL;
             case 1:
-                return platformTiny;
+                return PLATFORM_TINY;
             case 2:
-                return platformLarge;
+                return PLATFORM_LARGE;
         }
     }
 
+    function addPlatform(platformType, x, y, moving) {
+        switch(platformType) {
+            case PLATFORM_SMALL:
+                level.platformSmall.push({x: x, y: y, moving: moving});
+                break;
+            case PLATFORM_TINY:
+                level.platformTiny.push({x: x, y: y, moving: moving});
+                break;
+            case PLATFORM_LARGE:
+                level.platformLarge.push({x: x, y: y, moving: moving});
+                break;
+        }
+    }
 
-    //Authored sections below
-
-    //Creates ascending stairs of platforms with 
-    //va
     function steppingStonesSection() {
-        let numberOfReapers = randomNumber(1, 5 + levelNumber);
-        let numberOfMolecules = randomNumber(1, 5 + levelNumber);
-
-        for (let i = 0; i < randomNumber(1, 5); i++) {
-            let platformType = choosePlatformType();
-
-            if (platformType === platformSmall)
-                level.platformSmall.push({x: startX, y: startY - platformType.h, moving: (Math.random() < 0.5) ? true : false});
-
-            if (numberOfReapers > 0) {   
-                level.reaper.push({x: startX + platformType.w/2 - reaper.w/2, y: startY - platformType.h - reaper.h});
-                numberOfReapers--;
-            }
-
-            if (numberOfMolecules > 0) {
-                level.molecule.push({x: startX + platformType.w - molecule.w/2, y: startY - platformType.h - molecule.h});
-                numberOfMolecules--;
-            }
-
-            startX += platformplatformType.w;        
+        let numberOfPlatforms = randomNumberInRange(1, 5);
+        for (let i = 0; i < numberOfPlatforms; i++) {
+            addPlatform(choosePlatformType(), startX, startY, (Math.random() < 0.5) ? true : false);
+            startX += randomNumberInRange(PLAYER.w, PLAYER.w * 2);
+            startY += randomNumberInRange(PLAYER.h, PLAYER.h * 2) * vertical();     
         }
     }
 
+    function flatSection() {
+        for (let i = 0; i < randomNumberInRange(1, 5); i++) {
+            let platformType = choosePlatformType();
+            addPlatform(platformType, startX, startY, false);
+            startX += randomNumberInRange(200, 600);
+        }
+    }
+        
     function hordeFightSection() {
+        //add two platforms side by side and a tall growth on the ends
+        let tempStartX = startX;
+        addPlatform(PLATFORM_LARGE, startX, startY, false);
+        startX += 256;
+        addPlatform(PLATFORM_LARGE, startX + 256, startY, false);
+        startX += 256;
+        level.hazardGrowthTall.push({x: startX, y: startY - 256});
+        level.hazardGrowthTall.push({x: startX, y: startY - 512});
 
-    }
-
-    function uSection() {
-
-    }
-
-    function sSection() {
-
+        //add reapers and molecules between tempStartX and startX
+        let numberOfEnemies = randomNumberInRange(10, 20);
+        for (let i = 0; i < numberOfEnemies; i++) {
+            let enemyType = Math.floor(Math.random() * 2);
+            let x = randomNumberInRange(tempStartX, startX);
+            let y = randomNumberInRange(startY - 256, startY - 512);
+            switch(enemyType) {
+                case 0:
+                    level.reaper.push({x: x, y: y});
+                    break;
+                case 1:
+                    level.molecule.push({x: x, y: y});
+                    break;
+            }
+        }
     }
 
     function verticalSection() {
@@ -160,17 +190,16 @@ function getLevel(levelNumber) {
     }
 
     function dnaPickupSection() {
-
+        
     }
 
-    function bossSection() {
+    // function bossSection() {
 
-    }
+    // }
 
     function checkpointSection() {
 
     }
+
+    return level;
 }
-
-
-
