@@ -24,7 +24,7 @@ class GameCharacter {
         // Animations
         this.animations = [];
         this.loadAnimations();
-    }; 
+    };
 
     updateBB() {
         this.lastBB = this.BB;
@@ -139,17 +139,16 @@ class GameCharacter {
             // Collisions with players bounding box
             if (entity.BB && this.BB.collide(entity.BB)) {
                 //falling
-                if (this.velocity.y > 0) {
-                    if ((entity instanceof Platform) //landing
+                if (this.velocity.y > 0) { 
+                    if ((entity instanceof SmallPlatform) //landing
                         && (this.lastBB.bottom) <= entity.BB.top) { // was above last tick
-                        this.y = entity.BB.top - this.BB.height;
+                        this.y = entity.BB.top - this.BB.height; 
                         this.velocity.y = 0
                     }
-                }
                     this.velocity.y === 0;
                     if (this.state === 2 || this.state === 3) this.state = 0;
                     this.updateBB();
-                  
+                }  
             }
         })
 

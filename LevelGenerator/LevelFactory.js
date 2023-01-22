@@ -32,8 +32,7 @@ function getLevel(levelNumber) {
 
     let level = {
         levelNumber: levelNumber,
-        //platformGround: [{ x: 0, y: view.y }, { x: view.x, y: view.y }],
-        platformGround: [{ x: 0, y: view.y }],
+        platformGround: [{x:0, y:view.y}, {x:view.x, y:view.y}],
         platformTiny: [],
         platformSmall: [],
         platformLarge: [],

@@ -15,10 +15,7 @@ class Platform {
     }
 
     draw(ctx) {
-        ctx.drawImage(this.sprite, this.x, this.y, this.width, this.height);
-
-        ctx.strokeStyle = 'Red';
-        ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+        ctx.drawImage(this.sprite, this.startX, this.startY, this.width, this.height);
     }
 
     update() {
