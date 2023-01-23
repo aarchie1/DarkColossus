@@ -32,9 +32,7 @@ ASSET_MANAGER.downloadAll(() => {
 	gameEngine.init(ctx);
 	gameEngine.addEntity(new SmallPlatform(gameEngine, -50, 800, 256));
 	gameEngine.addEntity(new SmallPlatform(gameEngine, 160, 800, 256));
-	gameEngine.addEntity(new SmallPlatform(gameEngine, 370, 800, 256));
-	gameEngine.addEntity(new SmallPlatform(gameEngine, 580, 800, 256));
-	gameEngine.addEntity(new SmallPlatform(gameEngine, 790, 800, 256));
+	
 	gameEngine.addEntity(new SmallPlatform(gameEngine, 1000, 800, 256));
 	gameEngine.addEntity(new SmallPlatform(gameEngine, 1210, 800, 256));
 	gameEngine.addEntity(new GameCharacter(gameEngine, 0, 0));
