@@ -157,6 +157,8 @@ class GameCharacter {
                         && (this.lastBB.bottom) <= entity.BB.top) { // was above last tick
                         this.y = entity.BB.top - this.BB.height; 
                         this.velocity.y = 0;
+                        this.animationXOffset = 0;
+                        this.animationYOffset = 0;
                         if (this.state === 2 || this.state == 3) this.state = 0;
                         this.updateBB();
                     } 
@@ -175,6 +177,8 @@ class GameCharacter {
                 this.state = 1;
             } else {
                 this.state = 0;
+                this.animationXOffset = 0;
+                this.animationYOffset = 0;
             }
         }
         // Falling
