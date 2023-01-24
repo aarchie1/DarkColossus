@@ -1,5 +1,5 @@
 function getLevel(levelNumber) {
-    let sections = [steppingStonesSection, hordeFightSection, verticalSection, dnaPickupSection, flatSection, checkpointSection];
+    let sections = [steppingStonesSection, hordeFightSection, verticalSection, dnaPickupSection, flatSection];
     let view = {x: 1400, y: 900};
 
     //ENUMS
@@ -38,6 +38,7 @@ function getLevel(levelNumber) {
         platformLarge: [],
         hazardGrowthShort: [],
         hazardGrowthTall: [],
+        dnaPickup: [],
         portal: [],
         reaper: [],
         molecule: [],
@@ -64,12 +65,37 @@ function getLevel(levelNumber) {
     let startX = view.x;
     let startY = view.y;
 
-    let numberOfSections = 3 + levelNumber;
+    let numberOfSections = randomNumberInRange(3, 6 + levelNumber);
 
     //BUILD LEVEL
     for(let i = 0; i < numberOfSections; i++) {
         let buildSection = sections[Math.floor(Math.random() * sections.length)];
         buildSection();
+    }
+    checkpointSection(); //build this last no matter what to go to next level
+
+    //iterate through all platforms and have a chance to spawn a reaper or molecule
+    level.platformGround.forEach(platform => { addEnemiesNearPlatform(platform); addHazardOnPlatform(platform);});
+    level.platformTiny.forEach(platform => { addEnemiesNearPlatform(platform); addHazardOnPlatform(platform);});
+    level.platformSmall.forEach(platform => { addEnemiesNearPlatform(platform); addHazardOnPlatform(platform);});
+    level.platformLarge.forEach(platform => { addEnemiesNearPlatform(platform); addHazardOnPlatform(platform);});
+
+    function addEnemiesNearPlatform(platform) {
+        if (Math.random() < 0.15 + (levelNumber/100)*2) { 
+            level.reaper.push({x: platform.x + randomNumberInRange(-500, 500), y: platform.y + randomNumberInRange(-500, 500)});
+        }
+        if (Math.random() < 0.15 + (levelNumber/100)*2) {
+            level.molecule.push({x: platform.x + randomNumberInRange(-500, 500), y: platform.y + randomNumberInRange(-500, 500)});
+        }
+    }
+
+    function addHazardOnPlatform(platform) {
+        if (Math.random() < 0.15 + (levelNumber/100)*2) {
+            level.hazardGrowthShort.push({x: platform.x + randomNumberInRange(-500, 500), y: platform.y + randomNumberInRange(-500, 500)});
+        }
+        if (Math.random() < 0.15 + (levelNumber/100)*2) {
+            level.hazardGrowthTall.push({x: platform.x + randomNumberInRange(-500, 500), y: platform.y + randomNumberInRange(-500, 500)});
+        }
     }
 
     //Filter level after its been built based off level modifier
@@ -169,7 +195,7 @@ function getLevel(levelNumber) {
         level.hazardGrowthTall.push({x: startX, y: startY - 512});
 
         //add reapers and molecules between tempStartX and startX
-        let numberOfEnemies = randomNumberInRange(10, 20);
+        let numberOfEnemies = randomNumberInRange(5, 20 +levelNumber);
         for (let i = 0; i < numberOfEnemies; i++) {
             let enemyType = Math.floor(Math.random() * 2);
             let x = randomNumberInRange(tempStartX, startX);
@@ -186,19 +212,48 @@ function getLevel(levelNumber) {
     }
 
     function verticalSection() {
-
+        //create platforms that go straight up
+        let tempStartX = startX;
+        let flightsOfPlatforms = randomNumberInRange(1, 4);
+        for (let i = 0; i < flightsOfPlatforms; i++) {
+            let numberOfPlatforms = randomNumberInRange(1, 2);
+            for (let j = 0; j < numberOfPlatforms; j++) {
+                addPlatform(choosePlatformType(), randomNumberInRange(tempStartX, 1400), startY, false);
+            }
+            startY -= randomNumberInRange(PLAYER.h*1.5, PLAYER.h * 2.5);
+        }
+        startX += 2000;
     }
 
     function dnaPickupSection() {
-        
+        //add a large platform with a dna pickup in the middle
+        addPlatform(PLATFORM_LARGE, startX, startY, false);
+        level.dnaPickup.push({x: startX + 350, y: startY - 50});
+        startX += PLATFORM_LARGE.w + 200;
+        //add some reapers and molecules
+        let numberOfEnemies = randomNumberInRange(2, 10 + levelNumber);
+        for (let i = 0; i < numberOfEnemies; i++) {
+            let enemyType = Math.floor(Math.random() * 2);
+            let x = randomNumberInRange(startX, startX + 200);
+            let y = randomNumberInRange(startY - 256, startY - 512);
+            switch(enemyType) {
+                case 0:
+                    level.reaper.push({x: x, y: y});
+                    break;
+                case 1:
+                    level.molecule.push({x: x, y: y});
+                    break;
+            }
+        }
     }
 
-    // function bossSection() {
-
-    // }
-
     function checkpointSection() {
-
+        //create three large platforms with a checkpoint in the middle of each
+        for (let i = 0; i < 3; i++) {
+            addPlatform(PLATFORM_LARGE, startX, startY, false);
+            level.portal.push({x: startX + 350, y: startY - 50});
+            startX += PLATFORM_LARGE.w + 200;
+        }
     }
 
     return level;
