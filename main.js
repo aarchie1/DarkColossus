@@ -14,9 +14,7 @@ ASSET_MANAGER.queueDownload("./Sprites/Player/player_falling_left.png");
 
 //Level/Platforms
 
-ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/floating_platform_small.png");
-
-
+ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/platform_small.png");
 
 // music
 ASSET_MANAGER.queueDownload("./Music/testmusic.mp3");
@@ -34,9 +32,7 @@ ASSET_MANAGER.downloadAll(() => {
 	gameEngine.init(ctx);
 	gameEngine.addEntity(new SmallPlatform(gameEngine, -50, 800, 256));
 	gameEngine.addEntity(new SmallPlatform(gameEngine, 160, 800, 256));
-	gameEngine.addEntity(new SmallPlatform(gameEngine, 370, 800, 256));
-	gameEngine.addEntity(new SmallPlatform(gameEngine, 580, 800, 256));
-	gameEngine.addEntity(new SmallPlatform(gameEngine, 790, 800, 256));
+	
 	gameEngine.addEntity(new SmallPlatform(gameEngine, 1000, 800, 256));
 	gameEngine.addEntity(new SmallPlatform(gameEngine, 1210, 800, 256));
 	gameEngine.addEntity(new GameCharacter(gameEngine, 0, 0));
@@ -48,7 +44,9 @@ ASSET_MANAGER.downloadAll(() => {
 		ASSET_MANAGER.playAssest("./Music/testmusic.mp3");
 	};
 	
+	//TEST ENTITIES
 	gameEngine.addEntity(new DnaTester());
+	gameEngine.addEntity(new LevelFactoryTester());
 
 	gameEngine.start();
 });

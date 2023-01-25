@@ -32,7 +32,7 @@ class GameCharacter {
     }
 
     update(){
-        const JUMP_ACC = -10000;
+        const JUMP_ACC = -300;
         const MIN_RUN = 50;
         const MAX_RUN = 450;
         const RUN_ACC = 800;
@@ -103,15 +103,27 @@ class GameCharacter {
             if (this.game.keys.Space) {
                 this.velocity.y = JUMP_ACC;
                 this.fallAcc = STOP_FALL;
+                if (this.facing == 0) {
+                    this.animationXOffset = 257;
+                    this.animationYOffset = 300;
+                } else {
+                    this.animationYOffset = 300;
+                }
                 this.state = 3;
                 this.animations[this.state][this.facing].elapsedTime = 0;
-                this.animationXOffset = 257;
-                this.animationYOffset = 300;
+                
             }
+            
         } else { 
             // Air Physics (need to implement horizontal aspect)
-            this.state = 2;
-            this.velocity.y += this.fallAcc * TICK;
+            //this.state = 2; TEST
+            if (this.velocity.y < 0) {
+                this.state = 3;
+                //this.animations[this.state][this.facing].elapsedTime = 0;
+            } else if (this.velocity.y >= 0) {
+                this.state = 2;
+            }
+            //Horizontal Physics
             if (this.game.keys.KeyD && !this.game.keys.KeyA) {
                this.velocity.x += RUN_ACC * TICK;
             } else if (this.game.keys.KeyA && !this.game.keys.keyD) {
@@ -121,6 +133,7 @@ class GameCharacter {
             }
         }
         
+        this.velocity.y += this.fallAcc * TICK;
 
         // Update Velocity/ Max speed calculation
         if (this.velocity.y >= MAX_FALL) this.velocity.y = MAX_FALL;
@@ -132,7 +145,7 @@ class GameCharacter {
         // Update Position
         this.x += this.velocity.x * TICK;
         this.y += this.velocity.y * TICK;   
-        
+        this.updateBB();
 
         //Collision
         this.game.entities.forEach((entity) => {
@@ -143,31 +156,37 @@ class GameCharacter {
                     if ((entity instanceof SmallPlatform) //landing
                         && (this.lastBB.bottom) <= entity.BB.top) { // was above last tick
                         this.y = entity.BB.top - this.BB.height; 
-                        this.velocity.y = 0
-                    }
-                    this.velocity.y === 0;
-                    if (this.state === 2 || this.state === 3) this.state = 0;
-                    this.updateBB();
+                        this.velocity.y = 0;
+                        this.animationXOffset = 0;
+                        this.animationYOffset = 0;
+                        if (this.state === 2 || this.state == 3) this.state = 0;
+                        this.updateBB();
+                    } 
                 }  
+                
+                //Jumping
+                if (this.velocity.y < 0) {
+                    
+                }
             }
         })
 
-
         // Update State
-        if (this.state !== 4 && 
-            this.state !== 2 && 
-            this.state !== 3)
-        {
-            if (Math.abs(this.velocity.x) >= MIN_RUN) {
+        if (this.state !== 4 && this.state !== 2 && this.state !== 3){
+            if (Math.abs(this.velocity.x) > 0) {
                 this.state = 1;
             } else {
                 this.state = 0;
+                this.animationXOffset = 0;
+                this.animationYOffset = 0;
             }
         }
         // Falling
         else if (this.velocity.y > 0) {
             this.state = 2;
-        } else if (this.velocity.y < 0) {
+            //this.animationXOffset = 257;
+            this.animationYOffset = 200;
+        } else if (this.velocity.y <= 0) {
             this.state = 3;
         }
 
@@ -178,7 +197,7 @@ class GameCharacter {
     }
 
     loadAnimations() {
-        for (let i = 0; i < 4; i++) { // 5 states (Havent implemented attacking) debug for running rn set back to 4
+        for (let i = 0; i < 4; i++) { // 5 states (Havent implemented attacking)  debug for running rn set back to 4
             this.animations.push([]);
             for (let j = 0; j < 2; j++){ // two directions
                 this.animations[i].push([]);
@@ -194,10 +213,10 @@ class GameCharacter {
 
         // Walking Animation state = 1
         // facing right = 0
-        this.animations[1][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_running_right.png"), 0, 0, 320, 256, 5, .2, 0, true);
+        this.animations[1][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_running_right.png"), 0, 0, 320, 256, 5, .1, 0, true);
 
         // facing left = 1
-        this.animations[1][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_running_left.png"), 0, 0, 320, 256, 5, .2, 0, true);
+        this.animations[1][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_running_left.png"), 0, 0, 320, 256, 5, .1, 0, true);
 
 
         // Falling animation for state = 2
@@ -209,7 +228,7 @@ class GameCharacter {
 
         // Jumping Animation state = 3
         // facing right = 0
-        this.animations[3][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_right.png"), 0, 0, 512, 564, 3, .25, 0, false);
+        this.animations[3][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_right.png"), 0, 0, 512, 564, 3, .2, 0, false);
 
         // facing left = 1
         this.animations[3][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_left.png"), 0, 0, 512, 564, 3, .25, 0, false);

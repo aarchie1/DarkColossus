@@ -11,9 +11,9 @@ class DnaTester {
 
     //Create two random DNA objects then create a child DNA object from them
     createTwoRandomDnaThenCreateAChild() {
-        let dnaParent1 = DnaFactory.getRandomDNA();
-        let dnaParent2 = DnaFactory.getRandomDNA();
-        let childDna = DnaFactory.getDNAFromParents(dnaParent1, dnaParent2);
+        let dnaParent1 = getRandomDNA();
+        let dnaParent2 = getRandomDNA();
+        let childDna = getDNAFromParents(dnaParent1, dnaParent2);
         
         this.test(dnaParent1);
         this.test(dnaParent2);
