@@ -16,7 +16,6 @@ class GameCharacter {
         const TICK = this.game.clockTick;
         this.state = 2;
 
-
         this.facing = 0 // 0 = right, 1 == left
         this.state = 0; //0 = idle, 1 = running, 2 = falling 3 = jumping, 4 = attacking
         this.velocity = { x: 0, y: 0 };
@@ -209,7 +208,8 @@ class GameCharacter {
     draw(ctx) {
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset, this.y-this.animationYOffset, 1);
 
-        ctx.strokeStyle = 'Red';
-        ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+        ctx.strokeStyle = 'Red';      
+        
+        if (debug) ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
     };
 }
