@@ -1,23 +1,28 @@
 class GameCharacter {
     #sprite;
     BLOCKWIDTH = 256;
-    
-
 
     constructor(game, x, y) {
         Object.assign(this, { game, x, y });
-    
-        
+        this.JUMP_ACC = -1000;
+        this.MIN_RUN = 50;
+        this.MAX_RUN = 1000;
+        this.RUN_ACC = 2500;
+        this.DEC_SKID = 5000;
+        this.DEC_REL = 1500;
+        this.FALL_ACC = 2500 //falling accceleration / "gravity"
+        this.STOP_FALL = 200;
+        this.MAX_JUMPS = 2;
+        this.JUMPS = 2;        
+        const TICK = this.game.clockTick;
+        this.state = 2;
         // State variables
-        
+
         this.facing = 0 // 0 = right, 1 == left
         this.state = 0; //0 = idle, 1 = running, 2 = falling 3 = jumping, 4 = attacking
-
         this.velocity = { x: 0, y: 0 };
-        this.fallAcc = 450
         this.dead = false;
         this.updateBB();
-
 
         this.animationXOffset = 0;
         this.animationYOffset = 0;
@@ -32,18 +37,24 @@ class GameCharacter {
     }
 
     update(){
-        const JUMP_ACC = -300;
-        const MIN_RUN = 50;
-        const MAX_RUN = 450;
-        const RUN_ACC = 800;
-        const DEC_SKID = 5000;
-        const DEC_REL = 1500;
-        const STOP_FALL = 200;
-        const MAX_FALL = 270;
+        console.log("jumps: " + this.JUMPS);
+        console.log("max jumps: " + this.MAX_JUMPS);
+        // console.log("state: " + this.state);
+        const JUMP_ACC = this.JUMP_ACC;
+        const MIN_RUN = this.MIN_RUN;
+        const MAX_RUN = this.MAX_RUN;
+        const RUN_ACC = this.RUN_ACC;
+        const DEC_SKID = this.DEC_SKID;
+        const DEC_REL = this.DEC_REL;
+        const STOP_FALL = this.STOP_FALL;
+        const MAX_FALL = this.MAX_FALL;
+        const FALL_ACC = this.FALL_ACC;
         const TICK = this.game.clockTick;
         
         // Ground Physics
         if (this.state < 2) {
+            // If we are on the ground, we can jump
+            if (this.state == 0 || this.state == 1) this.JUMPS = this.MAX_JUMPS;
             this.animationXOffset = 0;
             this.animationYOffset = 0;
             if (Math.abs(this.velocity.x) < MIN_RUN) {
@@ -57,9 +68,7 @@ class GameCharacter {
                 if (this.game.keys.KeyD || this.game.controllerButtonRight) {
                     this.velocity.x += MIN_RUN;
                 }
-            } else if (
-                Math.abs(this.velocity.x) >= MIN_RUN
-            ) {
+            } else if (Math.abs(this.velocity.x) >= MIN_RUN) {
                 // Facing right
                 if (this.facing === 0) {
                     this.animationYOffset = -35;
@@ -67,7 +76,6 @@ class GameCharacter {
                     if ((this.game.keys.KeyD || this.game.controllerButtonRight) && (!this.game.keys.KeyA || this.game.controllerButtonLeft)) {
                         this.velocity.x += RUN_ACC * TICK;
                         this.animationXOffset = 0;
-                        
                     }
                     // Deceleration Logic
                     // If facing right and pressing the A key, we need to slow down our character
@@ -97,47 +105,29 @@ class GameCharacter {
                     }
                 }
             }
-            this.velocity.y += this.fallAcc * TICK;
+            this.velocity.y += FALL_ACC * TICK; //FALLL
             
             // Jump Physics
-            if (this.game.keys.Space) {
-                this.velocity.y = JUMP_ACC;
-                this.fallAcc = STOP_FALL;
-                if (this.facing == 0) {
-                    this.animationXOffset = 257;
-                    this.animationYOffset = 300;
-                } else {
-                    this.animationYOffset = 300;
-                }
-                this.state = 3;
-                this.animations[this.state][this.facing].elapsedTime = 0;
-                
-            }
+            this.jump()
+
             
-        } else { 
-            // Air Physics (need to implement horizontal aspect)
-            //this.state = 2; TEST
-            if (this.velocity.y < 0) {
-                this.state = 3;
-                //this.animations[this.state][this.facing].elapsedTime = 0;
-            } else if (this.velocity.y >= 0) {
-                this.state = 2;
-            }
+        //Falling
+        } else if (this.velocity.y >= 0) {
+            if (this.jump() != true) this.state = 2; //2 FOR FALLING STATE
+            //this.animationXOffset = 257;
+            //this.animationYOffset = 200;
+
             //Horizontal Physics
+            //I put /1.5 so when we are falling we dont move as fast horizontally
+            //Just thought it makes the game feel better
             if (this.game.keys.KeyD && !this.game.keys.KeyA) {
-               this.velocity.x += RUN_ACC * TICK;
+               this.velocity.x += RUN_ACC/1.5 * TICK;
             } else if (this.game.keys.KeyA && !this.game.keys.keyD) {
-                this.velocity.x -= RUN_ACC * TICK;
-            } else {
-                //do nothing.
-            }
+                this.velocity.x -= RUN_ACC/1.5 * TICK;
+            } 
         }
         
-        this.velocity.y += this.fallAcc * TICK;
-
-        // Update Velocity/ Max speed calculation
-        if (this.velocity.y >= MAX_FALL) this.velocity.y = MAX_FALL;
-        if (this.velocity.y <= -MAX_FALL) this.velocity.y = -MAX_FALL;
+        this.velocity.y += FALL_ACC * TICK;
 
         if (this.velocity.x >= MAX_RUN) this.velocity.x = MAX_RUN;
         if (this.velocity.x <= -MAX_RUN) this.velocity.x = -MAX_RUN;
@@ -163,7 +153,6 @@ class GameCharacter {
                         this.updateBB();
                     } 
                 }  
-                
                 //Jumping
                 if (this.velocity.y < 0) {
                     
@@ -181,19 +170,28 @@ class GameCharacter {
                 this.animationYOffset = 0;
             }
         }
-        // Falling
-        else if (this.velocity.y > 0) {
-            this.state = 2;
-            //this.animationXOffset = 257;
-            this.animationYOffset = 200;
-        } else if (this.velocity.y <= 0) {
-            this.state = 3;
-        }
 
         // Update Facing direction
         if (this.velocity.x < 0) this.facing = 1;
         if (this.velocity.x > 0) this.facing = 0;
+    }
 
+    jump() {
+        if (this.game.keys.Space && this.JUMPS > 0) {
+            this.JUMPS--;
+            this.velocity.y = this.JUMP_ACC;
+            if (this.facing == 0) {
+                this.animationXOffset = 257;
+                this.animationYOffset = 300;
+            }else {
+                this.animationYOffset = 300;
+            }
+            this.state = 3;
+            this.animations[this.state][this.facing].elapsedTime = 0;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     loadAnimations() {
@@ -213,25 +211,25 @@ class GameCharacter {
 
         // Walking Animation state = 1
         // facing right = 0
-        this.animations[1][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_running_right.png"), 0, 0, 320, 256, 5, .1, 0, true);
+        this.animations[1][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_running_right.png"), 0, 0, 320, 256, 5, .075, 0, true);
 
         // facing left = 1
-        this.animations[1][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_running_left.png"), 0, 0, 320, 256, 5, .1, 0, true);
+        this.animations[1][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_running_left.png"), 0, 0, 320, 256, 5, .075, 0, true);
 
 
         // Falling animation for state = 2
         // facing right = 0
-        this.animations[2][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_falling_right.png"), 0, 0, 512, 564, 5, .2, 0, true);
+        this.animations[2][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_falling_right.png"), 0, 0, 512, 564, 5, .1, 0, true);
 
         //facing left  = 1
-        this.animations[2][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_falling_left.png"), 0, 0, 512, 564, 5, .2, 0, true);
+        this.animations[2][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_falling_left.png"), 0, 0, 512, 564, 5, .1, 0, true);
 
         // Jumping Animation state = 3
         // facing right = 0
-        this.animations[3][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_right.png"), 0, 0, 512, 564, 3, .2, 0, false);
+        this.animations[3][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_right.png"), 0, 0, 512, 564, 8, .075, 0, false);
 
         // facing left = 1
-        this.animations[3][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_left.png"), 0, 0, 512, 564, 3, .25, 0, false);
+        this.animations[3][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_left.png"), 0, 0, 512, 564, 8, .075, 0, false);
 
     }
     draw(ctx) {

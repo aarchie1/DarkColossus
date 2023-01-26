@@ -2,7 +2,7 @@ const gameEngine = new GameEngine();
 
 const ASSET_MANAGER = new AssetManager();
 
-// Sprites
+//Player
 ASSET_MANAGER.queueDownload("./Sprites/Player/player_idle_right.png");
 ASSET_MANAGER.queueDownload("./Sprites/Player/player_idle_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Player/player_running_right.png");
@@ -12,9 +12,28 @@ ASSET_MANAGER.queueDownload("./Sprites/Player/player_jump_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Player/player_falling_right.png");
 ASSET_MANAGER.queueDownload("./Sprites/Player/player_falling_left.png");
 
+//Abilities
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/cosmic_blade.png");
+
+//Enemies
+ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_full.png");
+ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_half.png");
+ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_low.png");
+ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_attack.png");
+ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_normal.png");
+ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_weak.png");
+ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_strong.png");
+
 //Level/Platforms
 
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/platform_small.png");
+ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/platform_ground.png");
+ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/platform_tiny.png");
+ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/platform_large.png");
+ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/background.png");
+ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/portal.png");
+ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/Hazards/hazard_growth_short.png");
+ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/Hazards/hazard_growth_tall.png");
 
 // music
 ASSET_MANAGER.queueDownload("./Music/testmusic.mp3");
