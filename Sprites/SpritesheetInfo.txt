@@ -35,4 +35,8 @@ LevelAssets
 Abilities
     cosmic_blade            1200x1164   4frames
 
+UI
+    DE_UI_Design            1050x675    1frame
+    DE_UI_Design_No_Text    1050x675    1frame
+
 
