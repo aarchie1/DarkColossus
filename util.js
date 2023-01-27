@@ -1,5 +1,8 @@
 /** Global Parameters Object */
-const params = { };
+const params = { 
+    CANVAS_WIDTH: 1400,
+    BLOCKWIDTH: 256,
+};
 let debug = false;
 function toggleDebug() {
     debug = !debug;
@@ -52,6 +55,8 @@ window.requestAnimFrame = (() => {
             window.setTimeout(callback, 1000 / 60);
         });
 })();
+
+
 
 /**
  * Returns distance from two points

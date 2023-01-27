@@ -13,6 +13,6 @@ class SmallPlatform {
     draw(ctx) {
         ctx.drawImage(this.spritesheet, this.x, this.y, this.w, this.BLOCKWIDTH);
         ctx.strokeStyle = 'Red';
-        if (debug) ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+        if (debug) ctx.strokeRect(this.BB.x-this.game.camera.x, this.BB.y-this.game.camera.y, this.BB.width, this.BB.height);
     };
 };

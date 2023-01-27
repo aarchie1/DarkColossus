@@ -71,7 +71,6 @@ class SceneManager {
 
         if (this.player.y < upperBoundY && !(this.player.y <= upperYLimit)) this.y = this.player.y - upperBoundY;
         if (this.player.y > lowerBoundY && !(this.player.y - lowerBoundY != lowerYLimit)) this.y = this.player.y - lowerBoundY;
-
     };
 
     draw(ctx) {
