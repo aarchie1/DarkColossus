@@ -8,13 +8,13 @@ class SceneManager {
         this.transition = false;
         this.player = new GameCharacter(this.game, 0, 0);
         gameEngine.addEntity(this.player);
-
+        gameEngine.addEntity(new Reaper(this.game, 1000, 30));
         this.loadLevel();
     };
 
     loadLevel() {
         let level = getLevel(1);
-
+        
         //add background
         for (let i = 0; i < level.platformGround.length; i++) {
             let platform = level.platformGround[i];
@@ -27,6 +27,7 @@ class SceneManager {
             this.game.addEntity(new Platform(this.game, platform.x, platform.y, 256, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_small.png"), new BoundingBox(platform.x, platform.y+150, 256, 100)));
         }
 
+        
 	    gameEngine.addEntity(new Background(this.game));
 
         

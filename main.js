@@ -48,7 +48,8 @@ ASSET_MANAGER.downloadAll(() => {
 	gameEngine.init(ctx);
 
 	gameEngine.addEntity(new SceneManager(gameEngine));
-			// Janky way of getting music to start, you have to interact with the volume bar first
+	
+	// Janky way of getting music to start, you have to interact with the volume bar first
 	var l = document.getElementById('volume');
 	l.addEventListener('click', handleClick, true);
 	function handleClick() {
