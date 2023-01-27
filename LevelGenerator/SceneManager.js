@@ -10,7 +10,7 @@ class SceneManager {
         gameEngine.addEntity(this.player);
         
         // TEMP for testing
-        gameEngine.addEntity(new Reaper(this.game, 1000, 520));
+        gameEngine.addEntity(new Reaper(this.game, 1000, 520, 2));
         
         this.loadLevel();
     };

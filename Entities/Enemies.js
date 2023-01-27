@@ -1,13 +1,12 @@
 class Reaper {
-    constructor(game, x, y) {
-        Object.assign(this, { game, x, y });
-        
+    constructor(game, x, y, size) {
+        Object.assign(this, { game, x, y, size});
         const TICK = this.game.clockTick;
         this.fallAcc = 400;
         this.reaper = this;
         this.player = this.game.camera.player;
         this.facing = 0 // 0 = right, 1 == left
-        this.state = 1; //0 = weak 1 = normal 2 = strong 3 = attacking
+        this.state = size; //0 = weak 1 = normal 2 = strong 3 = attacking
         this.velocity = { x: 0, y: 0 };
         this.dead = false;
         this.updateBB();
@@ -68,7 +67,7 @@ class Reaper {
 
         if (Math.abs(this.x - this.player.x) < 300) this.state = 3;
         else {
-            this.state = 1;
+            this.state = this.size;
         }
         
         
