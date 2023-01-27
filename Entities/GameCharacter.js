@@ -42,6 +42,14 @@ class GameCharacter {
         const MAX_FALL = this.MAX_FALL;
         const FALL_ACC = this.FALL_ACC;
         const TICK = this.game.clockTick;
+
+        if(!this.game.PAUSED && this.game.keys.Escape) {
+            this.game.PAUSED = true;
+        }
+
+        if(this.game.PAUSED && this.game.keys.KeyM) {
+            this.game.PAUSED = false;
+        }
         
         // Ground Physics
         if (this.state < 2) {
@@ -150,7 +158,7 @@ class GameCharacter {
     }
 
     jump() {
-        if (this.game.keys.Space && this.JUMPS > 0) {
+        if (!this.game.PAUSED && this.game.keys.Space && this.JUMPS > 0) {
             this.JUMPS--;
             this.velocity.y = this.JUMP_ACC;
             if (this.facing == 0) {
@@ -206,10 +214,10 @@ class GameCharacter {
 
     }
     draw(ctx) {
+        ctx.font = "50px Arial";
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset, this.y-this.animationYOffset, 1);
-
         ctx.strokeStyle = 'Red';      
-        
+        ctx.fillText("PAUSED: " + this.game.PAUSED, 100, 100);
         if (debug) ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
     };
 }
