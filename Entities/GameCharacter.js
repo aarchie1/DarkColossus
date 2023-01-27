@@ -11,7 +11,7 @@ class GameCharacter {
         this.DEC_SKID = 5000;
         this.DEC_REL = 1500;
         this.FALL_ACC = 2500
-        this.MAX_JUMPS = 2;
+        this.MAX_JUMPS = 1000;
         this.JUMPS = 2;        
         const TICK = this.game.clockTick;
         this.state = 2;
@@ -101,9 +101,9 @@ class GameCharacter {
                 this.animationYOffset = 200;
             }
             if (this.game.keys.KeyD && !this.game.keys.KeyA) {
-               this.velocity.x += RUN_ACC/1.5 * TICK;
+               this.velocity.x += RUN_ACC * TICK;
             } else if (this.game.keys.KeyA && !this.game.keys.keyD) {
-                this.velocity.x -= RUN_ACC/1.5 * TICK;
+                this.velocity.x -= RUN_ACC * TICK;
             } 
         }
         
@@ -120,7 +120,7 @@ class GameCharacter {
             if (entity.BB && this.BB.collide(entity.BB)) {
                 //falling
                 if (this.velocity.y > 0) { 
-                    if ((entity instanceof SmallPlatform) 
+                    if ((entity instanceof SmallPlatform) || (entity instanceof Platform) 
                         && (this.lastBB.bottom) <= entity.BB.top) {
                         this.y = entity.BB.top - this.BB.height; 
                         this.velocity.y = 0;
@@ -206,7 +206,7 @@ class GameCharacter {
 
     }
     draw(ctx) {
-        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset, this.y-this.animationYOffset, 1);
+        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset - this.game.camera.x, this.y-this.animationYOffset - this.game.camera.y, 1);
 
         ctx.strokeStyle = 'Red';      
         

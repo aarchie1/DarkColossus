@@ -3,7 +3,8 @@
 //            new BoundingBox(this.x, this.y+37, this.w, this.BLOCKWIDTH /2);
 class Platform {
 
-    constructor(x, y, width, height, sprite, boundingBox) {
+    constructor(game, x, y, width, height, sprite, boundingBox) {
+        this.game = game;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -13,12 +14,11 @@ class Platform {
     }
 
     draw(ctx) {
-        ctx.drawImage(this.sprite, this.x, this.y, this.width, this.height);
+        ctx.drawImage(this.sprite, this.x-this.game.camera.x, this.y-this.game.camera.y, this.width, this.height);
         ctx.strokeStyle = 'Green';
-        if (debug)ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+        if (debug) ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
     }
 
     update() {
-        
     }
 }
