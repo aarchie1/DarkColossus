@@ -39,7 +39,8 @@ LevelAssets
 Abilities
     cosmic_blade            1200x1164   4frames
     soul_grab               1024x512    4frames
-    slippery                320x256     9frames     
+    slippery                320x256     9frames  
+    emp                     1200x1164   7frames   
 
 UI
     DE_UI_Design            1050x675    1frame
