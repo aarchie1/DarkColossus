@@ -14,8 +14,11 @@ class SceneManager {
 
     loadLevel() {
         let level = getLevel(1);
+        let xBoundMin = 1900;
+        let xBoundMax = 15000;
+        let yBoundMin = 600;
+        let yBoundMax = -800;
 
-        //add background
         for (let i = 0; i < level.platformGround.length; i++) {
             let platform = level.platformGround[i];
             // original x values : 700 
@@ -23,11 +26,36 @@ class SceneManager {
             //constructor(game, x, y, width, height, sprite, boundingBox    
         }
 
+
         for (let i = 0; i < level.platformSmall.length; i++) {
             let platform = level.platformSmall[i];
-            this.game.addEntity(new Platform(this.game, platform.x, platform.y, 256, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_small.png"), new BoundingBox(platform.x, platform.y+150, 256, 100)));
+
+            let x = Math.random() * (xBoundMax - xBoundMin) + xBoundMin;
+            let y = Math.random() * (yBoundMax - yBoundMin) + yBoundMin;
+
+            this.game.addEntity(new Platform(this.game, x, y, 256, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_small.png"), new BoundingBox(x, y+150, 256, 100)));
         }
 
+        for (let i = 0; i < level.platformLarge.length; i++) {
+            let platform = level.platformLarge[i];
+
+            let x = Math.random() * (xBoundMax - xBoundMin) + xBoundMin;
+            let y = Math.random() * (yBoundMax - yBoundMin) + yBoundMin;
+
+            this.game.addEntity(new Platform(this.game, x, y, 256, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_large.png"), new BoundingBox(x, y + 150, 256, 100)));
+        }
+
+
+        for (let i = 0; i < level.platformTiny.length; i++) {
+            let platform = level.platformTiny[i];
+
+            let x = Math.random() * (xBoundMax - xBoundMin) + xBoundMin;
+            let y = Math.random() * (yBoundMax - yBoundMin) + yBoundMin;
+
+            this.game.addEntity(new Platform(this.game, x, y, 256, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_tiny.png"), new BoundingBox(x, y + 150, 256, 100)));
+        }
+
+        //add background
 	    gameEngine.addEntity(new Background(this.game));
 
         
