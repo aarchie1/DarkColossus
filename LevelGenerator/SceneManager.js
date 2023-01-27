@@ -46,18 +46,32 @@ class SceneManager {
     }
 
     update() {
-        let midpointRightX = 700;
-        let midpointLeftX = 700;
-        let midpointUpY = 450;
-        let midpointDownY = 450;
+
+        // splits the X axis into 4 sections [  |  |  |  ] <-- map, playable area --> [  |xx|xx|  ]
+        let quadX = 1400 / 4;
+        let rightBoundX = quadX * 3;
+        let midX = quadX * 2;
+        let leftBoundX = quadX * 1;
+
+        // splits the Y axis into 4 sections -- check how X works and turn it sideways for Y
+        let quadY = 900 / 4;
+        let lowerBoundY = quadY * 3;
+        let midY = quadY * 2;
+        let upperBoundY = quadY * 1;
+
+        // sets left, right, lower, and upper, map border so player cannot leave the area.
+        let leftXLimit = 0;
+        let rightXLimit = 10000;
+        let lowerYLimit = 700;
+        let upperYLimit = -10000;
 
         //Make the camera move based off this bounding box
-        if (this.player.x > midpointRightX) {
-            this.x = this.player.x - midpointRightX;
-        }
-        if (this.player.x < midpointLeftX) this.x = this.player.x - midpointLeftX;
-        if (this.player.y > midpointDownY) this.y = this.player.y - midpointDownY;
-        if (this.player.y < midpointUpY) this.y = this.player.y - midpointUpY;
+        if (this.player.x > rightBoundX && !(this.player.x >= rightXLimit)) this.x = this.player.x - rightBoundX;
+        if (this.player.x < leftBoundX && !(this.player.x - leftBoundX <= leftXLimit)) this.x = this.player.x - leftBoundX;
+
+        if (this.player.y < upperBoundY && !(this.player.y <= upperYLimit)) this.y = this.player.y - upperBoundY;
+        if (this.player.y > lowerBoundY && !(this.player.y - lowerBoundY != lowerYLimit)) this.y = this.player.y - lowerBoundY;
+
     };
 
     draw(ctx) {
