@@ -20,6 +20,7 @@ class GameEngine {
             KeyS: false,
             KeyD: false,
             Space: false,
+            Escape: false,
         };
 
         // Information on gamepad controller input
@@ -47,6 +48,7 @@ class GameEngine {
 
     start() {
         this.running = true;
+        this.PAUSED = false;
         const gameLoop = () => {
             this.loop();
             requestAnimFrame(gameLoop, this.ctx.canvas);
@@ -102,7 +104,7 @@ class GameEngine {
     draw() {
         // Clear the whole canvas with transparent color (rgba(0, 0, 0, 0))
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-
+        
         // Draw latest things first
         for (let i = this.entities.length - 1; i >= 0; i--) {
             this.entities[i].draw(this.ctx, this);
@@ -147,11 +149,20 @@ class GameEngine {
             }
         }
     };
-
+    
     loop() {
-        this.clockTick = this.timer.tick();
-        this.update();
-        this.draw();
+        if(!this.PAUSED) {
+            this.clockTick = this.timer.tick();
+            this.update();
+            this.draw();
+        } else {
+            this.clockTick = null;
+            this.update();
+            // this.draw();
+        }
+        
+        // this.update();
+        // this.draw();
     };
 
 };
