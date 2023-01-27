@@ -1,5 +1,9 @@
 /** Global Parameters Object */
 const params = { };
+let debug = false;
+function toggleDebug() {
+    debug = !debug;
+}
 
 /**
  * @param {Number} n

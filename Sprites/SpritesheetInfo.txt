@@ -1,5 +1,9 @@
 If a sprite looks weird I either added an unfinished version on accident
 or got the size wrong.
+Follow steps to add assets (reminder for myself):
+    1) Add png
+    2) Update this txt file 
+    3) Add png to download queue in main
 
 Player
     player_idle_left        256x256     8frames
@@ -34,6 +38,7 @@ LevelAssets
 
 Abilities
     cosmic_blade            1200x1164   4frames
+    soul_grab               1024x512    4frames
 
 UI
     DE_UI_Design            1050x675    1frame

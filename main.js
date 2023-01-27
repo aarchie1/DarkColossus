@@ -14,6 +14,7 @@ ASSET_MANAGER.queueDownload("./Sprites/Player/player_falling_left.png");
 
 //Abilities
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/cosmic_blade.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/soul_grab.png");
 
 //Enemies
 ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_full.png");
@@ -49,12 +50,15 @@ ASSET_MANAGER.downloadAll(() => {
 	const ctx = canvas.getContext("2d");
 	
 	gameEngine.init(ctx);
-	gameEngine.addEntity(new SmallPlatform(gameEngine, -50, 800, 256));
-	gameEngine.addEntity(new SmallPlatform(gameEngine, 160, 800, 256));
-	
-	gameEngine.addEntity(new SmallPlatform(gameEngine, 1000, 800, 256));
-	gameEngine.addEntity(new SmallPlatform(gameEngine, 1210, 800, 256));
-	gameEngine.addEntity(new GameCharacter(gameEngine, 0, 0));
+
+	let player = new GameCharacter(gameEngine, 0, 0);
+	gameEngine.addEntity(player);
+	gameEngine.addEntity(new SmallPlatform(gameEngine, 130, 500, 256));
+	gameEngine.addEntity(new SmallPlatform(gameEngine, 500, 200, 256));
+
+	gameEngine.addEntity(new SmallPlatform(gameEngine, 700, 600, 256));
+	gameEngine.addEntity(new SmallPlatform(gameEngine, 910, 400, 256));
+	//gameEngine.addEntity(new Platform(400, 300, 884, 496, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_large.png"), new BoundingBox(450, 440, 740, 200)));
 	
 	// Janky way of getting music to start, you have to interact with the volume bar first
 	var l = document.getElementById('volume');
@@ -63,9 +67,31 @@ ASSET_MANAGER.downloadAll(() => {
 		ASSET_MANAGER.playAssest("./Music/testmusic.mp3");
 	};
 	
+	//PROOF OF CONCEPT TESTS / PROTOYPE TEST
+	//I think SceneManager should control this
+	// class Background {
+	// 	constructor() {
+	// 		this.width = 2100;
+	// 		this.height = 1350;
+	// 		this.x = 0
+	// 		this.y = -200
+	// 		this.scrollSpeed = 0.008;
+	// 		this.image = ASSET_MANAGER.getAsset("./Sprites/LevelAssets/background.png");
+	// 	}
+
+	// 	draw(ctx) {
+	// 		ctx.drawImage(this.image, this.x-(player.x*this.scrollSpeed), this.y-(player.y*this.scrollSpeed), this.width, this.height);
+	// 	}
+	// 	update() {
+
+	// 	}
+	// }
 	//TEST ENTITIES
 	gameEngine.addEntity(new DnaTester());
 	gameEngine.addEntity(new LevelFactoryTester());
+	//gameEngine.addEntity(new Background);
+	
 
 	gameEngine.start();
+	
 });
