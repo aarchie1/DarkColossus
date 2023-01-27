@@ -15,6 +15,7 @@ ASSET_MANAGER.queueDownload("./Sprites/Player/player_falling_left.png");
 //Abilities
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/cosmic_blade.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/soul_grab.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/slippery.png");
 
 //Enemies
 ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_full.png");
@@ -26,7 +27,6 @@ ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_weak.png");
 ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_strong.png");
 
 //Level/Platforms
-
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/platform_small.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/platform_ground.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/platform_tiny.png");
