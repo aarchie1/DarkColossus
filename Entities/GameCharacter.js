@@ -29,7 +29,13 @@ class GameCharacter {
 
     updateBB() {
         this.lastBB = this.BB;
-        this.BB = new BoundingBox(this.x, this.y, 256, 256);
+        if (this.state === 3) this.BB = new BoundingBox(this.x+100, this.y, 100, 256);
+        else {
+            this.BB = new BoundingBox(this.x+100, this.y, 100, 256);
+        }
+        
+        
+        
     }
 
     update(){
