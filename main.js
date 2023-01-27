@@ -55,29 +55,7 @@ ASSET_MANAGER.downloadAll(() => {
 		ASSET_MANAGER.playAssest("./Music/testmusic.mp3");
 	};
 	
-	//PROOF OF CONCEPT TESTS / PROTOYPE TEST
-	//I think SceneManager should control this
-	// class Background {
-	// 	constructor() {
-	// 		this.width = 2100;
-	// 		this.height = 1350;
-	// 		this.x = 0
-	// 		this.y = -200
-	// 		this.scrollSpeed = 0.008;
-	// 		this.image = ASSET_MANAGER.getAsset("./Sprites/LevelAssets/background.png");
-	// 	}
 
-	// 	draw(ctx) {
-	// 		ctx.drawImage(this.image, this.x-(player.x*this.scrollSpeed), this.y-(player.y*this.scrollSpeed), this.width, this.height);
-	// 	}
-	// 	update() {
-
-	// 	}
-	// }
-	//TEST ENTITIES
-	//gameEngine.addEntity(new DnaTester());
-	//gameEngine.addEntity(new LevelFactoryTester());
-	//gameEngine.addEntity(new Background);
 	
 	gameEngine.start();
 });

@@ -15,6 +15,7 @@ class SceneManager {
     loadLevel() {
         let level = getLevel(1);
 
+        //add background
         for (let i = 0; i < level.platformGround.length; i++) {
             let platform = level.platformGround[i];
             this.game.addEntity(new Platform(this.game, platform.x, platform.y, 700, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_ground.png"), new BoundingBox(platform.x, platform.y+200, 700, 100)));
@@ -25,6 +26,9 @@ class SceneManager {
             let platform = level.platformSmall[i];
             this.game.addEntity(new Platform(this.game, platform.x, platform.y, 256, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_small.png"), new BoundingBox(platform.x, platform.y+150, 256, 100)));
         }
+
+	    gameEngine.addEntity(new Background(this.game));
+
         
         
     };
@@ -59,4 +63,28 @@ class SceneManager {
     draw(ctx) {
 
     };
+
+    
 }
+
+	class Background {
+		constructor(game) {
+            this.game = game;
+			this.width = 2100;
+			this.height = 1350;
+			this.x = -200;
+			this.y = -200
+			this.scrollSpeed = 0.02;
+			this.image = ASSET_MANAGER.getAsset("./Sprites/LevelAssets/background.png");
+		}
+
+		draw(ctx) {
+			ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed), this.y-(this.game.camera.y*this.scrollSpeed), this.width, this.height);
+		}
+		update() {
+
+		}
+	}
+	//TEST ENTITIES
+	//gameEngine.addEntity(new DnaTester());
+	//gameEngine.addEntity(new LevelFactoryTester());
