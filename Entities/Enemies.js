@@ -79,7 +79,7 @@ class Reaper {
     }
 
     loadAnimations() {
-        for (let i = 0; i < 4; i++) { // 5 states (Havent implemented attacking)  debug for running rn set back to 4
+        for (let i = 0; i < 4; i++) {
             this.animations.push([]);
             for (let j = 0; j < 2; j++){ // two directions
                 this.animations[i].push([]);
