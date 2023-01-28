@@ -213,7 +213,7 @@ class GameCharacter {
         this.animations[3][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_right.png"), 0, 0, 512, 564, 8, .075, 0, false);
 
         // facing left = 1
-        this.animations[3][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/player_jump_left.png"), 0, 0, 512, 564, 8, .075, 0, false);
+        this.animations[3][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_left.png"), 0, 0, 512, 564, 8, .075, 0, false);
 
     }
     draw(ctx) {

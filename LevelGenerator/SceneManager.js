@@ -19,19 +19,11 @@ class SceneManager {
         let yBoundMin = 600;
         let yBoundMax = -800;
 
-        // for (let i = 0; i < level.platformGround.length; i++) {
-        //     let platform = level.platformGround[i];
-        //     // original x values : 700 
-        //     this.game.addEntity(new Platform(this.game, platform.x, platform.y, 700, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_ground.png"), new BoundingBox(platform.x, platform.y+200, 15800, 100)));
-        //     //constructor(game, x, y, width, height, sprite, boundingBox    
-        // }
-
-        //add 10 platformGround in a row
-        for (let i = 0; i < 10; i++) {
-            let platform = level.platformGround[0];
-            // original x values : 700
-            this.game.addEntity(new Platform(this.game, 0+i*700, platform.y, 700, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_ground.png"), new BoundingBox(platform.x, platform.y + 200, 15800, 100)));
-            //constructor(game, x, y, width, height, sprite, boundingBox
+        for (let i = 0; i < level.platformGround.length; i++) {
+            let platform = level.platformGround[i];
+            // original x values : 700 
+            this.game.addEntity(new Platform(this.game, platform.x, platform.y, 16000, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_ground.png"), new BoundingBox(platform.x, platform.y+200, 15800, 100)));
+            //constructor(game, x, y, width, height, sprite, boundingBox    
         }
 
 
@@ -71,6 +63,8 @@ class SceneManager {
     };
 
     randomizeLevel() {
+
+
 
     }
 
@@ -129,6 +123,7 @@ class SceneManager {
 
     };
 
+    
 }
 
 	class Background {
