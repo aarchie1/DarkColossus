@@ -9,7 +9,7 @@ class GameCharacter {
         this.dnaSlot2 = null;
         this.JUMP_ACC = -1000;
         this.MIN_RUN = 50;
-        this.MAX_RUN = 1500;
+        this.MAX_RUN = 1000;
         this.RUN_ACC = 2500;
         this.DEC_SKID = 5000;
         this.DEC_REL = 1500;
@@ -28,8 +28,6 @@ class GameCharacter {
         this.animationYOffset = 0;
         this.animations = [];
         this.loadAnimations();
-        this.t = 0;
-        this.amplitude = 8;
     };
 
     updateBB() {
@@ -38,8 +36,6 @@ class GameCharacter {
     }
 
     update(){
-        this.t += .2;
-        if (this.velocity.x == 0) this.t = 0;
         const JUMP_ACC = this.JUMP_ACC;
         const MIN_RUN = this.MIN_RUN;
         const MAX_RUN = this.MAX_RUN;
@@ -217,13 +213,10 @@ class GameCharacter {
         this.animations[3][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Player/player_jump_right.png"), 0, 0, 512, 564, 8, .075, 0, false);
 
         // facing left = 1
-        this.animations[3][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/emp.png"), 0, 0, 1200, 1164, 7, .075, 0, false);
+        this.animations[3][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/player_jump_left.png"), 0, 0, 512, 564, 8, .075, 0, false);
 
     }
     draw(ctx) {
-        // if (this.velocity.x > 0 || this.velocity.x < 0)this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset, this.y-this.animationYOffset + Math.sin(this.t)*this.amplitude, 1);
-        // if (this.velocity.x == 0)this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset - this.game.camera.x, this.y-this.animationYOffset - this.game.camera.y, 1);
-        
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset - this.game.camera.x, this.y-this.animationYOffset - this.game.camera.y, 1);
         ctx.font = "50px Arial";
         ctx.strokeStyle = 'Red';      
