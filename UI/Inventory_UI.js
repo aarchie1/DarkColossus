@@ -1,20 +1,27 @@
 class InventoryUI {
-    constructor(inventory) {
-        
+    constructor(game) {
+        this.game = game;
         this.inventory = []//inventory;
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 25; i++) {
             this.inventory.push(getRandomDNA());
         }
-        this.numPages = Math.ceil(this.inventory.length / (this.rows * this.columns));
-        this.color = "#330000"
+        let testDna = getRandomDNA();
+        testDna.sigmaAbility = null;
+        testDna.betaAbility = null;
+        this.inventory.push(testDna);
         this.rows = 2;
         this.columns = 6;
+        this.numPages = Math.ceil(this.inventory.length / (this.rows * this.columns));
+        console.log(this.numPages);
+        this.color = "#330000"
         this.gridSize = 6;
         this.slotSize = 116;
         this.currentPage = 0;
+        this.currentSlot = 0;
         this.count = 50;
         this.x = CANVAS_WIDTH/2 - this.columns * this.slotSize/2;
         this.y = CANVAS_HEIGHT - this.rows * this.slotSize;
+        this.pressed = false;
     }
   
     draw(ctx) {
@@ -36,7 +43,25 @@ class InventoryUI {
         }
       }
       this.drawArrows();
-      //ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/DNA/dna_basic.png"), 100, 100, this.slotSize, this.slotSize);
+
+      //draw the current slot
+      ctx.strokeStyle = "#FFFFFF";
+      ctx.lineWidth = 5;
+      ctx.strokeRect(
+        this.x + (this.currentSlot % this.columns) * this.slotSize,
+        this.y + Math.floor(this.currentSlot / this.columns) * this.slotSize,
+        this.slotSize,
+        this.slotSize
+      );
+      ctx.fillStyle = "#FFFFFF";
+      ctx.globalAlpha = .3;
+      ctx.fillRect(
+        this.x + (this.currentSlot % this.columns) * this.slotSize,
+        this.y + Math.floor(this.currentSlot / this.columns) * this.slotSize,
+        this.slotSize,
+        this.slotSize
+      );
+      ctx.globalAlpha = 1;
 
       //iterate over inventory and draw every dna in a slot
       for (let i = this.currentPage*this.rows*this.columns; i < (i+1)*(this.rows*this.columns); i++) {
@@ -51,8 +76,33 @@ class InventoryUI {
 
     update() {
 
+      //I NEED HELP WITH CONTROLS 
+      //Move Cursor Left
+      if (!this.pressed &&(this.game.keys.KeyA || this.game.controllerButtonLeft)) {
+        this.currentSlot = (this.currentSlot == 0) ? this.columns*this.rows-1 : (this.currentSlot - 1) % (this.columns * this.rows);
+      
+      //Move Cursor Right
+      } else if(!this.pressed && (this.game.keys.KeyD || this.game.controllerButtonRight)) {
+        this.currentSlot = (this.currentSlot + 1) % (this.columns * this.rows);
 
+      //Go to next inventory page
+      } else if (this.game.keys.KeyS || this.game.controllerButtonDown) {
+       this.nextPage();
+       //this.currentPage++;
+
+      //Go to previous inventory page
+      } else if (this.game.keys.KeyW || this.game.controllerButtonUp) {
+        this.prevPage();
+      }
+
+      if (this.game.keys.KeyA == true || this.game.keys.KeyD == true || this.game.keys.KeyS == true || this.game.keys.KeyW == true) {
+        this.pressed = true;
+      } else {
+        this.pressed = false;
+      }
     }
+
+
 
 
     drawArrows() {

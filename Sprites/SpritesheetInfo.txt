@@ -46,4 +46,8 @@ UI
     DE_UI_Design            1050x675    1frame
     DE_UI_Design_No_Text    1050x675    1frame
 
-
+DNA
+    dna_basic               116x116     1frame
+    dna_uncommon            116x116     1frame
+    dna_rare                116x116     1frame
+    dna_godly               116x116     1frame

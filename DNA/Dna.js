@@ -5,6 +5,21 @@ class DNA {
         this.betaAbility = betaAbility;
         this.epsilonAbility = epsilonAbility;
         this.rarity = rarity;
+        //set image
+        switch (this.rarity) {
+            case 1:
+                this.image = ASSET_MANAGER.getAsset("./Sprites/DNA/dna_basic.png");
+                break;
+            case 2:
+                this.image = ASSET_MANAGER.getAsset("./Sprites/DNA/dna_uncommon.png");
+                break;
+            case 3:
+                this.image = ASSET_MANAGER.getAsset("./Sprites/DNA/dna_rare.png");
+                break;
+            case 4:
+                this.image = ASSET_MANAGER.getAsset("./Sprites/DNA/dna_godly.png");
+                break;
+        }
     };
 
     update() {
@@ -17,61 +32,51 @@ class DNA {
     drawDna(ctx, x, y, slotSize) {
         //draw 6 diagonal lines over the dna image to represent the rarity and cooldown rarity of each ability   
         //draw sigma ability    
-        ctx.strokeStyle = this.sigmaAbility.cooldownRarity;
         ctx.lineWidth = 5;
         let length = slotSize/4;
 
+        //check if abilities are null and if so, add null to the array
+        
+
+        //create an array of arrays of two values, for cooldownRarity and effectRarity for each ability
+        let strips = 
+            [(this.sigmaAbility == null) ? -1 : this.sigmaAbility.cooldownRarity,
+             (this.sigmaAbility == null) ? -1 : this.sigmaAbility.effectRarity,
+             (this.alphaAbility == null) ? -1 : this.alphaAbility.cooldownRarity,
+             (this.alphaAbility == null) ? -1 : this.alphaAbility.effectRarity,
+             (this.betaAbility == null) ? -1 : this.betaAbility.cooldownRarity,
+             (this.betaAbility == null) ? -1 : this.betaAbility.effectRarity
+            ];
         for (let i = 0; i < 6; i++) {
-            let distance = (slotSize/6.5)*i;
+            let distance = (slotSize/7)*i;
             let offset = 0;
             if (i == 1 || i == 3 || i == 5) {
                 offset = -10
             }
+            
+            if (strips[i] == -1) continue;     
+            switch (strips[i]) {
+                case 1:
+                    ctx.strokeStyle = "#4C4C4C"; //basic gray
+                    break;
+                case 2:
+                    ctx.strokeStyle = "#14663B"; //uncommon green
+                    break;
+                case 3:
+                    ctx.strokeStyle = "#006E99"; //rare blue
+                    break;
+                case 4:
+                    ctx.strokeStyle = "#B24A19"; //godly gold
+                    break;
+            }
 
+            let c = 0.3;
             ctx.beginPath();
-            ctx.moveTo(x + slotSize/1.7 + offset + distance - slotSize * 0.4, y + slotSize/1.7 - offset - distance + slotSize * 0.4);
-            ctx.lineTo(x + slotSize/2.7 + offset + distance - slotSize * 0.4, y + slotSize/2.7 - offset - distance + slotSize * 0.4);
+            ctx.moveTo(x + slotSize/1.6 + offset + distance - slotSize * c, y + slotSize/1.6 - offset - distance + slotSize * c);
+            ctx.lineTo(x + slotSize/2.6 + offset + distance - slotSize * c, y + slotSize/2.6 - offset - distance + slotSize * c);
             ctx.stroke();
         }
-        ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/DNA/dna_basic.png"), x, y, slotSize, slotSize);
-
-        // ctx.beginPath();
-        // ctx.moveTo(x + slotSize/2, y + slotSize/2);
-        // ctx.lineTo(x + slotSize/4, y + slotSize/4);
-        // ctx.stroke();
-        
-
-        
-
-        // ctx.strokeStyle = this.sigmaAbility.effectRarity;
-        // ctx.beginPath();
-        // ctx.moveTo(x + slotSize, y);
-        // ctx.lineTo(x, y + slotSize);
-        
-        // ctx.stroke();
-        // //draw alpha ability
-        // ctx.strokeStyle = this.alphaAbility.cooldownRarity;
-        // ctx.beginPath();
-        // ctx.moveTo(x + slotSize / 2, y);
-        // ctx.lineTo(x + slotSize / 2, y + slotSize);
-        // ctx.stroke();
-        // ctx.strokeStyle = this.alphaAbility.effectRarity;
-        // ctx.beginPath();
-        // ctx.moveTo(x, y + slotSize / 2);
-        // ctx.lineTo(x + slotSize, y + slotSize / 2);
-        // ctx.stroke();
-        // //draw beta ability
-        // ctx.strokeStyle = this.betaAbility.cooldownRarity;
-        // ctx.beginPath();
-        // ctx.moveTo(x, y);
-        // ctx.lineTo(x + slotSize / 2, y + slotSize / 2);
-        // ctx.stroke();
-        // ctx.strokeStyle = this.betaAbility.effectRarity;
-        // ctx.beginPath();
-        // ctx.moveTo(x + slotSize, y);
-        // ctx.lineTo(x + slotSize / 2, y + slotSize / 2);
-        // ctx.stroke();
-
+        ctx.drawImage(this.image, x, y, slotSize, slotSize);
     }
 
     toString() {
