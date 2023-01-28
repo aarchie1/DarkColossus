@@ -14,8 +14,64 @@ class DNA {
         this.epsilonAbility.update();
     }
 
-    drawInInventory(ctx, x, y) {
+    drawDna(ctx, x, y, slotSize) {
+        //draw 6 diagonal lines over the dna image to represent the rarity and cooldown rarity of each ability   
+        //draw sigma ability    
+        ctx.strokeStyle = this.sigmaAbility.cooldownRarity;
+        ctx.lineWidth = 5;
+        let length = slotSize/4;
+
+        for (let i = 0; i < 6; i++) {
+            let distance = (slotSize/6.5)*i;
+            let offset = 0;
+            if (i == 1 || i == 3 || i == 5) {
+                offset = -10
+            }
+
+            ctx.beginPath();
+            ctx.moveTo(x + slotSize/1.7 + offset + distance - slotSize * 0.4, y + slotSize/1.7 - offset - distance + slotSize * 0.4);
+            ctx.lineTo(x + slotSize/2.7 + offset + distance - slotSize * 0.4, y + slotSize/2.7 - offset - distance + slotSize * 0.4);
+            ctx.stroke();
+        }
+        ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/DNA/dna_basic.png"), x, y, slotSize, slotSize);
+
+        // ctx.beginPath();
+        // ctx.moveTo(x + slotSize/2, y + slotSize/2);
+        // ctx.lineTo(x + slotSize/4, y + slotSize/4);
+        // ctx.stroke();
         
+
+        
+
+        // ctx.strokeStyle = this.sigmaAbility.effectRarity;
+        // ctx.beginPath();
+        // ctx.moveTo(x + slotSize, y);
+        // ctx.lineTo(x, y + slotSize);
+        
+        // ctx.stroke();
+        // //draw alpha ability
+        // ctx.strokeStyle = this.alphaAbility.cooldownRarity;
+        // ctx.beginPath();
+        // ctx.moveTo(x + slotSize / 2, y);
+        // ctx.lineTo(x + slotSize / 2, y + slotSize);
+        // ctx.stroke();
+        // ctx.strokeStyle = this.alphaAbility.effectRarity;
+        // ctx.beginPath();
+        // ctx.moveTo(x, y + slotSize / 2);
+        // ctx.lineTo(x + slotSize, y + slotSize / 2);
+        // ctx.stroke();
+        // //draw beta ability
+        // ctx.strokeStyle = this.betaAbility.cooldownRarity;
+        // ctx.beginPath();
+        // ctx.moveTo(x, y);
+        // ctx.lineTo(x + slotSize / 2, y + slotSize / 2);
+        // ctx.stroke();
+        // ctx.strokeStyle = this.betaAbility.effectRarity;
+        // ctx.beginPath();
+        // ctx.moveTo(x + slotSize, y);
+        // ctx.lineTo(x + slotSize / 2, y + slotSize / 2);
+        // ctx.stroke();
+
     }
 
     toString() {

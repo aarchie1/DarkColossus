@@ -126,15 +126,12 @@ class GameEngine {
             this.controllerButtonDown = gamepad.buttons[13].pressed || gamepad.axes[0] > 0.3;
             this.controllerButtonLeft = gamepad.buttons[14].pressed || gamepad.axes[0] < -0.3;
             this.controllerButtonRight = gamepad.buttons[15].pressed || gamepad.axes[0] > 0.3;
-
         }
     }
 
     update() {
         let entitiesCount = this.entities.length;
-
         this.gamepadUpdate();
-
 
         for (let i = 0; i < entitiesCount; i++) {
             let entity = this.entities[i];

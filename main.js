@@ -36,6 +36,9 @@ ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/portal.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/Hazards/hazard_growth_short.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/Hazards/hazard_growth_tall.png");
 
+//DNA
+ASSET_MANAGER.queueDownload("./Sprites/DNA/dna_basic.png");
+
 // music
 ASSET_MANAGER.queueDownload("./Music/testmusic.mp3");
 
@@ -44,13 +47,14 @@ ASSET_MANAGER.downloadAll(() => {
 	ASSET_MANAGER.autoRepeat("./Music/testmusic.mp3");
 	
 	const canvas = document.getElementById("gameWorld"); 
+	CANVAS_HEIGHT = canvas.height;
+	CANVAS_WIDTH = canvas.width;
 	const ctx = canvas.getContext("2d");
-	
 	gameEngine.init(ctx);
 	gameEngine.addEntity(new InventoryUI());
-
 	gameEngine.addEntity(new SceneManager(gameEngine));
-			// Janky way of getting music to start, you have to interact with the volume bar first
+	
+	// Janky way of getting music to start, you have to interact with the volume bar first
 	var l = document.getElementById('volume');
 	l.addEventListener('click', handleClick, true);
 	function handleClick() {
@@ -60,7 +64,6 @@ ASSET_MANAGER.downloadAll(() => {
 	//TEST ENTITIES
 	// gameEngine.addEntity(new DnaTester());
 	// gameEngine.addEntity(new LevelFactoryTester());
-
 	
 	gameEngine.start();
 });

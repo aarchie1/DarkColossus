@@ -1,23 +1,26 @@
 class InventoryUI {
     constructor(inventory) {
-        this.inventory = inventory;
-        this.x = 300;
-        this.y = 300;
+        
+        this.inventory = []//inventory;
+        for (let i = 0; i < 8; i++) {
+            this.inventory.push(getRandomDNA());
+        }
+        this.numPages = Math.ceil(this.inventory.length / (this.rows * this.columns));
         this.color = "#330000"
-        this.rows = 3;
-        this.columns = 8;
+        this.rows = 2;
+        this.columns = 6;
         this.gridSize = 6;
         this.slotSize = 116;
         this.currentPage = 0;
-        this.numPages = 1;
         this.count = 50;
+        this.x = CANVAS_WIDTH/2 - this.columns * this.slotSize/2;
+        this.y = CANVAS_HEIGHT - this.rows * this.slotSize;
     }
   
     draw(ctx) {
-      this.drawCooldownIcons(ctx, 1400, 400, 100, 200, 7);
-      ctx.fillStyle = this.color;
+      ctx.fillStyle = "#DF8652";
       //make the rect transparent
-      ctx.globalAlpha = 0.5;
+      ctx.globalAlpha = .9;
       ctx.fillRect(this.x, this.y, this.columns*this.slotSize, this.rows*this.slotSize);
       ctx.globalAlpha = 1;
       ctx.strokeStyle = this.color;
@@ -33,24 +36,25 @@ class InventoryUI {
         }
       }
       this.drawArrows();
+      //ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/DNA/dna_basic.png"), 100, 100, this.slotSize, this.slotSize);
+
+      //iterate over inventory and draw every dna in a slot
+      for (let i = this.currentPage*this.rows*this.columns; i < (i+1)*(this.rows*this.columns); i++) {
+        let dna = this.inventory[i];
+        if (dna == null) break;
+        let x = this.x + (i % this.columns) * this.slotSize;
+        let y = this.y + Math.floor(i / this.columns) * this.slotSize;
+        dna.drawDna(ctx, x, y, this.slotSize);
+      }
     }
 
 
     update() {
+
+
     }
 
-    drawCooldownIcons(context, x, y, width, height, cooldown) {
-      let startCooldown = cooldown;
-      let count = 0;
-      while(cooldown > 0) {
-        context.fillStyle = "rgba(255, 0, 0, " + (1 - cooldown/startCooldown) + ")";
-        context.fillRect(x, y, width, height);
-        setTimeout(10);
-        count++;
-        cooldown--;
-      }
-  }
-  
+
     drawArrows() {
       if (this.numPages <= 1) return;
       //draw left arrow
@@ -73,6 +77,14 @@ class InventoryUI {
       if (this.currentPage > 0) {
         this.currentPage--;
       }
+    }
+
+    equipDna(dna) {
+
+    }
+
+    unequipDna(dna) {
+
     }
 }
   

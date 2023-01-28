@@ -1,8 +1,10 @@
 /** Global Parameters Object */
 const params = { 
-    CANVAS_WIDTH: 1400,
     BLOCKWIDTH: 256,
 };
+let CANVAS_HEIGHT = 0;
+let CANVAS_WIDTH = 0;
+
 let debug = false;
 function toggleDebug() {
     debug = !debug;
