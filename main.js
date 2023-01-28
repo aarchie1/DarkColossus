@@ -1,5 +1,4 @@
 const gameEngine = new GameEngine();
-
 const ASSET_MANAGER = new AssetManager();
 
 //Player
@@ -41,10 +40,7 @@ ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/Hazards/hazard_growth_tall.pn
 ASSET_MANAGER.queueDownload("./Music/testmusic.mp3");
 
 // sound effect
-
 ASSET_MANAGER.downloadAll(() => {
-	
-
 	ASSET_MANAGER.autoRepeat("./Music/testmusic.mp3");
 	
 	const canvas = document.getElementById("gameWorld"); 
@@ -53,16 +49,8 @@ ASSET_MANAGER.downloadAll(() => {
 	gameEngine.init(ctx);
 	gameEngine.addEntity(new InventoryUI());
 
-	let player = new GameCharacter(gameEngine, 0, 0);
-	gameEngine.addEntity(player);
-	gameEngine.addEntity(new SmallPlatform(gameEngine, 130, 500, 256));
-	gameEngine.addEntity(new SmallPlatform(gameEngine, 500, 200, 256));
-
-	gameEngine.addEntity(new SmallPlatform(gameEngine, 700, 600, 256));
-	gameEngine.addEntity(new SmallPlatform(gameEngine, 910, 400, 256));
-	//gameEngine.addEntity(new Platform(400, 300, 884, 496, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_large.png"), new BoundingBox(450, 440, 740, 200)));
-	
-	// Janky way of getting music to start, you have to interact with the volume bar first
+	gameEngine.addEntity(new SceneManager(gameEngine));
+			// Janky way of getting music to start, you have to interact with the volume bar first
 	var l = document.getElementById('volume');
 	l.addEventListener('click', handleClick, true);
 	function handleClick() {
@@ -72,8 +60,7 @@ ASSET_MANAGER.downloadAll(() => {
 	//TEST ENTITIES
 	// gameEngine.addEntity(new DnaTester());
 	// gameEngine.addEntity(new LevelFactoryTester());
-	
 
-	gameEngine.start();
 	
+	gameEngine.start();
 });

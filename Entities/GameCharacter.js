@@ -14,7 +14,7 @@ class GameCharacter {
         this.DEC_SKID = 5000;
         this.DEC_REL = 1500;
         this.FALL_ACC = 2500
-        this.MAX_JUMPS = 2;
+        this.MAX_JUMPS = 1000;
         this.JUMPS = 2;        
         const TICK = this.game.clockTick;
         this.state = 2;
@@ -49,6 +49,14 @@ class GameCharacter {
         const MAX_FALL = this.MAX_FALL;
         const FALL_ACC = this.FALL_ACC;
         const TICK = this.game.clockTick;
+
+        if(!this.game.PAUSED && (this.game.keys.Escape || this.game.controllerButtonY)) {
+            this.game.PAUSED = true;
+        }
+
+        if(this.game.PAUSED && (this.game.keys.KeyM || this.game.controllerButtonX)) {
+            this.game.PAUSED = false;
+        }
         
         // Ground Physics
         if (this.state < 2) {
@@ -67,7 +75,7 @@ class GameCharacter {
             } else if (Math.abs(this.velocity.x) >= MIN_RUN) {
                 if (this.facing === 0) {
                     this.animationYOffset = -35;
-                    if ((this.game.keys.KeyD || this.game.controllerButtonRight) && (!this.game.keys.KeyA || this.game.controllerButtonLeft)) {
+                    if ((this.game.keys.KeyD || this.game.controllerButtonRight) && (!this.game.keys.KeyA || !this.game.controllerButtonLeft)) {
                         this.velocity.x += RUN_ACC * TICK;
                         this.animationXOffset = 0;
                     }
@@ -83,7 +91,7 @@ class GameCharacter {
                     if ((this.game.keys.KeyA || this.game.controllerButtonLeft) && (!this.game.keys.KeyD || !this.game.controllerButtonRight)) {
                         this.velocity.x -= RUN_ACC * TICK;;
                     }
-                    else if ((this.game.keys.KeyD || this.game.controllerButtonRight) && (!this.game.keys.KeyA || this.game.controllerButtonLeft)) {
+                    else if ((this.game.keys.KeyD || this.game.controllerButtonRight) && (!this.game.keys.KeyA || !this.game.controllerButtonLeft)) {
                         this.velocity.x += DEC_SKID * TICK;
                     }
                     else {
@@ -107,10 +115,10 @@ class GameCharacter {
                 this.animationXOffset = 0;
                 this.animationYOffset = 200;
             }
-            if (this.game.keys.KeyD && !this.game.keys.KeyA) {
-               this.velocity.x += RUN_ACC/1.5 * TICK;
-            } else if (this.game.keys.KeyA && !this.game.keys.keyD) {
-                this.velocity.x -= RUN_ACC/1.5 * TICK;
+            if ((this.game.keys.KeyD && !this.game.keys.KeyA) || (this.game.controllerButtonRight && !this.game.controllerButtonLeft)) {
+               this.velocity.x += RUN_ACC * TICK;
+            } else if ((this.game.keys.KeyA && !this.game.keys.keyD) || (this.game.controllerButtonLeft && !this.game.controllerButtonRight)) {
+                this.velocity.x -= RUN_ACC * TICK;
             } 
         }
         
@@ -127,7 +135,7 @@ class GameCharacter {
             if (entity.BB && this.BB.collide(entity.BB)) {
                 //falling
                 if (this.velocity.y > 0) { 
-                    if ((entity instanceof SmallPlatform) 
+                    if ((entity instanceof SmallPlatform) || (entity instanceof Platform) 
                         && (this.lastBB.bottom) <= entity.BB.top) {
                         this.y = entity.BB.top - this.BB.height; 
                         this.velocity.y = 0;
@@ -157,7 +165,7 @@ class GameCharacter {
     }
 
     jump() {
-        if (this.game.keys.Space && this.JUMPS > 0) {
+        if (!this.game.PAUSED && (this.game.keys.Space || this.game.controllerButtonA) && this.JUMPS > 0) {
             this.JUMPS--;
             this.velocity.y = this.JUMP_ACC;
             if (this.facing == 0) {
@@ -216,9 +224,10 @@ class GameCharacter {
         if (this.velocity.x > 0 || this.velocity.x < 0)this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset, this.y-this.animationYOffset + Math.sin(this.t)*this.amplitude, 1);
         if (this.velocity.x == 0)this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset - this.game.camera.x, this.y-this.animationYOffset - this.game.camera.y, 1);
         
-
+        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset - this.game.camera.x, this.y-this.animationYOffset - this.game.camera.y, 1);
+        ctx.font = "50px Arial";
         ctx.strokeStyle = 'Red';      
-        
-        if (debug) ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+        ctx.fillText("PAUSED: " + this.game.PAUSED, 100, 100);
+        if (debug) ctx.strokeRect(this.BB.x-this.game.camera.x, this.BB.y-this.game.camera.y, this.BB.width, this.BB.height);
     };
 }

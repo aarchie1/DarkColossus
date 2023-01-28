@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Entities",
+    "\\LevelGenerator"
   ],
-  "SelectedNode": "\\D:\\DarkColMain",
+  "SelectedNode": "\\gameengine.js",
   "PreviewInSolutionExplorer": false
 }

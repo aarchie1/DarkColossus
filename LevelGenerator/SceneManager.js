@@ -129,7 +129,6 @@ class SceneManager {
 
     };
 
-    
 }
 
 	class Background {
