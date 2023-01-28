@@ -14,6 +14,10 @@ class DNA {
         this.epsilonAbility.update();
     }
 
+    drawInInventory(ctx, x, y) {
+        
+    }
+
     toString() {
 
 
