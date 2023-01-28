@@ -30,16 +30,7 @@ class DNA {
     }
 
     drawDna(ctx, x, y, slotSize) {
-        //draw 6 diagonal lines over the dna image to represent the rarity and cooldown rarity of each ability   
-        //draw sigma ability    
-        ctx.lineWidth = 5;
-        let length = slotSize/4;
-
-        //check if abilities are null and if so, add null to the array
-        
-
-        //create an array of arrays of two values, for cooldownRarity and effectRarity for each ability
-        let strips = 
+         let strips = 
             [(this.sigmaAbility == null) ? -1 : this.sigmaAbility.cooldownRarity,
              (this.sigmaAbility == null) ? -1 : this.sigmaAbility.effectRarity,
              (this.alphaAbility == null) ? -1 : this.alphaAbility.cooldownRarity,
@@ -71,6 +62,7 @@ class DNA {
             }
 
             let c = 0.3;
+            ctx.lineWidth = 5;        
             ctx.beginPath();
             ctx.moveTo(x + slotSize/1.6 + offset + distance - slotSize * c, y + slotSize/1.6 - offset - distance + slotSize * c);
             ctx.lineTo(x + slotSize/2.6 + offset + distance - slotSize * c, y + slotSize/2.6 - offset - distance + slotSize * c);

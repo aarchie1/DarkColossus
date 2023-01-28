@@ -2,7 +2,7 @@ class InventoryUI {
     constructor(game) {
         this.game = game;
         this.inventory = []//inventory;
-        for (let i = 0; i < 25; i++) {
+        for (let i = 0; i < 28; i++) {
             this.inventory.push(getRandomDNA());
         }
         let testDna = getRandomDNA();
@@ -12,7 +12,6 @@ class InventoryUI {
         this.rows = 2;
         this.columns = 6;
         this.numPages = Math.ceil(this.inventory.length / (this.rows * this.columns));
-        console.log(this.numPages);
         this.color = "#330000"
         this.gridSize = 6;
         this.slotSize = 116;
@@ -42,7 +41,7 @@ class InventoryUI {
             );
         }
       }
-      this.drawArrows();
+      //athis.drawArrows();
 
       //draw the current slot
       ctx.strokeStyle = "#FFFFFF";
@@ -63,14 +62,17 @@ class InventoryUI {
       );
       ctx.globalAlpha = 1;
 
+      let end = (this.rows*this.columns*this.currentPage) + (this.rows*this.columns);
       //iterate over inventory and draw every dna in a slot
-      for (let i = this.currentPage*this.rows*this.columns; i < (i+1)*(this.rows*this.columns); i++) {
+      for (let i = this.currentPage*this.rows*this.columns; i < end; i++) {
         let dna = this.inventory[i];
         if (dna == null) break;
         let x = this.x + (i % this.columns) * this.slotSize;
         let y = this.y + Math.floor(i / this.columns) * this.slotSize;
         dna.drawDna(ctx, x, y, this.slotSize);
       }
+      console.log("current page: " + this.currentPage);
+      console.log("dna range: " + (this.rows*this.columns*this.currentPage) + " to " + end);
     }
 
 
@@ -87,7 +89,7 @@ class InventoryUI {
 
       //Go to next inventory page
       } else if (this.game.keys.KeyS || this.game.controllerButtonDown) {
-       this.nextPage();
+        this.nextPage();
        //this.currentPage++;
 
       //Go to previous inventory page
@@ -101,8 +103,6 @@ class InventoryUI {
         this.pressed = false;
       }
     }
-
-
 
 
     drawArrows() {
@@ -130,7 +130,7 @@ class InventoryUI {
     }
 
     equipDna(dna) {
-
+      
     }
 
     unequipDna(dna) {
