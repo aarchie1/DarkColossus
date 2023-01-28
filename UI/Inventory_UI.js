@@ -10,9 +10,11 @@ class InventoryUI {
         this.slotSize = 116;
         this.currentPage = 0;
         this.numPages = 1;
+        this.count = 50;
     }
   
     draw(ctx) {
+      this.drawCooldownIcons(ctx, 1400, 400, 100, 200, 7);
       ctx.fillStyle = this.color;
       //make the rect transparent
       ctx.globalAlpha = 0.5;
@@ -36,6 +38,18 @@ class InventoryUI {
 
     update() {
     }
+
+    drawCooldownIcons(context, x, y, width, height, cooldown) {
+      let startCooldown = cooldown;
+      let count = 0;
+      while(cooldown > 0) {
+        context.fillStyle = "rgba(255, 0, 0, " + (1 - cooldown/startCooldown) + ")";
+        context.fillRect(x, y, width, height);
+        setTimeout(10);
+        count++;
+        cooldown--;
+      }
+  }
   
     drawArrows() {
       if (this.numPages <= 1) return;
