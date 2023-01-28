@@ -28,6 +28,8 @@ class GameCharacter {
         this.animationYOffset = 0;
         this.animations = [];
         this.loadAnimations();
+        this.t = 0;
+        this.amplitude = 8;
     };
 
     updateBB() {
@@ -36,6 +38,8 @@ class GameCharacter {
     }
 
     update(){
+        this.t += .2;
+        if (this.velocity.x == 0) this.t = 0;
         const JUMP_ACC = this.JUMP_ACC;
         const MIN_RUN = this.MIN_RUN;
         const MAX_RUN = this.MAX_RUN;
@@ -209,7 +213,9 @@ class GameCharacter {
 
     }
     draw(ctx) {
-        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset, this.y-this.animationYOffset, 1);
+        if (this.velocity.x > 0 || this.velocity.x < 0)this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset, this.y-this.animationYOffset + Math.sin(this.t)*this.amplitude, 1);
+        if (this.velocity.x == 0)this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset - this.game.camera.x, this.y-this.animationYOffset - this.game.camera.y, 1);
+        
 
         ctx.strokeStyle = 'Red';      
         
