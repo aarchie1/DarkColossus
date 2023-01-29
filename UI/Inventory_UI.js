@@ -2,7 +2,7 @@ class InventoryUI {
     constructor(game) {
         this.game = game;
         this.inventory = []//inventory;
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 16; i++) {
             this.inventory.push(getRandomDNA());
         }
         let testDna = getRandomDNA();
@@ -24,9 +24,9 @@ class InventoryUI {
     }
   
     draw(ctx) {
-      ctx.fillStyle = "#DF8652";
+      ctx.fillStyle = "#995B38";
       //make the rect transparent
-      ctx.globalAlpha = .9;
+      ctx.globalAlpha = .6;
       ctx.fillRect(this.x, this.y, this.columns*this.slotSize, this.rows*this.slotSize);
       ctx.globalAlpha = 1;
       ctx.strokeStyle = this.color;
