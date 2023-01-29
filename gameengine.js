@@ -97,6 +97,11 @@ class GameEngine {
         this.ctx.canvas.addEventListener("keyup", event => this.keys[event.code] = false);
     };
 
+    addEntityFirst(entity) {
+        this.entities.unshift(entity);
+    };
+
+
     addEntity(entity) {
         this.entities.push(entity);
     };

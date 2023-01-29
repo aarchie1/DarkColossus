@@ -2,7 +2,7 @@ class InventoryUI {
     constructor(game) {
         this.game = game;
         this.inventory = []//inventory;
-        for (let i = 0; i < 28; i++) {
+        for (let i = 0; i < 7; i++) {
             this.inventory.push(getRandomDNA());
         }
         let testDna = getRandomDNA();
@@ -71,9 +71,9 @@ class InventoryUI {
         let y = this.y + Math.floor(i / this.columns) * this.slotSize;
         dna.drawDna(ctx, x, y, this.slotSize);
       }
-      console.log("current page: " + this.currentPage);
-      console.log("dna range: " + (this.rows*this.columns*this.currentPage) + " to " + end);
-    }
+    //   console.log("current page: " + this.currentPage);
+    //   console.log("dna range: " + (this.rows*this.columns*this.currentPage) + " to " + end);
+     }
 
 
     update() {

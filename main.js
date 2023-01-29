@@ -21,6 +21,7 @@ ASSET_MANAGER.queueDownload("./Sprites/Abilities/emp.png");
 ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_full.png");
 ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_half.png");
 ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_low.png");
+ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_projectile.png");
 ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_attack.png");
 ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_normal.png");
 ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_weak.png");
