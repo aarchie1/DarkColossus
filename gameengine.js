@@ -152,6 +152,11 @@ class GameEngine {
                 this.entities.splice(i, 1);
             }
         }
+
+        if(this.PAUSED) {
+            //this.addEntity(new InventoryUI(gameEngine));
+	        gameEngine.addEntity(new DarkEnergyUI(gameEngine));
+        }
     };
     
     loop() {

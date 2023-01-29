@@ -3,26 +3,26 @@ class DarkEnergy {
         this.game = game;
         this.currency = 100;
         //Attack stats
-        this.meleeAttack = 1;
-        this.rangedAttack = 1;
-        this.attackSpeed = 1;
+        this.meleeAttack = 0;
+        this.rangedAttack = 0;
+        this.attackSpeed = 0;
 
         //Movement stats
-        this.movementSpeed = 1;
-        this.jumpHeight = 1;
+        this.movementSpeed = 0;
+        this.jumpHeight = 0;
 
         //Defensive stats
-        this.meleeDefense = 1;
-        this.rangedDefense = 1;
-        this.hp = 1;
+        this.meleeDefense = 0;
+        this.rangedDefense = 0;
+        this.hp = 0;
 
         //Special stats
-        this.dnaDropRate = 1;
-        this.sigmaChance = 1;
-        this.alphaChance = 1;
-        this.betaChance = 1;
-        this.epsilonChance = 1;
-        this.darkEnergyChance = 1;
+        this.dnaDropRate = 0;
+        this.sigmaChance = 0;
+        this.alphaChance = 0;
+        this.betaChance = 0;
+        this.epsilonChance = 0;
+        this.darkEnergyChance = 0;
 
 
         //Cost to buy will be the same as current value.
