@@ -2,7 +2,7 @@
 
 
 Contributors:
-Kevin Kulman kdkulman@gmail.com
+Kevin Kulman
 Stephen Vanluven  
 AJ Garcia  
 Anthony Archie 

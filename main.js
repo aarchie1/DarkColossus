@@ -55,7 +55,7 @@ ASSET_MANAGER.downloadAll(() => {
 	CANVAS_WIDTH = canvas.width;
 	const ctx = canvas.getContext("2d");
 	gameEngine.init(ctx);
-	gameEngine.addEntity(new InventoryUI(gameEngine));
+	//gameEngine.addEntity(new InventoryUI(gameEngine));
 	gameEngine.addEntity(new SceneManager(gameEngine));
 
 	// Janky way of getting music to start, you have to interact with the volume bar first
