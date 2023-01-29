@@ -4,6 +4,9 @@ class GameCharacter {
 
     constructor(game, x, y) {
         Object.assign(this, { game, x, y });
+        this.inventory = [];
+        this.dnaSlot1 = null;
+        this.dnaSlot2 = null;
         this.JUMP_ACC = -1000;
         this.MIN_RUN = 50;
         this.MAX_RUN = 1000;

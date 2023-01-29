@@ -7,6 +7,7 @@ class MockAbility {
     //To see if it makes sense to use them here.
 
     constructor(cooldownRarity, effectRarity) {
+        
         this.name = 'Mock Ability';
         this.cooldownRarity = cooldownRarity;
         this.effectRarity = effectRarity;
@@ -15,6 +16,7 @@ class MockAbility {
         this.currentCooldown = 0;
         this.name = 'Mock Ability';
         this.description = 'This is a mock ability';
+
 
         this.icon = 'mockAbilityIcon';
         this.animation = 'mockAbilityAnimation';

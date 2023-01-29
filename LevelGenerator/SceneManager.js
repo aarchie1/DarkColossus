@@ -10,9 +10,18 @@ class SceneManager {
         gameEngine.addEntity(this.player);
 
         this.loadLevel();
+
     };
 
     loadLevel() {
+        //This is just test code for dna drops 
+        // for (let i = 0; i < 30; i++) {
+        // //add a bunch of dna drops with random locations
+        // let x = Math.random() * CANVAS_WIDTH;
+        // let y = Math.random() * CANVAS_HEIGHT;
+        // this.game.addEntity(new DnaItemDrop(this.game, x, y));
+        // }
+
         let level = getLevel(1);
         let xBoundMin = 1900;
         let xBoundMax = 15000;
@@ -34,6 +43,7 @@ class SceneManager {
             let y = Math.random() * (yBoundMax - yBoundMin) + yBoundMin;
 
             this.game.addEntity(new Platform(this.game, x, y, 256, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_small.png"), new BoundingBox(x, y+150, 256, 100)));
+        
         }
 
         for (let i = 0; i < level.platformLarge.length; i++) {

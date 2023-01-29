@@ -24,11 +24,12 @@ Reaper
 Molecules
     molecule_full           256x256     6frames
     molecule_half           256x256     6frames
-    molecule_low            256x256     6frames
+    molecule_low            256x256     5frames
+    molecule_projectile     42x42       6frames
 
 LevelAssets
     background              2100x1350   1frame
-    platform_tiny           184x184     1frame
+    platform_tiny           128x128     1frame
     platform_small          256x256     1frame
     platform_large          884x496     1frame
     platform_ground         700x256     1frame
@@ -39,10 +40,15 @@ LevelAssets
 Abilities
     cosmic_blade            1200x1164   4frames
     soul_grab               1024x512    4frames
-    slippery                320x256     9frames     
+    slippery                320x256     9frames  
+    emp                     1200x1164   7frames   
 
 UI
     DE_UI_Design            1050x675    1frame
     DE_UI_Design_No_Text    1050x675    1frame
 
-
+DNA
+    dna_basic               116x116     1frame
+    dna_uncommon            116x116     1frame
+    dna_rare                116x116     1frame
+    dna_godly               116x116     1frame
