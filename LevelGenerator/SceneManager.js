@@ -14,15 +14,13 @@ class SceneManager {
     };
 
     loadLevel() {
-        //Test code for DnaItemDrop
         // for (let i = 0; i < 30; i++) {
         // //add a bunch of dna drops with random locations
         // let x = Math.random() * CANVAS_WIDTH;
         // let y = Math.random() * CANVAS_HEIGHT;
         // this.game.addEntity(new DnaItemDrop(this.game, x, y));
+        // }
 
-
-        }
         let level = getLevel(1);
         let xBoundMin = 1900;
         let xBoundMax = 15000;
