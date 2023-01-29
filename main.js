@@ -43,6 +43,9 @@ ASSET_MANAGER.queueDownload("./Sprites/DNA/dna_uncommon.png");
 ASSET_MANAGER.queueDownload("./Sprites/DNA/dna_rare.png");
 ASSET_MANAGER.queueDownload("./Sprites/DNA/dna_godly.png");
 
+//UI
+ASSET_MANAGER.queueDownload("./Sprites/UI/DE_UI_Design_No_Text.png");
+
 // music
 ASSET_MANAGER.queueDownload("./Music/testmusic.mp3");
 
@@ -56,7 +59,7 @@ ASSET_MANAGER.downloadAll(() => {
 	const ctx = canvas.getContext("2d");
 	gameEngine.init(ctx);
 	//gameEngine.addEntity(new InventoryUI(gameEngine));
-	//gameEngine.addEntity(new DarkEnergyUI(gameEngine));
+	gameEngine.addEntity(new DarkEnergyUI(gameEngine));
 	gameEngine.addEntity(new SceneManager(gameEngine));
 
 	// Janky way of getting music to start, you have to interact with the volume bar first
