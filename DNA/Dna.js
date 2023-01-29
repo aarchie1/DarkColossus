@@ -48,16 +48,16 @@ class DNA {
             if (strips[i] == -1) continue;     
             switch (strips[i]) {
                 case 1:
-                    ctx.strokeStyle = "#4C4C4C"; //basic gray
+                    ctx.strokeStyle = "#990F26"; //basic gray
                     break;
                 case 2:
-                    ctx.strokeStyle = "#14663B"; //uncommon green
+                    ctx.strokeStyle = "#1E9958"; //uncommon green
                     break;
                 case 3:
-                    ctx.strokeStyle = "#006E99"; //rare blue
+                    ctx.strokeStyle = "#0080B2"; //rare blue
                     break;
                 case 4:
-                    ctx.strokeStyle = "#B24A19"; //godly gold
+                    ctx.strokeStyle = "#E55916"; //godly gold
                     break;
             }
 
