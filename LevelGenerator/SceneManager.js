@@ -13,29 +13,74 @@ class SceneManager {
         gameEngine.addEntity(new Reaper(this.game, 1000, 520, 2));
         
         this.loadLevel();
+
     };
 
     loadLevel() {
+        //This is just test code for dna drops 
+        // for (let i = 0; i < 30; i++) {
+        // //add a bunch of dna drops with random locations
+        // let x = Math.random() * CANVAS_WIDTH;
+        // let y = Math.random() * CANVAS_HEIGHT;
+        // this.game.addEntity(new DnaItemDrop(this.game, x, y));
+        // }
+
         let level = getLevel(1);
+        let xBoundMin = 1900;
+        let xBoundMax = 15000;
+        let yBoundMin = 600;
+        let yBoundMax = -800;
+
         
-        //add background
         for (let i = 0; i < level.platformGround.length; i++) {
             let platform = level.platformGround[i];
-            this.game.addEntity(new Platform(this.game, platform.x, platform.y, 700, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_ground.png"), new BoundingBox(platform.x, platform.y+200, 700, 100)));
+            // original x values : 700 
+            this.game.addEntity(new Platform(this.game, platform.x, platform.y, 16000, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_ground.png"), new BoundingBox(platform.x, platform.y+200, 15800, 100)));
             //constructor(game, x, y, width, height, sprite, boundingBox    
         }
 
+
         for (let i = 0; i < level.platformSmall.length; i++) {
             let platform = level.platformSmall[i];
-            this.game.addEntity(new Platform(this.game, platform.x, platform.y, 256, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_small.png"), new BoundingBox(platform.x, platform.y+150, 256, 100)));
+
+            let x = Math.random() * (xBoundMax - xBoundMin) + xBoundMin;
+            let y = Math.random() * (yBoundMax - yBoundMin) + yBoundMin;
+
+            this.game.addEntity(new Platform(this.game, x, y, 256, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_small.png"), new BoundingBox(x, y+150, 256, 100)));
+        
         }
 
-        
+        for (let i = 0; i < level.platformLarge.length; i++) {
+            let platform = level.platformLarge[i];
+
+            let x = Math.random() * (xBoundMax - xBoundMin) + xBoundMin;
+            let y = Math.random() * (yBoundMax - yBoundMin) + yBoundMin;
+
+            this.game.addEntity(new Platform(this.game, x, y, 256, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_large.png"), new BoundingBox(x, y + 150, 256, 100)));
+        }
+
+
+        for (let i = 0; i < level.platformTiny.length; i++) {
+            let platform = level.platformTiny[i];
+
+            let x = Math.random() * (xBoundMax - xBoundMin) + xBoundMin;
+            let y = Math.random() * (yBoundMax - yBoundMin) + yBoundMin;
+
+            this.game.addEntity(new Platform(this.game, x, y, 256, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_tiny.png"), new BoundingBox(x, y + 150, 256, 100)));
+        }
+
+        //add background
 	    gameEngine.addEntity(new Background(this.game));
 
         
         
     };
+
+    randomizeLevel() {
+
+
+
+    }
 
     loadBoss(){
 
@@ -51,30 +96,41 @@ class SceneManager {
 
     update() {
 
-        // splits the X axis into 4 sections [  |  |  |  ] <-- map, playable area --> [  |xx|xx|  ]
-        let quadX = 1400 / 4;
+        // splits the X axis into 5 sections [  |  |  |  |  ] <-- map, playable area --> [  |xx|xx|xx|  ]
+        let quadX = 1400 / 5;
         let rightBoundX = quadX * 3;
-        let midX = quadX * 2;
+        let midX = quadX * 2.5;
         let leftBoundX = quadX * 1;
 
-        // splits the Y axis into 4 sections -- check how X works and turn it sideways for Y
+        // splits the Y axis into 4 sectionsd
         let quadY = 900 / 4;
         let lowerBoundY = quadY * 3;
         let midY = quadY * 2;
         let upperBoundY = quadY * 1;
 
         // sets left, right, lower, and upper, map border so player cannot leave the area.
-        let leftXLimit = 0;
-        let rightXLimit = 10000;
-        let lowerYLimit = 700;
-        let upperYLimit = -10000;
+        let leftXLimit = 0;      // do not change -- does not traverse left of starting point
+        let rightXLimit = 16000; // 16k to stay within background image (right)
+        let lowerYLimit = 700;   // 700 is reasonable to keep starting platform visible
+        let upperYLimit = -8500; // -8500 to stay within background image (top)
 
         //Make the camera move based off this bounding box
-        if (this.player.x > rightBoundX && !(this.player.x >= rightXLimit)) this.x = this.player.x - rightBoundX;
+/*      // Keeps player in rightBoundX
+        if (this.player.x > rightBoundX && !(this.player.x + rightBoundX >= rightXLimit)) this.x = this.player.x - rightBoundX;
         if (this.player.x < leftBoundX && !(this.player.x - leftBoundX <= leftXLimit)) this.x = this.player.x - leftBoundX;
+*/
+        // Keeps player centered on X
+        if (this.player.x > midX && !(this.player.x + midX >= rightXLimit)) this.x = this.player.x - midX;
+        if (this.player.x < midX && !(this.player.x - midX <= leftXLimit)) this.x = this.player.x - midX;
 
-        if (this.player.y < upperBoundY && !(this.player.y <= upperYLimit)) this.y = this.player.y - upperBoundY;
-        if (this.player.y > lowerBoundY && !(this.player.y - lowerBoundY != lowerYLimit)) this.y = this.player.y - lowerBoundY;
+
+        if (this.player.y < upperBoundY && !(this.player.y + upperBoundY <= upperYLimit)) this.y = this.player.y - upperBoundY;
+        if (this.player.y > lowerBoundY && !(this.player.y - lowerBoundY >= lowerYLimit)) this.y = this.player.y - lowerBoundY;
+
+
+        //if (this.player.y < upperBoundY && !(this.player.y <= upperYLimit)) this.y = this.player.y - upperBoundY;
+        //if (this.player.y > lowerBoundY && !(this.player.y - lowerBoundY != lowerYLimit)) this.y = this.player.y - lowerBoundY;
+
     };
 
     draw(ctx) {

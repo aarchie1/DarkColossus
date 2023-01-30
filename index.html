@@ -5,37 +5,50 @@
     <meta charset="utf-8">
     <title>Dark Colossus</title>
     
+
     <!--Character Files-->>
     <script type="text/javascript" src="./animator.js"></script>
     <script type="text/javascript" src="./Entities/GameCharacter.js"></script>
     <script type="text/javascript" src="./Entities/BoundingBox.js"></script>
     <script type="text/javascript" src="./Entities/Enemies.js"></script>
+
+    
+    <!--Dark Energy-->
+    <script type="text/javascript" src="./DarkEnergy/DarkEnergy.js"></script>
     
     <!--DNA files-->
     <script type="text/javascript" src="./DNA/Dna.js"></script>
+    <script type="text/javascript" src="./DNA/DnaItemDrop.js"></script>
     <script type="text/javascript" src="./DNA/DnaFactory.js"></script>
     <script type="text/javascript" src="./DNA/AbilityFactory.js"></script>
     <script type="text/javascript" src="./DNA/MockAbility.js"></script>
     <script type="text/javascript" src="./DNA/DnaTester.js"></script>
+
+    <!--UI files-->
+    <script type="text/javascript" src="./UI/Inventory_UI.js"></script>
+    <script type="text/javascript" src="./UI/DarkEnergyUI.js"></script>
     
     <!--Level files-->
     <script type="text/javascript" src="./LevelGenerator/SceneManager.js"></script>
-
     <script type="text/javascript" src="./LevelGenerator/SmallPlatform.js"></script>
     <script type="text/javascript" src="./LevelGenerator/Platform.js"></script>
     <script type="text/javascript" src="./LevelGenerator/LevelFactory.js"></script>
     <script type="text/javascript" src="./LevelGenerator/LevelFactoryTester.js"></script>
 
-    
+    <!--Game Engine files-->
     <script type="text/javascript" src="./assetmanager.js"></script>
     <script type="text/javascript" src="./timer.js"></script>
     <script type="text/javascript" src="./gameengine.js"></script>
     <script type="text/javascript" src="./util.js"></script>
     <script type="text/javascript" src="./main.js"></script>
 </head>
+<style>
+    canvas:focus {
+      outline: none;
+    }
+  </style>
 <body style="text-align: center; background-color: #330000; padding-top: 1.5%;">
-    <canvas id="gameWorld" width="1600" height="900" style="background: white; border: 1px solid hsl(0, 0%, 0%)" tabindex="0" autofocus></canvas>
-
+        <canvas id="gameWorld" width="1600" height="900" outline=0 style="background: white; border: 1px solid hsl(0, 0%, 0%)" tabindex="0" autofocus></canvas>
     <div>
         <br />
         <input type="checkbox" id="debug" onchange=toggleDebug()> Debug <input type="checkbox" id="mute" > Mute <input type="range" id="volume" min="0" max="1" value="0.1" step="0.05" > Volume
