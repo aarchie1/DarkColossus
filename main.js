@@ -62,7 +62,7 @@ ASSET_MANAGER.downloadAll(() => {
 	//gameEngine.addEntity(new DarkEnergyUI(gameEngine));
 	//gameEngine.addEntity(new InventoryUI(gameEngine));
 	gameEngine.addEntity(new SceneManager(gameEngine));
-
+	
 	// Janky way of getting music to start, you have to interact with the volume bar first
 	var l = document.getElementById('volume');
 	l.addEventListener('click', handleClick, true);

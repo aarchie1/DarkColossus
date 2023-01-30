@@ -8,7 +8,10 @@ class SceneManager {
         this.transition = false;
         this.player = new GameCharacter(this.game, 0, 0);
         gameEngine.addEntity(this.player);
-
+        
+        // TEMP for testing
+        gameEngine.addEntity(new Reaper(this.game, 1000, 520, 2));
+        
         this.loadLevel();
 
     };
@@ -28,6 +31,7 @@ class SceneManager {
         let yBoundMin = 600;
         let yBoundMax = -800;
 
+        
         for (let i = 0; i < level.platformGround.length; i++) {
             let platform = level.platformGround[i];
             // original x values : 700 
