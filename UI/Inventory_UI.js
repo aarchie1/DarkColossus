@@ -1,5 +1,11 @@
 class InventoryUI {
     constructor(game) {
+        //state "enums"
+        this.font = "20px Arial",
+        this.fontColor = "#FFFFFF"
+        this.BROWSE = 1;
+        this.SPLICE = 2;
+        this.state = this.BROWSE;
         this.game = game;
         this.inventory = []//inventory;
         for (let i = 0; i < 16; i++) {
@@ -71,12 +77,22 @@ class InventoryUI {
         let y = this.y + Math.floor(i / this.columns) * this.slotSize;
         dna.drawDna(ctx, x, y, this.slotSize);
       }
+
+      this.drawControls(ctx);
     //   console.log("current page: " + this.currentPage);
     //   console.log("dna range: " + (this.rows*this.columns*this.currentPage) + " to " + end);
      }
 
 
     update() {
+
+      //Controls
+      // this.button1();
+      // this.button2();
+      // this.button3();
+      this.button4();
+      //this.game.keypress(this.game.keys.Digit4, this.button4);
+
 
       //I NEED HELP WITH CONTROLS 
       //Move Cursor Left
@@ -104,6 +120,28 @@ class InventoryUI {
       }
     }
 
+    drawControls(ctx) {
+      //draw controls right above the inventory in a horizontal line
+      ctx.fillStyle = this.fontColor;
+      ctx.textAlign = "center";
+      ctx.font = this.font;
+      console.log(this.BROWSE);
+      if(this.state == this.BROWSE){
+        ctx.fillText("1: Equip slot 1   2: Equip slot 2   3: Convert   4:Splice", CANVAS_WIDTH/2, this.y - 20);
+      } else if (this.state == this.SPLICE) {
+        ctx.fillText("1: Select slot 1   2: Select slot 2   3: Splice   4:Browse", CANVAS_WIDTH/2, this.y - 20);
+      }
+    }
+
+    button4() {
+      if (this.game.keys.Digit4) {
+        if (this.state == this.BROWSE) {
+          this.state = this.SPLICE;
+        } else if (this.state == this.SPLICE) {
+          this.state = this.BROWSE;
+        }
+      }
+    }
 
     drawArrows() {
       if (this.numPages <= 1) return;

@@ -1,7 +1,8 @@
 /** Global Parameters Object */
 const params = { 
-    BLOCKWIDTH: 256,
+    BLOCKWIDTH: 256
 };
+
 let CANVAS_HEIGHT = 0;
 let CANVAS_WIDTH = 0;
 

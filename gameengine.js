@@ -95,6 +95,17 @@ class GameEngine {
         this.ctx.canvas.addEventListener("keydown", event => this.keys[event.code] = true);
         
         this.ctx.canvas.addEventListener("keyup", event => this.keys[event.code] = false);
+
+
+    };
+
+    keypress(key, action) {
+        if (this.keys[key]) {
+            action();
+            this.keys[key]  = false;
+        } else {
+            return false;
+        }
     };
 
     addEntityFirst(entity) {
@@ -158,6 +169,7 @@ class GameEngine {
             this.clockTick = this.timer.tick();
             this.update();
             this.draw();
+           // this.keys[key] = false;
         } else {
             this.clockTick = null;
             this.update();
