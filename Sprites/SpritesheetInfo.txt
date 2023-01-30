@@ -31,10 +31,13 @@ Molecules
 
 LevelAssets
     background              2100x1350   1frame
+    cross_background        1400x900    1frame
     platform_tiny           128x128     1frame
     platform_small          256x256     1frame
     platform_large          884x496     1frame
     platform_ground         700x256     1frame
+    platform_hub            1600x400    1frame
+    workbench               242x194     1frame
     portal                  364x364     4frames
     hazard_growth_short     256x256     7frames
     hazard_growth_tall      256x512     9frames
