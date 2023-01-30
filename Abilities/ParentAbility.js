@@ -1,10 +1,4 @@
-class MockAbility {
-
-    //This is not a parent abstract class. 
-    //This is a mock ability that will be used to test the ability system.
-
-    //I still need to research abstract classes in JS 
-    //To see if it makes sense to use them here.
+class ParentAbility {
 
     constructor(cooldownRarity, effectRarity) {
         
@@ -14,6 +8,7 @@ class MockAbility {
         this.effectRarity = effectRarity;
         this.cooldown = this.setCooldown(cooldownRarity);
         this.effect = this.setEffect(effectRarity);
+        this.currentCooldown = 0;
         this.dominant = false; //dominant or recessive
         this.description = 'This is a mock ability';
         this.icon = 'mockAbilityIcon';
@@ -21,27 +16,9 @@ class MockAbility {
         //Store animation in abilities
         this.animation = 'mockAbilityAnimation';
 
-        this.currentCooldown = 0;
-
         console.log('Mock Ability created');
         console.log('Cooldown Rarity: ' + cooldownRarity);
         console.log('Effect Rarity: ' + effectRarity);
-    }
-
-    onEquip() {
-
-    }
-
-    onUnequip() {
-
-    }
-
-    onUse() {
-
-    }
-
-    onEnd() {
-
     }
 
     setCooldown(cooldownRarity) { // 1-4
