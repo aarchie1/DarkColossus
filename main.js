@@ -23,9 +23,11 @@ ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_half.png");
 ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_low.png");
 ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_projectile.png");
 ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_attack.png");
+ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_attack_right.png");
 ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_normal.png");
 ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_weak.png");
 ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_strong.png");
+ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_strong_right.png");
 
 //Level/Platforms
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/platform_small.png");
@@ -43,6 +45,9 @@ ASSET_MANAGER.queueDownload("./Sprites/DNA/dna_uncommon.png");
 ASSET_MANAGER.queueDownload("./Sprites/DNA/dna_rare.png");
 ASSET_MANAGER.queueDownload("./Sprites/DNA/dna_godly.png");
 
+//UI
+ASSET_MANAGER.queueDownload("./Sprites/UI/DE_UI_Design_No_Text.png");
+
 // music
 ASSET_MANAGER.queueDownload("./Music/testmusic.mp3");
 
@@ -55,9 +60,11 @@ ASSET_MANAGER.downloadAll(() => {
 	CANVAS_WIDTH = canvas.width;
 	const ctx = canvas.getContext("2d");
 	gameEngine.init(ctx);
+
+	//gameEngine.addEntity(new DarkEnergyUI(gameEngine));
 	//gameEngine.addEntity(new InventoryUI(gameEngine));
 	gameEngine.addEntity(new SceneManager(gameEngine));
-
+	
 	// Janky way of getting music to start, you have to interact with the volume bar first
 	var l = document.getElementById('volume');
 	l.addEventListener('click', handleClick, true);

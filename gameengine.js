@@ -33,6 +33,7 @@ class GameEngine {
         this.controllerButtonX = false;
         this.controllerButtonY = false;
         this.gamepad = null;
+        this.darkEnergy = new DarkEnergy();
 
         // Options and the Details
         this.options = options || {
