@@ -3,6 +3,7 @@ const params = {
     BLOCKWIDTH: 256
 };
 
+
 let CANVAS_HEIGHT = 0;
 let CANVAS_WIDTH = 0;
 
@@ -10,6 +11,24 @@ let debug = false;
 function toggleDebug() {
     debug = !debug;
 }
+
+function keypress(key) {
+    if (gameEngine.keys[key] && !gameEngine.keysPressed[key]) {
+        gameEngine.keysPressed[key] = true;
+        return true;
+    } else {
+        return false;
+    }
+};
+
+function keyhold(key) {
+    if (gameEngine.keys[key]) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
 
 /**
  * @param {Number} n

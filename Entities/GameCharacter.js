@@ -52,12 +52,8 @@ class GameCharacter {
         const FALL_ACC = this.FALL_ACC;
         const TICK = this.game.clockTick;
 
-        if(!this.game.PAUSED && (this.game.keys.Escape || this.game.controllerButtonY)) {
-            this.game.PAUSED = true;
-        }
-
-        if(this.game.PAUSED && (this.game.keys.KeyM || this.game.controllerButtonX)) {
-            this.game.PAUSED = false;
+        if(keypress("Escape") || this.game.controllerButtonY) {
+            this.game.PAUSED = !this.game.PAUSED;
         }
         
         // Ground Physics

@@ -20,7 +20,24 @@ class GameEngine {
             KeyS: false,
             KeyD: false,
             Space: false,
+            Escape: false
+        };
+
+        this.keysPressed = {
+            // Movement
+            KeyW: false,
+            KeyA: false,
+            KeyS: false,
+            KeyD: false,
+            KeyE: false,
+            KeyF: false,
+            Space: false,
             Escape: false,
+            Digit1: false,
+            Digit2: false,
+            Digit3: false,
+            Digit4: false,
+            Digit5: false
         };
 
         // Information on gamepad controller input
@@ -95,19 +112,14 @@ class GameEngine {
 
         this.ctx.canvas.addEventListener("keydown", event => this.keys[event.code] = true);
         
-        this.ctx.canvas.addEventListener("keyup", event => this.keys[event.code] = false);
+        this.ctx.canvas.addEventListener("keyup", event => {
+            this.keys[event.code] = false
+            this.keysPressed[event.code] = false;
+        });
 
 
     };
 
-    keypress(key, action) {
-        if (this.keys[key]) {
-            action();
-            this.keys[key]  = false;
-        } else {
-            return false;
-        }
-    };
 
     addEntityFirst(entity) {
         this.entities.unshift(entity);

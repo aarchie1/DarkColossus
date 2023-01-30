@@ -63,9 +63,6 @@ ASSET_MANAGER.downloadAll(() => {
 	CANVAS_WIDTH = canvas.width;
 	const ctx = canvas.getContext("2d");
 	gameEngine.init(ctx);
-
-	//gameEngine.addEntity(new DarkEnergyUI(gameEngine));
-	//gameEngine.addEntity(new InventoryUI(gameEngine));
 	gameEngine.addEntity(new SceneManager(gameEngine));
 
 	
@@ -75,10 +72,6 @@ ASSET_MANAGER.downloadAll(() => {
 	function handleClick() {
 		ASSET_MANAGER.playAssest("./Music/flute.mp4");
 	};
-	
-	//TEST ENTITIES
-	// gameEngine.addEntity(new DnaTester());
-	// gameEngine.addEntity(new LevelFactoryTester());
 	
 	gameEngine.start();
 });

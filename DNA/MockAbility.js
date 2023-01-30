@@ -8,26 +8,43 @@ class MockAbility {
 
     constructor(cooldownRarity, effectRarity) {
         
+        //Necessary properties for all abilities
         this.name = 'Mock Ability';
         this.cooldownRarity = cooldownRarity;
         this.effectRarity = effectRarity;
         this.cooldown = this.setCooldown(cooldownRarity);
         this.effect = this.setEffect(effectRarity);
-        this.currentCooldown = 0;
-        this.name = 'Mock Ability';
+        this.dominant = false; //dominant or recessive
         this.description = 'This is a mock ability';
-
-
         this.icon = 'mockAbilityIcon';
+
+        //Store animation in abilities
         this.animation = 'mockAbilityAnimation';
-        this.dominant = false;
+
+        this.currentCooldown = 0;
 
         console.log('Mock Ability created');
         console.log('Cooldown Rarity: ' + cooldownRarity);
         console.log('Effect Rarity: ' + effectRarity);
     }
 
-    setCooldown(cooldownRarity) {
+    onEquip() {
+
+    }
+
+    onUnequip() {
+
+    }
+
+    onUse() {
+
+    }
+
+    onEnd() {
+
+    }
+
+    setCooldown(cooldownRarity) { // 1-4
         switch (cooldownRarity) {
             case 1:
                 // returns a random number between 15-25

@@ -10,9 +10,11 @@ class SceneManager {
         this.player = new GameCharacter(this.game, 0, 0);
         gameEngine.addEntity(this.player);
         gameEngine.addEntity(new Reaper(this.game, 1000, 520, 2));
-
+        //this.loadHub(); 
         this.loadLevel();
     };
+
+    
 
     loadLevel() {
         let level = getLevel(1);
@@ -90,11 +92,46 @@ class SceneManager {
 
     }
 
-    loadTitleScreen(){
+    loadHub() {
+
+        //Create Inventory
+        
+        this.game.addEntityFirst(new Interactable(this.game, 900, 525, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), new BoundingBox(900, 525, 248, 200), () => {
+            //check if InventoryUI is already in the game, if so, remove it
+            for (let i = 0; i < this.game.entities.length; i++) {
+                if (this.game.entities[i] instanceof InventoryUI) {
+                    this.game.entities[i].removeFromWorld = true;
+                    return;
+                }
+            }
+            this.game.addEntityFirst(new InventoryUI(this.game));
+        }));
+
+        //Create DE UI
+        this.game.addEntity(new Interactable(this.game, 400, 525, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), new BoundingBox(400, 525, 248, 200), () => {
+            console.log("DE UI");
+            for (let i = 0; i < this.game.entities.length; i++) {
+                if (this.game.entities[i] instanceof DarkEnergyUI) {
+                    this.game.entities[i].removeFromWorld = true;
+                    return;
+                }
+            }
+            this.game.addEntityFirst(new DarkEnergyUI(this.game));
+        }));
+
+        // //Create Portal Interactable
+        // this.game.addEntity(new Interactable(this.game, 1300, 525, 1400, 900, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/cross_background.png"), () => {
+        //     this.level++;
+        //     this.loadLevel();
+        // }));
+        
+        this.game.addEntity(new Platform(this.game, 1, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(0, 800, 1600, 400)));
+        this.game.addEntity(new Background(this.game));
+        
 
     }
 
-    loadHub(){
+    loadTitleScreen(){
 
     }
 

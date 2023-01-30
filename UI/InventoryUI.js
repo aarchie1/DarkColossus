@@ -1,6 +1,8 @@
 class InventoryUI {
     constructor(game) {
         //state "enums"
+        console.log("inventory created");
+        this.removeFromWorld = false;
         this.font = "20px Arial",
         this.fontColor = "#FFFFFF"
         this.BROWSE = 1;
@@ -125,7 +127,7 @@ class InventoryUI {
       ctx.fillStyle = this.fontColor;
       ctx.textAlign = "center";
       ctx.font = this.font;
-      console.log(this.BROWSE);
+      //console.log(this.BROWSE);
       if(this.state == this.BROWSE){
         ctx.fillText("1: Equip slot 1   2: Equip slot 2   3: Convert   4:Splice", CANVAS_WIDTH/2, this.y - 20);
       } else if (this.state == this.SPLICE) {
@@ -134,7 +136,7 @@ class InventoryUI {
     }
 
     button4() {
-      if (this.game.keys.Digit4) {
+      if (keypress("Digit4")) {
         if (this.state == this.BROWSE) {
           this.state = this.SPLICE;
         } else if (this.state == this.SPLICE) {
