@@ -227,7 +227,10 @@ class GameCharacter {
         ctx.font = "50px Arial";
         ctx.strokeStyle = 'Red';   
         ctx.textAlign = "left";   
-        ctx.fillText("PAUSED: " + this.game.PAUSED, 100, 100);
+        if (debug)ctx.fillText("PAUSED: " + this.game.PAUSED, 100, 100);
+        if (this.game.PAUSED) {
+            ctx.fillText("PAUSED", 100, 100);
+        }
         if (debug) ctx.strokeRect(this.BB.x-this.game.camera.x, this.BB.y-this.game.camera.y, this.BB.width, this.BB.height);
     };
 }
