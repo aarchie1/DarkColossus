@@ -52,11 +52,11 @@ ASSET_MANAGER.queueDownload("./Sprites/DNA/dna_godly.png");
 ASSET_MANAGER.queueDownload("./Sprites/UI/DE_UI_Design_No_Text.png");
 
 // music
-ASSET_MANAGER.queueDownload("./Music/testmusic.mp3");
+ASSET_MANAGER.queueDownload("./Music/flute.mp4");
 
 // sound effect
 ASSET_MANAGER.downloadAll(() => {
-	ASSET_MANAGER.autoRepeat("./Music/testmusic.mp3");
+	ASSET_MANAGER.autoRepeat("./Music/flute.mp4");
 	
 	const canvas = document.getElementById("gameWorld"); 
 	CANVAS_HEIGHT = canvas.height;
@@ -73,7 +73,7 @@ ASSET_MANAGER.downloadAll(() => {
 	var l = document.getElementById('volume');
 	l.addEventListener('click', handleClick, true);
 	function handleClick() {
-		ASSET_MANAGER.playAssest("./Music/testmusic.mp3");
+		ASSET_MANAGER.playAssest("./Music/flute.mp4");
 	};
 	
 	//TEST ENTITIES

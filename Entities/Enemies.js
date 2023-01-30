@@ -100,14 +100,14 @@ class Reaper {
 
         // strong animation for state = 2
         // facing right = 0
-        this.animations[2][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Reaper/reaper_strong.png"), 0, 0, 256, 256, 6, .2, 0, true);
+        this.animations[2][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Reaper/reaper_strong_right.png"), 0, 0, 256, 256, 6, .2, 0, true);
 
         //facing left  = 1
         this.animations[2][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Reaper/reaper_strong.png"), 0, 0, 256, 256, 6, .2, 0, true);
 
         // Attacking Animation state = 3
         // facing right = 0
-        this.animations[3][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Reaper/reaper_attack.png"), 0, 0, 320, 256, 6, .1, 0, true);
+        this.animations[3][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Reaper/reaper_attack_right.png"), 0, 0, 320, 256, 6, .1, 0, true);
 
         // facing left = 1
         this.animations[3][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Reaper/reaper_attack.png"), 0, 0, 320, 256, 6, .1, 0, true);

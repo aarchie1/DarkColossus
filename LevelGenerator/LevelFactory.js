@@ -66,7 +66,7 @@ function getLevel(levelNumber) {
     let startX = view.x;
     let startY = view.y;
 
-    let numberOfSections = randomNumberInRange(5, 10 + levelNumber);
+    let numberOfSections = randomNumberInRange(3, 7 + levelNumber);
 
     //BUILD LEVEL
     for(let i = 0; i < numberOfSections; i++) {
