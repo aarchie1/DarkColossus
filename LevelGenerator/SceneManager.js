@@ -14,46 +14,62 @@ class SceneManager {
 
     loadLevel() {
         let level = getLevel(1);
-        let xBoundMin = 1900;
-        let xBoundMax = 15000;
+        let xBoundMin = 1300;
+        let xBoundMax = 13000;
         let yBoundMin = 600;
         let yBoundMax = -800;
 
+
+        // initial platform final platform
+        let origX = -700;
+        for (let i = 0; i < 26; i++) {
+
+            let platform = level.platformGround[0];
+            this.game.addEntity(new Platform(this.game, origX, platform.y, 700, 256,
+                ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_ground.png"), new BoundingBox(platform.x, platform.y + 200, origX, 100)));
+            origX += 700;
+        }
+
+        // random ground platforms
         for (let i = 0; i < level.platformGround.length; i++) {
             let platform = level.platformGround[i];
+            let x = Math.random() * (xBoundMax - xBoundMin) + xBoundMin;
             // original x values : 700 
-            this.game.addEntity(new Platform(this.game, platform.x, platform.y, 16000, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_ground.png"), new BoundingBox(platform.x, platform.y+200, 15800, 100)));
+            this.game.addEntity(new Platform(this.game, x, platform.y, 700, 256,
+                ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_ground.png"), new BoundingBox(x, platform.y + 200, 700, 100)));
             //constructor(game, x, y, width, height, sprite, boundingBox    
         }
 
-
+        // random small platforms
         for (let i = 0; i < level.platformSmall.length; i++) {
-            let platform = level.platformSmall[i];
-
+            //let platform = level.platformSmall[i];
             let x = Math.random() * (xBoundMax - xBoundMin) + xBoundMin;
             let y = Math.random() * (yBoundMax - yBoundMin) + yBoundMin;
 
-            this.game.addEntity(new Platform(this.game, x, y, 256, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_small.png"), new BoundingBox(x, y+150, 256, 100)));
+            this.game.addEntity(new Platform(this.game, x, y, 256, 256,
+                ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_small.png"), new BoundingBox(x, y + 150, 256, 100)));
         }
 
+        // random large platforms
         for (let i = 0; i < level.platformLarge.length; i++) {
-            let platform = level.platformLarge[i];
-
+            //let platform = level.platformLarge[i];
             let x = Math.random() * (xBoundMax - xBoundMin) + xBoundMin;
             let y = Math.random() * (yBoundMax - yBoundMin) + yBoundMin;
 
-            this.game.addEntity(new Platform(this.game, x, y, 256, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_large.png"), new BoundingBox(x, y + 150, 256, 100)));
+            this.game.addEntity(new Platform(this.game, x, y, 884, 496,
+                ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_large.png"), new BoundingBox(x, y + 150, 884, 100)));
         }
 
-
+        // random tiny platforms
         for (let i = 0; i < level.platformTiny.length; i++) {
-            let platform = level.platformTiny[i];
-
+            //let platform = level.platformTiny[i];
             let x = Math.random() * (xBoundMax - xBoundMin) + xBoundMin;
             let y = Math.random() * (yBoundMax - yBoundMin) + yBoundMin;
 
-            this.game.addEntity(new Platform(this.game, x, y, 256, 256, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_tiny.png"), new BoundingBox(x, y + 150, 256, 100)));
+            this.game.addEntity(new Platform(this.game, x, y, 184, 184,
+                ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_tiny.png"), new BoundingBox(x, y + 150, 184, 100)));
         }
+
 
         //add background
 	    gameEngine.addEntity(new Background(this.game));
