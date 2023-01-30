@@ -36,6 +36,7 @@ function getLevel(levelNumber) {
         platformTiny: [],
         platformSmall: [],
         platformLarge: [],
+        platformHub: [],
         hazardGrowthShort: [],
         hazardGrowthTall: [],
         dnaPickup: [],
@@ -254,7 +255,6 @@ function getLevel(levelNumber) {
             level.portal.push({x: startX + 350, y: startY - 50});
             startX += PLATFORM_LARGE.w + 200;
         }
-    }
-
+    }         
     return level;
 }

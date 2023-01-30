@@ -225,7 +225,9 @@ class GameCharacter {
     draw(ctx) {
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset - this.game.camera.x, this.y-this.animationYOffset - this.game.camera.y, 1);
         ctx.font = "50px Arial";
-        ctx.strokeStyle = 'Red';      
+        ctx.strokeStyle = 'Red';   
+        ctx.textAlign = "left";   
+        ctx.fillText("PAUSED: " + this.game.PAUSED, 100, 100);
         if (debug) ctx.strokeRect(this.BB.x-this.game.camera.x, this.BB.y-this.game.camera.y, this.BB.width, this.BB.height);
     };
 }

@@ -34,8 +34,11 @@ ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/platform_small.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/platform_ground.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/platform_tiny.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/platform_large.png");
+ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/platform_hub.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/background.png");
+ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/cross_background.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/portal.png");
+ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/workbench.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/Hazards/hazard_growth_short.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/Hazards/hazard_growth_tall.png");
 
@@ -64,6 +67,7 @@ ASSET_MANAGER.downloadAll(() => {
 	//gameEngine.addEntity(new DarkEnergyUI(gameEngine));
 	//gameEngine.addEntity(new InventoryUI(gameEngine));
 	gameEngine.addEntity(new SceneManager(gameEngine));
+
 	
 	// Janky way of getting music to start, you have to interact with the volume bar first
 	var l = document.getElementById('volume');
