@@ -134,7 +134,7 @@ class InventoryUI {
     }
 
     button4() {
-      if (this.game.keys.Digit4) {
+      if (keypress("Digit4")) {
         if (this.state == this.BROWSE) {
           this.state = this.SPLICE;
         } else if (this.state == this.SPLICE) {

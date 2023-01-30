@@ -16,7 +16,7 @@ class Interactable {
     }
 
     update() {
-        if (this.game.keys.KeyE) {
+        if (keypress("KeyE")) {
             this.action();
         }
         
