@@ -23,9 +23,11 @@ ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_half.png");
 ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_low.png");
 ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_projectile.png");
 ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_attack.png");
+ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_attack_right.png");
 ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_normal.png");
 ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_weak.png");
 ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_strong.png");
+ASSET_MANAGER.queueDownload("./Sprites/Reaper/reaper_strong_right.png");
 
 //Level/Platforms
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/platform_small.png");

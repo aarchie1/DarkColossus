@@ -18,6 +18,8 @@ Player
 Reaper
     reaper_normal           256x256     6frames
     reaper_strong           256x256     6frames
+    reaper_strong_right     256x256     6frames
+    reaper_attack_right     320x256     6frames
     reaper_weak             256x256     6frames
     reaper_attack           320x256     6frames
 
