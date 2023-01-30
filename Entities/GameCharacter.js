@@ -4,6 +4,9 @@ class GameCharacter {
 
     constructor(game, x, y) {
         Object.assign(this, { game, x, y });
+        this.inventory = [];
+        this.dnaSlot1 = null;
+        this.dnaSlot2 = null;
         this.JUMP_ACC = -1000;
         this.MIN_RUN = 50;
         this.MAX_RUN = 1000;
@@ -29,7 +32,13 @@ class GameCharacter {
 
     updateBB() {
         this.lastBB = this.BB;
-        this.BB = new BoundingBox(this.x, this.y, 256, 256);
+        if (this.state === 3) this.BB = new BoundingBox(this.x+100, this.y, 100, 256);
+        else {
+            this.BB = new BoundingBox(this.x+100, this.y, 100, 256);
+        }
+        
+        
+        
     }
 
     update(){
@@ -217,7 +226,6 @@ class GameCharacter {
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset - this.game.camera.x, this.y-this.animationYOffset - this.game.camera.y, 1);
         ctx.font = "50px Arial";
         ctx.strokeStyle = 'Red';      
-        ctx.fillText("PAUSED: " + this.game.PAUSED, 100, 100);
         if (debug) ctx.strokeRect(this.BB.x-this.game.camera.x, this.BB.y-this.game.camera.y, this.BB.width, this.BB.height);
     };
 }

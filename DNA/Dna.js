@@ -5,6 +5,21 @@ class DNA {
         this.betaAbility = betaAbility;
         this.epsilonAbility = epsilonAbility;
         this.rarity = rarity;
+        //set image
+        switch (this.rarity) {
+            case 1:
+                this.image = ASSET_MANAGER.getAsset("./Sprites/DNA/dna_basic.png");
+                break;
+            case 2:
+                this.image = ASSET_MANAGER.getAsset("./Sprites/DNA/dna_uncommon.png");
+                break;
+            case 3:
+                this.image = ASSET_MANAGER.getAsset("./Sprites/DNA/dna_rare.png");
+                break;
+            case 4:
+                this.image = ASSET_MANAGER.getAsset("./Sprites/DNA/dna_godly.png");
+                break;
+        }
     };
 
     update() {
@@ -12,6 +27,48 @@ class DNA {
         this.alphaAbility.update();
         this.betaAbility.update();
         this.epsilonAbility.update();
+    }
+
+    drawDna(ctx, x, y, slotSize) {
+         let strips = 
+            [(this.sigmaAbility == null) ? -1 : this.sigmaAbility.cooldownRarity,
+             (this.sigmaAbility == null) ? -1 : this.sigmaAbility.effectRarity,
+             (this.alphaAbility == null) ? -1 : this.alphaAbility.cooldownRarity,
+             (this.alphaAbility == null) ? -1 : this.alphaAbility.effectRarity,
+             (this.betaAbility == null) ? -1 : this.betaAbility.cooldownRarity,
+             (this.betaAbility == null) ? -1 : this.betaAbility.effectRarity
+            ];
+        for (let i = 0; i < 6; i++) {
+            let distance = (slotSize/7)*i;
+            let offset = 0;
+            if (i == 1 || i == 3 || i == 5) {
+                offset = -10
+            }
+            
+            if (strips[i] == -1) continue;     
+            switch (strips[i]) {
+                case 1:
+                    ctx.strokeStyle = "#990F26"; //basic gray
+                    break;
+                case 2:
+                    ctx.strokeStyle = "#1E9958"; //uncommon green
+                    break;
+                case 3:
+                    ctx.strokeStyle = "#0080B2"; //rare blue
+                    break;
+                case 4:
+                    ctx.strokeStyle = "#E55916"; //godly gold
+                    break;
+            }
+
+            let c = 0.3;
+            ctx.lineWidth = 5;        
+            ctx.beginPath();
+            ctx.moveTo(x + slotSize/1.6 + offset + distance - slotSize * c, y + slotSize/1.6 - offset - distance + slotSize * c);
+            ctx.lineTo(x + slotSize/2.6 + offset + distance - slotSize * c, y + slotSize/2.6 - offset - distance + slotSize * c);
+            ctx.stroke();
+        }
+        ctx.drawImage(this.image, x, y, slotSize, slotSize);
     }
 
     toString() {

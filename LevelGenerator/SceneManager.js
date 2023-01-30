@@ -1,3 +1,4 @@
+
 class SceneManager {
     constructor(game) {
         this.x = 0;
@@ -160,6 +161,3 @@ class SceneManager {
 
 		}
 	}
-	//TEST ENTITIES
-	//gameEngine.addEntity(new DnaTester());
-	//gameEngine.addEntity(new LevelFactoryTester());

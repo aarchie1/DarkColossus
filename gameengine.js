@@ -33,6 +33,7 @@ class GameEngine {
         this.controllerButtonX = false;
         this.controllerButtonY = false;
         this.gamepad = null;
+        this.darkEnergy = new DarkEnergy();
 
         // Options and the Details
         this.options = options || {
@@ -97,6 +98,11 @@ class GameEngine {
         this.ctx.canvas.addEventListener("keyup", event => this.keys[event.code] = false);
     };
 
+    addEntityFirst(entity) {
+        this.entities.unshift(entity);
+    };
+
+
     addEntity(entity) {
         this.entities.push(entity);
     };
@@ -126,15 +132,12 @@ class GameEngine {
             this.controllerButtonDown = gamepad.buttons[13].pressed || gamepad.axes[0] > 0.3;
             this.controllerButtonLeft = gamepad.buttons[14].pressed || gamepad.axes[0] < -0.3;
             this.controllerButtonRight = gamepad.buttons[15].pressed || gamepad.axes[0] > 0.3;
-
         }
     }
 
     update() {
         let entitiesCount = this.entities.length;
-
         this.gamepadUpdate();
-
 
         for (let i = 0; i < entitiesCount; i++) {
             let entity = this.entities[i];
