@@ -69,8 +69,6 @@ class Reaper {
         else {
             this.state = this.size;
         }
-        
-        
 
         // Update Facing direction
         if (this.velocity.x < 0) this.facing = 1;
