@@ -9,6 +9,7 @@ class SceneManager {
         this.transition = false;
         this.player = new GameCharacter(this.game, 0, 0);
         gameEngine.addEntity(this.player);
+        gameEngine.addEntity(new Reaper(this.game, 1000, 520, 2));
 
         this.loadLevel();
     };
