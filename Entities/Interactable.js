@@ -27,6 +27,5 @@ class Interactable {
                 this.action();
             } 
         }
-        console.log(params.STATE);
     }
 }

@@ -34,9 +34,9 @@ class SceneManager {
     };
 
     loadLevel() {
-        this.game.addEntity(this.player);
-
-        let level = getLevel(1);
+        this.clearLevel();
+        params.LEVEL += 1;
+        let level = getLevel(params.LEVEL);
         let xBoundMin = 1300;
         let xBoundMax = 13000;
         let yBoundMin = 600;
@@ -111,7 +111,8 @@ class SceneManager {
     }
 
     loadHub() {
-        this.game.addEntity(this.player);
+        params.LEVEL = 0;
+        this.clearLevel();
 
         this.rightXLimit = 1400;
         //Create Inventory UI
@@ -133,7 +134,7 @@ class SceneManager {
         }));
 
         //Create Portal Interactable
-        this.game.addEntity(new Portal(this.game));
+        this.game.addEntity(new Portal(this.game, this));
         this.game.addEntity(new Platform(this.game, 1, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(0, 830, 1600, 400)));
         this.game.addEntity(new Cross_Background(this.game, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/cross_background.png")));
         this.game.addEntity(new Background(this.game));
@@ -169,6 +170,21 @@ class SceneManager {
     draw(ctx) {
 
     };
+
+    clearLevel() {
+        //remove everything from this.game.entities except Inventory, DarkEnergy, SceneManager, etc.
+        this.game.entities = this.game.entities.filter(function (entity) {
+            return entity instanceof Inventory || entity instanceof DarkEnergy || entity instanceof SceneManager || entity instanceof hud;
+        });
+
+        this.game.camera.x = 0;
+        this.game.camera.y = 0;
+        this.player.x = 0;
+        this.player.y = 580;
+        this.game.addEntity(this.player);
+
+
+    }
 
     
 }

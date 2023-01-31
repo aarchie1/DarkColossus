@@ -1,11 +1,13 @@
 class Portal {
 
-    constructor(game) {
+    constructor(game, sceneManager) {
         this.game = game;
+        this.sceneManager = sceneManager;
         this.width = 1400;
         this.height = 900;
         this.x = 1250;
         this.y = 450;
+        this.BB = new BoundingBox(this.x, this.y, this.width, this.height);
         this.animation = new Animator(ASSET_MANAGER.getAsset("./Sprites/LevelAssets/portal.png"), 0, 0, 364, 364, 4, 0.2, false, true);
     }
 
@@ -15,5 +17,8 @@ class Portal {
 
     update() {
 
+        if (this.game.keys.KeyE && this.BB.collide(player.BB)) {
+            this.sceneManager.loadLevel();
+        }
     }
 }

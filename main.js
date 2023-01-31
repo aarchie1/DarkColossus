@@ -41,6 +41,7 @@ ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/portal.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/workbench.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/Hazards/hazard_growth_short.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/Hazards/hazard_growth_tall.png");
+ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/dark_energy.png");
 
 //DNA
 ASSET_MANAGER.queueDownload("./Sprites/DNA/dna_basic.png");
@@ -63,10 +64,11 @@ ASSET_MANAGER.downloadAll(() => {
 	CANVAS_WIDTH = canvas.width;
 	const ctx = canvas.getContext("2d");
 	gameEngine.init(ctx);
+	gameEngine.addEntity(new hud(gameEngine));
+
 	gameEngine.addEntity(new SceneManager(gameEngine));
 	gameEngine.addEntity(new Inventory(gameEngine));
 
-	
 	// Janky way of getting music to start, you have to interact with the volume bar first
 	var l = document.getElementById('volume');
 	l.addEventListener('click', handleClick, true);

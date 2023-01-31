@@ -1,7 +1,8 @@
 /** Global Parameters Object */
 const params = { 
     BLOCKWIDTH: 256,
-    STATE : "gameplay"
+    STATE : "gameplay",
+    LEVEL: 0
 };
 
 
