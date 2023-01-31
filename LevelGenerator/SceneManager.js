@@ -34,6 +34,8 @@ class SceneManager {
     };
 
     loadLevel() {
+        this.game.addEntity(this.player);
+
         let level = getLevel(1);
         let xBoundMin = 1300;
         let xBoundMax = 13000;
