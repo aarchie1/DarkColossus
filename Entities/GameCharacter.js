@@ -58,26 +58,26 @@ class GameCharacter {
         
         // Ground Physics
         if (this.state < 2) {
-            if (this.state == 0 || this.state == 1) this.JUMPS = this.MAX_JUMPS;
+            if (this.state == 0 || this.state == 1 && params.STATE == "gameplay") this.JUMPS = this.MAX_JUMPS;
             this.animationXOffset = 0;
             this.animationYOffset = 0;
             if (Math.abs(this.velocity.x) < MIN_RUN) {
                 this.velocity.x = 0;
                 this.state = 0;
-                if (this.game.keys.KeyA || this.game.controllerButtonLeft) {
+                if ((this.game.keys.KeyA || this.game.controllerButtonLeft) && params.STATE == "gameplay") {
                     this.velocity.x -= MIN_RUN;
                 }
-                if (this.game.keys.KeyD || this.game.controllerButtonRight) {
+                if ((this.game.keys.KeyD || this.game.controllerButtonRight) && params.STATE == "gameplay") {
                     this.velocity.x += MIN_RUN;
                 }
             } else if (Math.abs(this.velocity.x) >= MIN_RUN) {
                 if (this.facing === 0) {
                     this.animationYOffset = -35;
-                    if ((this.game.keys.KeyD || this.game.controllerButtonRight) && (!this.game.keys.KeyA || !this.game.controllerButtonLeft)) {
+                    if ((this.game.keys.KeyD || this.game.controllerButtonRight) && (!this.game.keys.KeyA || !this.game.controllerButtonLeft) && params.STATE == "gameplay") {
                         this.velocity.x += RUN_ACC * TICK;
                         this.animationXOffset = 0;
                     }
-                    else if ((this.game.keys.KeyA || this.game.controllerButtonLeft) && (!this.game.keys.KeyD || !this.game.controllerButtonRight)) {
+                    else if ((this.game.keys.KeyA || this.game.controllerButtonLeft) && (!this.game.keys.KeyD || !this.game.controllerButtonRight) && params.STATE == "gameplay") {
                         this.velocity.x -= DEC_SKID * TICK;
                     }
                     else {
@@ -86,10 +86,10 @@ class GameCharacter {
                 }
                 if (this.facing === 1) {
                     this.animationYOffset = -35;
-                    if ((this.game.keys.KeyA || this.game.controllerButtonLeft) && (!this.game.keys.KeyD || !this.game.controllerButtonRight)) {
+                    if ((this.game.keys.KeyA || this.game.controllerButtonLeft) && (!this.game.keys.KeyD || !this.game.controllerButtonRight) && params.STATE == "gameplay") {
                         this.velocity.x -= RUN_ACC * TICK;;
                     }
-                    else if ((this.game.keys.KeyD || this.game.controllerButtonRight) && (!this.game.keys.KeyA || !this.game.controllerButtonLeft)) {
+                    else if ((this.game.keys.KeyD || this.game.controllerButtonRight) && (!this.game.keys.KeyA || !this.game.controllerButtonLeft) && params.STATE == "gameplay") {
                         this.velocity.x += DEC_SKID * TICK;
                     }
                     else {
@@ -163,7 +163,7 @@ class GameCharacter {
     }
 
     jump() {
-        if (!this.game.PAUSED && (this.game.keys.Space || this.game.controllerButtonA) && this.JUMPS > 0) {
+        if (!this.game.PAUSED && params.STATE == "gameplay" && (this.game.keys.Space || this.game.controllerButtonA) && this.JUMPS > 0) {
             this.JUMPS--;
             this.velocity.y = this.JUMP_ACC;
             if (this.facing == 0) {

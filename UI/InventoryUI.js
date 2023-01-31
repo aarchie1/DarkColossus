@@ -2,7 +2,7 @@ class InventoryUI {
     constructor(game) {
         //state "enums"
         console.log("inventory created");
-        this.removeFromWorld = false;
+        params.STATE = "menu";
         this.font = "20px Arial",
         this.fontColor = "#FFFFFF"
         this.BROWSE = 1;
@@ -89,11 +89,11 @@ class InventoryUI {
     update() {
 
       //Controls
-      // this.button1();
-      // this.button2();
-      // this.button3();
       this.button4();
       //this.game.keypress(this.game.keys.Digit4, this.button4);
+
+      //Exit Inventory
+      this.closeInventory();
 
 
       //I NEED HELP WITH CONTROLS 
@@ -175,6 +175,14 @@ class InventoryUI {
 
     unequipDna(dna) {
 
+    }
+
+    closeInventory() {
+      if (this.game.keys.KeyE) {
+        params.STATE = "gameplay";
+        this.removeFromWorld = true;
+        gameEngine.keys.KeyE = false;
+      }
     }
 }
   

@@ -1,11 +1,13 @@
 /** Global Parameters Object */
 const params = { 
-    BLOCKWIDTH: 256
+    BLOCKWIDTH: 256,
+    STATE : "gameplay"
 };
 
 
 let CANVAS_HEIGHT = 0;
 let CANVAS_WIDTH = 0;
+let player = null;
 
 let debug = false;
 function toggleDebug() {

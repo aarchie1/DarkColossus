@@ -77,5 +77,17 @@ class DarkEnergyUI {
     }
 
     update() {
+
+        this.closeDarkEnergyUI();
+        
     }
+
+    closeDarkEnergyUI() {
+        if (this.game.keys.KeyE) {
+            params.STATE = "gameplay";
+            this.removeFromWorld = true;
+            gameEngine.keys.KeyE = false;
+        }
+    }
+
 }
