@@ -8,11 +8,29 @@ class SceneManager {
         this.gameOver = false;
         this.transition = false;
         this.player = new GameCharacter(this.game, 0, 0);
+
+        // splits the X axis into 5 sections [  |  |  |  |  ] <-- map, playable area --> [  |xx|xx|xx|  ]
+        this.quadX = 1400 / 5;
+        this.rightBoundX = this.quadX * 3;
+        this.midX = this.quadX * 2.5;
+        this.leftBoundX = this.quadX * 1;
+
+        // splits the Y axis into 4 sectionsd
+        this.quadY = 900 / 4;
+        this.lowerBoundY = this.quadY * 3;
+        this.midY = this.quadY * 2;
+        this.upperBoundY = this.quadY * 1;
+
+        // sets left, right, lower, and upper, map border so player cannot leave the area.
+        this.leftXLimit = 0;      // do not change -- does not traverse left of starting point
+        this.rightXLimit = 16000; // 16k to stay within background image (right)
+        this.lowerYLimit = 700;   // 700 is reasonable to keep starting platform visible
+        this.upperYLimit = -8500; // -8500 to stay within background image (top)
+
         player = this.player;
-        gameEngine.addEntity(this.player);
-        gameEngine.addEntity(new Reaper(this.game, 1000, 520, 2));
+        //gameEngine.addEntity(new Reaper(this.game, 1000, 520, 2));
         this.loadHub(); 
-        //this.loadLevel();
+        //this.loadLevel(); 
     };
 
     loadLevel() {
@@ -21,6 +39,8 @@ class SceneManager {
         let xBoundMax = 13000;
         let yBoundMin = 600;
         let yBoundMax = -800;
+
+        this.rightXLimit = 16000;
 
         // initial platform final platform
         let origX = -700;
@@ -89,7 +109,9 @@ class SceneManager {
     }
 
     loadHub() {
+        this.game.addEntity(this.player);
 
+        this.rightXLimit = 1400;
         //Create Inventory UI
         let inventoryBB = new BoundingBox(900, 525, 248, 200);
         this.game.addEntity(new Interactable(this.game, 900, 525, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), inventoryBB, () => {
@@ -108,23 +130,11 @@ class SceneManager {
             }
         }));
 
-        
-
-
-
-        
-
-
-
-        // //Create Portal Interactable
-        // this.game.addEntity(new Interactable(this.game, 1300, 525, 1400, 900, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/cross_background.png"), () => {
-        //     this.level++;
-        //     this.loadLevel();
-        // }));
-        
-        this.game.addEntity(new Platform(this.game, 1, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(0, 800, 1600, 400)));
+        //Create Portal Interactable
+        this.game.addEntity(new Portal(this.game));
+        this.game.addEntity(new Platform(this.game, 1, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(0, 830, 1600, 400)));
+        this.game.addEntity(new Cross_Background(this.game, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/cross_background.png")));
         this.game.addEntity(new Background(this.game));
-        
 
     }
 
@@ -134,23 +144,6 @@ class SceneManager {
 
     update() {
 
-        // splits the X axis into 5 sections [  |  |  |  |  ] <-- map, playable area --> [  |xx|xx|xx|  ]
-        let quadX = 1400 / 5;
-        let rightBoundX = quadX * 3;
-        let midX = quadX * 2.5;
-        let leftBoundX = quadX * 1;
-
-        // splits the Y axis into 4 sectionsd
-        let quadY = 900 / 4;
-        let lowerBoundY = quadY * 3;
-        let midY = quadY * 2;
-        let upperBoundY = quadY * 1;
-
-        // sets left, right, lower, and upper, map border so player cannot leave the area.
-        let leftXLimit = 0;      // do not change -- does not traverse left of starting point
-        let rightXLimit = 16000; // 16k to stay within background image (right)
-        let lowerYLimit = 700;   // 700 is reasonable to keep starting platform visible
-        let upperYLimit = -8500; // -8500 to stay within background image (top)
 
         //Make the camera move based off this bounding box
 /*      // Keeps player in rightBoundX
@@ -158,12 +151,12 @@ class SceneManager {
         if (this.player.x < leftBoundX && !(this.player.x - leftBoundX <= leftXLimit)) this.x = this.player.x - leftBoundX;
 */
         // Keeps player centered on X
-        if (this.player.x > midX && !(this.player.x + midX >= rightXLimit)) this.x = this.player.x - midX;
-        if (this.player.x < midX && !(this.player.x - midX <= leftXLimit)) this.x = this.player.x - midX;
+        if (this.player.x > this.midX && !(this.player.x + this.midX >= this.rightXLimit)) this.x = this.player.x - this.midX;
+        if (this.player.x < this.midX && !(this.player.x - this.midX <= this.leftXLimit)) this.x = this.player.x - this.midX;
 
 
-        if (this.player.y < upperBoundY && !(this.player.y + upperBoundY <= upperYLimit)) this.y = this.player.y - upperBoundY;
-        if (this.player.y > lowerBoundY && !(this.player.y - lowerBoundY >= lowerYLimit)) this.y = this.player.y - lowerBoundY;
+        if (this.player.y < this.upperBoundY && !(this.player.y + this.upperBoundY <= this.upperYLimit)) this.y = this.player.y - this.upperBoundY;
+        if (this.player.y > this.lowerBoundY && !(this.player.y - this.lowerBoundY >= this.lowerYLimit)) this.y = this.player.y - this.lowerBoundY;
 
 
         //if (this.player.y < upperBoundY && !(this.player.y <= upperYLimit)) this.y = this.player.y - upperBoundY;
@@ -196,3 +189,28 @@ class SceneManager {
 
 		}
 	}
+
+    class Cross_Background {
+        constructor(game) {
+            this.game = game;
+            this.width = 1400;
+            this.height = 900;
+            this.x = 90;
+            this.y = -40;
+            this.animation = new Animator(ASSET_MANAGER.getAsset("./Sprites/LevelAssets/cross_background.png"), 0, 0, 1400, 900, 1, 1, true, true);
+            this.t = 0;
+            this.amplitude = 20;
+        }
+
+        draw(ctx) {
+            this.t += 0.025;
+           // ctx.drawImage(this.image, this.x-(this.game.camera.x), this.y-(this.game.camera.y), this.width, this.height);
+            this.animation.drawFrame(this.game.clockTick, ctx, this.x-this.game.camera.x, this.y-this.game.camera.y + Math.sin(this.t) * this.amplitude, 1);
+        }
+
+        update() {
+
+        }
+    }
+
+
