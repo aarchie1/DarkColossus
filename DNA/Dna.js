@@ -38,7 +38,6 @@ class DNA {
     }
 
     drawDna(ctx, x, y, slotSize) {
-        console.log("drawing dna");
          let strips = 
             [(this.sigmaAbility == null) ? -1 : this.sigmaAbility.cooldownRarity,
              (this.sigmaAbility == null) ? -1 : this.sigmaAbility.effectRarity,
@@ -47,7 +46,8 @@ class DNA {
              (this.betaAbility == null) ? -1 : this.betaAbility.cooldownRarity,
              (this.betaAbility == null) ? -1 : this.betaAbility.effectRarity
             ];
-            
+
+
         for (let i = 0; i < 6; i++) {
             let distance = (slotSize/7)*i;
             let offset = 0;

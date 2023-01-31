@@ -18,6 +18,7 @@ class InventoryUI {
         this.slotSize = 116;
         this.currentPage = 0;
         this.currentSlot = 0;
+        this.currentDna = 0;
         this.count = 50;
         this.x = CANVAS_WIDTH/2 - this.columns * this.slotSize/2;
         this.y = CANVAS_HEIGHT - this.rows * this.slotSize;
@@ -65,10 +66,14 @@ class InventoryUI {
 
       let end = (this.rows*this.columns*this.currentPage) + (this.rows*this.columns);
       //iterate over inventory and draw every dna in a slot
+
       for (let i = this.currentPage*this.rows*this.columns; i < end; i++) {
         let dna = this.inventory[i];
         let x = this.x + (i % this.columns) * this.slotSize;
-        let y = this.y + Math.floor(i / this.columns) * this.slotSize;
+        let row = Math.floor(i / this.columns);
+        let y = this.y + row * this.slotSize - (this.currentPage * this.rows * this.slotSize);
+      
+      
         if (dna != null) dna.drawDna(ctx, x, y, this.slotSize);
       }
 
@@ -86,9 +91,8 @@ class InventoryUI {
       this.sellDna();
       this.toggleMode();
       this.closeInventory();
-
-
-      //I NEED HELP WITH CONTROLS 
+      console.log("current slot: " + this.currentSlot);
+      console.log("current dna: " + this.currentDna);
       //Move Cursor Left
       if (!this.pressed &&(this.game.keys.KeyA || this.game.controllerButtonLeft)) {
         this.currentSlot = (this.currentSlot == 0) ? this.columns*this.rows-1 : (this.currentSlot - 1) % (this.columns * this.rows);
@@ -112,6 +116,7 @@ class InventoryUI {
       } else {
         this.pressed = false;
       }
+      this.currentDna = this.currentSlot + (this.currentPage * this.rows * this.columns);
     }
 
     drawControls(ctx) {
@@ -120,7 +125,6 @@ class InventoryUI {
       ctx.fillStyle = this.fontColor;
       ctx.textAlign = "center";
       ctx.font = this.font;
-      //console.log(this.BROWSE);
       if(this.state == this.BROWSE){
         ctx.fillText("1: Equip slot 1   2: Equip slot 2   3: Sell   4:Splice", CANVAS_WIDTH/2, this.y - 20);
       } else if (this.state == this.SPLICE) {
@@ -140,7 +144,7 @@ class InventoryUI {
 
     equipSlot1() {
       if (keypress("Digit1") && this.state == this.BROWSE && !this.game.PAUSED){
-        params.INVENTORY.dnaSlot1 = this.inventory[this.currentSlot];
+        params.INVENTORY.dnaSlot1 = this.inventory[this.currentDna];
         if (params.INVENTORY.dnaSlot2 == params.INVENTORY.dnaSlot1) {
           params.INVENTORY.dnaSlot2 = null;
         }
@@ -149,7 +153,7 @@ class InventoryUI {
 
     equipSlot2() {
       if (keypress("Digit2") && this.state == this.BROWSE && !this.game.PAUSED){
-        params.INVENTORY.dnaSlot2 = this.inventory[this.currentSlot];
+        params.INVENTORY.dnaSlot2 = this.inventory[this.currentDna];
         if (params.INVENTORY.dnaSlot2 == params.INVENTORY.dnaSlot1) {
           params.INVENTORY.dnaSlot1 = null;
         }
@@ -158,10 +162,10 @@ class InventoryUI {
 
     sellDna() {
       if (keypress("Digit3") && this.state == this.BROWSE && !this.game.PAUSED){
-        if(this.inventory[this.currentSlot] == null) return;
-        params.DARK_ENERGY.currency += this.inventory[this.currentSlot].value;
+        if(this.inventory[this.currentDna] == null) return;
+        params.DARK_ENERGY.currency += this.inventory[this.currentDna].value;
         //remove only the current slot
-        this.inventory.splice(this.currentSlot, 1);
+        this.inventory.splice(this.currentDna, 1);
       }
     }
 
