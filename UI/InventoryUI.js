@@ -1,6 +1,5 @@
 class InventoryUI {
     constructor(game) {
-        //state "enums"
         console.log("inventory created");
         params.STATE = "menu";
         this.font = "20px Arial",
@@ -9,18 +8,12 @@ class InventoryUI {
         this.SPLICE = 2;
         this.state = this.BROWSE;
         this.game = game;
-        this.inventory = []//inventory;
-        for (let i = 0; i < 16; i++) {
-            this.inventory.push(getRandomDNA());
-        }
-        let testDna = getRandomDNA();
-        testDna.sigmaAbility = null;
-        testDna.betaAbility = null;
-        this.inventory.push(testDna);
+        //find inventory in entities
+        this.inventory = params.INVENTORY.inventory;
         this.rows = 2;
         this.columns = 6;
         this.numPages = Math.ceil(this.inventory.length / (this.rows * this.columns));
-        this.color = "#330000"
+        this.color = "#330000";
         this.gridSize = 6;
         this.slotSize = 116;
         this.currentPage = 0;
@@ -74,10 +67,9 @@ class InventoryUI {
       //iterate over inventory and draw every dna in a slot
       for (let i = this.currentPage*this.rows*this.columns; i < end; i++) {
         let dna = this.inventory[i];
-        if (dna == null) break;
         let x = this.x + (i % this.columns) * this.slotSize;
         let y = this.y + Math.floor(i / this.columns) * this.slotSize;
-        dna.drawDna(ctx, x, y, this.slotSize);
+        if (dna != null) dna.drawDna(ctx, x, y, this.slotSize);
       }
 
       this.drawControls(ctx);
@@ -89,10 +81,10 @@ class InventoryUI {
     update() {
 
       //Controls
-      this.button4();
-      //this.game.keypress(this.game.keys.Digit4, this.button4);
-
-      //Exit Inventory
+      this.equipSlot1();
+      this.equipSlot2();
+      this.sellDna();
+      this.toggleMode();
       this.closeInventory();
 
 
@@ -124,19 +116,20 @@ class InventoryUI {
 
     drawControls(ctx) {
       //draw controls right above the inventory in a horizontal line
+      console.log("page: " + this.currentPage);
       ctx.fillStyle = this.fontColor;
       ctx.textAlign = "center";
       ctx.font = this.font;
       //console.log(this.BROWSE);
       if(this.state == this.BROWSE){
-        ctx.fillText("1: Equip slot 1   2: Equip slot 2   3: Convert   4:Splice", CANVAS_WIDTH/2, this.y - 20);
+        ctx.fillText("1: Equip slot 1   2: Equip slot 2   3: Sell   4:Splice", CANVAS_WIDTH/2, this.y - 20);
       } else if (this.state == this.SPLICE) {
         ctx.fillText("1: Select slot 1   2: Select slot 2   3: Splice   4:Browse", CANVAS_WIDTH/2, this.y - 20);
       }
     }
 
-    button4() {
-      if (keypress("Digit4")) {
+    toggleMode() {
+      if (keypress("Digit4") && !this.game.PAUSED) {
         if (this.state == this.BROWSE) {
           this.state = this.SPLICE;
         } else if (this.state == this.SPLICE) {
@@ -144,6 +137,34 @@ class InventoryUI {
         }
       }
     }
+
+    equipSlot1() {
+      if (keypress("Digit1") && this.state == this.BROWSE && !this.game.PAUSED){
+        params.INVENTORY.dnaSlot1 = this.inventory[this.currentSlot];
+        if (params.INVENTORY.dnaSlot2 == params.INVENTORY.dnaSlot1) {
+          params.INVENTORY.dnaSlot2 = null;
+        }
+      }
+    }
+
+    equipSlot2() {
+      if (keypress("Digit2") && this.state == this.BROWSE && !this.game.PAUSED){
+        params.INVENTORY.dnaSlot2 = this.inventory[this.currentSlot];
+        if (params.INVENTORY.dnaSlot2 == params.INVENTORY.dnaSlot1) {
+          params.INVENTORY.dnaSlot1 = null;
+        }
+      }
+    }
+
+    sellDna() {
+      if (keypress("Digit3") && this.state == this.BROWSE && !this.game.PAUSED){
+        if(this.inventory[this.currentSlot] == null) return;
+        params.DARK_ENERGY.currency += this.inventory[this.currentSlot].value;
+        //remove only the current slot
+        this.inventory.splice(this.currentSlot, 1);
+      }
+    }
+
 
     drawArrows() {
       if (this.numPages <= 1) return;
@@ -167,14 +188,6 @@ class InventoryUI {
       if (this.currentPage > 0) {
         this.currentPage--;
       }
-    }
-
-    equipDna(dna) {
-      
-    }
-
-    unequipDna(dna) {
-
     }
 
     closeInventory() {

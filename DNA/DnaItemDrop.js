@@ -27,24 +27,5 @@ class DnaItemDrop {
         this.dna.drawDna(ctx, this.x - this.game.camera.x , this.y - this.game.camera.y, 116);
     }
     
-    // drawEllipse(ctx, x, y, w, h, alpha) {
-    //     ctx.globalAlpha = 0;;
-    //     ctx.fillStyle = "#330000"
-    //     ctx.beginPath();
-    
-    //     for (let i = 0; i < 2 * Math.PI; i += 0.01) {
-    //         let xPos = x + w * Math.cos(i);
-    //         let yPos = y + h * Math.sin(i);
-    //         if (i === 0) {
-    //             ctx.moveTo(xPos, yPos);
-    //         } else {
-    //             ctx.lineTo(xPos, yPos);
-    //         }
-    //     }
-    //     ctx.stroke();
-    //     ctx.globalAlpha = alpha;
-    //     ctx.fill();
-    //     ctx.globalAlpha = 1;
-    
-    // }
+
 }

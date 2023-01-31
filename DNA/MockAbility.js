@@ -28,20 +28,33 @@ class MockAbility {
         console.log('Effect Rarity: ' + effectRarity);
     }
 
+    //INVENTORY UI CALL THIS
     onEquip() {
-
+        //add stat changes
+        //example cases:
+            //on splice?
+            //on equip
     }
 
+    //INVENTORY UI CALL THIS
     onUnequip() {
-
+        //remove stat changes
+        //example cases:
+            //on sell
+            //on splice
+            //on replace
     }
 
+    //GAME CHARACTER CALLS THIS
     onUse() {
-
+        //changes character state to 4/5
+        //example cases:
+            //on use/specific button press
     }
 
+    //Ability itself
     onEnd() {
-
+        //reverts character state to 1-3
     }
 
     setCooldown(cooldownRarity) { // 1-4

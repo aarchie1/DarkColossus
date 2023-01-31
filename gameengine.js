@@ -52,11 +52,14 @@ class GameEngine {
         this.controllerButtonY = false;
         this.gamepad = null;
         this.darkEnergy = new DarkEnergy();
+        params.DARK_ENERGY = this.darkEnergy;
 
         // Options and the Details
         this.options = options || {
             debugging: false,
         };
+
+
     };
 
     init(ctx) {
@@ -194,13 +197,16 @@ class GameEngine {
             this.keys.KeyE = false;
 
             //menu specific single presses
-            //Add here Stephen
             if (params.STATE == "MENU") {
                 this.keys.Digit1 = false;
                 this.keys.Digit2 = false;
                 this.keys.Digit3 = false;
                 this.keys.Digit4 = false;
                 this.keys.Digit5 = false;
+                this.keys.KeyW = false;
+                this.keys.KeyS = false;
+                this.keys.KeyA = false;
+                this.keys.KeyD = false;
             }
 
 
