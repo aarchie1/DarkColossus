@@ -19,6 +19,7 @@ class GameEngine {
             KeyA: false,
             KeyS: false,
             KeyD: false,
+            KeyE: false,
             Space: false,
             Escape: false
         };
@@ -110,14 +111,20 @@ class GameEngine {
             this.rightclick = getXandY(e);
         });
 
-        this.ctx.canvas.addEventListener("keydown", event => this.keys[event.code] = true);
+        this.ctx.canvas.addEventListener("keydown", event => {
+            // if (this.keysPressed[event.code] == false){
+            //     this.keys[event.code] = true;
+            //     this.keysPressed[event.code] = true;
+            // } else {
+            //     this.keys[event.code] = false;
+            // }
+            this.keys[event.code] = true;
+        });
         
         this.ctx.canvas.addEventListener("keyup", event => {
-            this.keys[event.code] = false
+            this.keys[event.code] = false;
             this.keysPressed[event.code] = false;
         });
-
-
     };
 
 
@@ -182,7 +189,21 @@ class GameEngine {
             this.clockTick = this.timer.tick();
             this.update();
             this.draw();
-           // this.keys[key] = false;
+
+            //Global single press
+            this.keys.KeyE = false;
+
+            //menu specific single presses
+            //Add here Stephen
+            if (params.STATE == "MENU") {
+                this.keys.Digit1 = false;
+                this.keys.Digit2 = false;
+                this.keys.Digit3 = false;
+                this.keys.Digit4 = false;
+                this.keys.Digit5 = false;
+            }
+
+
         } else {
             this.clockTick = null;
             this.update();
