@@ -31,10 +31,11 @@ class DNA {
     };
 
     update() {
-        this.sigmaAbility.update();
-        this.alphaAbility.update();
-        this.betaAbility.update();
-        this.epsilonAbility.update();
+        if(this.sigmaAbility != null)this.sigmaAbility.update();
+        if(this.alphaAbility != null)this.alphaAbility.update();
+        if(this.betaAbility != null)this.betaAbility.update();
+        if(this.epsilonAbility != null)this.epsilonAbility.update();
+        
     }
 
     drawDna(ctx, x, y, slotSize) {

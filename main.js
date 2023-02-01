@@ -14,7 +14,7 @@ ASSET_MANAGER.queueDownload("./Sprites/Player/player_falling_left.png");
 //Abilities
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/cosmic_blade.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/soul_grab.png");
-ASSET_MANAGER.queueDownload("./Sprites/Abilities/slippery.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/supersonic.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/emp.png");
 
 //Enemies
@@ -66,9 +66,9 @@ ASSET_MANAGER.downloadAll(() => {
 	gameEngine.init(ctx);
 	params.HUD = new hud(gameEngine);
 	gameEngine.addEntity(params.HUD);
-	gameEngine.addEntity(new SceneManager(gameEngine));
 	params.INVENTORY = new Inventory(gameEngine);
 	gameEngine.addEntity(params.INVENTORY);
+	gameEngine.addEntity(new SceneManager(gameEngine));
 
 	// Janky way of getting music to start, you have to interact with the volume bar first
 	var l = document.getElementById('volume');

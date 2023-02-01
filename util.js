@@ -35,6 +35,23 @@ function keyhold(key) {
     }
 };
 
+function equipAbilities(){
+    if (params.INVENTORY.dnaSlot1 != null) {
+        let dna = params.INVENTORY.dnaSlot1;
+        if (dna.sigmaAbility != null) dna.sigmaAbility.onEquip();
+        if (dna.alphaAbility != null) dna.alphaAbility.onEquip();
+        if (dna.betaAbility != null) dna.betaAbility.onEquip();
+    } 
+
+    if (params.INVENTORY.dnaSlot2 != null) {
+        let dna = params.INVENTORY.dnaSlot2;
+        if (dna.sigmaAbility != null) dna.sigmaAbility.onEquip();
+        if (dna.alphaAbility != null) dna.alphaAbility.onEquip();
+        if (dna.betaAbility != null) dna.betaAbility.onEquip();
+    }
+}
+
+
 
 /**
  * @param {Number} n

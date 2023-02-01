@@ -13,7 +13,6 @@ class DarkEnergyItemDrop {
     update() {
         this.t += 0.06;
         this.y += Math.sin(this.t) * this.amplitude;
-        
     }
 
     draw(ctx) {

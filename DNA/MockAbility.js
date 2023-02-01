@@ -23,9 +23,9 @@ class MockAbility {
 
         this.currentCooldown = 0;
 
-        console.log('Mock Ability created');
-        console.log('Cooldown Rarity: ' + cooldownRarity);
-        console.log('Effect Rarity: ' + effectRarity);
+        // console.log('Mock Ability created');
+        // console.log('Cooldown Rarity: ' + cooldownRarity);
+        // console.log('Effect Rarity: ' + effectRarity);
     }
 
     //INVENTORY UI CALL THIS
@@ -34,6 +34,7 @@ class MockAbility {
         //example cases:
             //on splice?
             //on equip
+            //on new level start
     }
 
     //INVENTORY UI CALL THIS

@@ -19,7 +19,7 @@ class SceneManager {
         this.quadY = 900 / 4;
         this.lowerBoundY = this.quadY * 3;
         this.midY = this.quadY * 2;
-        this.upperBoundY = this.quadY * 1;
+        this.upperBoundY = this.quadY * 1.5;
 
         // sets left, right, lower, and upper, map border so player cannot leave the area.
         this.leftXLimit = 0;      // do not change -- does not traverse left of starting point
@@ -28,8 +28,8 @@ class SceneManager {
         this.upperYLimit = -8500; // -8500 to stay within background image (top)
 
         player = this.player;
+        //this.loadTitleScreen(); //This will replace this.loadHub() when we have a title screen
         this.loadHub(); 
-        //this.loadLevel(); 
     };
 
     loadLevel() {
@@ -42,8 +42,19 @@ class SceneManager {
         let xBoundMax = 13000;
         let yBoundMin = 600;
         let yBoundMax = -800;
-
         this.rightXLimit = 16000;
+
+        // spawn in dna pickups
+        for (let i = 0; i < level.dnaPickup.length; i++) {
+            let dna = level.dnaPickup[i];
+            this.game.addEntity(new DnaItemDrop(this.game, dna.x, dna.y));
+        }
+
+        //spawn in enemies
+        for (let i = 0; i < level.reaper.length; i++) {
+            let enemy = level.reaper[i];
+            this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
+        }
 
         // initial platform final platform
         let origX = -700;
@@ -94,13 +105,7 @@ class SceneManager {
             this.game.addEntity(new Platform(this.game, x, y, 184, 184,
                 ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_tiny.png"), new BoundingBox(x, y + 150, 184, 100)));
         }
-
-        //spawn in enemies
-        for (let i = 0; i < level.reaper.length; i++) {
-            let enemy = level.reaper[i];
-            this.game.addEntityFirst(new Reaper(this.game, enemy.x, enemy.y, 2));
-        }
-
+        
         //add background
 	    gameEngine.addEntity(new Background(this.game));
     
@@ -120,7 +125,6 @@ class SceneManager {
     loadHub() {
         params.LEVEL = 0;
         this.clearLevel();
-
         this.rightXLimit = 1400;
         //Create Inventory UI
         let inventoryBB = new BoundingBox(900, 525, 248, 200);
@@ -153,7 +157,10 @@ class SceneManager {
     }
 
     update() {
-
+        if (this.player != null && this.player.y > CANVAS_HEIGHT+200) {
+            
+            this.loadHub();
+        }
 
         //Make the camera move based off this bounding box
 /*      // Keeps player in rightBoundX
@@ -186,11 +193,10 @@ class SceneManager {
 
         this.game.camera.x = 0;
         this.game.camera.y = 0;
-        this.player.x = 0;
-        this.player.y = 580;
+        this.player = new GameCharacter(this.game, CANVAS_WIDTH/2-150, 0);
+        player = this.player; //update global player reference
+        equipAbilities(); //equip abilities
         this.game.addEntity(this.player);
-
-
     }
     
 }

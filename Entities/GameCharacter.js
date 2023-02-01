@@ -4,15 +4,15 @@ class GameCharacter {
 
     constructor(game, x, y) {
         Object.assign(this, { game, x, y });
-        this.JUMP_ACC = -1000;
+        this.JUMP_ACC = -2500;
         this.MIN_RUN = 50;
-        this.MAX_RUN = 2000;
+        this.MAX_RUN = 1200;
         this.RUN_ACC = 2500;
         this.DEC_SKID = 5000;
         this.DEC_REL = 1500;
-        this.FALL_ACC = 2500
-        this.MAX_JUMPS = 1000;
-        this.JUMPS = 2;        
+        this.FALL_ACC = 4500
+        this.MAX_JUMPS = 2;
+        this.JUMPS = this.MAX_JUMPS;        
         const TICK = this.game.clockTick;
         this.state = 2;
 
@@ -33,12 +33,10 @@ class GameCharacter {
         else {
             this.BB = new BoundingBox(this.x+100, this.y, 100, 256);
         }
-        
-        
-        
     }
 
     update(){
+
         const JUMP_ACC = this.JUMP_ACC;
         const MIN_RUN = this.MIN_RUN;
         const MAX_RUN = this.MAX_RUN;
@@ -48,6 +46,10 @@ class GameCharacter {
         const MAX_FALL = this.MAX_FALL;
         const FALL_ACC = this.FALL_ACC;
         const TICK = this.game.clockTick;
+
+        // Call ability update methods at all times
+        if (params.INVENTORY.dnaSlot1 != null) params.INVENTORY.dnaSlot1.update();
+        if (params.INVENTORY.dnaSlot2 != null) params.INVENTORY.dnaSlot2.update();
 
         if(keypress("Escape") || this.game.controllerButtonY) {
             this.game.PAUSED = !this.game.PAUSED;

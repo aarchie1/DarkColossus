@@ -90,7 +90,6 @@ class InventoryUI {
       this.toggleMode();
       this.closeInventory();
 
-
       //Move Cursor Left
       if (!this.pressed && (this.game.keys.KeyA || this.game.controllerButtonLeft)) {
         if (this.currentSlot == 0 || this.currentSlot % this.columns == 0) {
@@ -128,11 +127,7 @@ class InventoryUI {
       } else if (keypress("KeyW") || this.game.controllerButtonUp) {
         this.currentSlot = (this.currentSlot - this.columns + this.rows * this.columns) % (this.columns * this.rows);
         //this.prevPage();
-
-
       } 
-
-
 
       if (this.game.keys.KeyA == true || this.game.keys.KeyD == true || this.game.keys.KeyS == true || this.game.keys.KeyW == true) {
         this.pressed = true;
@@ -182,6 +177,8 @@ class InventoryUI {
         if (params.INVENTORY.dnaSlot2 == params.INVENTORY.dnaSlot1) {
           params.INVENTORY.dnaSlot2 = null;
         }
+        //onUnequip();
+        equipAbilities();
       }
     }
 
@@ -191,6 +188,8 @@ class InventoryUI {
         if (params.INVENTORY.dnaSlot2 == params.INVENTORY.dnaSlot1) {
           params.INVENTORY.dnaSlot1 = null;
         }
+        //onUnequip();
+        equipAbilities();
       }
     }
 

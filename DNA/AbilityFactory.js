@@ -30,7 +30,7 @@ function getAbility(abilityType) {
 function searchAbilityPool(abilityPool) {
     //PUT ALL ABILITIES HERE
     let sigmaAbilityPool = [MockAbility];
-    let alphaAbilityPool = [MockAbility];
+    let alphaAbilityPool = [SupersonicAbility];
     let betaAbilityPool = [MockAbility];
     switch (abilityPool) {
         case 'sigma':
@@ -47,9 +47,8 @@ function searchAbilityPool(abilityPool) {
             return null;
     }
 
-
     let abilityIndex = Math.max(Math.round(Math.random() * abilityPool.length) - 1, 0);
-    console.log("abilityIndex: " + abilityIndex);
+    //console.log("abilityIndex: " + abilityIndex);
     return new abilityPool[abilityIndex](this.getRarity(), this.getRarity());
 }
 
