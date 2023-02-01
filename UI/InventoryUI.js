@@ -1,6 +1,5 @@
 class InventoryUI {
     constructor(game) {
-        console.log("inventory created");
         params.STATE = "menu";
         this.font = "20px Arial",
         this.fontColor = "#FFFFFF"
@@ -90,8 +89,7 @@ class InventoryUI {
       this.sellDna();
       this.toggleMode();
       this.closeInventory();
-      console.log("current slot: " + this.currentSlot);
-      console.log("current dna: " + this.currentDna);
+
 
       //Move Cursor Left
       if (!this.pressed && (this.game.keys.KeyA || this.game.controllerButtonLeft)) {
@@ -146,7 +144,6 @@ class InventoryUI {
 
     drawControls(ctx) {
       //draw controls right above the inventory in a horizontal line
-      console.log("page: " + this.currentPage);
       ctx.fillStyle = this.fontColor;
       ctx.textAlign = "center";
       ctx.font = this.font;
