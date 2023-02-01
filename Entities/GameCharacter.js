@@ -159,6 +159,11 @@ class GameCharacter {
         // Update Facing direction
         if (this.velocity.x < 0) this.facing = 1;
         if (this.velocity.x > 0) this.facing = 0;
+
+        // Call ability update methods at all times
+        if (params.INVENTORY.dnaSlot1 != null) params.INVENTORY.dnaSlot1.update();
+        if (params.INVENTORY.dnaSlot2 != null) params.INVENTORY.dnaSlot2.update();
+
     }
 
     jump() {
