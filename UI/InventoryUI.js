@@ -26,9 +26,9 @@ class InventoryUI {
     }
   
     draw(ctx) {
-      ctx.fillStyle = "#995B38";
+      ctx.fillStyle = "#994B50";
       //make the rect transparent
-      ctx.globalAlpha = .6;
+      ctx.globalAlpha = .8;
       ctx.fillRect(this.x, this.y, this.columns*this.slotSize, this.rows*this.slotSize);
       ctx.globalAlpha = 1;
       ctx.strokeStyle = this.color;
@@ -43,7 +43,6 @@ class InventoryUI {
             );
         }
       }
-      //athis.drawArrows();
 
       //draw the current slot
       ctx.strokeStyle = "#FFFFFF";
@@ -93,23 +92,49 @@ class InventoryUI {
       this.closeInventory();
       console.log("current slot: " + this.currentSlot);
       console.log("current dna: " + this.currentDna);
-      //Move Cursor Left
-      if (!this.pressed &&(this.game.keys.KeyA || this.game.controllerButtonLeft)) {
-        this.currentSlot = (this.currentSlot == 0) ? this.columns*this.rows-1 : (this.currentSlot - 1) % (this.columns * this.rows);
-      
-      //Move Cursor Right
-      } else if(!this.pressed && (this.game.keys.KeyD || this.game.controllerButtonRight)) {
-        this.currentSlot = (this.currentSlot + 1) % (this.columns * this.rows);
 
-      //Go to next inventory page
-      } else if (this.game.keys.KeyS || this.game.controllerButtonDown) {
-        this.nextPage();
+      //Move Cursor Left
+      if (!this.pressed && (this.game.keys.KeyA || this.game.controllerButtonLeft)) {
+        if (this.currentSlot == 0 || this.currentSlot % this.columns == 0) {
+          if (this.currentPage > 0) {
+            this.prevPage();
+            //this.currentSlot = this.columns * this.rows - 1;
+          } else {
+            //this.currentSlot = this.columns * this.rows - 1;
+          }
+        } else {
+          this.currentSlot = (this.currentSlot - 1) % (this.columns * this.rows);
+        }
+
+      //Move Cursor Right
+      } else if (!this.pressed && (this.game.keys.KeyD || this.game.controllerButtonRight)) {
+        if ((this.currentSlot+1) % (this.columns) == 0) {
+          if (this.currentPage < this.inventory.length / (this.columns * this.rows) - 1) {
+            this.nextPage();
+            this.currentSlot = 0;
+            //this.currentSlot = 0;
+          } else {
+            this.currentSlot = 0;
+          }
+        } else {
+          this.currentSlot = (this.currentSlot + 1) % (this.columns * this.rows);
+        }
+
+      //Move Cursor Down
+      } else if (keypress("KeyS") || this.game.controllerButtonDown) {
+        this.currentSlot = (this.currentSlot + this.columns) % (this.columns * this.rows);
+        //this.nextPage();
        //this.currentPage++;
 
-      //Go to previous inventory page
-      } else if (this.game.keys.KeyW || this.game.controllerButtonUp) {
-        this.prevPage();
-      }
+      //Move cursor up or wrap to bottom
+      } else if (keypress("KeyW") || this.game.controllerButtonUp) {
+        this.currentSlot = (this.currentSlot - this.columns + this.rows * this.columns) % (this.columns * this.rows);
+        //this.prevPage();
+
+
+      } 
+
+
 
       if (this.game.keys.KeyA == true || this.game.keys.KeyD == true || this.game.keys.KeyS == true || this.game.keys.KeyW == true) {
         this.pressed = true;
@@ -130,6 +155,18 @@ class InventoryUI {
       } else if (this.state == this.SPLICE) {
         ctx.fillText("1: Select slot 1   2: Select slot 2   3: Splice   4:Browse", CANVAS_WIDTH/2, this.y - 20);
       }
+
+      //draw on the left and right side of the inventory to indicate that there are more pages
+      ctx.font = "50px Arial";
+      if (this.currentPage > 0) {
+        ctx.fillText("<", this.x - 40, this.y + this.slotSize * this.rows/2);
+      }
+      
+      if (this.currentPage < this.inventory.length / (this.rows * this.columns) - 1) {
+        ctx.fillText(">", this.x + this.slotSize * this.columns + 40, this.y + this.slotSize * this.rows/2);
+      }
+
+      
     }
 
     toggleMode() {
@@ -166,19 +203,6 @@ class InventoryUI {
         params.DARK_ENERGY.currency += this.inventory[this.currentDna].value;
         //remove only the current slot
         this.inventory.splice(this.currentDna, 1);
-      }
-    }
-
-
-    drawArrows() {
-      if (this.numPages <= 1) return;
-      //draw left arrow
-      if (this.currentPage > 0) {
-          // draw left arrow
-      }
-      //draw right arrow
-      if (this.currentPage < this.numPages - 1) {
-        // draw right arrow
       }
     }
   

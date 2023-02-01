@@ -58,8 +58,8 @@ class hud {
 
         //draw Dark Energy currency
         ctx.fillStyle = "white";
-        ctx.fillText("" + params.DARK_ENERGY.currency, locationTitleX*2.6, locationTitleY*3.6);
-        ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/LevelAssets/dark_energy.png"), locationTitleX, locationTitleY*3, 64, 64);
+        ctx.fillText("" + params.DARK_ENERGY.currency, locationTitleX*29.8, locationTitleY*.9);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/LevelAssets/dark_energy.png"), locationTitleX*28.3, locationTitleY*.3, 64, 64);
         
         this.drawAbilityHud(ctx);
 
@@ -69,11 +69,13 @@ class hud {
     drawAbilityHud(ctx) {
         //draw the dnaSlot1 and dnaSlot2
 
-        ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+        ctx.fillStyle = "#994B50";
+        ctx.globalAlpha = 0.7;
         ctx.fillRect(100, 700, 400, 116);
         ctx.strokeStyle = "white";
         ctx.lineWidth = 2;
         ctx.strokeRect(100, 700, 400, 116);
+        ctx.globalAlpha = 1;
         if (params.INVENTORY.dnaSlot1) params.INVENTORY.dnaSlot1.drawDna(ctx, 100, 700, 116);
         if (params.INVENTORY.dnaSlot2) params.INVENTORY.dnaSlot2.drawDna(ctx, 300, 700, 116);
 
