@@ -47,6 +47,7 @@ Abilities
     cosmic_blade            1200x1164   4frames
     soul_grab               1024x512    4frames
     supersonic              320x256     9frames  
+    supersonic_left         320x256     9frames
     emp                     1200x1164   7frames   
 
 UI

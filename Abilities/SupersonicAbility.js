@@ -14,18 +14,16 @@ class SupersonicAbility{
 
         //Supersonic specific properties
         console.log("player: " + player);
-        this.originalAnimation = player.animations[1][0];
-        this.speedIncrease = 2000;
-    
-        //Debug
-        console.log('Supersonic Ability created');
-        console.log('Cooldown Rarity: ' + cooldownRarity);
-        console.log('Effect Rarity: ' + effectRarity);
+        this.originalAnimationRight = player.animations[1][0];
+        this.originalAnimationLeft = player.animations[1][1];
+        
+        this.speedIncrease = 1000;
     }
 
     onEquip() {
 
-        player.animations[1][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/supersonic.png"), 0, 0, 320, 256, 9, .075, 0, true);
+        player.animations[1][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/supersonic.png"), 0, 0, 320, 256, 9, .06, 0, true);
+        player.animations[1][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/supersonic_left.png"), 0, 0, 320, 256, 9, .06, 0, true);
         player.MAX_RUN += this.speedIncrease;
 
         // facing left = 1
@@ -34,6 +32,7 @@ class SupersonicAbility{
 
     onUnequip() {
         player.animations[1][0] = this.originalAnimation;
+        player.animations[1][1] = this.originalAnimationLeft;
         player.MAX_RUN -= this.speedIncrease;
     }
 
@@ -73,14 +72,12 @@ class SupersonicAbility{
     }
 
     update() {
-        //This will be called through the DNA's update method.
-        console.log('Mock Ability updated');
         if (Math.abs(player.velocity.x) == player.MAX_RUN && player.state == 1) {
             gameEngine.entities.forEach((enemy) => {
                 // Collisions with players bounding box
-                if (enemy != null && enemy instanceof Reaper && player.BB.collide(enemy.BB)) {
-                    enemy.hp -= this.effect;
-                }
+                // if (enemy != null && enemy instanceof Reaper && player.BB.collide(enemy.BB)) {
+                //     enemy.hp -= this.effect;
+                // }
             })
         }
     }
