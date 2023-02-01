@@ -4,15 +4,15 @@ class GameCharacter {
 
     constructor(game, x, y) {
         Object.assign(this, { game, x, y });
-        this.JUMP_ACC = -2500;
+        this.JUMP_ACC = -1300;
         this.MIN_RUN = 50;
         this.MAX_RUN = 1200;
         this.RUN_ACC = 2500;
         this.DEC_SKID = 5000;
         this.DEC_REL = 1500;
-        this.FALL_ACC = 4500
+        this.FALL_ACC = 2700
         this.MAX_JUMPS = 2;
-        this.JUMPS = this.MAX_JUMPS;        
+        this.JUMPS = this.MAX_JUMPS;    
         const TICK = this.game.clockTick;
         this.state = 2;
 
