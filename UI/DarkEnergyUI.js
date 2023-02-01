@@ -40,7 +40,7 @@ class DarkEnergyUI {
 
     draw(ctx) {
         let m = 0;
-        ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/UI/DE_UI_Design_No_Text.png"), this.x - this.width / 2, this.y - this.height / 2);
+       // ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/UI/DE_UI_Design_No_Text.png"), this.x - this.width / 2, this.y - this.height / 2);
         ctx.font = "50px Papyrus";
         ctx.fillText("Dark Energy: " + this.game.darkEnergy.currency, this.darkEnergyDisplayX, this.darkEnergyDisplayY);
         ctx.strokeStyle = this.color;

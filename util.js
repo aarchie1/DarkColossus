@@ -2,7 +2,10 @@
 const params = { 
     BLOCKWIDTH: 256,
     STATE : "gameplay",
-    LEVEL: 0
+    LEVEL: 0, 
+    INVENTORY : null,
+    HUD : null,
+    DARK_ENERGY : null
 };
 
 

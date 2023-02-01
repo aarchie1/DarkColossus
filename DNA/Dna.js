@@ -1,9 +1,10 @@
 class DNA {
     constructor(sigmaAbility, alphaAbility, betaAbility, epsilonAbility, rarity) {
-        this.sigmaAbility = sigmaAbility;
-        this.alphaAbility = alphaAbility;
-        this.betaAbility = betaAbility;
-        this.epsilonAbility = epsilonAbility;
+        this.sigmaAbility = sigmaAbility; // up dnaslot1.sigmaAbility
+                                                
+        this.alphaAbility = alphaAbility; //down
+        this.betaAbility = betaAbility; //left
+        this.epsilonAbility = epsilonAbility; //right
         this.rarity = rarity;
         //set image
         switch (this.rarity) {
@@ -20,6 +21,13 @@ class DNA {
                 this.image = ASSET_MANAGER.getAsset("./Sprites/DNA/dna_godly.png");
                 break;
         }
+        //add up all the ability rarities and set the dna value
+        this.value = 0;
+        if (this.sigmaAbility != null) this.value += this.sigmaAbility.cooldownRarity + this.sigmaAbility.effectRarity;
+        if (this.alphaAbility != null) this.value += this.alphaAbility.cooldownRarity + this.alphaAbility.effectRarity;
+        if (this.betaAbility != null) this.value += this.betaAbility.cooldownRarity + this.betaAbility.effectRarity;
+        if (this.epsilonAbility != null) this.value += this.epsilonAbility.cooldownRarity + this.epsilonAbility.effectRarity;
+        this.value *= 2;
     };
 
     update() {
@@ -38,6 +46,8 @@ class DNA {
              (this.betaAbility == null) ? -1 : this.betaAbility.cooldownRarity,
              (this.betaAbility == null) ? -1 : this.betaAbility.effectRarity
             ];
+
+
         for (let i = 0; i < 6; i++) {
             let distance = (slotSize/7)*i;
             let offset = 0;

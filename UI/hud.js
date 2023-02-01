@@ -44,7 +44,6 @@ class hud {
         ctx.lineTo(locationTitleX*6, locationTitleY*1.4);
         ctx.stroke();
 
-
         //draw health bar rectangle
         ctx.fillStyle = "#FF3232";
         ctx.fillRect(50, 150, 300, 50);
@@ -59,8 +58,42 @@ class hud {
 
         //draw Dark Energy currency
         ctx.fillStyle = "white";
-        ctx.fillText("" + 690, locationTitleX*2.6, locationTitleY*3.6);
-        ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/LevelAssets/dark_energy.png"), locationTitleX, locationTitleY*3, 64, 64);
+        ctx.fillText("" + params.DARK_ENERGY.currency, locationTitleX*29.8, locationTitleY*.9);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/LevelAssets/dark_energy.png"), locationTitleX*28.3, locationTitleY*.3, 64, 64);
+        
+        this.drawAbilityHud(ctx);
 
+        //this.pauseControl(ctx);
+    }
+
+    drawAbilityHud(ctx) {
+        //draw the dnaSlot1 and dnaSlot2
+
+        ctx.fillStyle = "#994B50";
+        ctx.globalAlpha = 0.7;
+        ctx.fillRect(100, 700, 400, 116);
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(100, 700, 400, 116);
+        ctx.globalAlpha = 1;
+        if (params.INVENTORY.dnaSlot1) params.INVENTORY.dnaSlot1.drawDna(ctx, 100, 700, 116);
+        if (params.INVENTORY.dnaSlot2) params.INVENTORY.dnaSlot2.drawDna(ctx, 300, 700, 116);
+
+    }
+
+    pauseControl(ctx) {
+        //display controls for the game in pause menu
+        if (this.game.PAUSED) {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+            ctx.fillRect(0, 0, 1400, 900);
+            ctx.fillStyle = "white";
+            ctx.font = "50px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText("PAUSED", 700, 100);
+            ctx.font = "30px Arial";
+            ctx.fillText("Press 'P' to resume", 700, 150);
+            ctx.fillText("Press 'R' to restart", 700, 200);
+            ctx.fillText("Press 'ESC' to return to main menu", 700, 250);
+        }
     }
 }
