@@ -22,7 +22,7 @@ class Interactable {
     }
 
     update() {
-        if (this.game.keys.KeyE == true) {
+        if (this.game.keys.KeyE == true && !this.game.PAUSED) {
             if (this.BB.collide(player.BB)) {
                 this.action();
             } 

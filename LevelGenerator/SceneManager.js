@@ -28,13 +28,14 @@ class SceneManager {
         this.upperYLimit = -8500; // -8500 to stay within background image (top)
 
         player = this.player;
-        
         this.loadHub(); 
         //this.loadLevel(); 
     };
 
     loadLevel() {
         this.clearLevel();
+       // gameEngine.addEntity(new Reaper(this.game, 1000, 520, 2));
+
         params.LEVEL += 1;
         let level = getLevel(params.LEVEL);
         let xBoundMin = 1300;
@@ -93,6 +94,12 @@ class SceneManager {
 
             this.game.addEntity(new Platform(this.game, x, y, 184, 184,
                 ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_tiny.png"), new BoundingBox(x, y + 150, 184, 100)));
+        }
+
+        //spawn in enemies
+        for (let i = 0; i < level.reaper.length; i++) {
+            let enemy = level.reaper[i];
+            this.game.addEntityFirst(new Reaper(this.game, enemy.x, enemy.y, 2));
         }
 
         //add background
@@ -187,7 +194,6 @@ class SceneManager {
 
 
     }
-
     
 }
 

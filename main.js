@@ -64,10 +64,11 @@ ASSET_MANAGER.downloadAll(() => {
 	CANVAS_WIDTH = canvas.width;
 	const ctx = canvas.getContext("2d");
 	gameEngine.init(ctx);
-	gameEngine.addEntity(new hud(gameEngine));
-
+	params.HUD = new hud(gameEngine);
+	gameEngine.addEntity(params.HUD);
 	gameEngine.addEntity(new SceneManager(gameEngine));
-	gameEngine.addEntity(new Inventory(gameEngine));
+	params.INVENTORY = new Inventory(gameEngine);
+	gameEngine.addEntity(params.INVENTORY);
 
 	// Janky way of getting music to start, you have to interact with the volume bar first
 	var l = document.getElementById('volume');
@@ -77,4 +78,6 @@ ASSET_MANAGER.downloadAll(() => {
 	};
 	
 	gameEngine.start();
+
+	
 });
