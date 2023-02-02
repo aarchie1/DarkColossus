@@ -1,4 +1,4 @@
-class Molecule  {
+class Molecule {
   constructor(game, x, y, size) {
     Object.assign(this, { game, x, y, size });
     const TICK = this.game.clockTick;
@@ -17,7 +17,7 @@ class Molecule  {
     this.projectileBuffer = 150;
 
     this.attackDistance = 400;
-    this.fireRate = .2;
+    this.fireRate = 1;
     this.elapsedTime = 0;
 
     this.updateBB();
@@ -115,24 +115,24 @@ class Molecule  {
       else {
         this.state = this.size;
       }
-      
+
       //Collisions
-      if (this.state === 3 && this.elapsedTime > this.fireRate) {
-        this.game.entities.forEach((entity) => {
-          if (entity instanceof GameCharacter) {
-            this.elapsedTime = 0;
-            if (this.facing === 1) {
-              this.game.camera.game.addEntityFirst(
-                new MoleculeProjectile(this.game, this.x + 100, this.y, entity)
-              );
-            } else {
-              this.game.camera.game.addEntityFirst(
-                new MoleculeProjectile(this.game, this.x + 200, this.y, entity)
-              );
-            }
-          }
-        });
-      }
+
+      this.game.entities.forEach((entity) => {
+        if (
+          entity instanceof GameCharacter &&
+          this.elapsedTime > this.fireRate &&
+          this.state === 3
+        ) {
+          this.elapsedTime = 0;
+          this.game.camera.game.addEntityFirst(
+            new MoleculeProjectile(this.game, this.x + 200, this.y, entity)
+          );
+        }
+      });
+
+  
+
       // Update Facing direction
       if (this.velocity.x < 0) this.facing = 1;
       if (this.velocity.x > 0) this.facing = 0;
