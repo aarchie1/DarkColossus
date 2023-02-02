@@ -5,9 +5,13 @@ class Reaper {
     this.fallAcc = 400;
     this.reaper = this;
     this.player = this.game.camera.player;
-    this.facing = 0; // 0 = right, 1 == left
+    this.facing = 1; // 0 = right, 1 == left
     this.state = size; //0 = weak 1 = normal 2 = strong 3 = attacking
     this.velocity = { x: 0, y: 0 };
+
+    this.attackRate = 2;
+    this.elapsedTime = 0;
+    this.attackDistance = 0;
     this.health = 10;
     this.dead = false;
     this.paused = true;
@@ -20,17 +24,13 @@ class Reaper {
 
   updateBB() {
     this.lastBB = this.BB;
-    if (this.state === 3)
-      if (this.facing === 0)
-        this.BB = new BoundingBox(this.x + 100, this.y, 150, 250);
-      else this.BB = new BoundingBox(this.x + 50, this.y, 150, 250);
-    else {
-      this.BB = new BoundingBox(this.x + 50, this.y, 100, 250);
-    }
+    this.BB = new BoundingBox(this.x + 50, this.y, 150, 250);
+    
   }
 
   update() {
     const TICK = this.game.clockTick;
+    this.elapsedTime += this.game.clockTick;
 
     if (this.paused && this.game.camera.player.x > this.x - 1000) {
       this.paused = false;
@@ -51,12 +51,12 @@ class Reaper {
         // if the player is facing right
         if (
           this.player.facing === 0 &&
-          this.BB.left - this.player.BB.right <= 0
+          this.BB.left - this.player.BB.right <= this.attackDistance
         ) {
           this.velocity.x = 0;
         } else if (
           this.player.facing === 1 &&
-          this.BB.left - this.player.BB.right <= 0
+          this.BB.left - this.player.BB.right <= this.attackDistance
         ) {
           this.velocity.x = 0;
         }
@@ -67,12 +67,12 @@ class Reaper {
         // if the player is facing left
         if (
           this.player.facing === 1 &&
-          this.BB.right - this.player.BB.left >= 0
+          this.BB.right - this.player.BB.left >= this.attackDistance
         ) {
           this.velocity.x = 0;
         } else if (
           this.player.facing === 0 &&
-          this.BB.right - this.player.BB.left >= 0
+          this.BB.right - this.player.BB.left >= this.attackDistance
         ) {
           this.velocity.x = 0;
         }
@@ -89,7 +89,7 @@ class Reaper {
 
       //Collision
       this.game.entities.forEach((entity) => {
-        // Collisions with players bounding box
+        // Collisions with Reaper bounding box
         if (entity.BB && this.BB.collide(entity.BB)) {
           //falling
           if (this.velocity.y > 0) {
@@ -100,8 +100,6 @@ class Reaper {
             ) {
               this.y = entity.BB.top - this.BB.height;
               this.velocity.y = 0;
-              this.animationXOffset = 0;
-              this.animationYOffset = 0;
               this.updateBB();
             }
           }
@@ -111,9 +109,20 @@ class Reaper {
       if (
         Math.abs(this.x - this.player.x) < 300 &&
         Math.abs(this.y - this.player.y) < 300
-      )
-        this.state = 3;
-      else {
+      ) {
+        if (this.elapsedTime > this.attackRate) {
+          this.state = 3;
+          if (this.facing === 1 ) {
+            this.animationXOffset = +55;
+          }
+          if (this.animations[this.state][this.facing].isDone()) {
+            this.animations[this.state][this.facing].elapsedTime = 0;
+            this.state = this.size;
+            this.elapsedTime = 0;
+            this.animations[this.state][this.facing].elapsedTime = 0;
+          }
+        }
+      } else {
         this.state = this.size;
       }
 
@@ -224,7 +233,7 @@ class Reaper {
       6,
       0.1,
       0,
-      true
+      false
     );
 
     // facing left = 1
@@ -237,7 +246,7 @@ class Reaper {
       6,
       0.1,
       0,
-      true
+      false
     );
   }
   draw(ctx) {
