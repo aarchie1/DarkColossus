@@ -3,14 +3,16 @@ class SupersonicAbility{
     constructor(cooldownRarity, effectRarity) {
         //Necessary properties for all abilities
         this.name = 'Supersonic';
-        this.description = 'This is a mock ability';
-        this.icon = 'mockAbilityIcon';
+        this.description = 'Passive ability that increases speed and deals' + this.effect + ' damage to enemies hit while moving at max speed';
+        this.icon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/supersonic_icon.png");
+        this.inUseIcon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/supersonic_in_use_icon.png");
         this.dominant = false;
         this.cooldownRarity = cooldownRarity;
         this.effectRarity = effectRarity;
         this.cooldown = this.setCooldown(cooldownRarity);
         this.effect = this.setEffect(effectRarity);
         this.currentCooldown = 0;
+        this.inUse = false;
 
         //Supersonic specific properties
         this.originalAnimationRight = player.animations[1][0];
@@ -80,6 +82,7 @@ class SupersonicAbility{
 
     update() {
         if (Math.abs(player.velocity.x) == player.MAX_RUN && player.state == 1) {
+            this.inUse = true;
 
            gameEngine.entities.forEach((enemy) => {
                 //Collisions with players bounding box
@@ -93,6 +96,7 @@ class SupersonicAbility{
            })
         } else {
             this.enemiesHit = [];
+            this.inUse = false;
         }
 
     }

@@ -16,7 +16,7 @@ class MockAbility {
         this.effect = this.setEffect(effectRarity);
         this.dominant = false; //dominant or recessive
         this.description = 'This is a mock ability';
-        this.icon = 'mockAbilityIcon';
+        this.icon = ASSET_MANAGER.getAsset('./Sprites/Abilities/Icons/mock_icon.png');
 
         //Store animation in abilities
         this.animation = 'mockAbilityAnimation';

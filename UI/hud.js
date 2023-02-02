@@ -9,6 +9,9 @@ class hud {
         this.locationTitleX = 50;
         this.locationTitleY = 80;
         this.BB = new BoundingBox(this.x, this.y, this.width, this.height);
+
+        this.abilityHudX = 50;
+        this.abilityHudY = -50;
     }
 
     update() {
@@ -46,16 +49,27 @@ class hud {
         ctx.stroke();
 
         //draw health bar rectangle
-        ctx.fillStyle = "#FF3232";
-        ctx.fillRect(50, 150, 300, 50);
-        //draw health bar fill
-        ctx.fillStyle = "green";
-        ctx.fillRect(50, 150, player.hp, 50);
-        //draw health bar border
-        ctx.strokeStyle = "white";
-        //set line width to 5
-        ctx.lineWidth = 2;
-        ctx.strokeRect(50, 150, 300, 50);
+        // ctx.fillStyle = "#FF3232";
+        // ctx.fillRect(50, 150, 300, 50);
+        // //draw health bar fill
+        // ctx.fillStyle = "green";
+        // ctx.fillRect(50, 150, player.hp, 50);
+        // //draw health bar border
+        // ctx.strokeStyle = "white";
+        // //set line width to 5
+        // ctx.lineWidth = 2;
+        // ctx.strokeRect(50, 150, 300, 50);
+
+        //draw hp crosses images for each unit of hp, when it goes over 10 make a new row
+        for (let i = 0; i < 14; i++) {
+            if (i < 10) {
+                ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/UI/hp_cross.png"), 50 + (i * 55), 150, 64, 64);
+            } else {
+                ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/UI/hp_cross.png"), 50 + ((i - 10) * 55), 205, 64, 64);
+            }
+        }
+
+        
 
 
         this.drawDarkEnergyHud(ctx);
@@ -75,17 +89,34 @@ class hud {
 
     drawAbilityHud(ctx) {
         //draw the dnaSlot1 and dnaSlot2
+        if (params.INVENTORY.dnaSlot1 != null) {
+            let alpha = params.INVENTORY.dnaSlot1.alphaAbility;
+            if (alpha) {
+                let icon =  (alpha.inUse) ? alpha.inUseIcon : alpha.icon;
+                ctx.drawImage(icon, 203 + this.abilityHudX, 887 + this.abilityHudY, 98, 98);
+            }
 
-        ctx.fillStyle = "#994B50";
-        ctx.globalAlpha = 0.7;
-        ctx.fillRect(30, CANVAS_HEIGHT - 150, 400, 116);
-        ctx.strokeStyle = "white";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(30, CANVAS_HEIGHT - 150, 400, 116);
-        ctx.globalAlpha = 1;
-        if (params.INVENTORY.dnaSlot1) params.INVENTORY.dnaSlot1.drawDna(ctx, 100, 930, 116);
+            if (params.INVENTORY.dnaSlot1.sigmaAbility) {
+                let icon = params.INVENTORY.dnaSlot1.sigmaAbility.icon;
+                ctx.drawImage(icon, 110+ this.abilityHudX, 803 + this.abilityHudY, 98, 98);
+            }
+
+            if (params.INVENTORY.dnaSlot1.betaAbility) {
+                let icon = params.INVENTORY.dnaSlot1.betaAbility.icon;
+                ctx.drawImage(icon, 108+ this.abilityHudX, 967 + this.abilityHudY, 98, 98);
+            }
+
+            if (params.INVENTORY.dnaSlot1.epsilonAbility) {
+                let icon = params.INVENTORY.dnaSlot1.epsilonAbility.icon;
+                ctx.drawImage(icon, 15+ this.abilityHudX, 887 + this.abilityHudY, 98, 98);
+            }
+            let A = ASSET_MANAGER.getAsset("./Sprites/UI/ability_hud.png");
+            ctx.drawImage(A, 0+ this.abilityHudX, CANVAS_HEIGHT - 290 + this.abilityHudY, 316, 288);
+
+        }
+
+        
         if (params.INVENTORY.dnaSlot2) params.INVENTORY.dnaSlot2.drawDna(ctx, 250, 930, 116);
-
     }
 
     pauseControl(ctx) {
