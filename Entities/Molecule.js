@@ -17,7 +17,7 @@ class Molecule {
     this.projectileBuffer = 150;
 
     this.attackDistance = 400;
-    this.fireRate = 1;
+    this.fireRate = .2;
     this.elapsedTime = 0;
 
     this.updateBB();
