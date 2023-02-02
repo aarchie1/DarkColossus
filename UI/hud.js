@@ -83,8 +83,8 @@ class hud {
         ctx.lineWidth = 2;
         ctx.strokeRect(30, CANVAS_HEIGHT - 150, 400, 116);
         ctx.globalAlpha = 1;
-        if (params.INVENTORY.dnaSlot1) params.INVENTORY.dnaSlot1.drawDna(ctx, 100, 700, 116);
-        if (params.INVENTORY.dnaSlot2) params.INVENTORY.dnaSlot2.drawDna(ctx, 300, 700, 116);
+        if (params.INVENTORY.dnaSlot1) params.INVENTORY.dnaSlot1.drawDna(ctx, 100, 930, 116);
+        if (params.INVENTORY.dnaSlot2) params.INVENTORY.dnaSlot2.drawDna(ctx, 250, 930, 116);
 
     }
 

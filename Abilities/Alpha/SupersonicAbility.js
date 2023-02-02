@@ -13,14 +13,15 @@ class SupersonicAbility{
         this.currentCooldown = 0;
 
         //Supersonic specific properties
-        console.log("player: " + player);
         this.originalAnimationRight = player.animations[1][0];
         this.originalAnimationLeft = player.animations[1][1];
-        this.speedIncrease = 800;
+        this.speedIncrease = 500;
+        this.enemiesHit = [];
     }
 
     onEquip() {
-
+        //equipped supersonic ability
+        console.log("Equipped Supersonic Ability");
         player.animations[1][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/supersonic.png"), 0, 0, 320, 256, 9, .06, 0, true);
         player.animations[1][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/supersonic_left.png"), 0, 0, 320, 256, 9, .06, 0, true);
         player.MAX_RUN += this.speedIncrease;
@@ -42,6 +43,14 @@ class SupersonicAbility{
 
     //Ability itself
     onEnd() {
+
+    }
+
+    checkForDuplicateAbilities() {
+        //check how many abilities is an instance of this ability in dnaslot1 and dnaslot2
+        //if more than 1, return true
+        //else return false
+        
 
     }
 
@@ -74,10 +83,16 @@ class SupersonicAbility{
 
            gameEngine.entities.forEach((enemy) => {
                 //Collisions with players bounding box
-                if (enemy != null && enemy instanceof Reaper && player.BB.collide(enemy.BB)) {
-                    //enemy.health -= this.effect;
+                if (enemy.hostile && player.BB.collide(enemy.BB)) {
+                    if (!this.enemiesHit.includes(enemy)) {
+                        this.enemiesHit.push(enemy);
+                        enemy.health -= this.effect;
+                        gameEngine.addEntityFirst(new DamageIndicator(enemy.x+30, enemy.y, this.effect));
+                     }
                 }
            })
+        } else {
+            this.enemiesHit = [];
         }
 
     }

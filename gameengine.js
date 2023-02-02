@@ -185,6 +185,8 @@ class GameEngine {
                 this.entities.splice(i, 1);
             }
         }
+
+        if (keypress("KeyB")) toggleDebug();
     };
     
     loop() {

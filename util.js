@@ -13,7 +13,8 @@ let CANVAS_HEIGHT = 0;
 let CANVAS_WIDTH = 0;
 let player = null;
 
-let debug = true;
+let debug = false;
+
 function toggleDebug() {
     debug = !debug;
 }
@@ -35,57 +36,23 @@ function keyhold(key) {
     }
 };
 
-function equipAbilities(){
-    if (params.INVENTORY.dnaSlot1 != null) {
-        let dna = params.INVENTORY.dnaSlot1;
-        if (dna.sigmaAbility != null) dna.sigmaAbility.onEquip();
-        if (dna.alphaAbility != null) dna.alphaAbility.onEquip();
-        if (dna.betaAbility != null) dna.betaAbility.onEquip();
-        if (dna.epsilonAbility != null) dna.epsilonAbility.onEquip();
-    } 
-
-    if (params.INVENTORY.dnaSlot2 != null) {
-        let dna = params.INVENTORY.dnaSlot2;
-        if (dna.sigmaAbility != null) dna.sigmaAbility.onEquip();
-        if (dna.alphaAbility != null) dna.alphaAbility.onEquip();
-        if (dna.betaAbility != null) dna.betaAbility.onEquip();
-        if (dna.epsilonAbility != null) dna.epsilonAbility.onEquip();
-    }
+function equipAbilities(dna){
+    console.log("equipping:" + dna);
+    if (dna == null) return;
+    if (dna.sigmaAbility != null) dna.sigmaAbility.onEquip();
+    if (dna.alphaAbility != null) dna.alphaAbility.onEquip();
+    if (dna.betaAbility != null) dna.betaAbility.onEquip();
+    if (dna.epsilonAbility != null) dna.epsilonAbility.onEquip();
+    
 }
 
 function unequipAbilities(dna){
-    // if (dna == null) return;
-    // if (dna.sigmaAbility != null) dna.sigmaAbility.onUnequip();
-    // if (dna.alphaAbility != null) dna.alphaAbility.onUnequip();
-    // if (dna.betaAbility != null) dna.betaAbility.onUnequip();
-    // if (dna.epsilonAbility != null) dna.epsilonAbility.onUnequip();
-
-    // if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot2 != null){
-    //     if (dna == params.INVENTORY.dnaSlot1) {
-    //         let tempDna2 = params.INVENTORY.dnaSlot2;
-    //         if (tempDna2.sigmaAbility != null) tempDna2.sigmaAbility.onUnequip();
-    //         if (tempDna2.alphaAbility != null) tempDna2.alphaAbility.onUnequip();
-    //         if (tempDna2.betaAbility != null) tempDna2.betaAbility.onUnequip();
-    //         if (tempDna2.epsilonAbility != null) tempDna2.epsilonAbility.onUnequip();
-
-    //         if (tempDna2.sigmaAbility != null) tempDna2.sigmaAbility.onEquip();
-    //         if (tempDna2.alphaAbility != null) tempDna2.alphaAbility.onEquip();
-    //         if (tempDna2.betaAbility != null) tempDna2.betaAbility.onEquip();
-    //         if (tempDna2.epsilonAbility != null) tempDna2.epsilonAbility.onEquip();
-
-    //     } else {
-    //         let tempDna1 = params.INVENTORY.dnaSlot1;
-    //         if (tempDna1.sigmaAbility != null) tempDna1.sigmaAbility.onUnequip();
-    //         if (tempDna1.alphaAbility != null) tempDna1.alphaAbility.onUnequip();
-    //         if (tempDna1.betaAbility != null) tempDna1.betaAbility.onUnequip();
-    //         if (tempDna1.epsilonAbility != null) tempDna1.epsilonAbility.onUnequip();
-
-    //         if (tempDna1.sigmaAbility != null) tempDna1.sigmaAbility.onEquip();
-    //         if (tempDna1.alphaAbility != null) tempDna1.alphaAbility.onEquip();
-    //         if (tempDna1.betaAbility != null) tempDna1.betaAbility.onEquip();
-    //         if (tempDna1.epsilonAbility != null) tempDna1.epsilonAbility.onEquip();
-    //     }
-    // }
+    console.log("unequipping:" + dna);
+    if (dna == null) return;
+    if (dna.sigmaAbility != null) dna.sigmaAbility.onUnequip();
+    if (dna.alphaAbility != null) dna.alphaAbility.onUnequip();
+    if (dna.betaAbility != null) dna.betaAbility.onUnequip();
+    if (dna.epsilonAbility != null) dna.epsilonAbility.onUnequip();
 }    
 
 

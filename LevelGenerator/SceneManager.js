@@ -210,7 +210,8 @@ class SceneManager {
         this.game.camera.y = 0;
         this.player = new GameCharacter(this.game, CANVAS_WIDTH/2-150, 0);
         player = this.player; //update global player reference
-        equipAbilities(); //equip abilities
+        equipAbilities(params.INVENTORY.dnaSlot1); //equip abilities
+        equipAbilities(params.INVENTORY.dnaSlot2);
         this.game.addEntity(this.player);
     }
     

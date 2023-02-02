@@ -174,28 +174,31 @@ class InventoryUI {
     equipSlot1() {
       if (keypress("Digit1") && this.state == this.BROWSE && !this.game.PAUSED){
         unequipAbilities(params.INVENTORY.dnaSlot1);
-
         params.INVENTORY.dnaSlot1 = this.inventory[this.currentDna];
-        if (params.INVENTORY.dnaSlot2 == params.INVENTORY.dnaSlot1) {
+
+        //If moving from slot2 to slot1, dont unequip or equip the abilities, just swap the slots
+        if (params.INVENTORY.dnaSlot1 === params.INVENTORY.dnaSlot2) {
+          unequipAbilities(params.INVENTORY.dnaSlot2);
           params.INVENTORY.dnaSlot2 = null;
         }
-        //onUnequip();
-        equipAbilities();
+
+        equipAbilities(params.INVENTORY.dnaSlot1);
       }
     }
 
     equipSlot2() {
       if (keypress("Digit2") && this.state == this.BROWSE && !this.game.PAUSED){
-        //unequip the abiliities in the current slot
+        console.log("equipping slot 2");
         unequipAbilities(params.INVENTORY.dnaSlot2);
-
         params.INVENTORY.dnaSlot2 = this.inventory[this.currentDna];
-        if (params.INVENTORY.dnaSlot2 == params.INVENTORY.dnaSlot1) {
 
+        //If moving from slot1 to slot2, dont unequip or equip the abilities, just swap the slots
+        if (params.INVENTORY.dnaSlot1 === params.INVENTORY.dnaSlot2) {
+          unequipAbilities(params.INVENTORY.dnaSlot1);
           params.INVENTORY.dnaSlot1 = null;
         }
-        //onUnequip();
-        equipAbilities();
+
+        equipAbilities(params.INVENTORY.dnaSlot2);
       }
     }
 
@@ -203,11 +206,11 @@ class InventoryUI {
       if (keypress("Digit3") && this.state == this.BROWSE && !this.game.PAUSED){
         if(this.inventory[this.currentDna] == null) return;
         //check if current dna is equipped
-        if (this.inventory[this.currentDna] == params.INVENTORY.dnaSlot1) {
+        if (this.inventory[this.currentDna] === params.INVENTORY.dnaSlot1) {
           unequipAbilities(this.inventory[this.currentDna]);
           params.INVENTORY.dnaSlot1 = null;
 
-        } else if (this.inventory[this.currentDna] == params.INVENTORY.dnaSlot2) {
+        } else if (this.inventory[this.currentDna] === params.INVENTORY.dnaSlot2) {
           unequipAbilities(this.inventory[this.currentDna]);
           params.INVENTORY.dnaSlot2 = null;
         }

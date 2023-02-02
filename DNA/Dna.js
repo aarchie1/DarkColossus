@@ -82,6 +82,8 @@ class DNA {
         ctx.drawImage(this.image, x, y, slotSize, slotSize);
     }
 
+
+
     toString() {
 
 

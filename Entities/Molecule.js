@@ -1,9 +1,10 @@
-class Molecule {
+class Molecule  {
   constructor(game, x, y, size) {
     Object.assign(this, { game, x, y, size });
     const TICK = this.game.clockTick;
     this.molecule = this;
     this.player = this.game.camera.player;
+    this.hostile = true;
 
     this.facing = 1; // 0 = right, 1 == left
     this.state = size; // 0 = low 1 = half,  2 = full, 3 = attack

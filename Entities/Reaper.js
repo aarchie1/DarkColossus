@@ -8,6 +8,7 @@ class Reaper {
     this.facing = 1; // 0 = right, 1 == left
     this.state = size; //0 = weak 1 = normal 2 = strong 3 = attacking
     this.velocity = { x: 0, y: 0 };
+    this.hostile = true;
 
     this.attackRate = 2;
     this.elapsedTime = 0;
@@ -129,6 +130,9 @@ class Reaper {
       // Update Facing direction
       if (this.velocity.x < 0) this.facing = 1;
       if (this.velocity.x > 0) this.facing = 0;
+    }
+    if (this.health <= 0) {
+      this.removeFromWorld = true;
     }
   }
 
