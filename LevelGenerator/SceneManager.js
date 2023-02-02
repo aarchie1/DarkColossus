@@ -10,13 +10,13 @@ class SceneManager {
         this.player = new GameCharacter(this.game, 0, 0);
 
         // splits the X axis into 5 sections [  |  |  |  |  ] <-- map, playable area --> [  |xx|xx|xx|  ]
-        this.quadX = 1400 / 5;
+        this.quadX = 1650 / 5;
         this.rightBoundX = this.quadX * 3;
         this.midX = this.quadX * 2.5;
         this.leftBoundX = this.quadX * 1;
 
         // splits the Y axis into 4 sectionsd
-        this.quadY = 900 / 4;
+        this.quadY = 1000 / 4;
         this.lowerBoundY = this.quadY * 3;
         this.midY = this.quadY * 2;
         this.upperBoundY = this.quadY * 1.5;
@@ -131,8 +131,8 @@ class SceneManager {
         this.clearLevel();
         this.rightXLimit = 1400;
         //Create Inventory UI
-        let inventoryBB = new BoundingBox(900, 525, 248, 200);
-        this.game.addEntity(new Interactable(this.game, 900, 525, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), inventoryBB, () => {
+        let inventoryBB = new BoundingBox(1200, 525, 248, 200);
+        this.game.addEntity(new Interactable(this.game, 1200, 525, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), inventoryBB, () => {
             //check if inventory is already open
             if (params.STATE != "menu") {
                 this.game.addEntityFirst(new InventoryUI(this.game));
@@ -149,9 +149,13 @@ class SceneManager {
         }));
 
         //Create Portal Interactable
-        this.game.addEntity(new Portal(this.game, this));
-        this.game.addEntity(new Platform(this.game, 1, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(0, 830, 1600, 400)));
-        this.game.addEntity(new Cross_Background(this.game, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/cross_background.png")));
+        this.game.addEntity(new Portal(this.game, 1550, 450, this));
+        //this.game.addEntity(new Platform(this.game, 1, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(0, 830, 1600, 400)));
+        ///spawn three of those platforms next to each other but spawn one of them in the middle of the screen and the other two on the sides
+        this.game.addEntity(new Platform(this.game, CANVAS_WIDTH/2, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(CANVAS_WIDTH/2, 830, 1600, 400)));
+        this.game.addEntity(new Platform(this.game, CANVAS_WIDTH/2 - CANVAS_WIDTH/2, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(CANVAS_WIDTH/2 - CANVAS_WIDTH/2, 830, 1600, 400)));
+
+        this.game.addEntity(new Cross_Background(this.game));
         this.game.addEntity(new Background(this.game));
     
 
@@ -238,11 +242,11 @@ class SceneManager {
 	}
 
     class Cross_Background {
-        constructor(game, x) {
+        constructor(game) {
             this.game = game;
             this.width = CANVAS_WIDTH;
             this.height = CANVAS_HEIGHT;
-            this.x = x;
+            this.x = 250;
             this.y = -40;
             this.animation = new Animator(ASSET_MANAGER.getAsset("./Sprites/LevelAssets/cross_background.png"), 0, 0, 1400, 900, 1, 1, true, true);
             this.t = 0;

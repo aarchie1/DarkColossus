@@ -208,6 +208,8 @@ class GameCharacter {
     // Update Facing direction
     if (this.velocity.x < 0) this.facing = 1;
     if (this.velocity.x > 0) this.facing = 0;
+
+    this.abilityControls();
   }
 
   jump() {
@@ -230,6 +232,35 @@ class GameCharacter {
       return true;
     } else {
       return false;
+    }
+  }
+
+  //This will need to be updated later on
+  //to include the second equipped dna once
+  //we decide control scheme for that
+  abilityControls() {
+    if (this.game.keys.ArrowUp) {
+     if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.sigmaAbility != null) {
+        params.INVENTORY.dnaSlot1.sigmaAbility.onUse();
+      }
+    }
+
+    if (this.game.keys.ArrowLeft) {
+      if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.alphaAbility != null) {
+        params.INVENTORY.dnaSlot1.alphaAbility.onUse();
+      }
+    }
+
+    if (this.game.keys.ArrowRight) {
+      if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.epsilonAbility != null) {
+        params.INVENTORY.dnaSlot1.epsilongAbility.onUse();
+      }
+    }
+
+    if (this.game.keys.ArrowDown) {
+      if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.betaAbility != null) {
+        params.INVENTORY.dnaSlot1.betaAbility.onUse();
+      }
     }
   }
 
@@ -359,85 +390,68 @@ class GameCharacter {
       this.y - this.animationYOffset - this.game.camera.y,
       1
     );
-    if (debug) ctx.fillText("PAUSED: " + this.game.PAUSED, 100, 100);
+
     if (this.game.PAUSED) {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-      ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-      ctx.font = "50px Arial";
-      ctx.strokeStyle = "Red";
-      ctx.textAlign = "center";
-      ctx.fillStyle = "white";
-      ctx.fillText("PAUSED", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+        ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        ctx.font = "50px Arial";
+        ctx.strokeStyle = 'Red';   
+        ctx.textAlign = "center";  
+        ctx.fillStyle = "white";
+        ctx.fillText("PAUSED", CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
     }
-    draw(ctx) {
-        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset - this.game.camera.x, this.y-this.animationYOffset - this.game.camera.y, 1);
-        if (this.game.PAUSED) {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-            ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-            ctx.font = "50px Arial";
-            ctx.strokeStyle = 'Red';   
-            ctx.textAlign = "center";  
-            ctx.fillStyle = "white";
-            ctx.fillText("PAUSED", CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
 
+    //DEBUG (I probably should have put it all in one if statement oops lmao)
+    ctx.fillStyle = 'white';
+    ctx.font = "20px Arial";
+    ctx.textAlign = "left";
+    if (debug) ctx.strokeRect(this.BB.x-this.game.camera.x, this.BB.y-this.game.camera.y, this.BB.width, this.BB.height);
+    //put debug on screen text for x, y, velocity, state, facing, and jumps on the right hand side of the screen
+    let debugY = 150;
+    let debugX = 1400;
+    //use math.roudn
+    if (debug) ctx.fillText("X: " + Math.round(this.x), debugX, debugY);
+    if (debug) ctx.fillText("Y: " + Math.round(this.y), debugX, debugY + 20);
+    if (debug) ctx.fillText("Velocity X: " + Math.round(this.velocity.x), debugX, debugY + 40);
+    if (debug) ctx.fillText("Velocity Y: " + Math.round(this.velocity.y), debugX, debugY + 60);
+    switch (this.state) {
+        case 0:
+            if (debug) ctx.fillText("State: Idle" , debugX, debugY + 80);
+            break;
+        case 1:
+            if (debug) ctx.fillText("State: Running" , debugX, debugY + 80);
+            break;
+        case 2:
+            if (debug) ctx.fillText("State: Falling" , debugX, debugY + 80);
+            break;
+        case 3:
+            if (debug) ctx.fillText("State: Jumping" , debugX, debugY + 80);
+            break;
+        default:
+            if (debug) ctx.fillText("State: Unknown" , debugX, debugY + 80);
+            break;
+    }
+    switch (this.facing) {
+        case 0:
+            if (debug) ctx.fillText("Facing: Right" , debugX, debugY + 100);
+            break;
+        case 1:
+            if (debug) ctx.fillText("Facing: Left" , debugX, debugY + 100);
+            break;
+        default:
+            if (debug) ctx.fillText("Facing: Unknown" , debugX, debugY + 100);
+            break;
+    }
 
-        }
-
-
-
-        //DEBUG (I probably should have put it all in one if statement oops lmao)
-        ctx.fillStyle = 'white';
-        ctx.font = "20px Arial";
-        ctx.textAlign = "left";
-        if (debug) ctx.strokeRect(this.BB.x-this.game.camera.x, this.BB.y-this.game.camera.y, this.BB.width, this.BB.height);
-        //put debug on screen text for x, y, velocity, state, facing, and jumps on the right hand side of the screen
-        let debugY = 150;
-        let debugX = 1400;
-        //use math.roudn
-        if (debug) ctx.fillText("X: " + Math.round(this.x), debugX, debugY);
-        if (debug) ctx.fillText("Y: " + Math.round(this.y), debugX, debugY + 20);
-        if (debug) ctx.fillText("Velocity X: " + Math.round(this.velocity.x), debugX, debugY + 40);
-        if (debug) ctx.fillText("Velocity Y: " + Math.round(this.velocity.y), debugX, debugY + 60);
-        switch (this.state) {
-            case 0:
-                if (debug) ctx.fillText("State: Idle" , debugX, debugY + 80);
-                break;
-            case 1:
-                if (debug) ctx.fillText("State: Running" , debugX, debugY + 80);
-                break;
-            case 2:
-                if (debug) ctx.fillText("State: Falling" , debugX, debugY + 80);
-                break;
-            case 3:
-                if (debug) ctx.fillText("State: Jumping" , debugX, debugY + 80);
-                break;
-            default:
-                if (debug) ctx.fillText("State: Unknown" , debugX, debugY + 80);
-                break;
-        }
-        switch (this.facing) {
-            case 0:
-                if (debug) ctx.fillText("Facing: Right" , debugX, debugY + 100);
-                break;
-            case 1:
-                if (debug) ctx.fillText("Facing: Left" , debugX, debugY + 100);
-                break;
-            default:
-                if (debug) ctx.fillText("Facing: Unknown" , debugX, debugY + 100);
-                break;
-        }
-        if (debug) ctx.fillText("Jumps: " + this.JUMPS, debugX, debugY + 120);
-        if (debug)ctx.fillText("PAUSED: " + this.game.PAUSED, debugX, debugY + 140);
-
-
-
-    };
-    if (debug)
+    if (debug) ctx.fillText("Jumps: " + this.JUMPS, debugX, debugY + 120);
+    if (debug)ctx.fillText("PAUSED: " + this.game.PAUSED, debugX, debugY + 140);
+    if (debug){
       ctx.strokeRect(
-        this.BB.x - this.game.camera.x,
-        this.BB.y - this.game.camera.y,
-        this.BB.width,
-        this.BB.height
+      this.BB.x - this.game.camera.x,
+      this.BB.y - this.game.camera.y,
+      this.BB.width,
+      this.BB.height
       );
+    }
   }
 }

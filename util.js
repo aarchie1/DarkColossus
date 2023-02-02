@@ -13,7 +13,7 @@ let CANVAS_HEIGHT = 0;
 let CANVAS_WIDTH = 0;
 let player = null;
 
-let debug = false;
+let debug = true;
 function toggleDebug() {
     debug = !debug;
 }
