@@ -16,16 +16,16 @@ class MockAbility {
         this.effect = this.setEffect(effectRarity);
         this.dominant = false; //dominant or recessive
         this.description = 'This is a mock ability';
-        this.icon = 'mockAbilityIcon';
+        this.icon = ASSET_MANAGER.getAsset('./Sprites/Abilities/Icons/mock_icon.png');
 
         //Store animation in abilities
         this.animation = 'mockAbilityAnimation';
 
         this.currentCooldown = 0;
 
-        console.log('Mock Ability created');
-        console.log('Cooldown Rarity: ' + cooldownRarity);
-        console.log('Effect Rarity: ' + effectRarity);
+        // console.log('Mock Ability created');
+        // console.log('Cooldown Rarity: ' + cooldownRarity);
+        // console.log('Effect Rarity: ' + effectRarity);
     }
 
     //INVENTORY UI CALL THIS
@@ -33,16 +33,17 @@ class MockAbility {
         //add stat changes
         //example cases:
             //on splice?
-            //on equip
+            //on equip DONE
+            //on new level start DONE
     }
 
     //INVENTORY UI CALL THIS
     onUnequip() {
         //remove stat changes
         //example cases:
-            //on sell
+            //on sell DONE
             //on splice
-            //on replace
+            //on replace/equip other DONE
     }
 
     //GAME CHARACTER CALLS THIS
@@ -99,6 +100,9 @@ class MockAbility {
 
     update() {
         //This will be called through the DNA's update method.
-        console.log('Mock Ability updated');
+    }
+
+    draw() {
+        //This will be called through the DNA's draw method.
     }
 }

@@ -10,16 +10,16 @@ class SceneManager {
         this.player = new GameCharacter(this.game, 0, 0);
 
         // splits the X axis into 5 sections [  |  |  |  |  ] <-- map, playable area --> [  |xx|xx|xx|  ]
-        this.quadX = 1400 / 5;
+        this.quadX = 1650 / 5;
         this.rightBoundX = this.quadX * 3;
         this.midX = this.quadX * 2.5;
         this.leftBoundX = this.quadX * 1;
 
         // splits the Y axis into 4 sectionsd
-        this.quadY = 900 / 4;
+        this.quadY = 1000 / 4;
         this.lowerBoundY = this.quadY * 3;
         this.midY = this.quadY * 2;
-        this.upperBoundY = this.quadY * 1;
+        this.upperBoundY = this.quadY * 1.5;
 
         // sets left, right, lower, and upper, map border so player cannot leave the area.
         this.leftXLimit = 0;      // do not change -- does not traverse left of starting point
@@ -28,8 +28,8 @@ class SceneManager {
         this.upperYLimit = -8500; // -8500 to stay within background image (top)
 
         player = this.player;
+        //this.loadTitleScreen(); //This will replace this.loadHub() when we have a title screen
         this.loadHub(); 
-        //this.loadLevel(); 
     };
 
     loadLevel() {
@@ -42,9 +42,19 @@ class SceneManager {
         let xBoundMax = 13000;
         let yBoundMin = 600;
         let yBoundMax = -800;
-
         this.rightXLimit = 16000;
 
+        // spawn in dna pickups
+        for (let i = 0; i < level.dnaPickup.length; i++) {
+            let dna = level.dnaPickup[i];
+            this.game.addEntity(new DnaItemDrop(this.game, dna.x, dna.y));
+        }
+
+        //spawn in enemies
+        for (let i = 0; i < level.reaper.length; i++) {
+            let enemy = level.reaper[i];
+            this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
+        }
         //Enemy Testing Lines
         //this.game.addEntity(new Reaper(this.game, 1000, 520, 2));
         this.game.addEntity(new Molecule(this.game, 1000, 520, 2));
@@ -98,13 +108,7 @@ class SceneManager {
             this.game.addEntity(new Platform(this.game, x, y, 184, 184,
                 ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_tiny.png"), new BoundingBox(x, y + 150, 184, 100)));
         }
-
-        //spawn in enemies
-        for (let i = 0; i < level.reaper.length; i++) {
-            let enemy = level.reaper[i];
-            this.game.addEntityFirst(new Reaper(this.game, enemy.x, enemy.y, 2));
-        }
-
+        
         //add background
         gameEngine.addEntity(new Background(this.game));
         
@@ -125,11 +129,10 @@ class SceneManager {
     loadHub() {
         params.LEVEL = 0;
         this.clearLevel();
-
         this.rightXLimit = 1400;
         //Create Inventory UI
-        let inventoryBB = new BoundingBox(900, 525, 248, 200);
-        this.game.addEntity(new Interactable(this.game, 900, 525, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), inventoryBB, () => {
+        let inventoryBB = new BoundingBox(1200, 525, 248, 200);
+        this.game.addEntity(new Interactable(this.game, 1200, 525, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), inventoryBB, () => {
             //check if inventory is already open
             if (params.STATE != "menu") {
                 this.game.addEntityFirst(new InventoryUI(this.game));
@@ -146,10 +149,16 @@ class SceneManager {
         }));
 
         //Create Portal Interactable
-        this.game.addEntity(new Portal(this.game, this));
-        this.game.addEntity(new Platform(this.game, 1, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(0, 830, 1600, 400)));
-        this.game.addEntity(new Cross_Background(this.game, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/cross_background.png")));
+        this.game.addEntity(new Portal(this.game, 1550, 450, this));
+        //this.game.addEntity(new Platform(this.game, 1, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(0, 830, 1600, 400)));
+        ///spawn three of those platforms next to each other but spawn one of them in the middle of the screen and the other two on the sides
+        this.game.addEntity(new Platform(this.game, CANVAS_WIDTH/2, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(CANVAS_WIDTH/2, 830, 1600, 400)));
+        this.game.addEntity(new Platform(this.game, CANVAS_WIDTH/2 - CANVAS_WIDTH/2, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(CANVAS_WIDTH/2 - CANVAS_WIDTH/2, 830, 1600, 400)));
+
+        this.game.addEntity(new Cross_Background(this.game));
         this.game.addEntity(new Background(this.game));
+    
+
 
     }
 
@@ -158,6 +167,14 @@ class SceneManager {
     }
 
     update() {
+        //Attemped to implement a out of bounds death mechanic, 
+        //bugged out when dying during a level
+        //Anyone who wants to fix it is welcome to or implement a new one, delete, etc.
+            // if (this.player != null && this.player.y > CANVAS_HEIGHT+200) {
+                
+            //     this.loadHub();
+            // }
+
 
 
         //Make the camera move based off this bounding box
@@ -191,11 +208,11 @@ class SceneManager {
 
         this.game.camera.x = 0;
         this.game.camera.y = 0;
-        this.player.x = 0;
-        this.player.y = 580;
+        this.player = new GameCharacter(this.game, CANVAS_WIDTH/2-150, 0);
+        player = this.player; //update global player reference
+        equipAbilities(params.INVENTORY.dnaSlot1); //equip abilities
+        equipAbilities(params.INVENTORY.dnaSlot2);
         this.game.addEntity(this.player);
-
-
     }
     
 }
@@ -213,7 +230,13 @@ class SceneManager {
 
 		draw(ctx) {
 			ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed), this.y-(this.game.camera.y*this.scrollSpeed), this.width, this.height);
-		}
+            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)+this.width, this.y-(this.game.camera.y*this.scrollSpeed), this.width, this.height);
+            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)-this.width, this.y-(this.game.camera.y*this.scrollSpeed), this.width, this.height);
+            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)+this.width*2, this.y-(this.game.camera.y*this.scrollSpeed)+this.height, this.width, this.height);
+            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)-this.width*2, this.y-(this.game.camera.y*this.scrollSpeed)+this.height, this.width, this.height);
+            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)+this.width*3, this.y-(this.game.camera.y*this.scrollSpeed)+this.height, this.width, this.height);
+            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)-this.width*3, this.y-(this.game.camera.y*this.scrollSpeed)+this.height, this.width, this.height);
+        }
 		update() {
 
 		}
@@ -222,9 +245,9 @@ class SceneManager {
     class Cross_Background {
         constructor(game) {
             this.game = game;
-            this.width = 1400;
-            this.height = 900;
-            this.x = 90;
+            this.width = CANVAS_WIDTH;
+            this.height = CANVAS_HEIGHT;
+            this.x = 250;
             this.y = -40;
             this.animation = new Animator(ASSET_MANAGER.getAsset("./Sprites/LevelAssets/cross_background.png"), 0, 0, 1400, 900, 1, 1, true, true);
             this.t = 0;

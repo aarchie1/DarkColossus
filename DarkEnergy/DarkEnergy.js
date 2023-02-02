@@ -1,7 +1,7 @@
 class DarkEnergy {
     constructor(game) {
         this.game = game;
-        this.currency = 100;
+        this.currency = 10000000;
         //Attack stats
         this.meleeAttack = 0;
         this.rangedAttack = 0;

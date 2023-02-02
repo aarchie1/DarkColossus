@@ -11,7 +11,10 @@ class MoleculeProjectile {
       spritesheet,
     });
     const TICK = this.game.clockTick;
+    console.log("molecule projectile spawn");
 
+    this.hostile = true;
+    this.health = 1;
     this.maxSpeed = 500; // pixels per second
 
     let dist = getDistance(this, this.target);
@@ -51,6 +54,10 @@ class MoleculeProjectile {
     this.updateBB();
 
     //check for collision with target
+
+    if (this.health <= 0) {
+      this.removeFromWorld = true;
+    }
   }
 
   draw(ctx) {

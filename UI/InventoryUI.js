@@ -90,7 +90,6 @@ class InventoryUI {
       this.toggleMode();
       this.closeInventory();
 
-
       //Move Cursor Left
       if (!this.pressed && (this.game.keys.KeyA || this.game.controllerButtonLeft)) {
         if (this.currentSlot == 0 || this.currentSlot % this.columns == 0) {
@@ -128,11 +127,7 @@ class InventoryUI {
       } else if (keypress("KeyW") || this.game.controllerButtonUp) {
         this.currentSlot = (this.currentSlot - this.columns + this.rows * this.columns) % (this.columns * this.rows);
         //this.prevPage();
-
-
       } 
-
-
 
       if (this.game.keys.KeyA == true || this.game.keys.KeyD == true || this.game.keys.KeyS == true || this.game.keys.KeyW == true) {
         this.pressed = true;
@@ -178,25 +173,48 @@ class InventoryUI {
 
     equipSlot1() {
       if (keypress("Digit1") && this.state == this.BROWSE && !this.game.PAUSED){
+        unequipAbilities(params.INVENTORY.dnaSlot1);
         params.INVENTORY.dnaSlot1 = this.inventory[this.currentDna];
-        if (params.INVENTORY.dnaSlot2 == params.INVENTORY.dnaSlot1) {
+
+        //If moving from slot2 to slot1, dont unequip or equip the abilities, just swap the slots
+        if (params.INVENTORY.dnaSlot1 === params.INVENTORY.dnaSlot2) {
+          unequipAbilities(params.INVENTORY.dnaSlot2);
           params.INVENTORY.dnaSlot2 = null;
         }
+
+        equipAbilities(params.INVENTORY.dnaSlot1);
       }
     }
 
     equipSlot2() {
       if (keypress("Digit2") && this.state == this.BROWSE && !this.game.PAUSED){
+        console.log("equipping slot 2");
+        unequipAbilities(params.INVENTORY.dnaSlot2);
         params.INVENTORY.dnaSlot2 = this.inventory[this.currentDna];
-        if (params.INVENTORY.dnaSlot2 == params.INVENTORY.dnaSlot1) {
+
+        //If moving from slot1 to slot2, dont unequip or equip the abilities, just swap the slots
+        if (params.INVENTORY.dnaSlot1 === params.INVENTORY.dnaSlot2) {
+          unequipAbilities(params.INVENTORY.dnaSlot1);
           params.INVENTORY.dnaSlot1 = null;
         }
+
+        equipAbilities(params.INVENTORY.dnaSlot2);
       }
     }
 
     sellDna() {
       if (keypress("Digit3") && this.state == this.BROWSE && !this.game.PAUSED){
         if(this.inventory[this.currentDna] == null) return;
+        //check if current dna is equipped
+        if (this.inventory[this.currentDna] === params.INVENTORY.dnaSlot1) {
+          unequipAbilities(this.inventory[this.currentDna]);
+          params.INVENTORY.dnaSlot1 = null;
+
+        } else if (this.inventory[this.currentDna] === params.INVENTORY.dnaSlot2) {
+          unequipAbilities(this.inventory[this.currentDna]);
+          params.INVENTORY.dnaSlot2 = null;
+        }
+
         params.DARK_ENERGY.currency += this.inventory[this.currentDna].value;
         //remove only the current slot
         this.inventory.splice(this.currentDna, 1);

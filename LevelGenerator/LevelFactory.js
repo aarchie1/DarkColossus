@@ -82,13 +82,14 @@ function getLevel(levelNumber) {
     level.platformLarge.forEach(platform => { addEnemiesNearPlatform(platform); addHazardOnPlatform(platform);});
 
     function addEnemiesNearPlatform(platform) {
-        if (Math.random() < 0.17 + (levelNumber/100)*2) { 
+        if (Math.random() < 0.85 + (levelNumber/100)*2) { 
             level.reaper.push({x: platform.x + randomNumberInRange(-500, 500), y: platform.y + randomNumberInRange(-500, 500)});
         }
-        if (Math.random() < 0.15 + (levelNumber/100)*2) {
+        if (Math.random() < 0.85 + (levelNumber/100)*2) {
             level.molecule.push({x: platform.x + randomNumberInRange(-500, 500), y: platform.y + randomNumberInRange(-500, 500)});
         }
     }
+
 
     function addHazardOnPlatform(platform) {
         if (Math.random() < 0.15 + (levelNumber/100)*2) {

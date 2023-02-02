@@ -14,6 +14,7 @@ let CANVAS_WIDTH = 0;
 let player = null;
 
 let debug = false;
+
 function toggleDebug() {
     debug = !debug;
 }
@@ -34,6 +35,26 @@ function keyhold(key) {
         return false;
     }
 };
+
+function equipAbilities(dna){
+    console.log("equipping:" + dna);
+    if (dna == null) return;
+    if (dna.sigmaAbility != null) dna.sigmaAbility.onEquip();
+    if (dna.alphaAbility != null) dna.alphaAbility.onEquip();
+    if (dna.betaAbility != null) dna.betaAbility.onEquip();
+    if (dna.epsilonAbility != null) dna.epsilonAbility.onEquip();
+    
+}
+
+function unequipAbilities(dna){
+    console.log("unequipping:" + dna);
+    if (dna == null) return;
+    if (dna.sigmaAbility != null) dna.sigmaAbility.onUnequip();
+    if (dna.alphaAbility != null) dna.alphaAbility.onUnequip();
+    if (dna.betaAbility != null) dna.betaAbility.onUnequip();
+    if (dna.epsilonAbility != null) dna.epsilonAbility.onUnequip();
+}    
+
 
 
 /**

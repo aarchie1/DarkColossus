@@ -4,9 +4,7 @@ class Inventory {
         this.inventory = [];
 
         //test data
-        for (let i = 0; i < 15; i++) {
-            this.inventory.push(getRandomDNA());
-        }
+
         this.game = game;
         this.dnaSlot1 = null;
         this.dnaSlot2 = null;
@@ -17,6 +15,8 @@ class Inventory {
     }
 
     update() {
-
+        if (this.game.keys.KeyP) {
+            this.inventory.push(getRandomDNA());
+        }
     }
 }

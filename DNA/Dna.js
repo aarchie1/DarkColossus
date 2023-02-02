@@ -21,6 +21,23 @@ class DNA {
                 this.image = ASSET_MANAGER.getAsset("./Sprites/DNA/dna_godly.png");
                 break;
         }
+
+        //set hud image
+        switch (this.rarity) {
+            case 1:
+                this.hudImage = ASSET_MANAGER.getAsset("./Sprites/UI/ability_hud_basic.png");
+                break;
+            case 2:
+                this.hudImage = ASSET_MANAGER.getAsset("./Sprites/UI/ability_hud_uncommon.png");
+                break;
+            case 3:
+                this.hudImage = ASSET_MANAGER.getAsset("./Sprites/UI/ability_hud_rare.png");
+                break;
+            case 4:
+                this.hudImage = ASSET_MANAGER.getAsset("./Sprites/UI/ability_hud_godly.png");
+                break;
+        }
+        
         //add up all the ability rarities and set the dna value
         this.value = 0;
         if (this.sigmaAbility != null) this.value += this.sigmaAbility.cooldownRarity + this.sigmaAbility.effectRarity;
@@ -31,10 +48,11 @@ class DNA {
     };
 
     update() {
-        this.sigmaAbility.update();
-        this.alphaAbility.update();
-        this.betaAbility.update();
-        this.epsilonAbility.update();
+        if(this.sigmaAbility != null)this.sigmaAbility.update();
+        if(this.alphaAbility != null)this.alphaAbility.update();
+        if(this.betaAbility != null)this.betaAbility.update();
+        if(this.epsilonAbility != null)this.epsilonAbility.update();
+        
     }
 
     drawDna(ctx, x, y, slotSize) {
@@ -80,6 +98,8 @@ class DNA {
         }
         ctx.drawImage(this.image, x, y, slotSize, slotSize);
     }
+
+
 
     toString() {
 

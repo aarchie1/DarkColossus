@@ -11,11 +11,16 @@ class DnaItemDrop {
         this.t = Math.random();
         this.amplitude = 2;
         this.dna = getRandomDNA(); //this is what goes into the player's inventory
+        this.BB = new BoundingBox(this.x, this.y, 116, 116);
     }
 
     update() {
         this.t += 0.06;
         this.y += Math.sin(this.t) * this.amplitude;
+        if (this.BB.collide(player.BB)) {
+            params.INVENTORY.inventory.push(this.dna);
+            this.removeFromWorld = true;
+        }
         
     }
 
@@ -25,6 +30,7 @@ class DnaItemDrop {
         // let y = this.y + this.game.camera.y + 100;
         // this.drawEllipse(ctx, x, y, w, 40, 0.5);
         this.dna.drawDna(ctx, this.x - this.game.camera.x , this.y - this.game.camera.y, 116);
+
     }
     
 
