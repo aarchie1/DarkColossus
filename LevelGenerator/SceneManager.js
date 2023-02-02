@@ -55,6 +55,9 @@ class SceneManager {
             let enemy = level.reaper[i];
             this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
         }
+        //Enemy Testing Lines
+        //this.game.addEntity(new Reaper(this.game, 1000, 520, 2));
+        this.game.addEntity(new Molecule(this.game, 1000, 520, 2));
 
         // initial platform final platform
         let origX = -700;
@@ -107,7 +110,8 @@ class SceneManager {
         }
         
         //add background
-	    gameEngine.addEntity(new Background(this.game));
+        gameEngine.addEntity(new Background(this.game));
+        
     
         
     };
