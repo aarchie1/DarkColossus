@@ -6,7 +6,7 @@ class GameCharacter {
         Object.assign(this, { game, x, y });
         this.JUMP_ACC = -1300;
         this.MIN_RUN = 50;
-        this.MAX_RUN = 1200;
+        this.MAX_RUN = 800;
         this.RUN_ACC = 2500;
         this.DEC_SKID = 5000;
         this.DEC_REL = 1500;
@@ -224,7 +224,6 @@ class GameCharacter {
     }
     draw(ctx) {
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.animationXOffset - this.game.camera.x, this.y-this.animationYOffset - this.game.camera.y, 1);
-        if (debug)ctx.fillText("PAUSED: " + this.game.PAUSED, 100, 100);
         if (this.game.PAUSED) {
             ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
             ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -236,6 +235,52 @@ class GameCharacter {
 
 
         }
+
+        //DEBUG (I probably should have put it all in one if statement oops lmao)
+        ctx.fillStyle = 'white';
+        ctx.font = "20px Arial";
+        ctx.textAlign = "left";
         if (debug) ctx.strokeRect(this.BB.x-this.game.camera.x, this.BB.y-this.game.camera.y, this.BB.width, this.BB.height);
+        //put debug on screen text for x, y, velocity, state, facing, and jumps on the right hand side of the screen
+        let debugY = 150;
+        let debugX = 1400;
+        //use math.roudn
+        if (debug) ctx.fillText("X: " + Math.round(this.x), debugX, debugY);
+        if (debug) ctx.fillText("Y: " + Math.round(this.y), debugX, debugY + 20);
+        if (debug) ctx.fillText("Velocity X: " + Math.round(this.velocity.x), debugX, debugY + 40);
+        if (debug) ctx.fillText("Velocity Y: " + Math.round(this.velocity.y), debugX, debugY + 60);
+        switch (this.state) {
+            case 0:
+                if (debug) ctx.fillText("State: Idle" , debugX, debugY + 80);
+                break;
+            case 1:
+                if (debug) ctx.fillText("State: Running" , debugX, debugY + 80);
+                break;
+            case 2:
+                if (debug) ctx.fillText("State: Falling" , debugX, debugY + 80);
+                break;
+            case 3:
+                if (debug) ctx.fillText("State: Jumping" , debugX, debugY + 80);
+                break;
+            default:
+                if (debug) ctx.fillText("State: Unknown" , debugX, debugY + 80);
+                break;
+        }
+        switch (this.facing) {
+            case 0:
+                if (debug) ctx.fillText("Facing: Right" , debugX, debugY + 100);
+                break;
+            case 1:
+                if (debug) ctx.fillText("Facing: Left" , debugX, debugY + 100);
+                break;
+            default:
+                if (debug) ctx.fillText("Facing: Unknown" , debugX, debugY + 100);
+                break;
+        }
+        if (debug) ctx.fillText("Jumps: " + this.JUMPS, debugX, debugY + 120);
+        if (debug)ctx.fillText("PAUSED: " + this.game.PAUSED, debugX, debugY + 140);
+
+
+
     };
 }

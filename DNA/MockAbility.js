@@ -33,17 +33,17 @@ class MockAbility {
         //add stat changes
         //example cases:
             //on splice?
-            //on equip
-            //on new level start
+            //on equip DONE
+            //on new level start DONE
     }
 
     //INVENTORY UI CALL THIS
     onUnequip() {
         //remove stat changes
         //example cases:
-            //on sell
+            //on sell DONE
             //on splice
-            //on replace
+            //on replace/equip other DONE
     }
 
     //GAME CHARACTER CALLS THIS

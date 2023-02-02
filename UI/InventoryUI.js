@@ -173,6 +173,8 @@ class InventoryUI {
 
     equipSlot1() {
       if (keypress("Digit1") && this.state == this.BROWSE && !this.game.PAUSED){
+        unequipAbilities(params.INVENTORY.dnaSlot1);
+
         params.INVENTORY.dnaSlot1 = this.inventory[this.currentDna];
         if (params.INVENTORY.dnaSlot2 == params.INVENTORY.dnaSlot1) {
           params.INVENTORY.dnaSlot2 = null;
@@ -184,8 +186,12 @@ class InventoryUI {
 
     equipSlot2() {
       if (keypress("Digit2") && this.state == this.BROWSE && !this.game.PAUSED){
+        //unequip the abiliities in the current slot
+        unequipAbilities(params.INVENTORY.dnaSlot2);
+
         params.INVENTORY.dnaSlot2 = this.inventory[this.currentDna];
         if (params.INVENTORY.dnaSlot2 == params.INVENTORY.dnaSlot1) {
+
           params.INVENTORY.dnaSlot1 = null;
         }
         //onUnequip();
@@ -196,6 +202,16 @@ class InventoryUI {
     sellDna() {
       if (keypress("Digit3") && this.state == this.BROWSE && !this.game.PAUSED){
         if(this.inventory[this.currentDna] == null) return;
+        //check if current dna is equipped
+        if (this.inventory[this.currentDna] == params.INVENTORY.dnaSlot1) {
+          unequipAbilities(this.inventory[this.currentDna]);
+          params.INVENTORY.dnaSlot1 = null;
+
+        } else if (this.inventory[this.currentDna] == params.INVENTORY.dnaSlot2) {
+          unequipAbilities(this.inventory[this.currentDna]);
+          params.INVENTORY.dnaSlot2 = null;
+        }
+
         params.DARK_ENERGY.currency += this.inventory[this.currentDna].value;
         //remove only the current slot
         this.inventory.splice(this.currentDna, 1);

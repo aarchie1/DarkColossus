@@ -31,7 +31,7 @@ class SupersonicAbility{
     }
 
     onUnequip() {
-        player.animations[1][0] = this.originalAnimation;
+        player.animations[1][0] = this.originalAnimationRight;
         player.animations[1][1] = this.originalAnimationLeft;
         player.MAX_RUN -= this.speedIncrease;
     }
@@ -43,7 +43,6 @@ class SupersonicAbility{
 
     //Ability itself
     onEnd() {
-        
 
     }
 
@@ -73,12 +72,12 @@ class SupersonicAbility{
 
     update() {
         if (Math.abs(player.velocity.x) == player.MAX_RUN && player.state == 1) {
-            gameEngine.entities.forEach((enemy) => {
-                // Collisions with players bounding box
-                // if (enemy != null && enemy instanceof Reaper && player.BB.collide(enemy.BB)) {
-                //     enemy.hp -= this.effect;
-                // }
-            })
+           gameEngine.entities.forEach((enemy) => {
+                //Collisions with players bounding box
+                if (enemy != null && enemy instanceof Enemy && player.BB.collide(enemy.BB)) {
+                    enemy.hp -= this.effect;
+                }
+           })
         }
     }
 }

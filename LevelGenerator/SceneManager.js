@@ -157,10 +157,15 @@ class SceneManager {
     }
 
     update() {
-        if (this.player != null && this.player.y > CANVAS_HEIGHT+200) {
-            
-            this.loadHub();
-        }
+        //Attemped to implement a out of bounds death mechanic, 
+        //bugged out when dying during a level
+        //Anyone who wants to fix it is welcome to or implement a new one, delete, etc.
+            // if (this.player != null && this.player.y > CANVAS_HEIGHT+200) {
+                
+            //     this.loadHub();
+            // }
+
+
 
         //Make the camera move based off this bounding box
 /*      // Keeps player in rightBoundX
