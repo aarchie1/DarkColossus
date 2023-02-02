@@ -149,6 +149,8 @@ class SceneManager {
         this.game.addEntity(new Platform(this.game, 1, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(0, 830, 1600, 400)));
         this.game.addEntity(new Cross_Background(this.game, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/cross_background.png")));
         this.game.addEntity(new Background(this.game));
+    
+
 
     }
 
@@ -219,18 +221,24 @@ class SceneManager {
 
 		draw(ctx) {
 			ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed), this.y-(this.game.camera.y*this.scrollSpeed), this.width, this.height);
-		}
+            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)+this.width, this.y-(this.game.camera.y*this.scrollSpeed), this.width, this.height);
+            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)-this.width, this.y-(this.game.camera.y*this.scrollSpeed), this.width, this.height);
+            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)+this.width*2, this.y-(this.game.camera.y*this.scrollSpeed)+this.height, this.width, this.height);
+            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)-this.width*2, this.y-(this.game.camera.y*this.scrollSpeed)+this.height, this.width, this.height);
+            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)+this.width*3, this.y-(this.game.camera.y*this.scrollSpeed)+this.height, this.width, this.height);
+            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)-this.width*3, this.y-(this.game.camera.y*this.scrollSpeed)+this.height, this.width, this.height);
+        }
 		update() {
 
 		}
 	}
 
     class Cross_Background {
-        constructor(game) {
+        constructor(game, x) {
             this.game = game;
-            this.width = 1400;
-            this.height = 900;
-            this.x = 90;
+            this.width = CANVAS_WIDTH;
+            this.height = CANVAS_HEIGHT;
+            this.x = x;
             this.y = -40;
             this.animation = new Animator(ASSET_MANAGER.getAsset("./Sprites/LevelAssets/cross_background.png"), 0, 0, 1400, 900, 1, 1, true, true);
             this.t = 0;

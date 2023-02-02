@@ -11,7 +11,7 @@
     <script type="text/javascript" src="./UI/DarkEnergyUI.js"></script>
     <script type="text/javascript" src="./UI/hud.js"></script>
         
-    <!--Character/Entity Files-->>
+    <!--Character/Entity Files-->
     <script type="text/javascript" src="./animator.js"></script>
     <script type="text/javascript" src="./Entities/GameCharacter.js"></script>
     <script type="text/javascript" src="./Entities/BoundingBox.js"></script>
@@ -54,10 +54,16 @@
     }
   </style>
 <body style="text-align: center; background-color: #330000; padding-top: 1.5%;">
-        <canvas id="gameWorld" width="1600" height="900" outline=0 style="background: white; border: 1px solid hsl(0, 0%, 0%)" tabindex="0" autofocus></canvas>
-    <div>
-        <br />
-        <input type="checkbox" id="debug" onchange=toggleDebug()> Debug <input type="checkbox" id="mute" > Mute <input type="range" id="volume" min="0" max="1" value="0.1" step="0.05" > Volume
-    </div>
+
+  <div style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; display: flex; flex-direction: column; align-items: center;">
+    <canvas id="gameWorld" width="1920" height="1080" outline=0 style="background: white; border: 1px solid hsl(0, 0%, 0%); width: 100%; height: 100%; position: absolute; top: 0; left: 0; bottom: 0; right: 0" tabindex="0" autofocus></canvas>
+ </div>
+ <input type="checkbox" id="debug" onchange="toggleDebug()"> Debug 
+ <input type="checkbox" id="mute"> Mute 
+ <input type="range" id="volume" min="0" max="1" value="0.1" step="0.05"> Volume
+
+  
+
+
 </body>
 </html>

@@ -236,6 +236,8 @@ class GameCharacter {
 
         }
 
+
+
         //DEBUG (I probably should have put it all in one if statement oops lmao)
         ctx.fillStyle = 'white';
         ctx.font = "20px Arial";

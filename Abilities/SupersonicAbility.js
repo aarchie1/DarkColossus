@@ -16,8 +16,7 @@ class SupersonicAbility{
         console.log("player: " + player);
         this.originalAnimationRight = player.animations[1][0];
         this.originalAnimationLeft = player.animations[1][1];
-        
-        this.speedIncrease = 1000;
+        this.speedIncrease = 800;
     }
 
     onEquip() {
@@ -72,12 +71,21 @@ class SupersonicAbility{
 
     update() {
         if (Math.abs(player.velocity.x) == player.MAX_RUN && player.state == 1) {
+
            gameEngine.entities.forEach((enemy) => {
                 //Collisions with players bounding box
-                if (enemy != null && enemy instanceof Enemy && player.BB.collide(enemy.BB)) {
-                    enemy.hp -= this.effect;
+                if (enemy != null && enemy instanceof Reaper && player.BB.collide(enemy.BB)) {
+                    //enemy.health -= this.effect;
                 }
            })
+        }
+
+    }
+
+    draw(ctx) {
+        //draw image slightly behind player
+        if (Math.abs(player.velocity.x) == player.MAX_RUN && player.state == 1) {
+            //ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/Abilities/supersonic.png"), player.x - 300 - gameEngine.camera.x, player.y - 100 - gameEngine.camera.y, 320, 256);
         }
     }
 }

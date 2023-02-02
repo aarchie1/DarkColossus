@@ -102,4 +102,9 @@ class MockAbility {
         //This will be called through the DNA's update method.
         console.log('Mock Ability updated');
     }
+
+    draw() {
+        //This will be called through the DNA's draw method.
+        console.log('Mock Ability drawn');
+    }
 }
