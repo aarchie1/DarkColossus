@@ -20,6 +20,7 @@ class GameCharacter {
         this.state = 0; //0 = idle, 1 = running, 2 = falling 3 = jumping, 4 = attacking
         this.velocity = { x: 0, y: 0 };
         this.dead = false;
+        this.health = 100;
         this.updateBB();
         this.animationXOffset = 0;
         this.animationYOffset = 0;
@@ -29,9 +30,18 @@ class GameCharacter {
 
     updateBB() {
         this.lastBB = this.BB;
-        if (this.state === 3) this.BB = new BoundingBox(this.x+100, this.y, 100, 256);
-        else {
-            this.BB = new BoundingBox(this.x+100, this.y, 100, 256);
+        if (this.state === 3) this.BB = new BoundingBox(this.x + 100, this.y, 100, 256);
+        else if (this.state === 1) {
+            if (this.facing === 0) {
+                this.BB = new BoundingBox(this.x + 150, this.y, 100, 256); 
+            } else {
+                this.BB = new BoundingBox(this.x+50, this.y, 100, 256);
+            }
+           
+        } else {
+
+            if (this.facing == 0) this.BB = new BoundingBox(this.x + 100, this.y, 100, 256);
+            else this.BB = new BoundingBox(this.x+50, this.y, 100, 256);
         }
         
         
@@ -58,7 +68,7 @@ class GameCharacter {
             if (this.state == 0 || this.state == 1 && params.STATE == "gameplay") this.JUMPS = this.MAX_JUMPS;
             this.animationXOffset = 0;
             this.animationYOffset = 0;
-            if (Math.abs(this.velocity.x) < MIN_RUN) {
+            if (Math.abs(this.velocity.x) < MIN_RUN && this.velocity.y <= 0) {
                 this.velocity.x = 0;
                 this.state = 0;
                 if ((this.game.keys.KeyA || this.game.controllerButtonLeft) && params.STATE == "gameplay") {
@@ -67,7 +77,7 @@ class GameCharacter {
                 if ((this.game.keys.KeyD || this.game.controllerButtonRight) && params.STATE == "gameplay") {
                     this.velocity.x += MIN_RUN;
                 }
-            } else if (Math.abs(this.velocity.x) >= MIN_RUN) {
+            } else if (Math.abs(this.velocity.x) >= MIN_RUN && this.velocity.y <= 0) {
                 if (this.facing === 0) {
                     this.animationYOffset = -35;
                     if ((this.game.keys.KeyD || this.game.controllerButtonRight) && (!this.game.keys.KeyA || !this.game.controllerButtonLeft) && params.STATE == "gameplay") {
@@ -92,6 +102,15 @@ class GameCharacter {
                     else {
                         this.velocity.x += DEC_REL * TICK;
                     }
+                }
+            } else if (this.velocity.y >= 0) {
+                this.state = 2
+                if (this.facing == 0) {
+                    this.animationXOffset = 257;
+                    this.animationYOffset = 200;
+                } else {
+                    this.animationXOffset = 0;
+                    this.animationYOffset = 200;
                 }
             }
             this.velocity.y += FALL_ACC * TICK; 
@@ -147,12 +166,16 @@ class GameCharacter {
         if (this.state !== 4 && this.state !== 2 && this.state !== 3){
             if (Math.abs(this.velocity.x) > 0) {
                 this.state = 1;
+                this.animationXOffset = 0;
+                this.animationYOffset = -30;
             } else {
                 this.state = 0;
                 this.animationXOffset = 0;
                 this.animationYOffset = 0;
             }
         }
+
+        // Add check to see if player was on platform and is now falling
 
         // Update Facing direction
         if (this.velocity.x < 0) this.facing = 1;

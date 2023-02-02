@@ -45,6 +45,7 @@ class SceneManager {
 
         this.rightXLimit = 16000;
 
+        this.game.addEntity(new Reaper(this.game, 1000, 520, 2));
         // initial platform final platform
         let origX = -700;
         for (let i = 0; i < 26; i++) {
@@ -102,7 +103,8 @@ class SceneManager {
         }
 
         //add background
-	    gameEngine.addEntity(new Background(this.game));
+        gameEngine.addEntity(new Background(this.game));
+        
     
         
     };
