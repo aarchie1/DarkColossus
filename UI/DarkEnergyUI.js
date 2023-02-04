@@ -1,13 +1,17 @@
 class DarkEnergyUI {
     constructor(game) {
+        //initializing state
         this.game = game;
+        this.BROWSE = 1;
+        this.state = this.BROWSE;
+
+        //Build menu information
         this.rows = 7;
         this.columns = 2;
         this.x = CANVAS_WIDTH/2;
         this.y = CANVAS_HEIGHT/2;
         this.width = 1050;
         this.height = 675;
-        this.color = "#000000";
         this.slotHorizontal = 468;
         this.slotVertical = 69;
         this.gridStartX = 331;
@@ -18,32 +22,39 @@ class DarkEnergyUI {
         this.followingRowOffset = 69;
         this.darkEnergyDisplayX = 610;
         this.darkEnergyDisplayY = 218;
+
+        //Tracks currently highlighted slot
+        this.currentSlot = 0;
+
+        //Stats in printable format
+        this.statIncreaseAmount = 10;
         this.deInfo = [
-            `Melee Attack: ${100 + 10 * this.game.darkEnergy.meleeAttack}%`,
-            `Ranged Attack: ${100 + 10 * this.game.darkEnergy.rangedAttack}%`,
-            `Attack Speed: ${100 + 10 * this.game.darkEnergy.attackSpeed}%`,
-            `Movement Speed: ${100 + 10 * this.game.darkEnergy.movementSpeed}%`,
-            `Jump Height: ${100 + 10 * this.game.darkEnergy.jumpHeight}%`,
-            `Melee Defense: ${100 + 10 * this.game.darkEnergy.meleeDefense}%`,
-            `Ranged Defense: ${100 + 10 * this.game.darkEnergy.rangedDefense}%`,
-            `HP: ${100 + 10 * this.game.darkEnergy.hp}`,
-            `DNA Drop Rate: ${100 + 10 * this.game.darkEnergy.dnaDropRate}%`,
-            `Sigma Chance: ${100 + 10 * this.game.darkEnergy.sigmaChance}%`,
-            `Alpha Chance: ${100 + 10 * this.game.darkEnergy.alphaChance}%`,
-            `Beta Chance: ${100 + 10 * this.game.darkEnergy.betaChance}%`,
-            `Epsilon Chance: ${100 + 10 * this.game.darkEnergy.epsilonChance}%`,
-            `Dark Energy Gather: ${100 + 10 * this.game.darkEnergy.darkEnergyChance}%`,
+            `Melee Attack: ${100 + 1 * this.game.darkEnergy.meleeAttack}%`,
+            `Ranged Attack: ${100 + 1 * this.game.darkEnergy.rangedAttack}%`,
+            `Attack Speed: ${100 + 1 * this.game.darkEnergy.attackSpeed}%`,
+            `Movement Speed: ${100 + 1 * this.game.darkEnergy.movementSpeed}%`,
+            `Jump Height: ${100 + 1 * this.game.darkEnergy.jumpHeight}%`,
+            `Melee Defense: ${100 + 1 * this.game.darkEnergy.meleeDefense}%`,
+            `Ranged Defense: ${100 + 1 * this.game.darkEnergy.rangedDefense}%`,
+            `HP: ${100 + 1 * this.game.darkEnergy.hp}`,
+            `DNA Drop Rate: ${100 + 1 * this.game.darkEnergy.dnaDropRate}%`,
+            `Sigma Chance: ${100 + 1 * this.game.darkEnergy.sigmaChance}%`,
+            `Alpha Chance: ${100 + 1 * this.game.darkEnergy.alphaChance}%`,
+            `Beta Chance: ${100 + 1 * this.game.darkEnergy.betaChance}%`,
+            `Epsilon Chance: ${100 + 1 * this.game.darkEnergy.epsilonChance}%`,
+            `Dark Energy Gather: ${100 + 1 * this.game.darkEnergy.darkEnergyChance}%`,
         ];
     }
 
 
 
     draw(ctx) {
-        let m = 0;
-       // ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/UI/DE_UI_Design_No_Text.png"), this.x - this.width / 2, this.y - this.height / 2);
-        ctx.font = "50px Papyrus";
-        ctx.fillText("Dark Energy: " + this.game.darkEnergy.currency, this.darkEnergyDisplayX, this.darkEnergyDisplayY);
-        ctx.strokeStyle = this.color;
+        this.ctx = ctx;
+        ctx.fillStyle = "#994B50";
+        ctx.globalAlpha = 0.8;
+        ctx.fillRect(this.gridStartX, this.gridStartY, this.columns*this.slotHorizontal, this.rows*this.slotVertical);
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = "#000000";
         ctx.lineWidth = 5;
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.columns; j++) {
@@ -55,16 +66,29 @@ class DarkEnergyUI {
                 );
             }
         }
-        ctx.strokeStyle = this.color;
+        ctx.strokeStyle = "#FFFFFF";
         ctx.lineWidth = 5;
         ctx.strokeRect(
-            this.x + (this.currentSlot % this.columns) * this.slotHorizontal,
-            this.y + Math.floor(this.currentSlot / this.columns) * this.slotVertical,
+            this.gridStartX + (this.currentSlot % this.columns) * this.slotHorizontal,
+            this.gridStartY + Math.floor(this.currentSlot / this.columns) * this.slotVertical,
             this.slotHorizontal,
             this.slotVertical
         );
+        ctx.fillStyle = "#FFFFFF";
+        ctx.globalAlpha = 0.3;
+        ctx.fillRect(
+            this.gridStartX + (this.currentSlot % this.columns) * this.slotHorizontal,
+            this.gridStartY + Math.floor(this.currentSlot / this.columns) * this.slotVertical,
+            this.slotHorizontal,
+            this.slotVertical
+        );
+        ctx.globalAlpha = 1;
         
+
+        //Fill in stats
+        let m = 0;
         ctx.font = "25px Arial";
+        ctx.fillStyle = "#FFFFFF";
         for(let i = 0; i < 7; i++) {
             for(let j = 0; j < 2; j++) {
                 if(j % 2 == 0) {
@@ -74,11 +98,80 @@ class DarkEnergyUI {
                 }
             }
         }
+        
+
+        //print controls on the right side of DE_UI
+        ctx.fillText("Controls:", this.darkEnergyDisplayX + 660, this.darkEnergyDisplayY + 90);
+        ctx.fillText("1: Increase Stat", this.darkEnergyDisplayX + 660, this.darkEnergyDisplayY + 130);
+
+        //Debug option to show current slot on side menu
+        if(debug) {
+            ctx.fillText("Current Slot: " + this.currentSlot, this.darkEnergyDisplayX + 660, this.darkEnergyDisplayY + 170);
+            ctx.fillText("Current Melee Attack Value: " + this.game.darkEnergy.meleeAttack, this.darkEnergyDisplayX + 660, this.darkEnergyDisplayY + 200);
+            ctx.fillText("Current Ranged Attack Value: " + this.game.darkEnergy.rangedAttack, this.darkEnergyDisplayX + 660, this.darkEnergyDisplayY + 230);
+            ctx.fillText("Current HP Value: " + this.game.darkEnergy.hp, this.darkEnergyDisplayX + 660, this.darkEnergyDisplayY + 260);
+            ctx.fillText("Current BetaChance Value: " + this.game.darkEnergy.betaChance, this.darkEnergyDisplayX + 660, this.darkEnergyDisplayY + 290);
+            ctx.fillText("Current Dark Energy Gather Value: " + this.game.darkEnergy.darkEnergyChance, this.darkEnergyDisplayX + 660, this.darkEnergyDisplayY + 320);
+        }
+        
     }
 
     update() {
-
+        //Controls
+        this.increaseStat();
+        this.decreaseStat();
         this.closeDarkEnergyUI();
+
+        if(keypress("KeyW") && this.state == this.BROWSE) {
+            if(this.currentSlot < 2) {
+                this.currentSlot += 12;
+            } else {
+                this.currentSlot -= 2;
+            }
+        }
+
+        if(keypress("KeyA") && this.state == this.BROWSE) {
+            if(this.currentSlot % 2 == 0) {
+                this.currentSlot += 1;
+            } else {
+                this.currentSlot -= 1;
+            }
+        }
+
+        if(keypress("KeyS") && this.state == this.BROWSE) {
+            if(this.currentSlot > 11) {
+                this.currentSlot -= 12;
+            } else {
+                this.currentSlot += 2;
+            }
+        }
+
+        if(keypress("KeyD") && this.state == this.BROWSE) {
+            if(this.currentSlot % 2 == 1) {
+                this.currentSlot -= 1;
+            } else {
+                this.currentSlot += 1;
+            }
+        }
+
+        this.deInfo = [
+            `Melee Attack: ${100 + 1 * this.game.darkEnergy.meleeAttack}%`,
+            `Ranged Attack: ${100 + 1 * this.game.darkEnergy.rangedAttack}%`,
+            `Attack Speed: ${100 + 1 * this.game.darkEnergy.attackSpeed}%`,
+            `Movement Speed: ${100 + 1 * this.game.darkEnergy.movementSpeed}%`,
+            `Jump Height: ${100 + 1 * this.game.darkEnergy.jumpHeight}%`,
+            `Melee Defense: ${100 + 1 * this.game.darkEnergy.meleeDefense}%`,
+            `Ranged Defense: ${100 + 1 * this.game.darkEnergy.rangedDefense}%`,
+            `HP: ${100 + 1 * this.game.darkEnergy.hp}`,
+            `DNA Drop Rate: ${100 + 1 * this.game.darkEnergy.dnaDropRate}%`,
+            `Sigma Chance: ${100 + 1 * this.game.darkEnergy.sigmaChance}%`,
+            `Alpha Chance: ${100 + 1 * this.game.darkEnergy.alphaChance}%`,
+            `Beta Chance: ${100 + 1 * this.game.darkEnergy.betaChance}%`,
+            `Epsilon Chance: ${100 + 1 * this.game.darkEnergy.epsilonChance}%`,
+            `Dark Energy Gather: ${100 + 1 * this.game.darkEnergy.darkEnergyChance}%`,
+        ];
+
+
         
     }
 
@@ -88,6 +181,80 @@ class DarkEnergyUI {
             this.removeFromWorld = true;
             gameEngine.keys.KeyE = false;
         }
+    }
+
+    increaseStat() {
+        let cost = 0;
+        if(keypress("Digit1") && this.state == this.BROWSE) {
+            switch (this.currentSlot) {
+                case 0:
+                    cost = Math.ceil(this.game.darkEnergy.meleeAttack++ + this.statIncreaseAmount);
+                    this.game.darkEnergy.currency -= cost;
+                    break;
+                case 1:
+                    cost = Math.ceil(this.game.darkEnergy.rangedAttack++ + this.statIncreaseAmount);
+                    this.game.darkEnergy.currency -= cost;
+                    break;
+                case 2:
+                    cost = Math.ceil(this.game.darkEnergy.attackSpeed++ + this.statIncreaseAmount);
+                    this.game.darkEnergy.currency -= cost;
+                    break;
+                case 3:
+                    cost = Math.ceil(this.game.darkEnergy.movementSpeed++ + this.statIncreaseAmount);
+                    this.game.darkEnergy.currency -= cost;
+                    break;
+                case 4:
+                    cost = Math.ceil(this.game.darkEnergy.jumpHeight++ + this.statIncreaseAmount);
+                    this.game.darkEnergy.currency -= cost;
+                    break;
+                case 5:
+                    cost = Math.ceil(this.game.darkEnergy.meleeDefense++ + this.statIncreaseAmount);
+                    this.game.darkEnergy.currency -= cost;
+                    break;
+                case 6:
+                    cost = Math.ceil(this.game.darkEnergy.rangedDefense++ + this.statIncreaseAmount);
+                    this.game.darkEnergy.currency -= cost;
+                    break;
+                case 7:
+                    cost = Math.ceil(this.game.darkEnergy.hp++ + this.statIncreaseAmount);
+                    this.game.darkEnergy.currency -= cost;
+                    break;
+                case 8:
+                    cost = Math.ceil(this.game.darkEnergy.dnaDropRate++ + this.statIncreaseAmount);
+                    this.game.darkEnergy.currency -= cost;
+                    break;
+                case 9:
+                    cost = Math.ceil(this.game.darkEnergy.sigmaChance++ + this.statIncreaseAmount);
+                    this.game.darkEnergy.currency -= cost;
+                    break;
+                case 10:
+                    cost = Math.ceil(this.game.darkEnergy.alphaChance++ + this.statIncreaseAmount);
+                    this.game.darkEnergy.currency -= cost;
+                    break;
+                case 11:
+                    cost = Math.ceil(this.game.darkEnergy.betaChance++ + this.statIncreaseAmount);
+                    this.game.darkEnergy.currency -= cost;
+                    break;
+                case 12:
+                    cost = Math.ceil(this.game.darkEnergy.epsilonChance++ + this.statIncreaseAmount);
+                    this.game.darkEnergy.currency -= cost;
+                    break;
+                case 13:
+                    cost = Math.ceil(this.game.darkEnergy.darkEnergyChance++ + this.statIncreaseAmount);
+                    this.game.darkEnergy.currency -= cost;
+                    break;
+            }
+
+        }
+
+    }
+
+    //NYI
+    decreaseStat() {
+        if(keypress("Digit2") && this.state == this.BROWSE) {
+
+        }
+
     }
 
 }
