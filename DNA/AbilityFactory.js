@@ -29,7 +29,7 @@ function getAbility(abilityType) {
 
 function searchAbilityPool(abilityPool) {
     //PUT ALL ABILITIES HERE
-    let sigmaAbilityPool = [EMPAbility];
+    let sigmaAbilityPool = [MockAbility];
     let alphaAbilityPool = [SupersonicAbility];
     let betaAbilityPool = [MockAbility];
     switch (abilityPool) {
