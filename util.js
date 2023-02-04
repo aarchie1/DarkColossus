@@ -5,7 +5,8 @@ const params = {
     LEVEL: 0, 
     INVENTORY : null,
     HUD : null,
-    DARK_ENERGY : null
+    DARK_ENERGY : null, 
+    CANVAS : null,
 };
 
 
@@ -55,6 +56,25 @@ function unequipAbilities(dna){
     if (dna.epsilonAbility != null) dna.epsilonAbility.onUnequip();
 }    
 
+async function cooldownTimer(duration) {
+    let timeLeft = duration;
+    const interval = setInterval(() => {
+      timeLeft--;
+    }, 1000);
+  
+    setTimeout(() => {
+      clearInterval(interval);
+    }, duration * 1000);
+  
+    return timeLeft;
+  }
+
+async function callTimer(cooldownTime) {
+    const timeLeft = await cooldownTimer(cooldownTime);
+    console.log(`Time left: ${timeLeft}`);
+}
+
+callTimer(5000);
 
 
 /**

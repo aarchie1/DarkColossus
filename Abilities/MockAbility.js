@@ -102,7 +102,7 @@ class MockAbility {
         //This will be called through the DNA's update method.
     }
 
-    draw() {
+    draw(ctx) {
         //This will be called through the DNA's draw method.
     }
 }

@@ -55,6 +55,13 @@ class SceneManager {
             let enemy = level.reaper[i];
             this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
         }
+
+        //spawn Molecules
+        for (let i = 0; i < level.molecule.length; i++) {
+            let enemy = level.molecule[i];
+            this.game.addEntity(new Molecule(this.game, enemy.x, enemy.y, 2));
+        }
+
         //Enemy Testing Lines
         //this.game.addEntity(new Reaper(this.game, 1000, 520, 2));
         this.game.addEntity(new Molecule(this.game, 1000, 520, 2));
@@ -132,6 +139,7 @@ class SceneManager {
         this.rightXLimit = 1400;
         //Create Inventory UI
         let inventoryBB = new BoundingBox(1200, 525, 248, 200);
+        this.game.addEntity(new FloatingObject(1320, 525, 242, 194, 5, 0, "Press E for Inventory"));
         this.game.addEntity(new Interactable(this.game, 1200, 525, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), inventoryBB, () => {
             //check if inventory is already open
             if (params.STATE != "menu") {
@@ -141,6 +149,8 @@ class SceneManager {
         }));
 
         //Create DE UI
+        this.game.addEntity(new FloatingObject(520, 525, 242, 194, 5, 0, "Press E for Dark Energy"));
+
         this.game.addEntity(new Interactable(this.game, 400, 525, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), new BoundingBox(400, 525, 248, 200), () => {
             if (params.STATE != "menu") {
                 this.game.addEntityFirst(new DarkEnergyUI(this.game));
