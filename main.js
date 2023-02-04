@@ -21,7 +21,9 @@ ASSET_MANAGER.queueDownload("./Sprites/Abilities/emp.png");
 //Abilities Icons
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/supersonic_icon.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/supersonic_in_use_icon.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/emp_icon.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/mock_icon.png");
+
 
 //Enemies
 ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_full.png");
@@ -75,6 +77,7 @@ ASSET_MANAGER.downloadAll(() => {
 	CANVAS_HEIGHT = canvas.height;
 	CANVAS_WIDTH = canvas.width;
 	const ctx = canvas.getContext("2d");
+	params.CANVAS = ctx;
 	gameEngine.init(ctx);
 	params.HUD = new hud(gameEngine);
 	gameEngine.addEntity(params.HUD);
@@ -83,11 +86,11 @@ ASSET_MANAGER.downloadAll(() => {
 	gameEngine.addEntity(new SceneManager(gameEngine));
 
 	// Janky way of getting music to start, you have to interact with the volume bar first
-	var l = document.getElementById('volume');
-	l.addEventListener('click', handleClick, true);
-	function handleClick() {
-		ASSET_MANAGER.playAssest("./Music/flute.mp4");
-	};
+	// var l = document.getElementById('volume');
+	// l.addEventListener('click', handleClick, true);
+	// function handleClick() {
+	// 	ASSET_MANAGER.playAssest("./Music/flute.mp4");
+	// };
 	
 	gameEngine.start();
 

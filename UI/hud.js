@@ -69,8 +69,6 @@ class hud {
             }
         }
 
-        
-
 
         this.drawDarkEnergyHud(ctx);
         this.drawAbilityHud(ctx);
@@ -91,24 +89,27 @@ class hud {
         //draw the dnaSlot1 and dnaSlot2
         if (params.INVENTORY.dnaSlot1 != null) {
             let alpha = params.INVENTORY.dnaSlot1.alphaAbility;
+            let sigma = params.INVENTORY.dnaSlot1.sigmaAbility;
+            let beta = params.INVENTORY.dnaSlot1.betaAbility;
+            let epsilon = params.INVENTORY.dnaSlot1.epsilonAbility;
             if (alpha) {
                 let icon =  (alpha.inUse) ? alpha.inUseIcon : alpha.icon;
-                ctx.drawImage(icon, 203 + this.abilityHudX, 887 + this.abilityHudY, 98, 98);
+                ctx.drawImage(icon, 203 + this.abilityHudX, CANVAS_HEIGHT-195 + this.abilityHudY, 98, 98);
+            }
+            
+            if (sigma) {
+                let icon = (sigma.inUse) ? sigma.inUseIcon : sigma.icon;
+                ctx.drawImage(icon, 110+ this.abilityHudX, CANVAS_HEIGHT-280 + this.abilityHudY, 98, 98);
             }
 
-            if (params.INVENTORY.dnaSlot1.sigmaAbility) {
-                let icon = params.INVENTORY.dnaSlot1.sigmaAbility.icon;
-                ctx.drawImage(icon, 110+ this.abilityHudX, 803 + this.abilityHudY, 98, 98);
+            if (beta) {
+                let icon = (beta.inUse) ? beta.inUseIcon : beta.icon;
+                ctx.drawImage(icon, 108+ this.abilityHudX, CANVAS_HEIGHT-110 + this.abilityHudY, 98, 98);
             }
 
-            if (params.INVENTORY.dnaSlot1.betaAbility) {
-                let icon = params.INVENTORY.dnaSlot1.betaAbility.icon;
-                ctx.drawImage(icon, 108+ this.abilityHudX, 967 + this.abilityHudY, 98, 98);
-            }
-
-            if (params.INVENTORY.dnaSlot1.epsilonAbility) {
-                let icon = params.INVENTORY.dnaSlot1.epsilonAbility.icon;
-                ctx.drawImage(icon, 15+ this.abilityHudX, 887 + this.abilityHudY, 98, 98);
+            if (epsilon) {
+                let icon = (epsilon.inUse) ? epsilon.inUseIcon : epsilon.icon;
+                ctx.drawImage(icon, 15+ this.abilityHudX, CANVAS_HEIGHT-195 + this.abilityHudY, 98, 98);
             }
             let A = ASSET_MANAGER.getAsset("./Sprites/UI/ability_hud.png");
             ctx.drawImage(A, 0+ this.abilityHudX, CANVAS_HEIGHT - 290 + this.abilityHudY, 316, 288);

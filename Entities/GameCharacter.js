@@ -60,7 +60,6 @@ class GameCharacter {
     if (params.INVENTORY.dnaSlot1 != null) params.INVENTORY.dnaSlot1.update();
     if (params.INVENTORY.dnaSlot2 != null) params.INVENTORY.dnaSlot2.update();
 
-
     if (keypress("Escape") || this.game.controllerButtonY) {
       this.game.PAUSED = !this.game.PAUSED;
     }
@@ -213,8 +212,7 @@ class GameCharacter {
   }
 
   jump() {
-    if (
-      !this.game.PAUSED &&
+    if (!this.game.PAUSED &&
       params.STATE == "gameplay" &&
       (this.game.keys.Space || this.game.controllerButtonA) &&
       this.JUMPS > 0
@@ -253,7 +251,7 @@ class GameCharacter {
 
     if (this.game.keys.ArrowRight) {
       if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.epsilonAbility != null) {
-        params.INVENTORY.dnaSlot1.epsilongAbility.onUse();
+        params.INVENTORY.dnaSlot1.epsilonAbility.onUse();
       }
     }
 
@@ -427,6 +425,9 @@ class GameCharacter {
         case 3:
             if (debug) ctx.fillText("State: Jumping" , debugX, debugY + 80);
             break;
+        case 4:
+            if (debug) ctx.fillText("State: Ability" , debugX, debugY + 80);
+            break;
         default:
             if (debug) ctx.fillText("State: Unknown" , debugX, debugY + 80);
             break;
@@ -453,5 +454,23 @@ class GameCharacter {
       this.BB.height
       );
     }
+
+  //run draw event for all abilities
+  //will add slot2 later 
+      if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.sigmaAbility != null) {
+        params.INVENTORY.dnaSlot1.sigmaAbility.draw(ctx);
+      }
+
+      if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.alphaAbility != null) {
+        params.INVENTORY.dnaSlot1.alphaAbility.draw(ctx);
+      }
+
+      if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.epsilonAbility != null) {
+        params.INVENTORY.dnaSlot1.epsilonAbility.draw(ctx);
+      }
+
+      if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.betaAbility != null) {
+        params.INVENTORY.dnaSlot1.betaAbility.draw(ctx);
+      }
   }
 }
