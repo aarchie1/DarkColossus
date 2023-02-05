@@ -34,7 +34,6 @@ class SceneManager {
 
     loadLevel() {
         this.clearLevel();
-       // gameEngine.addEntity(new Reaper(this.game, 1000, 520, 2));
 
         params.LEVEL += 1;
         let level = getLevel(params.LEVEL);
