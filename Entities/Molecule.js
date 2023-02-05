@@ -17,7 +17,7 @@ class Molecule {
     this.projectileBuffer = 150;
 
     this.attackDistance = 400;
-    this.fireRate = .2;
+    this.fireRate = 0.2;
     this.elapsedTime = 0;
 
     this.updateBB();
@@ -130,8 +130,6 @@ class Molecule {
           );
         }
       });
-
-  
 
       // Update Facing direction
       if (this.velocity.x < 0) this.facing = 1;
