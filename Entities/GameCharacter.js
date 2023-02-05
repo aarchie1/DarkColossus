@@ -243,11 +243,23 @@ class GameCharacter {
       }
     }
 
+    if (this.game.keys.ArrowUp && KeyboardEvent.shiftKey) {
+      if (params.INVENTORY.dnaSlot2 != null && params.INVENTORY.dnaSlot2.sigmaAbility != null) {
+         params.INVENTORY.dnaSlot2.sigmaAbility.onUse();
+       }
+     }
+
     if (this.game.keys.ArrowLeft) {
       if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.alphaAbility != null) {
         params.INVENTORY.dnaSlot1.alphaAbility.onUse();
       }
     }
+
+    if (this.game.keys.ArrowLeft && KeyboardEvent.shiftKey) {
+      if (params.INVENTORY.dnaSlot2 != null && params.INVENTORY.dnaSlot2.alphaAbility != null) {
+         params.INVENTORY.dnaSlot2.alphaAbility.onUse();
+       }
+     }
 
     if (this.game.keys.ArrowRight) {
       if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.epsilonAbility != null) {
@@ -255,12 +267,26 @@ class GameCharacter {
       }
     }
 
+    if (this.game.keys.ArrowRight && KeyboardEvent.shiftKey) {
+      if (params.INVENTORY.dnaSlot2 != null && params.INVENTORY.dnaSlot2.epsilonAbility != null) {
+         params.INVENTORY.dnaSlot2.epsilonAbility.onUse();
+       }
+     }
+
     if (this.game.keys.ArrowDown) {
       if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.betaAbility != null) {
         params.INVENTORY.dnaSlot1.betaAbility.onUse();
       }
     }
+
+    if (this.game.keys.ArrowDown && KeyboardEvent.shiftKey) {
+      if (params.INVENTORY.dnaSlot2 != null && params.INVENTORY.dnaSlot2.betaAbility != null) {
+         params.INVENTORY.dnaSlot2.betaAbility.onUse();
+       }
+     }
   }
+
+  
 
   loadAnimations() {
     for (let i = 0; i < 4; i++) {
