@@ -19,6 +19,9 @@ class SupersonicAbility{
         this.originalAnimationLeft = player.animations[1][1];
         this.speedIncrease = 500;
         this.enemiesHit = [];
+
+        //set effect to random number between 1 and 15
+
     }
 
     onEquip() {
@@ -85,6 +88,7 @@ class SupersonicAbility{
     update() {
         if (Math.abs(player.velocity.x) == player.MAX_RUN && player.state == 1) {
             this.inUse = true;
+           // this.effect = Math.floor(Math.random() * 15) + 1;
 
            gameEngine.entities.forEach((enemy) => {
                 //Collisions with players bounding box
@@ -92,7 +96,8 @@ class SupersonicAbility{
                     if (!this.enemiesHit.includes(enemy)) {
                         this.enemiesHit.push(enemy);
                         enemy.health -= this.effect;
-                        gameEngine.addEntityFirst(new DamageIndicator(enemy.x+30, enemy.y, this.effect));
+                        if ( !(enemy instanceof MoleculeProjectile))
+                             gameEngine.addEntityFirst(new DamageIndicator(enemy.x+30, enemy.y, this.effect));
                      }
                 }
            })
