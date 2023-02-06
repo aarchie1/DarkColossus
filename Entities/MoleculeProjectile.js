@@ -7,7 +7,8 @@ class MoleculeProjectile {
       target,
     });
     const TICK = this.game.clockTick;
-
+    
+    this.damage = 1;
     this.hostile = true;
     this.health = 1;
     this.maxSpeed = 500; // pixels per second
@@ -49,9 +50,19 @@ class MoleculeProjectile {
     this.updateBB();
 
     //check for collision with target
+    if (this.target.BB.collide(this.BB)) {
+      this.removeFromWorld = true;
+      
+    }
 
     if (this.health <= 0) {
       this.removeFromWorld = true;
+    }
+
+    // add check to see if projectile is off screen
+    if (this.x < this.game.camera.x - 2000 || this.x > this.game.camera.x + 2000 || this.y < this.game.camera.y - 2000 || this.y > this.game.camera.y + 2000) {
+      this.removeFromWorld = true;
+      console.log("Projectile off screen and removed");
     }
   }
 

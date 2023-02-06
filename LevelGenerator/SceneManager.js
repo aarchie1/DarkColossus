@@ -63,7 +63,7 @@ class SceneManager {
 
         //Enemy Testing Lines
         //this.game.addEntity(new Reaper(this.game, 1000, 520, 2));
-        this.game.addEntity(new Molecule(this.game, 1000, 520, 2));
+        //this.game.addEntity(new Molecule(this.game, 1000, 520, 2));
 
         // initial platform final platform
         let origX = -700;

@@ -27,6 +27,7 @@ class SupersonicAbility{
         player.animations[1][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/supersonic.png"), 0, 0, 320, 256, 9, .06, 0, true);
         player.animations[1][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/supersonic_left.png"), 0, 0, 320, 256, 9, .06, 0, true);
         player.MAX_RUN += this.speedIncrease;
+        player.usingAbility = true;
 
         // facing left = 1
         //this.animations[1][1] 
@@ -36,6 +37,7 @@ class SupersonicAbility{
         player.animations[1][0] = this.originalAnimationRight;
         player.animations[1][1] = this.originalAnimationLeft;
         player.MAX_RUN -= this.speedIncrease;
+        player.usingAbility = false;
     }
 
     //GAME CHARACTER CALLS THIS
