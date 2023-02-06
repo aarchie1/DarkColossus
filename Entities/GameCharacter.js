@@ -221,6 +221,11 @@ class GameCharacter {
       this.game.camera.gameOver = true;
     }
 
+    if(this.health <= 0) {
+      this.dead = true;
+      this.game.camera.gameOver = true;
+    }
+
   }
 
   jump() {
