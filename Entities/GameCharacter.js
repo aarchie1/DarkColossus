@@ -21,13 +21,14 @@ class GameCharacter {
     this.velocity = { x: 0, y: 0 };
     this.dead = false;
     this.health = 100;
+    this.currentIFrameTimer = 0;
+    this.maxIFrameTimer = 60;
+    this.usingAbilty = false;
     this.updateBB();
     this.animationXOffset = 0;
     this.animationYOffset = 0;
     this.animations = [];
     this.loadAnimations();
-    
-      
   }
 
   updateBB() {
@@ -188,6 +189,37 @@ class GameCharacter {
             this.updateBB();
           }
         }
+
+        // Damage Player
+
+        if (entity.hostile) {
+          // if reaper is in attack state
+          if (
+            entity instanceof Reaper &&
+            entity.state == 3 &&
+            this.currentIFrameTimer === 0 && !this.usingAbilty
+          ) {
+            // subtract reaper damage from player health
+            this.health -= entity.damage;
+            this.health = Math.max(this.health, 0);
+            this.currentIFrameTimer = this.maxIFrameTimer;
+            this.game.addEntityFirst(
+              new DamageIndicator(this.x+150, this.y, entity.damage)
+            );
+          }
+          if (
+            entity instanceof MoleculeProjectile &&
+            this.currentIFrameTimer == 0 &&  !this.usingAbilty
+          ) {
+            // subtract molecule damage from player health
+            this.health -= entity.damage;
+            this.currentIFrameTimer = this.maxIFrameTimer;
+            entity.removeFromWorld = true;
+            this.game.camera.game.addEntityFirst(
+              new DamageIndicator(this.x+250, this.y, entity.damage)
+            );
+          }
+        }
       }
     });
 
@@ -204,13 +236,9 @@ class GameCharacter {
       }
     }
 
-
-
-
     // Update Facing direction
     if (this.velocity.x < 0) this.facing = 1;
     if (this.velocity.x > 0) this.facing = 0;
-
 
     // Pass control to abilities
     this.abilityControls();
@@ -221,11 +249,15 @@ class GameCharacter {
       this.game.camera.gameOver = true;
     }
 
-    if(this.health <= 0) {
+    if (this.health <= 0) {
       this.dead = true;
       this.game.camera.gameOver = true;
     }
 
+    if (this.currentIFrameTimer > 0) {
+      this.currentIFrameTimer -= 1;
+      // console.log(this.currentIFrameTimer);
+    }
   }
 
   jump() {
@@ -525,6 +557,19 @@ class GameCharacter {
     if (debug) ctx.fillText("Jumps: " + this.JUMPS, debugX, debugY + 120);
     if (debug)
       ctx.fillText("PAUSED: " + this.game.PAUSED, debugX, debugY + 140);
+    if (debug) ctx.fillText("Health: " + this.health, debugX, debugY + 160);
+    if (debug)
+      ctx.fillText(
+        "Current IFrames: " + this.currentIFrameTimer,
+        debugX,
+        debugY + 180
+      );
+      if (debug)
+      ctx.fillText(
+        "Using Ability: " + this.usingAbilty,
+        debugX,
+        debugY + 200
+      );
     if (debug) {
       ctx.strokeRect(
         this.BB.x - this.game.camera.x,

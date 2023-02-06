@@ -9,7 +9,8 @@ class Reaper {
     this.state = size; //0 = weak 1 = normal 2 = strong 3 = attacking
     this.velocity = { x: 0, y: 0 };
     this.hostile = true;
-
+    this.damage = 1;
+    
     this.attackRate = 2;
     this.elapsedTime = 0;
     this.attackDistance = 0;
@@ -104,6 +105,13 @@ class Reaper {
               this.updateBB();
             }
           }
+
+          // // damage GameCharacter
+          // if (entity instanceof GameCharacter) {
+          //   if (this.state === 3) {
+          //     entity.health -= this.damage;
+          //   }
+          // }
         }
       });
 
