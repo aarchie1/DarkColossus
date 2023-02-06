@@ -34,7 +34,6 @@ class SceneManager {
 
     loadLevel() {
         this.clearLevel();
-       // gameEngine.addEntity(new Reaper(this.game, 1000, 520, 2));
 
         params.LEVEL += 1;
         let level = getLevel(params.LEVEL);
@@ -135,7 +134,15 @@ class SceneManager {
 
     loadHub() {
         params.LEVEL = 0;
+        
+        //On Death stuff
+        // If game over reset HUD, Dark Energy, and Inventory
+        if (this.gameOver) {
+            this.gameOver = false;
+        }
         this.clearLevel();
+        
+        
         this.rightXLimit = 1400;
         //Create Inventory UI
         let inventoryBB = new BoundingBox(1200, 525, 248, 200);
@@ -177,16 +184,6 @@ class SceneManager {
     }
 
     update() {
-        //Attemped to implement a out of bounds death mechanic, 
-        //bugged out when dying during a level
-        //Anyone who wants to fix it is welcome to or implement a new one, delete, etc.
-            // if (this.player != null && this.player.y > CANVAS_HEIGHT+200) {
-                
-            //     this.loadHub();
-            // }
-
-
-
         //Make the camera move based off this bounding box
 /*      // Keeps player in rightBoundX
         if (this.player.x > rightBoundX && !(this.player.x + rightBoundX >= rightXLimit)) this.x = this.player.x - rightBoundX;
@@ -203,6 +200,10 @@ class SceneManager {
 
         //if (this.player.y < upperBoundY && !(this.player.y <= upperYLimit)) this.y = this.player.y - upperBoundY;
         //if (this.player.y > lowerBoundY && !(this.player.y - lowerBoundY != lowerYLimit)) this.y = this.player.y - lowerBoundY;
+
+        if (this.gameOver) {
+            this.loadHub();
+        }
 
     };
 
@@ -224,6 +225,20 @@ class SceneManager {
         equipAbilities(params.INVENTORY.dnaSlot2);
         this.game.addEntity(this.player);
     }
+
+    // For death condition
+    // clearEntities() {
+    //     this.game.entities = this.game.entities.filter(function (entity) {
+    //         return entity instanceof Inventory || entity instanceof DarkEnergy || entity instanceof SceneManager || entity instanceof hud;
+    //     });
+    //     this.game.camera.x = 0;
+    //     this.game.camera.y = 0;
+    //     this.player = new GameCharacter(this.game, CANVAS_WIDTH/2-150, 0);
+    //     player = this.player; //update global player reference
+    //     equipAbilities(params.INVENTORY.dnaSlot1); //equip abilities
+    //     equipAbilities(params.INVENTORY.dnaSlot2);
+    //     this.game.addEntity(this.player);
+    // };
     
 }
 

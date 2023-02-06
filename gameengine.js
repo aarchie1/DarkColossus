@@ -20,6 +20,7 @@ class GameEngine {
             KeyS: false,
             KeyD: false,
             KeyE: false,
+            KeyP: false,
             Space: false,
             Escape: false
         };
@@ -32,6 +33,7 @@ class GameEngine {
             KeyD: false,
             KeyE: false,
             KeyF: false,
+            KeyP: false,
             Space: false,
             Escape: false,
             Digit1: false,
@@ -53,6 +55,10 @@ class GameEngine {
         this.gamepad = null;
         this.darkEnergy = new DarkEnergy();
         params.DARK_ENERGY = this.darkEnergy;
+
+        // Test for inventory on death reset
+        // this.Inventory = new Inventory();
+        // params.INVENTORY= this.Inventory;
 
         // Options and the Details
         this.options = options || {
@@ -180,6 +186,8 @@ class GameEngine {
             }
         }
 
+        this.camera.update();
+
         for (let i = this.entities.length - 1; i >= 0; --i) {
             if (this.entities[i].removeFromWorld) {
                 this.entities.splice(i, 1);
@@ -197,6 +205,7 @@ class GameEngine {
 
             //Global single press
             this.keys.KeyE = false;
+            this.keys.KeyP = false;
 
             //menu specific single presses
             if (params.STATE == "MENU") {

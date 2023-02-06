@@ -1,12 +1,17 @@
 class MoleculeProjectile {
-  constructor(game, x, y, target) {
+  constructor(game, x, y, target, owner, maxSpeed, damage, spritesheet) {
     Object.assign(this, {
       game,
       x,
       y,
       target,
+      owner,
+      maxSpeed,
+      damage,
+      spritesheet,
     });
     const TICK = this.game.clockTick;
+    
 
     this.hostile = true;
     this.health = 1;
