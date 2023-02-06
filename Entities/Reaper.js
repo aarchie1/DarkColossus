@@ -105,13 +105,6 @@ class Reaper {
               this.updateBB();
             }
           }
-
-          // // damage GameCharacter
-          // if (entity instanceof GameCharacter) {
-          //   if (this.state === 3) {
-          //     entity.health -= this.damage;
-          //   }
-          // }
         }
       });
 
