@@ -37,14 +37,14 @@ class EMPAbility {
     onUse() {
         if (this.inUse || this.currentCooldown != this.cooldown) return;
         this.inUse = true;
-        player.state = 4;
+        player.usingAbility = true;
         player.animations[4][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/emp.png"), 0, 0, 1200, 1164, 7, 0.1, 0, false);
-        this.previousAnimationXOffset = player.animationXOffset;
-        this.previousAnimationYOffset = player.animationYOffset;
         player.animationXOffset = 450;
         player.animationYOffset = 1000;
-        player.animations[4][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/emp.png"), 0, 0, 1200, 1164, 7, 0.1, 0, false);
-        this.previousPlayerState = player.state;
+        
+        this.previousAnimationXOffset = player.animationXOffset;
+        this.previousAnimationYOffset = player.animationYOffset;
+        
     }
 
     //The ability will call this itself 

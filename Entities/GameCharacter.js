@@ -358,7 +358,7 @@ class GameCharacter {
   }
 
   loadAnimations() {
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
       this.animations.push([]);
       for (let j = 0; j < 2; j++) {
         // two directions

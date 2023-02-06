@@ -8,11 +8,13 @@ class SceneManager {
         this.gameOver = false;
         this.transition = false;
         this.player = new GameCharacter(this.game, 0, 0);
+        player = this.player;
+
 
         // splits the X axis into 5 sections [  |  |  |  |  ] <-- map, playable area --> [  |xx|xx|xx|  ]
         this.quadX = 1650 / 5;
         this.rightBoundX = this.quadX * 3;
-        this.midX = this.quadX * 2.5;
+        this.midX = (this.quadX * 2.5) + (400 * player.velocity.x/player.MAX_RUN);
         this.leftBoundX = this.quadX * 1;
 
         // splits the Y axis into 4 sectionsd
@@ -27,7 +29,10 @@ class SceneManager {
         this.lowerYLimit = 700;   // 700 is reasonable to keep starting platform visible
         this.upperYLimit = -8500; // -8500 to stay within background image (top)
 
-        player = this.player;
+        this.xCameraOffset = 0;
+        this.yCameraOffset = 0;
+
+
         //this.loadTitleScreen(); //This will replace this.loadHub() when we have a title screen
         this.loadHub(); 
     };
@@ -143,7 +148,8 @@ class SceneManager {
         this.clearLevel();
         
         
-        this.rightXLimit = 1400;
+        this.rightXLimit = 4400;
+        this.leftXLimit = -1800;
         //Create Inventory UI
         let inventoryBB = new BoundingBox(1200, 525, 248, 200);
         this.game.addEntity(new FloatingObject(1320, 525, 242, 194, 5, 0, "Press E for Inventory"));
@@ -188,7 +194,14 @@ class SceneManager {
 /*      // Keeps player in rightBoundX
         if (this.player.x > rightBoundX && !(this.player.x + rightBoundX >= rightXLimit)) this.x = this.player.x - rightBoundX;
         if (this.player.x < leftBoundX && !(this.player.x - leftBoundX <= leftXLimit)) this.x = this.player.x - leftBoundX;
-*/
+*/     
+
+        this.xCameraSmoothing();
+        //this.yCameraSmoothing(); Y camera smoothing was harder to implement so I just left it out for now
+        this.midX = (this.quadX * 2.5) - this.xCameraOffset;
+        this.midY = (this.quadY * 2.5);
+
+
         // Keeps player centered on X
         if (this.player.x > this.midX && !(this.player.x + this.midX >= this.rightXLimit)) this.x = this.player.x - this.midX;
         if (this.player.x < this.midX && !(this.player.x - this.midX <= this.leftXLimit)) this.x = this.player.x - this.midX;
@@ -210,6 +223,41 @@ class SceneManager {
     draw(ctx) {
 
     };
+
+    //This function adds a slight smoothing to the camera movement
+    xCameraSmoothing() {
+        const SMOOTHING = 0.05;
+        let max = 450; //pixels to offset camera
+        let min = -450;
+        let target = 0;
+        let velocity = player.velocity.x/player.MAX_RUN + 0.01;
+        if (velocity === 0) {
+            target = 0;
+            SMOOTHING = 0.1;
+        } else {
+            target = max * velocity;
+        }
+        this.xCameraOffset += (target - this.xCameraOffset) * SMOOTHING;
+        this.xCameraOffset = this.xCameraOffset <= min ? min : this.xCameraOffset >= max ? max : this.xCameraOffset;
+    }
+
+    yCameraSmoothing() {
+        const SMOOTHING = 0.05;
+        let max = 500;
+        let min = -500;
+        let target = 0;
+        let velocity = player.velocity.y/player.MAX_RUN + 0.01;
+        if (velocity === 0) {
+            target = 0;
+            SMOOTHING = 0.1;
+        } else {
+            target = max * velocity;
+        }
+        this.yCameraOffset += (target - this.yCameraOffset) * SMOOTHING;
+        this.yCameraOffset = this.yCameraOffset <= min ? min : this.yCameraOffset >= max ? max : this.yCameraOffset;
+    }
+    
+    
 
     clearLevel() {
         //remove everything from this.game.entities except Inventory, DarkEnergy, SceneManager, etc.
