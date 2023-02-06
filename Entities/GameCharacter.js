@@ -2,19 +2,19 @@ class GameCharacter {
   #sprite;
   BLOCKWIDTH = 256;
 
-    constructor(game, x, y) {
-        Object.assign(this, { game, x, y });
-        this.JUMP_ACC = -1300;
-        this.MIN_RUN = 50;
-        this.MAX_RUN = 800;
-        this.RUN_ACC = 2500;
-        this.DEC_SKID = 5000;
-        this.DEC_REL = 1500;
-        this.FALL_ACC = 2700
-        this.MAX_JUMPS = 2;
-        this.JUMPS = this.MAX_JUMPS;    
-        const TICK = this.game.clockTick;
-        this.state = 2;
+  constructor(game, x, y) {
+    Object.assign(this, { game, x, y });
+    this.JUMP_ACC = -1300;
+    this.MIN_RUN = 50;
+    this.MAX_RUN = 800;
+    this.RUN_ACC = 2500;
+    this.DEC_SKID = 5000;
+    this.DEC_REL = 1500;
+    this.FALL_ACC = 2700;
+    this.MAX_JUMPS = 2;
+    this.JUMPS = this.MAX_JUMPS;
+    const TICK = this.game.clockTick;
+    this.state = 2;
 
     this.facing = 0; // 0 = right, 1 == left
     this.state = 0; //0 = idle, 1 = running, 2 = falling 3 = jumping, 4 = attacking
@@ -26,6 +26,8 @@ class GameCharacter {
     this.animationYOffset = 0;
     this.animations = [];
     this.loadAnimations();
+    
+      
   }
 
   updateBB() {
@@ -202,17 +204,28 @@ class GameCharacter {
       }
     }
 
-    // Add check to see if player was on platform and is now falling
+
+
 
     // Update Facing direction
     if (this.velocity.x < 0) this.facing = 1;
     if (this.velocity.x > 0) this.facing = 0;
 
+
+    // Pass control to abilities
     this.abilityControls();
+
+    // Check if player is out of bounds
+    if (this.y > 1000) {
+      this.dead = true;
+      this.game.camera.gameOver = true;
+    }
+
   }
 
   jump() {
-    if (!this.game.PAUSED &&
+    if (
+      !this.game.PAUSED &&
       params.STATE == "gameplay" &&
       (this.game.keys.Space || this.game.controllerButtonA) &&
       this.JUMPS > 0
@@ -233,64 +246,82 @@ class GameCharacter {
     }
   }
 
-  //This will need to be updated later on
-  //to include the second equipped dna once
-  //we decide control scheme for that
   abilityControls() {
     if (this.game.keys.ArrowUp) {
-     if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.sigmaAbility != null) {
+      if (
+        params.INVENTORY.dnaSlot1 != null &&
+        params.INVENTORY.dnaSlot1.sigmaAbility != null
+      ) {
         params.INVENTORY.dnaSlot1.sigmaAbility.onUse();
       }
     }
 
     if (this.game.keys.ArrowUp && KeyboardEvent.shiftKey) {
-      if (params.INVENTORY.dnaSlot2 != null && params.INVENTORY.dnaSlot2.sigmaAbility != null) {
-         params.INVENTORY.dnaSlot2.sigmaAbility.onUse();
-       }
-     }
+      if (
+        params.INVENTORY.dnaSlot2 != null &&
+        params.INVENTORY.dnaSlot2.sigmaAbility != null
+      ) {
+        params.INVENTORY.dnaSlot2.sigmaAbility.onUse();
+      }
+    }
 
     if (this.game.keys.ArrowLeft) {
-      if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.alphaAbility != null) {
+      if (
+        params.INVENTORY.dnaSlot1 != null &&
+        params.INVENTORY.dnaSlot1.alphaAbility != null
+      ) {
         params.INVENTORY.dnaSlot1.alphaAbility.onUse();
       }
     }
 
     if (this.game.keys.ArrowLeft && KeyboardEvent.shiftKey) {
-      if (params.INVENTORY.dnaSlot2 != null && params.INVENTORY.dnaSlot2.alphaAbility != null) {
-         params.INVENTORY.dnaSlot2.alphaAbility.onUse();
-       }
-     }
+      if (
+        params.INVENTORY.dnaSlot2 != null &&
+        params.INVENTORY.dnaSlot2.alphaAbility != null
+      ) {
+        params.INVENTORY.dnaSlot2.alphaAbility.onUse();
+      }
+    }
 
     if (this.game.keys.ArrowRight) {
-      if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.epsilonAbility != null) {
+      if (
+        params.INVENTORY.dnaSlot1 != null &&
+        params.INVENTORY.dnaSlot1.epsilonAbility != null
+      ) {
         params.INVENTORY.dnaSlot1.epsilonAbility.onUse();
       }
     }
 
     if (this.game.keys.ArrowRight && KeyboardEvent.shiftKey) {
-      if (params.INVENTORY.dnaSlot2 != null && params.INVENTORY.dnaSlot2.epsilonAbility != null) {
-         params.INVENTORY.dnaSlot2.epsilonAbility.onUse();
-       }
-     }
+      if (
+        params.INVENTORY.dnaSlot2 != null &&
+        params.INVENTORY.dnaSlot2.epsilonAbility != null
+      ) {
+        params.INVENTORY.dnaSlot2.epsilonAbility.onUse();
+      }
+    }
 
     if (this.game.keys.ArrowDown) {
-      if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.betaAbility != null) {
+      if (
+        params.INVENTORY.dnaSlot1 != null &&
+        params.INVENTORY.dnaSlot1.betaAbility != null
+      ) {
         params.INVENTORY.dnaSlot1.betaAbility.onUse();
       }
     }
 
     if (this.game.keys.ArrowDown && KeyboardEvent.shiftKey) {
-      if (params.INVENTORY.dnaSlot2 != null && params.INVENTORY.dnaSlot2.betaAbility != null) {
-         params.INVENTORY.dnaSlot2.betaAbility.onUse();
-       }
-     }
+      if (
+        params.INVENTORY.dnaSlot2 != null &&
+        params.INVENTORY.dnaSlot2.betaAbility != null
+      ) {
+        params.INVENTORY.dnaSlot2.betaAbility.onUse();
+      }
+    }
   }
-
-  
 
   loadAnimations() {
     for (let i = 0; i < 4; i++) {
-      // 5 states (Havent implemented attacking)  debug for running rn set back to 4
       this.animations.push([]);
       for (let j = 0; j < 2; j++) {
         // two directions
@@ -416,87 +447,116 @@ class GameCharacter {
     );
 
     if (this.game.PAUSED) {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        ctx.font = "50px Arial";
-        ctx.strokeStyle = 'Red';   
-        ctx.textAlign = "center";  
-        ctx.fillStyle = "white";
-        ctx.fillText("PAUSED", CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
+      ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+      ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+      ctx.font = "50px Arial";
+      ctx.strokeStyle = "Red";
+      ctx.textAlign = "center";
+      ctx.fillStyle = "white";
+      ctx.fillText("PAUSED", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
     }
 
     //DEBUG (I probably should have put it all in one if statement oops lmao)
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = "white";
     ctx.font = "20px Arial";
     ctx.textAlign = "left";
-    if (debug) ctx.strokeRect(this.BB.x-this.game.camera.x, this.BB.y-this.game.camera.y, this.BB.width, this.BB.height);
+    if (debug)
+      ctx.strokeRect(
+        this.BB.x - this.game.camera.x,
+        this.BB.y - this.game.camera.y,
+        this.BB.width,
+        this.BB.height
+      );
     //put debug on screen text for x, y, velocity, state, facing, and jumps on the right hand side of the screen
     let debugY = 150;
     let debugX = 1400;
-    //use math.roudn
+    //use math.round
     if (debug) ctx.fillText("X: " + Math.round(this.x), debugX, debugY);
     if (debug) ctx.fillText("Y: " + Math.round(this.y), debugX, debugY + 20);
-    if (debug) ctx.fillText("Velocity X: " + Math.round(this.velocity.x), debugX, debugY + 40);
-    if (debug) ctx.fillText("Velocity Y: " + Math.round(this.velocity.y), debugX, debugY + 60);
+    if (debug)
+      ctx.fillText(
+        "Velocity X: " + Math.round(this.velocity.x),
+        debugX,
+        debugY + 40
+      );
+    if (debug)
+      ctx.fillText(
+        "Velocity Y: " + Math.round(this.velocity.y),
+        debugX,
+        debugY + 60
+      );
     switch (this.state) {
-        case 0:
-            if (debug) ctx.fillText("State: Idle" , debugX, debugY + 80);
-            break;
-        case 1:
-            if (debug) ctx.fillText("State: Running" , debugX, debugY + 80);
-            break;
-        case 2:
-            if (debug) ctx.fillText("State: Falling" , debugX, debugY + 80);
-            break;
-        case 3:
-            if (debug) ctx.fillText("State: Jumping" , debugX, debugY + 80);
-            break;
-        case 4:
-            if (debug) ctx.fillText("State: Ability" , debugX, debugY + 80);
-            break;
-        default:
-            if (debug) ctx.fillText("State: Unknown" , debugX, debugY + 80);
-            break;
+      case 0:
+        if (debug) ctx.fillText("State: Idle", debugX, debugY + 80);
+        break;
+      case 1:
+        if (debug) ctx.fillText("State: Running", debugX, debugY + 80);
+        break;
+      case 2:
+        if (debug) ctx.fillText("State: Falling", debugX, debugY + 80);
+        break;
+      case 3:
+        if (debug) ctx.fillText("State: Jumping", debugX, debugY + 80);
+        break;
+      case 4:
+        if (debug) ctx.fillText("State: Ability", debugX, debugY + 80);
+        break;
+      default:
+        if (debug) ctx.fillText("State: Unknown", debugX, debugY + 80);
+        break;
     }
     switch (this.facing) {
-        case 0:
-            if (debug) ctx.fillText("Facing: Right" , debugX, debugY + 100);
-            break;
-        case 1:
-            if (debug) ctx.fillText("Facing: Left" , debugX, debugY + 100);
-            break;
-        default:
-            if (debug) ctx.fillText("Facing: Unknown" , debugX, debugY + 100);
-            break;
+      case 0:
+        if (debug) ctx.fillText("Facing: Right", debugX, debugY + 100);
+        break;
+      case 1:
+        if (debug) ctx.fillText("Facing: Left", debugX, debugY + 100);
+        break;
+      default:
+        if (debug) ctx.fillText("Facing: Unknown", debugX, debugY + 100);
+        break;
     }
 
     if (debug) ctx.fillText("Jumps: " + this.JUMPS, debugX, debugY + 120);
-    if (debug)ctx.fillText("PAUSED: " + this.game.PAUSED, debugX, debugY + 140);
-    if (debug){
+    if (debug)
+      ctx.fillText("PAUSED: " + this.game.PAUSED, debugX, debugY + 140);
+    if (debug) {
       ctx.strokeRect(
-      this.BB.x - this.game.camera.x,
-      this.BB.y - this.game.camera.y,
-      this.BB.width,
-      this.BB.height
+        this.BB.x - this.game.camera.x,
+        this.BB.y - this.game.camera.y,
+        this.BB.width,
+        this.BB.height
       );
     }
 
-  //run draw event for all abilities
-  //will add slot2 later 
-      if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.sigmaAbility != null) {
-        params.INVENTORY.dnaSlot1.sigmaAbility.draw(ctx);
-      }
+    //run draw event for all abilities
+    //will add slot2 later
+    if (
+      params.INVENTORY.dnaSlot1 != null &&
+      params.INVENTORY.dnaSlot1.sigmaAbility != null
+    ) {
+      params.INVENTORY.dnaSlot1.sigmaAbility.draw(ctx);
+    }
 
-      if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.alphaAbility != null) {
-        params.INVENTORY.dnaSlot1.alphaAbility.draw(ctx);
-      }
+    if (
+      params.INVENTORY.dnaSlot1 != null &&
+      params.INVENTORY.dnaSlot1.alphaAbility != null
+    ) {
+      params.INVENTORY.dnaSlot1.alphaAbility.draw(ctx);
+    }
 
-      if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.epsilonAbility != null) {
-        params.INVENTORY.dnaSlot1.epsilonAbility.draw(ctx);
-      }
+    if (
+      params.INVENTORY.dnaSlot1 != null &&
+      params.INVENTORY.dnaSlot1.epsilonAbility != null
+    ) {
+      params.INVENTORY.dnaSlot1.epsilonAbility.draw(ctx);
+    }
 
-      if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.betaAbility != null) {
-        params.INVENTORY.dnaSlot1.betaAbility.draw(ctx);
-      }
+    if (
+      params.INVENTORY.dnaSlot1 != null &&
+      params.INVENTORY.dnaSlot1.betaAbility != null
+    ) {
+      params.INVENTORY.dnaSlot1.betaAbility.draw(ctx);
+    }
   }
 }
