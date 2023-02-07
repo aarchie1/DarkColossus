@@ -23,7 +23,7 @@ class GameCharacter {
     this.health = 100;
     this.currentIFrameTimer = 0;
     this.maxIFrameTimer = 60;
-    this.usingAbilty = false;
+    this.usingAbility = false;
     this.updateBB();
     this.animationXOffset = 0;
     this.animationYOffset = 0;
@@ -71,8 +71,8 @@ class GameCharacter {
     if (this.state < 2) {
       if (this.state == 0 || (this.state == 1 && params.STATE == "gameplay"))
         this.JUMPS = this.MAX_JUMPS;
-      this.animationXOffset = 0;
-      this.animationYOffset = 0;
+      // this.animationXOffset = 0;
+      // this.animationYOffset = 0;
       if (Math.abs(this.velocity.x) < MIN_RUN && this.velocity.y <= 0) {
         this.velocity.x = 0;
         this.state = 0;
@@ -90,14 +90,14 @@ class GameCharacter {
         }
       } else if (Math.abs(this.velocity.x) >= MIN_RUN && this.velocity.y <= 0) {
         if (this.facing === 0) {
-          this.animationYOffset = -35;
+         // this.animationYOffset = -35;
           if (
             (this.game.keys.KeyD || this.game.controllerButtonRight) &&
             (!this.game.keys.KeyA || !this.game.controllerButtonLeft) &&
             params.STATE == "gameplay"
           ) {
             this.velocity.x += RUN_ACC * TICK;
-            this.animationXOffset = 0;
+           // this.animationXOffset = 0;
           } else if (
             (this.game.keys.KeyA || this.game.controllerButtonLeft) &&
             (!this.game.keys.KeyD || !this.game.controllerButtonRight) &&
@@ -109,7 +109,7 @@ class GameCharacter {
           }
         }
         if (this.facing === 1) {
-          this.animationYOffset = -35;
+         // this.animationYOffset = -35;
           if (
             (this.game.keys.KeyA || this.game.controllerButtonLeft) &&
             (!this.game.keys.KeyD || !this.game.controllerButtonRight) &&
@@ -129,11 +129,11 @@ class GameCharacter {
       } else if (this.velocity.y >= 0) {
         this.state = 2;
         if (this.facing == 0) {
-          this.animationXOffset = 257;
-          this.animationYOffset = 200;
+          // this.animationXOffset = 257;
+          // this.animationYOffset = 200;
         } else {
-          this.animationXOffset = 0;
-          this.animationYOffset = 200;
+          // this.animationXOffset = 0;
+          // this.animationYOffset = 200;
         }
       }
       this.velocity.y += FALL_ACC * TICK;
@@ -145,11 +145,11 @@ class GameCharacter {
     } else if (this.velocity.y >= 0) {
       if (this.jump() != true) this.state = 2;
       if (this.facing == 0) {
-        this.animationXOffset = 257;
-        this.animationYOffset = 200;
+        // this.animationXOffset = 257;
+        // this.animationYOffset = 200;
       } else {
-        this.animationXOffset = 0;
-        this.animationYOffset = 200;
+        // this.animationXOffset = 0;
+        // this.animationYOffset = 200;
       }
       if (
         (this.game.keys.KeyD && !this.game.keys.KeyA) ||
@@ -183,8 +183,8 @@ class GameCharacter {
           ) {
             this.y = entity.BB.top - this.BB.height;
             this.velocity.y = 0;
-            this.animationXOffset = 0;
-            this.animationYOffset = 0;
+            // this.animationXOffset = 0;
+            // this.animationYOffset = 0;
             if (this.state === 2 || this.state == 3) this.state = 0;
             this.updateBB();
           }
@@ -197,7 +197,7 @@ class GameCharacter {
           if (
             entity instanceof Reaper &&
             entity.state == 3 &&
-            this.currentIFrameTimer === 0 && !this.usingAbilty
+            this.currentIFrameTimer === 0 && !this.usingAbility
           ) {
             // subtract reaper damage from player health
             this.health -= entity.damage;
@@ -209,7 +209,7 @@ class GameCharacter {
           }
           if (
             entity instanceof MoleculeProjectile &&
-            this.currentIFrameTimer == 0 &&  !this.usingAbilty
+            this.currentIFrameTimer == 0 &&  !this.usingAbility
           ) {
             // subtract molecule damage from player health
             this.health -= entity.damage;
@@ -302,7 +302,7 @@ class GameCharacter {
       }
     }
 
-    if (this.game.keys.ArrowLeft) {
+    if (this.game.keys.ArrowRight) {
       if (
         params.INVENTORY.dnaSlot1 != null &&
         params.INVENTORY.dnaSlot1.alphaAbility != null
@@ -311,7 +311,7 @@ class GameCharacter {
       }
     }
 
-    if (this.game.keys.ArrowLeft && KeyboardEvent.shiftKey) {
+    if (this.game.keys.ArrowRight && KeyboardEvent.shiftKey) {
       if (
         params.INVENTORY.dnaSlot2 != null &&
         params.INVENTORY.dnaSlot2.alphaAbility != null
@@ -320,7 +320,7 @@ class GameCharacter {
       }
     }
 
-    if (this.game.keys.ArrowRight) {
+    if (this.game.keys.ArrowLeft) {
       if (
         params.INVENTORY.dnaSlot1 != null &&
         params.INVENTORY.dnaSlot1.epsilonAbility != null
@@ -329,7 +329,7 @@ class GameCharacter {
       }
     }
 
-    if (this.game.keys.ArrowRight && KeyboardEvent.shiftKey) {
+    if (this.game.keys.ArrowLeft && KeyboardEvent.shiftKey) {
       if (
         params.INVENTORY.dnaSlot2 != null &&
         params.INVENTORY.dnaSlot2.epsilonAbility != null
@@ -379,6 +379,7 @@ class GameCharacter {
       0,
       true
     );
+
 
     // facing left = 1
     this.animations[0][1] = new Animator(
@@ -473,15 +474,58 @@ class GameCharacter {
       0,
       false
     );
+
+    //this.animations[4][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/emp.png"), 0, 0, 1200, 1164, 7, 0.1, 0, true);
+    //this.animations[4][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/emp.png"), 0, 0, 1200, 1164, 7, 0.1, 0, true);
+    
+
+
+    //Offsets
+    //idle
+    this.animations[0][0].xOffset = 0;
+    this.animations[0][0].yOffset = 0;
+    this.animations[0][1].xOffset = 0;
+    this.animations[0][1].yOffset = 0;
+
+    //running
+    this.animations[1][0].xOffset = 0;
+    this.animations[1][0].yOffset = 40;
+    this.animations[1][1].xOffset = 0;
+    this.animations[1][1].yOffset = 40;
+
+    //falling
+    this.animations[2][0].xOffset = -256;
+    this.animations[2][0].yOffset = -256;
+    this.animations[2][1].xOffset = 0;
+    this.animations[2][1].yOffset = -256;
+
+    //jumping
+    this.animations[3][0].xOffset = -256;
+    this.animations[3][0].yOffset = -256;
+    this.animations[3][1].xOffset = 10;
+    this.animations[3][1].yOffset = -256;
+
   }
   draw(ctx) {
-    this.animations[this.state][this.facing].drawFrame(
-      this.game.clockTick,
-      ctx,
-      this.x - this.animationXOffset - this.game.camera.x,
-      this.y - this.animationYOffset - this.game.camera.y,
-      1
-    );
+
+    if (this.usingAbility){
+      this.animations[4][this.facing].drawFrame(
+        this.game.clockTick,
+        ctx,
+        this.x - this.game.camera.x,
+        this.y - this.game.camera.y,
+        1
+      );
+    } else {
+      this.animations[this.state][this.facing].drawFrame(
+        this.game.clockTick,
+        ctx,
+        this.x - this.game.camera.x,
+        this.y - this.game.camera.y,
+        1
+      );
+    }
+
 
     if (this.game.PAUSED) {
       ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
@@ -566,7 +610,7 @@ class GameCharacter {
       );
       if (debug)
       ctx.fillText(
-        "Using Ability: " + this.usingAbilty,
+        "Using Ability: " + this.usingAbility,
         debugX,
         debugY + 200
       );
@@ -577,6 +621,55 @@ class GameCharacter {
         this.BB.width,
         this.BB.height
       );
+
+      //draw information about the all abilities equipped in slot1 (Sigma, alpha, beta, epsilon) for these fields: in use , effect, effect rarity, cooldown rarity, cooldown, and cooldown max, name
+      if (debug){
+       // ctx.fillText("Slot 1", debugX, debugY + 220);
+        if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.sigmaAbility != null){
+          ctx.fillText("Sigma Ability: " + params.INVENTORY.dnaSlot1.sigmaAbility.name, debugX, debugY + 240);
+          ctx.fillText("In Use: " + params.INVENTORY.dnaSlot1.sigmaAbility.inUse, debugX, debugY + 260);
+          ctx.fillText("Effect: " + params.INVENTORY.dnaSlot1.sigmaAbility.effect, debugX, debugY + 280);
+          ctx.fillText("Effect Rarity: " + params.INVENTORY.dnaSlot1.sigmaAbility.effectRarity, debugX, debugY + 300);
+          ctx.fillText("Cooldown Rarity: " + params.INVENTORY.dnaSlot1.sigmaAbility.cooldownRarity, debugX, debugY + 320);
+          ctx.fillText("Cooldown: " + params.INVENTORY.dnaSlot1.sigmaAbility.cooldown, debugX, debugY + 340);
+          ctx.fillText("Cooldown Seconds Remaining: " + params.INVENTORY.dnaSlot1.sigmaAbility.cooldownTimer.getRemainingSeconds(), debugX, debugY + 360);
+        }
+
+        if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.alphaAbility != null){
+          ctx.fillText("Alpha Ability: " + params.INVENTORY.dnaSlot1.alphaAbility.name, debugX, debugY + 400);
+          ctx.fillText("In Use: " + params.INVENTORY.dnaSlot1.alphaAbility.inUse, debugX, debugY + 420);
+          ctx.fillText("Effect: " + params.INVENTORY.dnaSlot1.alphaAbility.effect, debugX, debugY + 440);
+          ctx.fillText("Effect Rarity: " + params.INVENTORY.dnaSlot1.alphaAbility.effectRarity, debugX, debugY + 460);
+          ctx.fillText("Cooldown Rarity: " + params.INVENTORY.dnaSlot1.alphaAbility.cooldownRarity, debugX, debugY + 480);
+          ctx.fillText("Cooldown: " + params.INVENTORY.dnaSlot1.alphaAbility.cooldown, debugX, debugY + 500);
+          ctx.fillText("Cooldown Max: " + params.INVENTORY.dnaSlot1.alphaAbility.cooldownMax, debugX, debugY + 520);
+        }
+        if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.epsilonAbility != null){
+          ctx.fillText("Epsilon Ability: " + params.INVENTORY.dnaSlot1.epsilonAbility.name, debugX, debugY + 560);
+          ctx.fillText("In Use: " + params.INVENTORY.dnaSlot1.epsilonAbility.inUse, debugX, debugY + 580);
+          ctx.fillText("Effect: " + params.INVENTORY.dnaSlot1.epsilonAbility.effect, debugX, debugY + 600);
+          ctx.fillText("Effect Rarity: " + params.INVENTORY.dnaSlot1.epsilonAbility.effectRarity, debugX, debugY + 620);
+          ctx.fillText("Cooldown Rarity: " + params.INVENTORY.dnaSlot1.epsilonAbility.cooldownRarity, debugX, debugY + 640);
+          ctx.fillText("Cooldown: " + params.INVENTORY.dnaSlot1.epsilonAbility.cooldown, debugX, debugY + 660);
+          ctx.fillText("Cooldown Max: " + params.INVENTORY.dnaSlot1.epsilonAbility.cooldownMax, debugX, debugY + 680);
+        }
+
+        if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.betaAbility != null){
+          ctx.fillText("Beta Ability: " + params.INVENTORY.dnaSlot1.betaAbility.name, debugX, debugY + 720);
+          ctx.fillText("In Use: " + params.INVENTORY.dnaSlot1.betaAbility.inUse, debugX, debugY + 740);
+          ctx.fillText("Effect: " + params.INVENTORY.dnaSlot1.betaAbility.effect, debugX, debugY + 760);
+          ctx.fillText("Effect Rarity: " + params.INVENTORY.dnaSlot1.betaAbility.effectRarity, debugX, debugY + 780);
+          ctx.fillText("Cooldown Rarity: " + params.INVENTORY.dnaSlot1.betaAbility.cooldownRarity, debugX, debugY + 800);
+          ctx.fillText("Cooldown: " + params.INVENTORY.dnaSlot1.betaAbility.cooldown, debugX, debugY + 820);
+          ctx.fillText("Cooldown Max: " + params.INVENTORY.dnaSlot1.betaAbility.cooldownMax, debugX, debugY + 840);
+        }
+
+
+
+      }
+        
+
+        
     }
 
     //run draw event for all abilities

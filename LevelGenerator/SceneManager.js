@@ -233,7 +233,6 @@ class SceneManager {
         let velocity = player.velocity.x/player.MAX_RUN + 0.01;
         if (velocity === 0) {
             target = 0;
-            SMOOTHING = 0.1;
         } else {
             target = max * velocity;
         }
@@ -249,7 +248,6 @@ class SceneManager {
         let velocity = player.velocity.y/player.MAX_RUN + 0.01;
         if (velocity === 0) {
             target = 0;
-            SMOOTHING = 0.1;
         } else {
             target = max * velocity;
         }

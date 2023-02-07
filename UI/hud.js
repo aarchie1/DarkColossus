@@ -99,7 +99,18 @@ class hud {
             
             if (sigma) {
                 let icon = (sigma.inUse) ? sigma.inUseIcon : sigma.icon;
-                ctx.drawImage(icon, 110+ this.abilityHudX, CANVAS_HEIGHT-280 + this.abilityHudY, 98, 98);
+                //draw the cooldown number on top of the ability icon
+                if (sigma.cooldownTimer.getRemainingSeconds() != 0)  {
+                    ctx.globalAlpha = 0.5;
+                    ctx.drawImage(icon, 110+ this.abilityHudX, CANVAS_HEIGHT-280 + this.abilityHudY, 98, 98);
+                    ctx.globalAlpha = 1;
+                    ctx.fillStyle = "white";
+                    ctx.font = "50px Arial";
+                    let textWidth = ctx.measureText(sigma.cooldownTimer.getRemainingSeconds()).width;
+                    ctx.fillText(sigma.cooldownTimer.getRemainingSeconds(), 160 + this.abilityHudX - textWidth/2, CANVAS_HEIGHT-260 + this.abilityHudY + 50);
+                } else {
+                    ctx.drawImage(icon, 110+ this.abilityHudX, CANVAS_HEIGHT-280 + this.abilityHudY, 98, 98);
+                }
             }
 
             if (beta) {
