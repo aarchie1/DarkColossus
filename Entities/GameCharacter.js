@@ -4,6 +4,8 @@ class GameCharacter {
 
   constructor(game, x, y) {
     Object.assign(this, { game, x, y });
+
+    //Physics
     this.JUMP_ACC = -1300;
     this.MIN_RUN = 50;
     this.MAX_RUN = 800;
@@ -16,13 +18,15 @@ class GameCharacter {
     const TICK = this.game.clockTick;
     this.state = 2;
 
+    //Base Stats
+    this.health = 10;
+
     this.facing = 0; // 0 = right, 1 == left
     this.state = 0; //0 = idle, 1 = running, 2 = falling 3 = jumping, 4 = attacking
     this.velocity = { x: 0, y: 0 };
     this.dead = false;
-    this.health = 100;
     this.currentIFrameTimer = 0;
-    this.maxIFrameTimer = 60;
+    this.maxIFrameTimer = 20;
     this.usingAbility = false;
     this.updateBB();
     this.animationXOffset = 0;

@@ -61,7 +61,7 @@ class hud {
         // ctx.strokeRect(50, 150, 300, 50);
 
         //draw hp crosses images for each unit of hp, when it goes over 10 make a new row
-        for (let i = 0; i < 14; i++) {
+        for (let i = 0; i < player.health; i++) {
             if (i < 10) {
                 ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/UI/hp_cross.png"), 50 + (i * 55), 150, 64, 64);
             } else {
