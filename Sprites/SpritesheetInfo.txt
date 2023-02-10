@@ -53,6 +53,7 @@ Abilities
 UI
     DE_UI_Design            1050x675    1frame
     DE_UI_Design_No_Text    1050x675    1frame
+    title_screen            1920x1080   1frame
 
 DNA
     dna_basic               116x116     1frame
