@@ -65,6 +65,7 @@ ASSET_MANAGER.queueDownload("./Sprites/UI/ability_hud_uncommon.png");
 ASSET_MANAGER.queueDownload("./Sprites/UI/ability_hud_basic.png");
 ASSET_MANAGER.queueDownload("./Sprites/UI/ability_hud.png");
 ASSET_MANAGER.queueDownload("./Sprites/UI/hp_cross.png");
+ASSET_MANAGER.queueDownload("./Sprites/UI/title_screen.png");
 
 // music
 ASSET_MANAGER.queueDownload("./Music/flute.mp4");
