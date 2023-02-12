@@ -1,14 +1,15 @@
 class DamageIndicator {
     constructor(x, y, damage) {
         Object.assign(this, { x, y, damage });
-        this.timerStart = 120;
+        this.timerStart = 20 + (damage+1) + Math.pow(damage, 1.7);
         this.timer = this.timerStart;
         this.alpha = 1;
-        this.randomX = Math.random() * 40 - 80;
-        this.randomY = Math.random() * 40 - 80;
+        this.randomOffset = 100;
+        this.randomX = Math.random() * this.randomOffset - this.randomOffset*2;
+        this.randomY = Math.random() * this.randomOffset/2 - this.randomOffset;
 
-        //have font size be 1.5 times the damage
-        this.fontSize = 30 + (damage+1) * 3;
+        //have font size expoenetially increase with damage
+        this.fontSize = 15 + (damage+1) + Math.pow(damage, 1.5);
 
     }
 
@@ -20,11 +21,11 @@ class DamageIndicator {
     }
 
     draw(ctx) {
-        ctx.font = this.fontSize + " Arial";
+        ctx.font = "bold " + this.fontSize + "pt Roboto";
         ctx.fillStyle = "white";
         ctx.globalAlpha = this.timer / this.timerStart;
 
-        ctx.fillText(this.damage, this.x - gameEngine.camera.x - 4 + this.randomX, this.y - gameEngine.camera.y - 4 - (50 - this.timer/2) * 2 + this.randomY);
+        ctx.fillText(this.damage, this.x + 50 - gameEngine.camera.x - 4 + this.randomX, this.y - gameEngine.camera.y - 4 - (50 - this.timer/2) * 2 + this.randomY);
         ctx.globalAlpha = 1;
 
     }

@@ -19,6 +19,9 @@ class SupersonicAbility{
         this.originalAnimationLeft = player.animations[1][1];
         this.speedIncrease = 500;
         this.enemiesHit = [];
+
+        //set effect to random number between 1 and 15
+
     }
 
     onEquip() {
@@ -27,7 +30,7 @@ class SupersonicAbility{
         player.animations[1][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/supersonic.png"), 0, 0, 320, 256, 9, .06, 0, true);
         player.animations[1][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/supersonic_left.png"), 0, 0, 320, 256, 9, .06, 0, true);
         player.MAX_RUN += this.speedIncrease;
-        player.usingAbility = true;
+        //player.usingAbility = true;
 
         // facing left = 1
         //this.animations[1][1] 
@@ -37,7 +40,7 @@ class SupersonicAbility{
         player.animations[1][0] = this.originalAnimationRight;
         player.animations[1][1] = this.originalAnimationLeft;
         player.MAX_RUN -= this.speedIncrease;
-        player.usingAbility = false;
+       // player.usingAbility = false;
     }
 
     //GAME CHARACTER CALLS THIS
@@ -85,6 +88,7 @@ class SupersonicAbility{
     update() {
         if (Math.abs(player.velocity.x) == player.MAX_RUN && player.state == 1) {
             this.inUse = true;
+           // this.effect = Math.floor(Math.random() * 15) + 1;
 
            gameEngine.entities.forEach((enemy) => {
                 //Collisions with players bounding box
@@ -92,7 +96,8 @@ class SupersonicAbility{
                     if (!this.enemiesHit.includes(enemy)) {
                         this.enemiesHit.push(enemy);
                         enemy.health -= this.effect;
-                        gameEngine.addEntityFirst(new DamageIndicator(enemy.x+30, enemy.y, this.effect));
+                        if ( !(enemy instanceof MoleculeProjectile))
+                             gameEngine.addEntityFirst(new DamageIndicator(enemy.x+30, enemy.y, this.effect));
                      }
                 }
            })
