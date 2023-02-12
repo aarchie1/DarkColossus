@@ -1,10 +1,6 @@
 class Molecule {
   constructor(game, x, y, size) {
     Object.assign(this, { game, x, y, size });
-    this.game = game;
-    this.x = x;
-    this.y = y;
-    this.size = size;
     const TICK = this.game.clockTick;
     this.molecule = this;
     this.player = this.game.camera.player;
