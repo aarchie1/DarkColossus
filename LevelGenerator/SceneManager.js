@@ -226,7 +226,7 @@ class SceneManager {
 
     //This function adds a slight smoothing to the camera movement
     xCameraSmoothing() {
-        const SMOOTHING = 0.004;
+        const SMOOTHING = 0.003;
         let max = 200; 
         let min = -200;
         let target = 0;
@@ -262,7 +262,14 @@ class SceneManager {
         this.game.entities = this.game.entities.filter(function (entity) {
             return entity instanceof Inventory || entity instanceof DarkEnergy || entity instanceof SceneManager || entity instanceof hud;
         });
-
+        //SET ALL ABILITIES TO NOT IN USE TO PREVENT BUG
+        if (params.INVENTORY.dnaSlot1 != null) {
+            let dna = params.INVENTORY.dnaSlot1;
+            if (dna.sigmaAbility != null) dna.sigmaAbility.inUse = false;
+            if (dna.epsilonAbility != null) dna.epsilonAbility.inUse = false;
+            if (dna.alphaAbility != null) dna.alphaAbility.inUse = false;
+            if (dna.betaAbility != null) dna.betaAbility.inUse = false;
+        }
         this.game.camera.x = 0;
         this.game.camera.y = 0;
         this.player = new GameCharacter(this.game, CANVAS_WIDTH/2-150, 0);
