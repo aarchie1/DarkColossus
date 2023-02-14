@@ -226,9 +226,9 @@ class SceneManager {
 
     //This function adds a slight smoothing to the camera movement
     xCameraSmoothing() {
-        const SMOOTHING = 0.05;
-        let max = 450; //pixels to offset camera
-        let min = -450;
+        const SMOOTHING = 0.004;
+        let max = 200; 
+        let min = -200;
         let target = 0;
         let velocity = player.velocity.x/player.MAX_RUN + 0.01;
         if (velocity === 0) {

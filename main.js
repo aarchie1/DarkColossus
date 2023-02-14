@@ -17,6 +17,8 @@ ASSET_MANAGER.queueDownload("./Sprites/Abilities/soul_grab.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/supersonic.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/supersonic_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/emp.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/astral_beam_right.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/astral_beam_left.png");
 
 //Abilities Icons
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/supersonic_icon.png");
@@ -25,6 +27,8 @@ ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/emp_icon.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/mock_icon.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/cosmic_blade_icon.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/cosmic_blade_in_use_icon.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/astral_beam_icon.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/astral_beam_in_use_icon.png");
 
 //Enemies
 ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_full.png");
