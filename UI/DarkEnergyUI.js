@@ -29,20 +29,20 @@ class DarkEnergyUI {
         //Stats in printable format
         this.statIncreaseAmount = 10;
         this.deInfo = [
-            `Melee Attack: ${100 + 1 * this.game.darkEnergy.meleeAttack}%`,
-            `Ranged Attack: ${100 + 1 * this.game.darkEnergy.rangedAttack}%`,
-            `Attack Speed: ${100 + 1 * this.game.darkEnergy.attackSpeed}%`,
-            `Movement Speed: ${100 + 1 * this.game.darkEnergy.movementSpeed}%`,
-            `Jump Height: ${100 + 1 * this.game.darkEnergy.jumpHeight}%`,
-            `Melee Defense: ${100 + 1 * this.game.darkEnergy.meleeDefense}%`,
-            `Ranged Defense: ${100 + 1 * this.game.darkEnergy.rangedDefense}%`,
-            `HP: ${100 + 1 * this.game.darkEnergy.hp}`,
-            `DNA Drop Rate: ${100 + 1 * this.game.darkEnergy.dnaDropRate}%`,
-            `Sigma Chance: ${100 + 1 * this.game.darkEnergy.sigmaChance}%`,
-            `Alpha Chance: ${100 + 1 * this.game.darkEnergy.alphaChance}%`,
-            `Beta Chance: ${100 + 1 * this.game.darkEnergy.betaChance}%`,
-            `Epsilon Chance: ${100 + 1 * this.game.darkEnergy.epsilonChance}%`,
-            `Dark Energy Gather: ${100 + 1 * this.game.darkEnergy.darkEnergyChance}%`,
+            "Melee Attack Bonus: " + this.game.darkEnergy.meleeAttack,
+            "Ranged Attack Bonus: " + this.game.darkEnergy.rangedAttack,
+            "Attack Speed Bonus: " + this.game.darkEnergy.attackSpeed,
+            "Movement Speed Bonus: " + this.game.darkEnergy.movementSpeed,
+            "Jump Height Bonus: " + this.game.darkEnergy.jumpHeight,
+            "Melee Defense Bonus: " + this.game.darkEnergy.meleeDefense,
+            "Ranged Defense Bonus: " + this.game.darkEnergy.rangedDefense,
+            "HP Bonus: " + this.game.darkEnergy.hp,
+            "DNA Drop Rate Bonus: " + this.game.darkEnergy.dnaDropRate,
+            "Sigma Chance Bonus: " + this.game.darkEnergy.sigmaChance,
+            "Alpha Chance Bonus: " + this.game.darkEnergy.alphaChance,
+            "Beta Chance Bonus: " + this.game.darkEnergy.betaChance,
+            "Epsilon Chance Bonus: " + this.game.darkEnergy.epsilonChance,
+            "Dark Energy Gather Bonus: " + this.game.darkEnergy.darkEnergyChance,
         ];
     }
 
@@ -154,21 +154,25 @@ class DarkEnergyUI {
             }
         }
 
+        if(keypress("KeyX") && this.state == this.BROWSE) {
+            this.game.darkEnergy.currency += 1000;
+        }
+
         this.deInfo = [
-            `Melee Attack: ${100 + 1 * this.game.darkEnergy.meleeAttack}%`,
-            `Ranged Attack: ${100 + 1 * this.game.darkEnergy.rangedAttack}%`,
-            `Attack Speed: ${100 + 1 * this.game.darkEnergy.attackSpeed}%`,
-            `Movement Speed: ${100 + 1 * this.game.darkEnergy.movementSpeed}%`,
-            `Jump Height: ${100 + 1 * this.game.darkEnergy.jumpHeight}%`,
-            `Melee Defense: ${100 + 1 * this.game.darkEnergy.meleeDefense}%`,
-            `Ranged Defense: ${100 + 1 * this.game.darkEnergy.rangedDefense}%`,
-            `HP: ${100 + 1 * this.game.darkEnergy.hp}`,
-            `DNA Drop Rate: ${100 + 1 * this.game.darkEnergy.dnaDropRate}%`,
-            `Sigma Chance: ${100 + 1 * this.game.darkEnergy.sigmaChance}%`,
-            `Alpha Chance: ${100 + 1 * this.game.darkEnergy.alphaChance}%`,
-            `Beta Chance: ${100 + 1 * this.game.darkEnergy.betaChance}%`,
-            `Epsilon Chance: ${100 + 1 * this.game.darkEnergy.epsilonChance}%`,
-            `Dark Energy Gather: ${100 + 1 * this.game.darkEnergy.darkEnergyChance}%`,
+            "Melee Attack Bonus: " + this.game.darkEnergy.meleeAttack,
+            "Ranged Attack Bonus: " + this.game.darkEnergy.rangedAttack,
+            "Attack Speed Bonus: " + this.game.darkEnergy.attackSpeed,
+            "Movement Speed Bonus: " + this.game.darkEnergy.movementSpeed,
+            "Jump Height Bonus: " + this.game.darkEnergy.jumpHeight,
+            "Melee Defense Bonus: " + this.game.darkEnergy.meleeDefense,
+            "Ranged Defense Bonus: " + this.game.darkEnergy.rangedDefense,
+            "HP Bonus: " + this.game.darkEnergy.hp,
+            "DNA Drop Rate Bonus: " + this.game.darkEnergy.dnaDropRate,
+            "Sigma Chance Bonus: " + this.game.darkEnergy.sigmaChance,
+            "Alpha Chance Bonus: " + this.game.darkEnergy.alphaChance,
+            "Beta Chance Bonus: " + this.game.darkEnergy.betaChance,
+            "Epsilon Chance Bonus: " + this.game.darkEnergy.epsilonChance,
+            "Dark Energy Gather Bonus: " + this.game.darkEnergy.darkEnergyChance,
         ];
 
 
