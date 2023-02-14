@@ -3,7 +3,6 @@ class SupersonicAbility{
     constructor(cooldownRarity, effectRarity) {
         //Necessary properties for all abilities
         this.name = 'Supersonic';
-        this.description = 'Passive ability that increases speed and deals' + this.effect + ' damage to enemies hit while moving at max speed';
         this.icon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/supersonic_icon.png");
         this.inUseIcon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/supersonic_in_use_icon.png");
         this.dominant = false;
@@ -11,6 +10,7 @@ class SupersonicAbility{
         this.effectRarity = effectRarity;
         this.cooldown = this.setCooldown(cooldownRarity);
         this.effect = this.setEffect(effectRarity);
+        this.description = 'Passive | Increases speed, deals ' + this.effect + ' dmg while moving at max speed';
         this.currentCooldown = 0;
         this.inUse = false;
 

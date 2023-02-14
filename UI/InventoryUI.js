@@ -22,9 +22,20 @@ class InventoryUI {
         this.x = CANVAS_WIDTH/2 - this.columns * this.slotSize/2;
         this.y = CANVAS_HEIGHT - this.rows * this.slotSize;
         this.pressed = false;
+
+        this.spliceSlot1 = 0;
+        this.spliceSlot2 = 0;
     }
   
     draw(ctx) {
+
+      if (this.state == this.BROWSE) dnaInfoWindow(ctx, CANVAS_WIDTH/3, 5, this.inventory[this.currentDna]);
+      if (this.state == this.SPLICE) {
+        dnaInfoWindow(ctx, 0, 0, this.inventory[this.spliceSlot1]);
+        dnaInfoWindow(ctx, CANVAS_WIDTH/3, 0, this.inventory[this.spliceSlot2]);
+       // this.drawSpliceInformation(ctx, CANVAS_WIDTH/1.5, 0, getPredictedDna(this.inventory[this.spliceSlot1], this.inventory[this.spliceSlot2]));
+      }
+
       ctx.fillStyle = "#994B50";
       //make the rect transparent
       ctx.globalAlpha = .8;
@@ -63,23 +74,16 @@ class InventoryUI {
       ctx.globalAlpha = 1;
 
       let end = (this.rows*this.columns*this.currentPage) + (this.rows*this.columns);
-      //iterate over inventory and draw every dna in a slot
-
       for (let i = this.currentPage*this.rows*this.columns; i < end; i++) {
         let dna = this.inventory[i];
         let x = this.x + (i % this.columns) * this.slotSize;
         let row = Math.floor(i / this.columns);
         let y = this.y + row * this.slotSize - (this.currentPage * this.rows * this.slotSize);
-      
-      
         if (dna != null) dna.drawDna(ctx, x, y, this.slotSize);
       }
 
       this.drawControls(ctx);
-    //   console.log("current page: " + this.currentPage);
-    //   console.log("dna range: " + (this.rows*this.columns*this.currentPage) + " to " + end);
      }
-
 
     update() {
 

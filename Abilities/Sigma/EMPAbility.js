@@ -3,14 +3,14 @@ class EMPAbility {
     constructor(cooldownRarity, effectRarity) {
         //Necessary properties for all abilities
         this.name = 'EMP';
-        this.description = 'Nearby Molecules are disabled for ' + this.effect + 's';
         this.icon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/emp_icon.png");
         this.inUseIcon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/emp_icon.png");
         this.dominant = false;
         this.effect = this.setEffect(effectRarity);
+        this.description = 'Nearby Molecules are disabled for ' + this.effect + 's';
         this.effectRarity = effectRarity;
         this.cooldownRarity = cooldownRarity;
-        this.cooldown = this.setCooldown(cooldownRarity);
+        this.cooldown = this.setCooldown(this.cooldownRarity);
         this.cooldownTimer = new AbilityCooldown(this.cooldown);
         this.inUse = false;
 
