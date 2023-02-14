@@ -57,6 +57,31 @@ function unequipAbilities(dna){
     if (dna.epsilonAbility != null) dna.epsilonAbility.onUnequip();
 }    
 
+function wrapText(ctx, text, x, y, maxWidth, lineHeight, color) {
+    ctx.fillStyle = color;
+    let words = text.split(' ');
+    let line = '';
+    for(let n = 0; n < words.length; n++) {
+      let testLine = line + words[n] + ' ';
+      let metrics = ctx.measureText(testLine);
+      let testWidth = metrics.width;
+      if (testWidth > maxWidth && n > 0) {
+        ctx.fillText(line, x, y);
+        line = words[n] + ' ';
+        y += lineHeight;
+      }
+      else {
+        line = testLine;
+      }
+    }
+    ctx.fillText(line, x, y);
+    ctx.fillStyle = "#FFFFFF";
+}  
+  
+  
+  
+  
+
 
 /**
  * @param {Number} n

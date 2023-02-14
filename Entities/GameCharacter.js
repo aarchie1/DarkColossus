@@ -646,7 +646,8 @@ class GameCharacter {
           ctx.fillText("Effect Rarity: " + params.INVENTORY.dnaSlot1.alphaAbility.effectRarity, debugX, debugY + 460);
           ctx.fillText("Cooldown Rarity: " + params.INVENTORY.dnaSlot1.alphaAbility.cooldownRarity, debugX, debugY + 480);
           ctx.fillText("Cooldown: " + params.INVENTORY.dnaSlot1.alphaAbility.cooldown, debugX, debugY + 500);
-          ctx.fillText("Cooldown Max: " + params.INVENTORY.dnaSlot1.alphaAbility.cooldownMax, debugX, debugY + 520);
+          let remainingSeconds = (params.INVENTORY.dnaSlot1.alphaAbility.cooldownTimer != null) ? params.INVENTORY.dnaSlot1.alphaAbility.cooldownTimer.getRemainingSeconds() : -1;
+          ctx.fillText("Cooldown Seconds Remaining: " + remainingSeconds, debugX, debugY + 520);
         }
         if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.epsilonAbility != null){
           ctx.fillText("Epsilon Ability: " + params.INVENTORY.dnaSlot1.epsilonAbility.name, debugX, debugY + 560);
@@ -655,7 +656,8 @@ class GameCharacter {
           ctx.fillText("Effect Rarity: " + params.INVENTORY.dnaSlot1.epsilonAbility.effectRarity, debugX, debugY + 620);
           ctx.fillText("Cooldown Rarity: " + params.INVENTORY.dnaSlot1.epsilonAbility.cooldownRarity, debugX, debugY + 640);
           ctx.fillText("Cooldown: " + params.INVENTORY.dnaSlot1.epsilonAbility.cooldown, debugX, debugY + 660);
-          ctx.fillText("Cooldown Max: " + params.INVENTORY.dnaSlot1.epsilonAbility.cooldownMax, debugX, debugY + 680);
+          let remainingSeconds = (params.INVENTORY.dnaSlot1.epsilonAbility.cooldownTimer != null) ? params.INVENTORY.dnaSlot1.epsilonAbility.cooldownTimer.getRemainingSeconds() : -1;
+          ctx.fillText("Cooldown Seconds Remaining: " + remainingSeconds, debugX, debugY + 680);
         }
 
         if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.betaAbility != null){
@@ -665,7 +667,8 @@ class GameCharacter {
           ctx.fillText("Effect Rarity: " + params.INVENTORY.dnaSlot1.betaAbility.effectRarity, debugX, debugY + 780);
           ctx.fillText("Cooldown Rarity: " + params.INVENTORY.dnaSlot1.betaAbility.cooldownRarity, debugX, debugY + 800);
           ctx.fillText("Cooldown: " + params.INVENTORY.dnaSlot1.betaAbility.cooldown, debugX, debugY + 820);
-          ctx.fillText("Cooldown Max: " + params.INVENTORY.dnaSlot1.betaAbility.cooldownMax, debugX, debugY + 840);
+          let remainingSeconds = (params.INVENTORY.dnaSlot1.betaAbility.cooldownTimer != null) ? params.INVENTORY.dnaSlot1.betaAbility.cooldownTimer.getRemainingSeconds() : -1;
+          ctx.fillText("Cooldown Seconds Remaining: " + remainingSeconds, debugX, debugY + 840);
         }
 
 
