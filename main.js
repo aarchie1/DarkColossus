@@ -13,12 +13,15 @@ ASSET_MANAGER.queueDownload("./Sprites/Player/player_falling_left.png");
 
 //Abilities
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/cosmic_blade.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/cosmic_blade_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/soul_grab.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/supersonic.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/supersonic_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/emp.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/astral_beam_right.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/astral_beam_left.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/atomic_left.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/atomic_right.png");
 
 //Abilities Icons
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/emp_icon.png");
