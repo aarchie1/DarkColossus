@@ -13,6 +13,7 @@ class Molecule {
     this.dead = false;
     this.paused = true;
 
+    
     //Changed to center point
     this.projectileBuffer = 150;
 
@@ -25,12 +26,15 @@ class Molecule {
     this.animationXOffset = 0;
     this.animationYOffset = 0;
     this.animations = [];
+    this.frameDuration = 0.2; //allows for easy freezing of animation speed for disabled molecules
     this.loadAnimations();
+
+    this.disabled = false; //status condition specific to Molecules
   }
 
   updateBB() {
     this.lastBB = this.BB;
-    this.BB = new BoundingBox(this.x + 75, this.y + 50, 100, 100);
+    this.BB = new BoundingBox(this.x - 75 - this.game.camera.x, this.y + 50 - this.game.camera.y, 100, 100);
   }
 
   update() {
@@ -41,7 +45,7 @@ class Molecule {
       this.paused = false;
     }
 
-    if (!this.paused && !this.dead) {
+    if (!this.paused && !this.dead && !this.disabled) {
       // If not paused, activate molecule AI
       if (this.x > this.player.x) this.velocity.x += -100 * TICK;
       if (this.x < this.player.x && this.velocity.x < 0) {
@@ -155,7 +159,7 @@ class Molecule {
       256,
       256,
       5,
-      0.2,
+      this.frameDuration,
       0,
       true
     );
@@ -168,7 +172,7 @@ class Molecule {
       256,
       256,
       5,
-      0.2,
+      this.frameDuration,
       0,
       true
     );
@@ -182,7 +186,7 @@ class Molecule {
       256,
       256,
       6,
-      0.2,
+      this.frameDuration,
       0,
       true
     );
@@ -195,7 +199,7 @@ class Molecule {
       256,
       256,
       6,
-      0.2,
+      this.frameDuration,
       0,
       true
     );
@@ -209,7 +213,7 @@ class Molecule {
       256,
       256,
       6,
-      0.2,
+      this.frameDuration,
       0,
       true
     );
@@ -222,7 +226,7 @@ class Molecule {
       256,
       256,
       6,
-      0.2,
+      this.frameDuration,
       0,
       true
     );
