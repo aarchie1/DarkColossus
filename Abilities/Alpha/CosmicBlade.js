@@ -58,9 +58,9 @@ class CosmicBladeAbility {
       false
     );
 
-    player.animations[4][0].yOffset = -730;
+    player.animations[4][0].yOffset = -650;
     player.animations[4][0].xOffset = -450;
-    player.animations[4][1].yOffset = -730;
+    player.animations[4][1].yOffset = -650;
     player.animations[4][1].xOffset = -500;
     this.inUse = true;
     player.usingAbility = true;
