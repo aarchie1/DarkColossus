@@ -91,16 +91,17 @@ class hud {
             let sigma = params.INVENTORY.dnaSlot1.sigmaAbility;
             let beta = params.INVENTORY.dnaSlot1.betaAbility;
             let epsilon = params.INVENTORY.dnaSlot1.epsilonAbility;
+            ctx.fillStyle = "white";
+            ctx.font = "50px Arial";
             
-            if (sigma && sigma.cooldownTimer != null) {
+            //TOP
+            if (sigma) {
                 let icon = (sigma.inUse) ? sigma.inUseIcon : sigma.icon;
                 //draw the cooldown number on top of the ability icon
-                if (sigma.cooldownTimer.getRemainingSeconds() != 0)  {
+                if (sigma.cooldownTimer != null && sigma.cooldownTimer.getRemainingSeconds() != 0)  {
                     ctx.globalAlpha = 0.5;
                     ctx.drawImage(icon, 110+ this.abilityHudX, CANVAS_HEIGHT-280 + this.abilityHudY, 98, 98);
                     ctx.globalAlpha = 1;
-                    ctx.fillStyle = "white";
-                    ctx.font = "50px Arial";
                     let textWidth = ctx.measureText(sigma.cooldownTimer.getRemainingSeconds()).width;
                     ctx.fillText(sigma.cooldownTimer.getRemainingSeconds(), 160 + this.abilityHudX - textWidth/2, CANVAS_HEIGHT-260 + this.abilityHudY + 50);
                 } else {
@@ -108,14 +109,13 @@ class hud {
                 }
             }
 
-            if (alpha && alpha.cooldownTimer != null) {
+            //RIGHT
+            if (alpha) {
                 let icon = (alpha.inUse) ? alpha.inUseIcon : alpha.icon;
-                if (alpha.cooldownTimer.getRemainingSeconds() != 0)  {
+                if (alpha.cooldownTimer != null && alpha.cooldownTimer.getRemainingSeconds() != 0)  {
                     ctx.globalAlpha = 0.5;
                     ctx.drawImage(icon, 203+ this.abilityHudX, CANVAS_HEIGHT-195 + this.abilityHudY, 98, 98);
                     ctx.globalAlpha = 1;
-                    ctx.fillStyle = "white";
-                    ctx.font = "50px Arial";
                     let textWidth = ctx.measureText(alpha.cooldownTimer.getRemainingSeconds()).width;
                     ctx.fillText(alpha.cooldownTimer.getRemainingSeconds(), 253 + this.abilityHudX - textWidth/2, CANVAS_HEIGHT-175 + this.abilityHudY + 50);
                 } else {
@@ -124,37 +124,36 @@ class hud {
             }
 
 
-            if (beta && beta.cooldownTimer != null) {
+            //DOWN
+            if (beta) {
                 let icon = (beta.inUse) ? beta.inUseIcon : beta.icon;
-                if (beta.cooldownTimer.getRemainingSeconds() != 0)  {
+                if (beta.cooldownTimer != null && beta.cooldownTimer.getRemainingSeconds() != 0)  {
                     ctx.globalAlpha = 0.5;
-                    ctx.drawImage(icon, 15+ this.abilityHudX, CANVAS_HEIGHT-280 + this.abilityHudY, 98, 98);
+                    ctx.drawImage(icon, 108+ this.abilityHudX, CANVAS_HEIGHT-110 + this.abilityHudY, 98, 98);
                     ctx.globalAlpha = 1;
-                    ctx.fillStyle = "white";
-                    ctx.font = "50px Arial";
                     let textWidth = ctx.measureText(beta.cooldownTimer.getRemainingSeconds()).width;
-
-                    ctx.fillText(beta.cooldownTimer.getRemainingSeconds(), 65 + this.abilityHudX - textWidth/2, CANVAS_HEIGHT-260 + this.abilityHudY + 50);
+                    ctx.fillText(beta.cooldownTimer.getRemainingSeconds(), 160 + this.abilityHudX - textWidth/2, CANVAS_HEIGHT-90 + this.abilityHudY + 50);
                 } else {
-                    ctx.drawImage(icon, 15+ this.abilityHudX, CANVAS_HEIGHT-280 + this.abilityHudY, 98, 98);
+                    ctx.drawImage(icon, 108+ this.abilityHudX, CANVAS_HEIGHT-110 + this.abilityHudY, 98, 98);
                 }
             }
 
 
-            if (epsilon && epsilon.cooldownTimer != null) {
+            //LEFT
+            if (epsilon) {
                 let icon = (epsilon.inUse) ? epsilon.inUseIcon : epsilon.icon;
-                if (epsilon.cooldownTimer.getRemainingSeconds() != 0)  {
+                if (epsilon.cooldownTimer != null && epsilon.cooldownTimer.getRemainingSeconds() != 0)  {
                     ctx.globalAlpha = 0.5;
-                    ctx.drawImage(icon, 110+ this.abilityHudX, CANVAS_HEIGHT-195 + this.abilityHudY, 98, 98);
+                    ctx.drawImage(icon, 15 + this.abilityHudX, CANVAS_HEIGHT-195 + this.abilityHudY, 98, 98);
                     ctx.globalAlpha = 1;
-                    ctx.fillStyle = "white";
-                    ctx.font = "50px Arial";
                     let textWidth = ctx.measureText(epsilon.cooldownTimer.getRemainingSeconds()).width;
-                    ctx.fillText(epsilon.cooldownTimer.getRemainingSeconds(), 160 + this.abilityHudX - textWidth/2, CANVAS_HEIGHT-175 + this.abilityHudY + 50);
+                    ctx.fillText(epsilon.cooldownTimer.getRemainingSeconds(), 60 + this.abilityHudX - textWidth/2, CANVAS_HEIGHT-175 + this.abilityHudY + 50);
                 } else {
-                    ctx.drawImage(icon, 110+ this.abilityHudX, CANVAS_HEIGHT-195 + this.abilityHudY, 98, 98);
+                    ctx.drawImage(icon, 15 + this.abilityHudX, CANVAS_HEIGHT-195 + this.abilityHudY, 98, 98);
                 }
             }
+
+
             let A = ASSET_MANAGER.getAsset("./Sprites/UI/ability_hud.png");
             ctx.drawImage(A, 0+ this.abilityHudX, CANVAS_HEIGHT - 290 + this.abilityHudY, 316, 288);
 

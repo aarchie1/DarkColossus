@@ -86,6 +86,8 @@ class SupersonicAbility{
     }
 
     update() {
+        this.damage = this.effect + params.DARK_ENERGY.meleeAttack*.2;
+
         if (Math.abs(player.velocity.x) == player.MAX_RUN && player.state == 1) {
             this.inUse = true;
            // this.effect = Math.floor(Math.random() * 15) + 1;
@@ -95,9 +97,12 @@ class SupersonicAbility{
                 if (enemy.hostile && player.BB.collide(enemy.BB)) {
                     if (!this.enemiesHit.includes(enemy)) {
                         this.enemiesHit.push(enemy);
-                        enemy.health -= this.effect;
+                        
+                        enemy.health -= this.damage;
+
+
                         if ( !(enemy instanceof MoleculeProjectile))
-                             gameEngine.addEntityFirst(new DamageIndicator(enemy.x+30, enemy.y, this.effect));
+                             gameEngine.addEntityFirst(new DamageIndicator(enemy.x+30, enemy.y, this.damage));
                      }
                 }
            })

@@ -23,7 +23,8 @@ ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/supersonic_icon.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/supersonic_in_use_icon.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/emp_icon.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/mock_icon.png");
-
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/cosmic_blade_icon.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/cosmic_blade_in_use_icon.png");
 
 //Enemies
 ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_full.png");
