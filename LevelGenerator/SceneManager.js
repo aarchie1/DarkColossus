@@ -60,20 +60,20 @@ class SceneManager {
             this.game.addEntity(new DnaItemDrop(this.game, dna.x, dna.y));
         }
 
-        //spawn in enemies
-        for (let i = 0; i < level.reaper.length; i++) {
-            let enemy = level.reaper[i];
-            this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
-        }
+        // //spawn in enemies
+        // for (let i = 0; i < level.reaper.length; i++) {
+        //     let enemy = level.reaper[i];
+        //     this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
+        // }
 
-        //spawn Molecules
-        for (let i = 0; i < level.molecule.length; i++) {
-            let enemy = level.molecule[i];
-            this.game.addEntity(new Molecule(this.game, enemy.x, enemy.y, 2));
-        }
+        // //spawn Molecules
+        // for (let i = 0; i < level.molecule.length; i++) {
+        //     let enemy = level.molecule[i];
+        //     this.game.addEntity(new Molecule(this.game, enemy.x, enemy.y, 2));
+        // }
 
         //Enemy Testing Lines
-        //this.game.addEntity(new Reaper(this.game, 1000, 520, 2));
+        this.game.addEntity(new Reaper(this.game, 1000, 520, 2));
         //this.game.addEntity(new Molecule(this.game, 1000, 520, 2));
 
         // initial platform final platform
@@ -259,9 +259,9 @@ class SceneManager {
 
     //This function adds a slight smoothing to the camera movement
     xCameraSmoothing() {
-        const SMOOTHING = 0.05;
-        let max = 450; //pixels to offset camera
-        let min = -450;
+        const SMOOTHING = 0.003;
+        let max = 100; //pixels to offset camera
+        let min = -100;
         let target = 0;
         let velocity = player.velocity.x/player.MAX_RUN + 0.01;
         if (velocity === 0) {
