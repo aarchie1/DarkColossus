@@ -29,12 +29,18 @@ class SceneManager {
         this.lowerYLimit = 700;   // 700 is reasonable to keep starting platform visible
         this.upperYLimit = -8500; // -8500 to stay within background image (top)
 
+        player = this.player;
+
+        this.loadTitleScreen();
+        //this.loadHub();
+
         this.xCameraOffset = 0;
         this.yCameraOffset = 0;
 
 
         //this.loadTitleScreen(); //This will replace this.loadHub() when we have a title screen
         this.loadHub(); 
+
     };
 
     loadLevel() {
@@ -137,12 +143,14 @@ class SceneManager {
 
     }
 
+
     loadHub() {
         params.LEVEL = 0;
         
         //On Death stuff
         // If game over reset HUD, Dark Energy, and Inventory
         if (this.gameOver) {
+            //this.loadDeathScreen();       // Death screen is not loading on top of other assets. Functionality works. Click to continue/
             this.gameOver = false;
         }
         this.clearLevel();
@@ -185,8 +193,33 @@ class SceneManager {
 
     }
 
-    loadTitleScreen(){
+    loadTitleScreen() {
 
+        this.game.addEntity(new Title_Screen_Background(this.game));
+
+        addEventListener('click', (event) => { });
+
+        onclick = (event) => {
+            onclick = null
+            this.loadHub()
+    
+        };
+    }
+
+    loadDeathScreen() {
+
+        //this.game.addEntity(new Death_Screen_Background(this.game));
+        //this.game.addEntityFirst(new Death_Screen_Background(this.game));
+
+        addEventListener('click', (event) => { });
+
+        onclick = (event) => {
+            onclick = null
+            this.gameOver = false;
+            this.loadTitleScreen();
+            //this.loadHub();
+
+        };
     }
 
     update() {
@@ -288,52 +321,155 @@ class SceneManager {
     
 }
 
-	class Background {
-		constructor(game) {
-            this.game = game;
-			this.width = 2100;
-			this.height = 1350;
-			this.x = -200;
-			this.y = -200
-			this.scrollSpeed = 0.02;
-			this.image = ASSET_MANAGER.getAsset("./Sprites/LevelAssets/background.png");
-		}
-
-		draw(ctx) {
-			ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed), this.y-(this.game.camera.y*this.scrollSpeed), this.width, this.height);
-            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)+this.width, this.y-(this.game.camera.y*this.scrollSpeed), this.width, this.height);
-            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)-this.width, this.y-(this.game.camera.y*this.scrollSpeed), this.width, this.height);
-            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)+this.width*2, this.y-(this.game.camera.y*this.scrollSpeed)+this.height, this.width, this.height);
-            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)-this.width*2, this.y-(this.game.camera.y*this.scrollSpeed)+this.height, this.width, this.height);
-            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)+this.width*3, this.y-(this.game.camera.y*this.scrollSpeed)+this.height, this.width, this.height);
-            ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)-this.width*3, this.y-(this.game.camera.y*this.scrollSpeed)+this.height, this.width, this.height);
-        }
-		update() {
-
-		}
+class Background {
+	constructor(game) {
+        this.game = game;
+		this.width = 2100;
+		this.height = 1350;
+		this.x = -200;
+		this.y = -200
+		this.scrollSpeed = 0.02;
+		this.image = ASSET_MANAGER.getAsset("./Sprites/LevelAssets/background.png");
 	}
 
-    class Cross_Background {
-        constructor(game) {
-            this.game = game;
-            this.width = CANVAS_WIDTH;
-            this.height = CANVAS_HEIGHT;
-            this.x = 250;
-            this.y = -40;
-            this.animation = new Animator(ASSET_MANAGER.getAsset("./Sprites/LevelAssets/cross_background.png"), 0, 0, 1400, 900, 1, 1, true, true);
-            this.t = 0;
-            this.amplitude = 20;
-        }
+	draw(ctx) {
+		ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed), this.y-(this.game.camera.y*this.scrollSpeed), this.width, this.height);
+        ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)+this.width, this.y-(this.game.camera.y*this.scrollSpeed), this.width, this.height);
+        ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)-this.width, this.y-(this.game.camera.y*this.scrollSpeed), this.width, this.height);
+        ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)+this.width*2, this.y-(this.game.camera.y*this.scrollSpeed)+this.height, this.width, this.height);
+        ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)-this.width*2, this.y-(this.game.camera.y*this.scrollSpeed)+this.height, this.width, this.height);
+        ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)+this.width*3, this.y-(this.game.camera.y*this.scrollSpeed)+this.height, this.width, this.height);
+        ctx.drawImage(this.image, this.x-(this.game.camera.x*this.scrollSpeed)-this.width*3, this.y-(this.game.camera.y*this.scrollSpeed)+this.height, this.width, this.height);
+    }
+	update() {
 
-        draw(ctx) {
-            this.t += 0.025;
-           // ctx.drawImage(this.image, this.x-(this.game.camera.x), this.y-(this.game.camera.y), this.width, this.height);
-            this.animation.drawFrame(this.game.clockTick, ctx, this.x-this.game.camera.x, this.y-this.game.camera.y + Math.sin(this.t) * this.amplitude, 1);
-        }
+	}
+}
 
-        update() {
-
-        }
+class Cross_Background {
+    constructor(game) {
+        this.game = game;
+        this.width = CANVAS_WIDTH;
+        this.height = CANVAS_HEIGHT;
+        this.x = 250;
+        this.y = -40;
+        this.animation = new Animator(ASSET_MANAGER.getAsset("./Sprites/LevelAssets/cross_background.png"), 0, 0, 1400, 900, 1, 1, true, true);
+        this.t = 0;
+        this.amplitude = 20;
     }
 
+    draw(ctx) {
+        this.t += 0.025;
+        // ctx.drawImage(this.image, this.x-(this.game.camera.x), this.y-(this.game.camera.y), this.width, this.height);
+        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y + Math.sin(this.t) * this.amplitude, 1);
+    }
 
+    update() {
+
+    }
+}
+
+class Title_Screen_Background {
+    constructor(game) {
+        this.game = game;
+        this.width = 1920;
+        this.height = 1080;
+        this.x = 0;
+        this.y = 0
+        this.scrollSpeed = 0.02;
+        this.image = ASSET_MANAGER.getAsset("./Sprites/UI/title_screen.png");
+
+    }
+
+    draw(ctx) {
+
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed), this.y - (this.game.camera.y * this.scrollSpeed), this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) + this.width, this.y - (this.game.camera.y * this.scrollSpeed), this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) - this.width, this.y - (this.game.camera.y * this.scrollSpeed), this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) + this.width * 2, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) - this.width * 2, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) + this.width * 3, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) - this.width * 3, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+
+/*
+        ctx.textAlign = "center";
+
+        ctx.fillStyle = "black";
+        ctx.font = "60px Angel";
+        ctx.fillText("New Game", CANVAS_WIDTH / 2 - 2, 500 - 2);
+        ctx.fillStyle = "white";
+        ctx.font = "60px Angel";
+        ctx.fillText("New Game", CANVAS_WIDTH / 2, 500);
+
+
+        ctx.fillStyle = "black";
+        ctx.font = "40px Angel";
+        ctx.fillText("Continue", CANVAS_WIDTH / 2 - 2, 600 - 2);
+        ctx.fillStyle = "white";
+        ctx.font = "40px Angel";
+        ctx.fillText("Continue", CANVAS_WIDTH / 2, 600);
+
+        this.game.addEntity(new Cross_Background(this.game));
+*/
+
+
+        // Single option to begin game
+        ctx.textAlign = "center";
+        ctx.fillStyle = "black";
+        ctx.font = "60px Angel";
+        ctx.fillText("Click to Begin", CANVAS_WIDTH / 2 - 2, 600 - 2);
+        ctx.fillStyle = "white";
+        ctx.font = "60px Angel";
+        ctx.fillText("Click to Begin", CANVAS_WIDTH / 2, 600);
+
+
+
+    }
+    update() {
+
+            
+
+    }
+}
+
+class Death_Screen_Background {
+    constructor(game) {
+        this.game = game;
+        this.width = 1920;
+        this.height = 1080;
+        this.x = 0;
+        this.y = 0
+        this.scrollSpeed = 0.02;
+        this.image = ASSET_MANAGER.getAsset("./Sprites/UI/title_screen.png");
+
+    }
+
+    draw(ctx) {
+
+
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed), this.y - (this.game.camera.y * this.scrollSpeed), this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) + this.width, this.y - (this.game.camera.y * this.scrollSpeed), this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) - this.width, this.y - (this.game.camera.y * this.scrollSpeed), this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) + this.width * 2, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) - this.width * 2, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) + this.width * 3, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) - this.width * 3, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+
+        // Single option to begin game
+        ctx.textAlign = "center";
+        ctx.fillStyle = "black";
+        ctx.font = "100px Angel";
+        ctx.fillText("YOU DIED", CANVAS_WIDTH / 2 - 2, 600 - 2);
+        ctx.fillStyle = "white";
+        ctx.font = "100px Angel";
+        ctx.fillText("YOU DIED", CANVAS_WIDTH / 2, 600);
+
+
+
+    }
+    update() {
+
+
+
+    }
+}
