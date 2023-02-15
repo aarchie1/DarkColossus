@@ -31,7 +31,7 @@ class Portal {
 
     update() {
 
-        if (this.game.keys.KeyE && this.BB.collide(player.BB)) {
+        if ((this.game.keys.KeyE || this.game.controllerButtonX) && this.BB.collide(player.BB)) {
             currentLevelModifier = this.levelModifier;
 
             if (this.levelModifier >= 0) {
@@ -40,6 +40,5 @@ class Portal {
                 this.game.camera.loadHub();
             }
         }
-
     }
 }
