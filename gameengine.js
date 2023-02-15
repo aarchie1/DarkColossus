@@ -165,6 +165,7 @@ class GameEngine {
             this.entities[i].draw(this.ctx, this);
         }
 
+
     };
 
     gamepadUpdate() {

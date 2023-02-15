@@ -530,17 +530,6 @@ class GameCharacter {
       );
     }
 
-
-    if (this.game.PAUSED) {
-
-        const image = new Image();
-        image.src = "./Sprites/UI/pause_screen.png";
-
-        ctx.drawImage(image, 0, 0);
-        
-
-    }
-
     //DEBUG (I probably should have put it all in one if statement oops lmao)
     ctx.fillStyle = "white";
     ctx.font = "20px Arial";

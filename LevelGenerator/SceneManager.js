@@ -179,8 +179,6 @@ class SceneManager {
         this.game.addEntity(new Cross_Background(this.game, 250, 200));
         this.game.addEntity(new Background(this.game));
     
-
-
     }
 
     loadTitleScreen() {
@@ -193,8 +191,10 @@ class SceneManager {
             onclick = null
             params.HUD = new hud(gameEngine);
             gameEngine.addEntity(params.HUD);
-            this.loadHub()
-    
+            //add dna to inventory
+            for (let i = 0; i < 5; i++)
+                params.INVENTORY.inventory.push(getRandomDNA());
+            this.loadHub();
         };
     }
 
@@ -444,7 +444,6 @@ class Title_Screen_Background {
 
 
 
-
     }
     update() {
 
@@ -495,6 +494,7 @@ class Death_Screen_Background {
 
 
     }
+
     update() {
 
 
