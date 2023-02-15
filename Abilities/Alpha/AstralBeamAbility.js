@@ -7,7 +7,9 @@ class AstralBeamAbility {
         this.inUseIcon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/astral_beam_in_use_icon.png");
         this.dominant = false;
         this.effect = this.setEffect(effectRarity);
-        this.description = 'Eviscerate enemies in a line of sight dealing' + this.effect + 'dmg';
+        //round to 1 decimal places
+        this.effect = Math.round(this.effect * 10) / 10;
+        this.description = 'Eviscerate enemies in a line of sight dealing ' + this.effect + ' dmg';
         this.effectRarity = effectRarity;
         this.cooldownRarity = cooldownRarity;
         this.cooldown = this.setCooldown(this.cooldownRarity);

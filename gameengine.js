@@ -165,7 +165,11 @@ class GameEngine {
             this.entities[i].draw(this.ctx, this);
         }
 
-
+        if (this.PAUSED) {
+            const image = new Image();
+            image.src = "./Sprites/UI/pause_screen.png";
+            this.ctx.drawImage(image, 0, 0);
+        }
     };
 
     gamepadUpdate() {

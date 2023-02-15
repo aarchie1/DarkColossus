@@ -73,11 +73,7 @@ class hud {
         this.drawAbilityHud(ctx);
 
         //this.pauseControl(ctx);
-        if (this.game.PAUSED) {
-            const image = new Image();
-            image.src = "./Sprites/UI/pause_screen.png";
-            ctx.drawImage(image, 0, 0);
-        }
+
     }
 
     drawDarkEnergyHud(ctx) {
