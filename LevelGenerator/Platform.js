@@ -11,6 +11,7 @@ class Platform {
         this.height = height;
         this.sprite = sprite;
         this.BB = boundingBox;
+
     }
 
     draw(ctx) {
@@ -20,5 +21,6 @@ class Platform {
     }
 
     update() {
+
     }
 }

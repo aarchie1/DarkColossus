@@ -27,7 +27,7 @@ class hud {
         if (params.LEVEL == 0) {
             ctx.fillText("Awakening Cross", this.locationTitleX, this.locationTitleY);
         } else {
-            ctx.fillText("Collosus Realm " + params.LEVEL, this.locationTitleX, this.locationTitleY);
+            ctx.fillText(getLevelModifierText(currentLevelModifier) + " " + params.LEVEL, this.locationTitleX, this.locationTitleY);
         }
 
         ctx.strokeStyle = "white";

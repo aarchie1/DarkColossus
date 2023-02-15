@@ -31,15 +31,9 @@ class SceneManager {
 
         player = this.player;
 
-        this.loadTitleScreen();
-        //this.loadHub();
-
         this.xCameraOffset = 0;
         this.yCameraOffset = 0;
-
-
-        //this.loadTitleScreen(); //This will replace this.loadHub() when we have a title screen
-        this.loadHub(); 
+        this.loadTitleScreen(); //This will replace this.loadHub() when we have a title screen
 
     };
 
@@ -48,82 +42,81 @@ class SceneManager {
 
         params.LEVEL += 1;
         let level = getLevel(params.LEVEL);
+        console.log("Loading Level: " + params.LEVEL);
         let xBoundMin = 1300;
         let xBoundMax = 13000;
         let yBoundMin = 600;
         let yBoundMax = -800;
-        this.rightXLimit = 16000;
+        this.rightXLimit = 160000;
 
-        // spawn in dna pickups
-        for (let i = 0; i < level.dnaPickup.length; i++) {
-            let dna = level.dnaPickup[i];
-            this.game.addEntity(new DnaItemDrop(this.game, dna.x, dna.y));
-        }
 
-        // //spawn in enemies
-        // for (let i = 0; i < level.reaper.length; i++) {
-        //     let enemy = level.reaper[i];
-        //     this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
-        // }
 
-        // //spawn Molecules
-        // for (let i = 0; i < level.molecule.length; i++) {
-        //     let enemy = level.molecule[i];
-        //     this.game.addEntity(new Molecule(this.game, enemy.x, enemy.y, 2));
-        // }
-
-        //Enemy Testing Lines
-        this.game.addEntity(new Reaper(this.game, 1000, 520, 2));
-        //this.game.addEntity(new Molecule(this.game, 1000, 520, 2));
-
-        // initial platform final platform
-        let origX = -700;
-        for (let i = 0; i < 26; i++) {
-
-            let platform = level.platformGround[0];
-            this.game.addEntity(new Platform(this.game, origX, platform.y, 700, 256,
-                ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_ground.png"), new BoundingBox(platform.x, platform.y + 200, origX, 100)));
-            origX += 700;
+        //Portals
+        for (let i = 0; i < level.portal.length; i++) {
+            let portal = level.portal[i];
+            console.log("Portal: " + portal.x + ", " + portal.y);
+            let newPortal = new Portal(this.game, portal.x, portal.y, this);
+            if (i == level.portal.length-1) {
+                newPortal.levelModifier = -1;
+                newPortal.levelModifierText = getLevelModifierText(-1);
+            }
+            this.game.addEntity(newPortal);
         }
 
         // random ground platforms
         for (let i = 0; i < level.platformGround.length; i++) {
             let platform = level.platformGround[i];
-            let x = Math.random() * (xBoundMax - xBoundMin) + xBoundMin;
-            // original x values : 700 
-            this.game.addEntity(new Platform(this.game, x, platform.y, 700, 256,
-                ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_ground.png"), new BoundingBox(x, platform.y + 200, 700, 100)));
-            //constructor(game, x, y, width, height, sprite, boundingBox    
+            this.game.addEntity(new Platform(this.game, platform.x, platform.y, 1600, 400,
+                ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(platform.x, platform.y + 300, 1600, 400)));
         }
 
         // random small platforms
         for (let i = 0; i < level.platformSmall.length; i++) {
-            //let platform = level.platformSmall[i];
-            let x = Math.random() * (xBoundMax - xBoundMin) + xBoundMin;
-            let y = Math.random() * (yBoundMax - yBoundMin) + yBoundMin;
+            let x = level.platformSmall[i].x;
+            let y = level.platformSmall[i].y;
+            //let x = Math.random() * (xBoundMax - xBoundMin) + xBoundMin;
+            //let y = Math.random() * (yBoundMax - yBoundMin) + yBoundMin;
 
             this.game.addEntity(new Platform(this.game, x, y, 256, 256,
-                ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_small.png"), new BoundingBox(x, y + 150, 256, 100)));
+                ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_small.png"), new BoundingBox(x+30, y + 120, 200, 100)));
         }
 
         // random large platforms
         for (let i = 0; i < level.platformLarge.length; i++) {
-            //let platform = level.platformLarge[i];
-            let x = Math.random() * (xBoundMax - xBoundMin) + xBoundMin;
-            let y = Math.random() * (yBoundMax - yBoundMin) + yBoundMin;
-
+            let x = level.platformLarge[i].x;
+            let y = level.platformLarge[i].y;
             this.game.addEntity(new Platform(this.game, x, y, 884, 496,
-                ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_large.png"), new BoundingBox(x, y + 150, 884, 100)));
+                ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_large.png"), new BoundingBox(x+55, y + 140, 740, 100)));
         }
 
         // random tiny platforms
         for (let i = 0; i < level.platformTiny.length; i++) {
-            //let platform = level.platformTiny[i];
-            let x = Math.random() * (xBoundMax - xBoundMin) + xBoundMin;
-            let y = Math.random() * (yBoundMax - yBoundMin) + yBoundMin;
+            let x = level.platformTiny[i].x;
+            let y = level.platformTiny[i].y;
+            // let x = Math.random() * (xBoundMax - xBoundMin) + xBoundMin;
+            // let y = Math.random() * (yBoundMax - yBoundMin) + yBoundMin;
 
             this.game.addEntity(new Platform(this.game, x, y, 184, 184,
-                ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_tiny.png"), new BoundingBox(x, y + 150, 184, 100)));
+                ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_tiny.png"), new BoundingBox(x+7, y + 90, 160, 100)));
+        }
+
+
+
+
+
+        for (let i = 0; i < level.dnaPickup.length; i++) {
+            let dna = level.dnaPickup[i];
+            this.game.addEntity(new DnaItemDrop(this.game, dna.x, dna.y));
+        }
+
+        for (let i = 0; i < level.reaper.length; i++) {
+            let enemy = level.reaper[i];
+            this.game.addEntityFirst(new Reaper(this.game, enemy.x, enemy.y, 2));
+        }
+
+        for (let i = 0; i < level.molecule.length; i++) {
+            let enemy = level.molecule[i];
+            this.game.addEntityFirst(new Molecule(this.game, enemy.x, enemy.y, 2));
         }
         
         //add background
@@ -146,22 +139,14 @@ class SceneManager {
 
     loadHub() {
         params.LEVEL = 0;
-        
-        //On Death stuff
-        // If game over reset HUD, Dark Energy, and Inventory
-        if (this.gameOver) {
-            //this.loadDeathScreen();       // Death screen is not loading on top of other assets. Functionality works. Click to continue/
-            this.gameOver = false;
-        }
         this.clearLevel();
         
-        
-        this.rightXLimit = 4400;
-        this.leftXLimit = -1800;
+        this.rightXLimit = 2000//4400;
+        this.leftXLimit = 0//-1800;
         //Create Inventory UI
-        let inventoryBB = new BoundingBox(1200, 525, 248, 200);
-        this.game.addEntity(new FloatingObject(1320, 525, 242, 194, 5, 0, "Press E for Inventory"));
-        this.game.addEntity(new Interactable(this.game, 1200, 525, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), inventoryBB, () => {
+        let inventoryBB = new BoundingBox(1200, 835, 248, 200);
+        this.game.addEntity(new FloatingObject(1320, 835, 242, 194, 5, 0, "Press E for Inventory"));
+        this.game.addEntity(new Interactable(this.game, 1200, 835, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), inventoryBB, () => {
             //check if inventory is already open
             if (params.STATE != "menu") {
                 this.game.addEntityFirst(new InventoryUI(this.game));
@@ -170,9 +155,9 @@ class SceneManager {
         }));
 
         //Create DE UI
-        this.game.addEntity(new FloatingObject(520, 525, 242, 194, 5, 0, "Press E for Dark Energy"));
+        this.game.addEntity(new FloatingObject(520, 835, 242, 194, 5, 0, "Press E for Dark Energy"));
 
-        this.game.addEntity(new Interactable(this.game, 400, 525, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), new BoundingBox(400, 525, 248, 200), () => {
+        this.game.addEntity(new Interactable(this.game, 400, 835, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), new BoundingBox(400, 835, 248, 200), () => {
             if (params.STATE != "menu") {
                 this.game.addEntityFirst(new DarkEnergyUI(this.game));
                 params.STATE = "menu";
@@ -180,13 +165,18 @@ class SceneManager {
         }));
 
         //Create Portal Interactable
-        this.game.addEntity(new Portal(this.game, 1550, 450, this));
+        let startingPortal = new Portal(this.game, 1800, 750, this)
+        startingPortal.levelModifier = 0;
+        startingPortal.levelTextModifier = "";
+
+        this.game.addEntity(startingPortal);
+
         //this.game.addEntity(new Platform(this.game, 1, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(0, 830, 1600, 400)));
         ///spawn three of those platforms next to each other but spawn one of them in the middle of the screen and the other two on the sides
-        this.game.addEntity(new Platform(this.game, CANVAS_WIDTH/2, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(CANVAS_WIDTH/2, 830, 1600, 400)));
-        this.game.addEntity(new Platform(this.game, CANVAS_WIDTH/2 - CANVAS_WIDTH/2, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(CANVAS_WIDTH/2 - CANVAS_WIDTH/2, 830, 1600, 400)));
+        this.game.addEntity(new Platform(this.game, CANVAS_WIDTH/2, 810, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(CANVAS_WIDTH/2, 1130, 1600, 400)));
+        this.game.addEntity(new Platform(this.game, CANVAS_WIDTH/2 - CANVAS_WIDTH/2, 810, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(CANVAS_WIDTH/2 - CANVAS_WIDTH/2, 1130, 1600, 400)));
 
-        this.game.addEntity(new Cross_Background(this.game));
+        this.game.addEntity(new Cross_Background(this.game, 250, 200));
         this.game.addEntity(new Background(this.game));
     
 
@@ -201,26 +191,26 @@ class SceneManager {
 
         onclick = (event) => {
             onclick = null
+            params.HUD = new hud(gameEngine);
+            gameEngine.addEntity(params.HUD);
             this.loadHub()
     
         };
     }
 
     loadDeathScreen() {
-
-        //this.game.addEntity(new Death_Screen_Background(this.game));
-        //this.game.addEntityFirst(new Death_Screen_Background(this.game));
+        this.clearLevel();
+        this.game.addEntityFirst(new Death_Screen_Background(this.game));
 
         addEventListener('click', (event) => { });
 
         onclick = (event) => {
             onclick = null
             this.gameOver = false;
-            this.loadTitleScreen();
-            //this.loadHub();
-
+            this.loadHub();
         };
     }
+
 
     update() {
         //Make the camera move based off this bounding box
@@ -248,7 +238,7 @@ class SceneManager {
         //if (this.player.y > lowerBoundY && !(this.player.y - lowerBoundY != lowerYLimit)) this.y = this.player.y - lowerBoundY;
 
         if (this.gameOver) {
-            this.loadHub();
+            this.loadDeathScreen();
         }
 
     };
@@ -260,8 +250,8 @@ class SceneManager {
     //This function adds a slight smoothing to the camera movement
     xCameraSmoothing() {
         const SMOOTHING = 0.003;
-        let max = 100; //pixels to offset camera
-        let min = -100;
+        let max = 300; 
+        let min = -300;
         let target = 0;
         let velocity = player.velocity.x/player.MAX_RUN + 0.01;
         if (velocity === 0) {
@@ -291,10 +281,19 @@ class SceneManager {
     
 
     clearLevel() {
+        //IF THINGS GO BAD UNCOMMENT THIS
         //remove everything from this.game.entities except Inventory, DarkEnergy, SceneManager, etc.
-        this.game.entities = this.game.entities.filter(function (entity) {
-            return entity instanceof Inventory || entity instanceof DarkEnergy || entity instanceof SceneManager || entity instanceof hud;
+        // this.game.entities = this.game.entities.filter(function (entity) {
+        //     return entity instanceof Inventory || entity instanceof DarkEnergy || entity instanceof SceneManager || entity instanceof hud;
+        // });
+
+        //set removeFromWorld to true for everything in this.game.entities except Inventory, DarkEnergy, SceneManager, etc.
+        this.game.entities.forEach(function (entity) {
+            if (!(entity instanceof Inventory || entity instanceof DarkEnergy || entity instanceof SceneManager || entity instanceof hud)) {
+                entity.removeFromWorld = true;
+            }
         });
+
         //SET ALL ABILITIES TO NOT IN USE TO PREVENT BUG
         if (params.INVENTORY.dnaSlot1 != null) {
             let dna = params.INVENTORY.dnaSlot1;
@@ -305,7 +304,7 @@ class SceneManager {
         }
         this.game.camera.x = 0;
         this.game.camera.y = 0;
-        this.player = new GameCharacter(this.game, CANVAS_WIDTH/2-150, 0);
+        this.player = new GameCharacter(this.game, CANVAS_WIDTH/3, 0);
         player = this.player; //update global player reference
         equipAbilities(params.INVENTORY.dnaSlot1); //equip abilities
         equipAbilities(params.INVENTORY.dnaSlot2);
@@ -354,12 +353,12 @@ class Background {
 }
 
 class Cross_Background {
-    constructor(game) {
+    constructor(game, x, y) {
         this.game = game;
         this.width = CANVAS_WIDTH;
         this.height = CANVAS_HEIGHT;
-        this.x = 250;
-        this.y = -40;
+        this.x = x;
+        this.y = y;
         this.animation = new Animator(ASSET_MANAGER.getAsset("./Sprites/LevelAssets/cross_background.png"), 0, 0, 1400, 900, 1, 1, true, true);
         this.t = 0;
         this.amplitude = 20;
@@ -385,7 +384,7 @@ class Title_Screen_Background {
         this.y = 0
         this.scrollSpeed = 0.02;
         this.image = ASSET_MANAGER.getAsset("./Sprites/UI/title_screen.png");
-
+        
     }
 
     draw(ctx) {
@@ -420,14 +419,29 @@ class Title_Screen_Background {
 */
 
 
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './Fonts/fontface.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+
         // Single option to begin game
         ctx.textAlign = "center";
         ctx.fillStyle = "black";
-        ctx.font = "60px Angel";
+        ctx.font = "80px Angel";
         ctx.fillText("Click to Begin", CANVAS_WIDTH / 2 - 2, 600 - 2);
         ctx.fillStyle = "white";
-        ctx.font = "60px Angel";
+        ctx.font = "80px Angel";
         ctx.fillText("Click to Begin", CANVAS_WIDTH / 2, 600);
+
+        ctx.fillStyle = "black";
+        ctx.font = "20px Ariel";
+        ctx.fillText("ESC to Pause", CANVAS_WIDTH / 2 - 2, 700 - 2);
+        ctx.fillStyle = "white";
+        ctx.font = "20px Ariel";
+        ctx.fillText("ESC to Pause", CANVAS_WIDTH / 2, 700);
+
+
 
 
 
@@ -461,6 +475,13 @@ class Death_Screen_Background {
         ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) - this.width * 2, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
         ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) + this.width * 3, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
         ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) - this.width * 3, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+
+
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './Fonts/fontface.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
 
         // Single option to begin game
         ctx.textAlign = "center";
