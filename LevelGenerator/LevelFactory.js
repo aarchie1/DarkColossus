@@ -1,24 +1,60 @@
-function getLevel(levelNumber) {
-    let sections = [steppingStonesSection, hordeFightSection, verticalSection, dnaPickupSection, flatSection];
-    let view = {x: 1400, y: 900};
+let currentLevelModifier = 0;
+const BACK_TO_HUB = -1;
+const NO_MODIFER = 0;
+const REAPERS_ONLY = 1;
+const MOLECULES_ONLY = 2;
+const NO_ENEMIES = 3;
+const HALF_HP = 4;
+const DOUBLE_REWARDS = 5;
+const NO_FIGHTS = 6;
+const ENEMIES_FASTER = 7;
+const REAPERS_DOUBLE_HP = 8;
+const PROJECTILES_DOUBLE_DAMAGE = 9;
+const PHYSICAL_DOUBLE_DAMAGE = 10;
 
-    //ENUMS
-    const NO_MODIFER = 0;
-    const REAPERS_ONLY = 1;
-    const MOLECULES_ONLY = 2;
-    const NO_ENEMIES = 3;
-    const HALF_HP = 4;
-    const DOUBLE_REWARDS = 5;
-    const NO_FIGHTS = 6;
-    const ENEMIES_FASTER = 7;
-    const REAPERS_DOUBLE_HP = 8;
-    const PROJECTILES_DOUBLE_DAMAGE = 9;
-    const PHYSICAL_DOUBLE_DAMAGE = 10;
-    const levelModifier = Math.floor(Math.random() * 11); //num between 0 and 10
+//make a function to get modifer text from the modifer number
+function getLevelModifierText(modifierNumber) {
+    switch(modifierNumber) {
+        case BACK_TO_HUB:
+            return "Return to Awakening Cross";
+        case NO_MODIFER:
+            return "Shadow Realm";
+        case REAPERS_ONLY:
+            return "Reaper Dimension";
+        case MOLECULES_ONLY:
+            return "Molecule Dimension";
+        case NO_ENEMIES:
+            return "Empty Abyss";
+        case HALF_HP:
+            return "Half Health Reality";
+        case DOUBLE_REWARDS:
+            return "Double Rewards Realm";
+        case NO_FIGHTS:
+            return "Pacifist Reality";
+        case ENEMIES_FASTER:
+            return "Fast Enemies Hell";
+        case REAPERS_DOUBLE_HP:
+            return "Strong Enemies Hell";
+        case PROJECTILES_DOUBLE_DAMAGE:
+            return "Projectile Power Space";
+        case PHYSICAL_DOUBLE_DAMAGE:
+            return "Physical Power Space";
+    }
+}
+
+
+
+
+function getLevel(levelNumber) {
+    let sections = [ascendingSteppingStonesSection, descendingSteppingStonesSection] //hordeFightSection, verticalSection, dnaPickupSection, flatSection];
+    let view = {x: CANVAS_WIDTH, y: CANVAS_HEIGHT};
+
+    const levelModifier = currentLevelModifier;//Math.floor(Math.random() * 11); //num between 0 and 10
 
     const PLATFORM_SMALL = {w: 256, h: 256};
     const PLATFORM_TINY = {w: 184, h: 284};
     const PLATFORM_LARGE = {w: 884, h: 496};
+    const PLATFORM_GROUND = {w: 1600, h: 400};
     const HAZARD_GROWTH_SHORT = {w: 256, h: 256};
     const HAZARD_GROWTH_TALL = {w: 256, h: 512};
     const PORTAL = {w: 364, h: 364};
@@ -26,13 +62,15 @@ function getLevel(levelNumber) {
     const MOLECULE = {w: 256, h: 256};
     const PLAYER = {w: 256, h: 256};
 
+    const GROUND_HEIGHT = 700;
+
     const randomNumberInRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
     const vertical = () => (Math.random() < 0.5) ? -1 : 1;
 
 
     let level = {
         levelNumber: levelNumber,
-        platformGround: [{x:0, y:650}, {x:700, y:650}],
+        platformGround: [{x:0, y:800}],
         platformTiny: [],
         platformSmall: [],
         platformLarge: [],
@@ -64,9 +102,9 @@ function getLevel(levelNumber) {
     }
 
     let startX = view.x;
-    let startY = view.y;
+    let startY = GROUND_HEIGHT;
 
-    let numberOfSections = randomNumberInRange(3, 7 + levelNumber);
+    let numberOfSections = 2; //randomNumberInRange(3, 7 + levelNumber);
 
     //BUILD LEVEL
     for(let i = 0; i < numberOfSections; i++) {
@@ -82,10 +120,10 @@ function getLevel(levelNumber) {
     level.platformLarge.forEach(platform => { addEnemiesNearPlatform(platform); addHazardOnPlatform(platform);});
 
     function addEnemiesNearPlatform(platform) {
-        if (Math.random() < 0.85 + (levelNumber/100)*2) { 
+        if (Math.random() < 0.5 + (levelNumber/100)*2) { 
             level.reaper.push({x: platform.x + randomNumberInRange(-500, 500), y: platform.y + randomNumberInRange(-500, 500)});
         }
-        if (Math.random() < 0.85 + (levelNumber/100)*2) {
+        if (Math.random() < 0.5 + (levelNumber/100)*2) {
             level.molecule.push({x: platform.x + randomNumberInRange(-500, 500), y: platform.y + randomNumberInRange(-500, 500)});
         }
     }
@@ -169,12 +207,23 @@ function getLevel(levelNumber) {
         }
     }
 
-    function steppingStonesSection() {
+    function ascendingSteppingStonesSection() {
         let numberOfPlatforms = randomNumberInRange(1, 5);
         for (let i = 0; i < numberOfPlatforms; i++) {
-            addPlatform(choosePlatformType(), startX, startY, (Math.random() < 0.5) ? true : false);
-            startX += randomNumberInRange(PLAYER.w, PLAYER.w * 2);
-            startY += randomNumberInRange(PLAYER.h, PLAYER.h * 2) * vertical();     
+            let platformType = choosePlatformType();
+            addPlatform(platformType, startX, startY, (Math.random() < 0.5) ? true : false);
+            startX += randomNumberInRange(platformType.w, platformType.w * 2);
+            startY -= Math.min(randomNumberInRange(platformType.h, PLAYER.h * 2), PLAYER.h);  
+        }
+    }
+
+    function descendingSteppingStonesSection() {
+        let numberOfPlatforms = randomNumberInRange(1, 5);
+        for (let i = 0; i < numberOfPlatforms; i++) {
+            let platformType = choosePlatformType();
+            addPlatform(platformType, startX, startY, (Math.random() < 0.5) ? true : false);
+            startX += randomNumberInRange(platformType.w, platformType.w * 2);
+            startY = Math.min(startY + randomNumberInRange(platformType.h, PLAYER.h), GROUND_HEIGHT);  
         }
     }
 
@@ -253,9 +302,15 @@ function getLevel(levelNumber) {
         //create three large platforms with a checkpoint in the middle of each
         for (let i = 0; i < 3; i++) {
             addPlatform(PLATFORM_LARGE, startX, startY, false);
-            level.portal.push({x: startX + 350, y: startY - 50});
-            startX += PLATFORM_LARGE.w + 200;
+            
+            level.portal.push({x: startX + PLATFORM_LARGE.w/3.5, y: startY - PLATFORM_LARGE.h/2});
+            startX += PLATFORM_LARGE.w + 25;
+
         }
+
+
     }         
     return level;
+
 }
+

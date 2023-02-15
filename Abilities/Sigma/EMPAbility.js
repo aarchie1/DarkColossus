@@ -55,17 +55,17 @@ class EMPAbility {
     setCooldown(cooldownRarity) { 
         switch (cooldownRarity) {
             case 1:
-                // Basic cooldown 20-30 seconds
-                return Math.floor(Math.random() * 5) + 20;
-            case 2:
-                // Uncommon cooldown 15-20 seconds
+                // Basic cooldown 15-20 seconds
                 return Math.floor(Math.random() * 5) + 15;
+            case 2:
+                // Uncommon cooldown 10-15 seconds
+                return Math.floor(Math.random() * 5) + 10;
             case 3:
-                // Rare cooldown 12-14 seconds
-                return Math.floor(Math.random() * 2) + 12;
+                // Rare cooldown 6-10 seconds
+                return Math.floor(Math.random() * 4) + 6;
             case 4:
-                // Godlike cooldown 7-11 seconds
-                return Math.floor(Math.random() * 4) + 7;
+                // Godlike cooldown 4-6 seconds
+                return Math.floor(Math.random() * 2) + 4;
             default:
                 console.log('Cooldown rarity not found');
         }
