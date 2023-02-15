@@ -415,11 +415,20 @@ class Title_Screen_Background {
         // Single option to begin game
         ctx.textAlign = "center";
         ctx.fillStyle = "black";
-        ctx.font = "60px Angel";
+        ctx.font = "80px Angel";
         ctx.fillText("Click to Begin", CANVAS_WIDTH / 2 - 2, 600 - 2);
         ctx.fillStyle = "white";
-        ctx.font = "60px Angel";
+        ctx.font = "80px Angel";
         ctx.fillText("Click to Begin", CANVAS_WIDTH / 2, 600);
+
+        ctx.fillStyle = "black";
+        ctx.font = "20px Ariel";
+        ctx.fillText("ESC to Pause", CANVAS_WIDTH / 2 - 2, 700 - 2);
+        ctx.fillStyle = "white";
+        ctx.font = "20px Ariel";
+        ctx.fillText("ESC to Pause", CANVAS_WIDTH / 2, 700);
+
+
 
 
 
@@ -476,6 +485,36 @@ class Death_Screen_Background {
     update() {
 
 
+
+    }
+}
+
+class Pause_Screen {
+    constructor(game) {
+        this.game = game;
+        this.width = 1920;
+        this.height = 1080;
+        this.x = 0;
+        this.y = 0
+        this.scrollSpeed = 0.02;
+        this.image = ASSET_MANAGER.getAsset("./Sprites/UI/pause_screen.png");
+
+    }
+
+    draw(ctx) {
+
+
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed), this.y - (this.game.camera.y * this.scrollSpeed), this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) + this.width, this.y - (this.game.camera.y * this.scrollSpeed), this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) - this.width, this.y - (this.game.camera.y * this.scrollSpeed), this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) + this.width * 2, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) - this.width * 2, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) + this.width * 3, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) - this.width * 3, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+
+
+    }
+    update() {
 
     }
 }
