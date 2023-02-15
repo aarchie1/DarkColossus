@@ -31,15 +31,9 @@ class SceneManager {
 
         player = this.player;
 
-        this.loadTitleScreen();
-        //this.loadHub();
-
         this.xCameraOffset = 0;
         this.yCameraOffset = 0;
-
-
-        //this.loadTitleScreen(); //This will replace this.loadHub() when we have a title screen
-        this.loadHub(); 
+        this.loadTitleScreen(); //This will replace this.loadHub() when we have a title screen
 
     };
 
@@ -146,15 +140,7 @@ class SceneManager {
 
     loadHub() {
         params.LEVEL = 0;
-        
-        //On Death stuff
-        // If game over reset HUD, Dark Energy, and Inventory
-        if (this.gameOver) {
-            //this.loadDeathScreen();       // Death screen is not loading on top of other assets. Functionality works. Click to continue/
-            this.gameOver = false;
-        }
         this.clearLevel();
-        
         
         this.rightXLimit = 4400;
         this.leftXLimit = -1800;
@@ -201,26 +187,26 @@ class SceneManager {
 
         onclick = (event) => {
             onclick = null
+            params.HUD = new hud(gameEngine);
+            gameEngine.addEntity(params.HUD);
             this.loadHub()
     
         };
     }
 
     loadDeathScreen() {
-
-        //this.game.addEntity(new Death_Screen_Background(this.game));
-        //this.game.addEntityFirst(new Death_Screen_Background(this.game));
+        this.clearLevel();
+        this.game.addEntityFirst(new Death_Screen_Background(this.game));
 
         addEventListener('click', (event) => { });
 
         onclick = (event) => {
             onclick = null
             this.gameOver = false;
-            this.loadTitleScreen();
-            //this.loadHub();
-
+            this.loadHub();
         };
     }
+
 
     update() {
         //Make the camera move based off this bounding box
@@ -248,7 +234,7 @@ class SceneManager {
         //if (this.player.y > lowerBoundY && !(this.player.y - lowerBoundY != lowerYLimit)) this.y = this.player.y - lowerBoundY;
 
         if (this.gameOver) {
-            this.loadHub();
+            this.loadDeathScreen();
         }
 
     };
@@ -385,7 +371,7 @@ class Title_Screen_Background {
         this.y = 0
         this.scrollSpeed = 0.02;
         this.image = ASSET_MANAGER.getAsset("./Sprites/UI/title_screen.png");
-
+        
     }
 
     draw(ctx) {
