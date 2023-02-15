@@ -29,9 +29,6 @@ function getAbility(abilityType) {
 
 function searchAbilityPool(abilityPool) {
     //PUT ALL ABILITIES HERE
-    let sigmaAbilityPool = [AstralBeamAbility];
-    let alphaAbilityPool = [CosmicBladeAbility];
-    let betaAbilityPool = [CosmicBladeAbility];
     let sigmaAbilityPool = [SupersonicAbility, null];
     let alphaAbilityPool = [AstralBeamAbility, null];
     let betaAbilityPool = [EMPAbility, null];
