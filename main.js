@@ -98,8 +98,7 @@ ASSET_MANAGER.downloadAll(() => {
 	const ctx = canvas.getContext("2d");
 	params.CANVAS = ctx;
 	gameEngine.init(ctx);
-	params.HUD = new hud(gameEngine);
-	gameEngine.addEntity(params.HUD);
+
 	params.INVENTORY = new Inventory(gameEngine);
 	gameEngine.addEntity(params.INVENTORY);
 	gameEngine.addEntity(new SceneManager(gameEngine));
