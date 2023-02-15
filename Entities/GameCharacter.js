@@ -602,6 +602,8 @@ class GameCharacter {
         break;
     }
 
+    if (debug) ctx.fillText("Jump Acceleration: " + this.JUMP_ACC, debugX, debugY + 240);
+    if (debug) ctx.fillText("Max Run Speed: " + this.MAX_RUN, debugX, debugY + 220);
     if (debug) ctx.fillText("Jumps: " + this.JUMPS, debugX, debugY + 120);
     if (debug)
       ctx.fillText("PAUSED: " + this.game.PAUSED, debugX, debugY + 140);
