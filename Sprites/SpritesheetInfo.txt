@@ -51,6 +51,9 @@ Abilities
     emp                     1200x1164   7frames
     astral_beam_left        320x320     10frames
     astral_beam_right       320x320     10frames
+    atomic_left             256x256     3frames
+    atomic_right            256x256     3frames
+    atomic_projectile       64x64       1frame
       
 
 UI
