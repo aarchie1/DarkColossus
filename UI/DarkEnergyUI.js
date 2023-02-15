@@ -27,7 +27,7 @@ class DarkEnergyUI {
         this.currentSlot = 0;
 
         //Stats in printable format
-        this.statIncreaseAmount = 10;
+        this.statIncreaseAmount = 20;
         this.deInfo = [
             "Melee Attack Bonus: " + this.game.darkEnergy.meleeAttack,
             "Ranged Attack Bonus: " + this.game.darkEnergy.rangedAttack,
@@ -108,9 +108,9 @@ class DarkEnergyUI {
         if(debug) {
             ctx.fillText("Current Slot: " + this.currentSlot, this.darkEnergyDisplayX + 660, this.darkEnergyDisplayY + 170);
             ctx.fillText("Current Melee Attack Value: " + this.game.darkEnergy.meleeAttack, this.darkEnergyDisplayX + 660, this.darkEnergyDisplayY + 200);
-            ctx.fillText("Current Ranged Attack Value: " + this.game.darkEnergy.rangedAttack, this.darkEnergyDisplayX + 660, this.darkEnergyDisplayY + 230);
+            ctx.fillText("Movement Speed Bonus: " + this.game.darkEnergy.movementSpeed, this.darkEnergyDisplayX + 660, this.darkEnergyDisplayY + 230);
             ctx.fillText("Current HP Value: " + this.game.darkEnergy.hp, this.darkEnergyDisplayX + 660, this.darkEnergyDisplayY + 260);
-            ctx.fillText("Current BetaChance Value: " + this.game.darkEnergy.betaChance, this.darkEnergyDisplayX + 660, this.darkEnergyDisplayY + 290);
+            ctx.fillText("Jump Bonus: " + this.game.darkEnergy.jumpHeight, this.darkEnergyDisplayX + 660, this.darkEnergyDisplayY + 290);
             ctx.fillText("Current Dark Energy Gather Value: " + this.game.darkEnergy.darkEnergyChance, this.darkEnergyDisplayX + 660, this.darkEnergyDisplayY + 320);
         }
         
@@ -224,15 +224,17 @@ class DarkEnergyUI {
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
                         this.game.darkEnergy.movementSpeed++;
+                        player.MAX_RUN = 800 + (this.game.darkEnergy.movementSpeed * 10);
                         break;
                     } else {
                         break;
                     }
                 case 4:
-                    cost = Math.ceil(this.game.darkEnergy.jumpHeight + this.statIncreaseAmount);
+                    cost = Math.ceil((this.game.darkEnergy.jumpHeight + 1) * this.statIncreaseAmount);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
                         this.game.darkEnergy.jumpHeight++;
+                        player.JUMP_ACC = -1300 - (this.game.darkEnergy.jumpHeight * 10);
                         break;
                     } else {
                         break;
