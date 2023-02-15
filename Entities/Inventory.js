@@ -15,7 +15,7 @@ class Inventory {
     }
 
     update() {
-        if (keypress("KeyP")) {
+        if (keypress("KeyP") || this.game.controllerButtonLeftStick) {
             this.inventory.push(getRandomDNA());
         }
     }

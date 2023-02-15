@@ -17,7 +17,7 @@ class Portal {
 
     update() {
 
-        if (this.game.keys.KeyE && this.BB.collide(player.BB)) {
+        if ((this.game.keys.KeyE || this.game.controllerButtonX) && this.BB.collide(player.BB)) {
             //this.sceneManager.loadLevel();
             this.game.camera.loadLevel();
         }
