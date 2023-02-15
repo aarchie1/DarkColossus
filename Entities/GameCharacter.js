@@ -636,7 +636,8 @@ class GameCharacter {
           ctx.fillText("Effect Rarity: " + params.INVENTORY.dnaSlot1.sigmaAbility.effectRarity, debugX, debugY + 300);
           ctx.fillText("Cooldown Rarity: " + params.INVENTORY.dnaSlot1.sigmaAbility.cooldownRarity, debugX, debugY + 320);
           ctx.fillText("Cooldown: " + params.INVENTORY.dnaSlot1.sigmaAbility.cooldown, debugX, debugY + 340);
-          ctx.fillText("Cooldown Seconds Remaining: " + params.INVENTORY.dnaSlot1.sigmaAbility.cooldownTimer.getRemainingSeconds(), debugX, debugY + 360);
+          let remainingSeconds = (params.INVENTORY.dnaSlot1.sigmaAbility.cooldownTimer != null) ? params.INVENTORY.dnaSlot1.sigmaAbility.cooldownTimer.getRemainingSeconds() : -1;
+          ctx.fillText("Cooldown Seconds Remaining: " + remainingSeconds, debugX, debugY + 360);
         }
 
         if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.alphaAbility != null){
@@ -649,6 +650,7 @@ class GameCharacter {
           let remainingSeconds = (params.INVENTORY.dnaSlot1.alphaAbility.cooldownTimer != null) ? params.INVENTORY.dnaSlot1.alphaAbility.cooldownTimer.getRemainingSeconds() : -1;
           ctx.fillText("Cooldown Seconds Remaining: " + remainingSeconds, debugX, debugY + 520);
         }
+        
         if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.epsilonAbility != null){
           ctx.fillText("Epsilon Ability: " + params.INVENTORY.dnaSlot1.epsilonAbility.name, debugX, debugY + 560);
           ctx.fillText("In Use: " + params.INVENTORY.dnaSlot1.epsilonAbility.inUse, debugX, debugY + 580);
