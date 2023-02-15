@@ -7,17 +7,36 @@ function getRandomDNA() {
 
     let epsilonAbilityCooldownRarity = (epsilonAbility == null) ? 0 : epsilonAbility.cooldownRarity;
     let epsilonAbilityEffectRarity = (epsilonAbility == null) ? 0 : epsilonAbility.effectRarity;
+    let sigmaAbilityCooldownRarity = (sigmaAbility == null) ? 0 : sigmaAbility.cooldownRarity;
+    let sigmaAbilityEffectRarity = (sigmaAbility == null) ? 0 : sigmaAbility.effectRarity;
+    let alphaAbilityCooldownRarity = (alphaAbility == null) ? 0 : alphaAbility.cooldownRarity;
+    let alphaAbilityEffectRarity = (alphaAbility == null) ? 0 : alphaAbility.effectRarity;
+    let betaAbilityCooldownRarity = (betaAbility == null) ? 0 : betaAbility.cooldownRarity;
+    let betaAbilityEffectRarity = (betaAbility == null) ? 0 : betaAbility.effectRarity;
+
+
+    // const rarity = calculateDnaRarity(
+    //     sigmaAbility.cooldownRarity,
+    //     alphaAbility.cooldownRarity,
+    //     betaAbility.cooldownRarity,
+    //     epsilonAbilityCooldownRarity,
+    //     sigmaAbility.effectRarity,
+    //     alphaAbility.effectRarity,
+    //     betaAbility.effectRarity,
+    //     epsilonAbilityEffectRarity
+    // );
 
     const rarity = calculateDnaRarity(
-        sigmaAbility.cooldownRarity,
-        alphaAbility.cooldownRarity,
-        betaAbility.cooldownRarity,
+        sigmaAbilityCooldownRarity,
+        alphaAbilityCooldownRarity,
+        betaAbilityCooldownRarity,
         epsilonAbilityCooldownRarity,
-        sigmaAbility.effectRarity,
-        alphaAbility.effectRarity,
-        betaAbility.effectRarity,
+        sigmaAbilityEffectRarity,
+        alphaAbilityEffectRarity,
+        betaAbilityEffectRarity,
         epsilonAbilityEffectRarity
     );
+
 
     return new DNA(
         sigmaAbility,

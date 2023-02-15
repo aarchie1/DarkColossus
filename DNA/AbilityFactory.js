@@ -29,9 +29,9 @@ function getAbility(abilityType) {
 
 function searchAbilityPool(abilityPool) {
     //PUT ALL ABILITIES HERE
-    let sigmaAbilityPool = [SupersonicAbility];
-    let alphaAbilityPool = [AstralBeamAbility];
-    let betaAbilityPool = [EMPAbility];
+    let sigmaAbilityPool = [SupersonicAbility, null];
+    let alphaAbilityPool = [AstralBeamAbility, null];
+    let betaAbilityPool = [EMPAbility, null];
     switch (abilityPool) {
         case 'sigma':
             abilityPool = sigmaAbilityPool;
@@ -49,6 +49,9 @@ function searchAbilityPool(abilityPool) {
 
     let abilityIndex = Math.max(Math.round(Math.random() * abilityPool.length) - 1, 0);
     //console.log("abilityIndex: " + abilityIndex);
+    if (abilityPool[abilityIndex] == null) {
+        return null;
+    }
     return new abilityPool[abilityIndex](this.getRarity(), this.getRarity());
 }
 

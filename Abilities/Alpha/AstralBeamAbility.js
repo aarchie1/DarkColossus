@@ -55,11 +55,11 @@ class AstralBeamAbility {
     setCooldown(cooldownRarity) { 
         switch (cooldownRarity) {
             case 1:
-                // Basic cooldown 10-20 seconds
-                return Math.floor(Math.random() * 10) + 10;
+                // Basic cooldown 8-15 seconds
+                return Math.floor(Math.random() * 7) + 8;
             case 2:
-                // Uncommon cooldown 5-10 seconds
-                return Math.floor(Math.random() * 5) + 5;
+                // Uncommon cooldown 5-8 seconds
+                return Math.floor(Math.random() * 3) + 5;
             case 3:
                 // Rare cooldown 2-5 seconds
                 return Math.floor(Math.random() * 3) + 2;
