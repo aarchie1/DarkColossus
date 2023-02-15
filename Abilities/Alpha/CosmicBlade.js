@@ -19,13 +19,20 @@ class CosmicBladeAbility {
     this.inUse = false;
 
     //Ability specific properties
-    this.updateBB();
     this.x = player.x;
     this.y = player.y;
-  }
-  updateBB() {
-    this.lastBB = this.BB;
-    this.BB = new BoundingBox(this.x + 200, this.y - 400, 400, 600);
+    this.BB_front = new BoundingBox(
+      this.x + 200 - gameEngine.camera.x,
+      this.y - 400 - gameEngine.camera.y,
+      400,
+      600
+    );
+    this.BB_top = new BoundingBox(
+      this.x + 200 - gameEngine.camera.x,
+      this.y - 400 - gameEngine.camera.y,
+      400,
+      600
+    );
   }
 
   onEquip() {}
@@ -124,11 +131,29 @@ class CosmicBladeAbility {
 
   //Required
   update() {
-    this.updateBB();
+    if (player.facing == 0) {
+      //RIGHT FACING
+      this.BB_front = new BoundingBox(
+        this.x + 200 - gameEngine.camera.x,
+        this.y - 400 - gameEngine.camera.y,
+        400,
+        600
+      );
+      this.BB_top = new BoundingBox(
+        this.x + 200 - gameEngine.camera.x,
+        this.y - 400 - gameEngine.camera.y,
+        400,
+        600
+      );
+    }
+
     this.cooldownTimer.checkCooldown();
     if (this.inUse) {
       gameEngine.entities.forEach((enemy) => {
-        if (enemy.hostile && this.BB.collide(enemy.BB)) {
+        if (
+          enemy.hostile &&
+          (this.BB_top.collide(enemy.BB) || this.BB_front.collide(enemy.BB))
+        ) {
           if (enemy.currentIFrameTimer === 0) {
             console.log("Cosmic Blade hit a enemy");
             enemy.health -= this.effect;
@@ -162,10 +187,16 @@ class CosmicBladeAbility {
   draw(ctx) {
     if (debug && this.inUse) {
       ctx.strokeRect(
-        this.BB.x - gameEngine.camera.x,
-        this.BB.y - gameEngine.camera.y,
-        this.BB.width,
-        this.BB.height
+        this.BB_front.x,
+        this.BB_front.y,
+        this.BB_front.height,
+        this.BB_front.width
+      );
+      ctx.strokeRect(
+        this.BB_top.x,
+        this.BB_top.y,
+        this.BB_top.height,
+        this.BB_top.width
       );
     }
   }
