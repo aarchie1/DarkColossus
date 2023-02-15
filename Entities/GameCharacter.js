@@ -532,13 +532,13 @@ class GameCharacter {
 
 
     if (this.game.PAUSED) {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-      ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-      ctx.font = "50px Arial";
-      ctx.strokeStyle = "Red";
-      ctx.textAlign = "center";
-      ctx.fillStyle = "white";
-      ctx.fillText("PAUSED", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+
+        const image = new Image();
+        image.src = "./Sprites/UI/pause_screen.png";
+
+        ctx.drawImage(image, 0, 0);
+        
+
     }
 
     //DEBUG (I probably should have put it all in one if statement oops lmao)
