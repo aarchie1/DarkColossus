@@ -19,22 +19,21 @@ class CosmicBladeAbility {
     this.inUse = false;
 
     //Ability specific properties
-    this.x = player.x;
-    this.y = player.y;
-    this.BB_front = new BoundingBox(
-      this.x + 200 - gameEngine.camera.x,
-      this.y - 400 - gameEngine.camera.y,
-      400,
-      600
-    );
-    this.BB_top = new BoundingBox(
-      this.x + 200 - gameEngine.camera.x,
-      this.y - 400 - gameEngine.camera.y,
-      400,
-      600
-    );
+    this.updateBB();
+    
   }
 
+  updateBB() {
+    this.lastBB1 = this.BB1;
+    if (player.facing === 0) {
+      this.BB1 = new BoundingBox(player.x, player.y - 650, 500, 100);
+      this.BB2 = new BoundingBox(player.x+400, player.y - 600, 300, 900);
+    } else {
+      this.BB1 = new BoundingBox(player.x-200, player.y - 650, 500, 100);
+      this.BB2 = new BoundingBox(player.x-400, player.y - 600, 300, 900);
+    }
+    
+  }
   onEquip() {}
 
   onUnequip() {}
@@ -54,7 +53,7 @@ class CosmicBladeAbility {
       false
     );
     player.animations[4][1] = new Animator(
-      ASSET_MANAGER.getAsset("./Sprites/Abilities/cosmic_blade.png"),
+      ASSET_MANAGER.getAsset("./Sprites/Abilities/cosmic_blade_left.png"),
       0,
       0,
       1200,
@@ -131,33 +130,21 @@ class CosmicBladeAbility {
 
   //Required
   update() {
-    if (player.facing == 0) {
-      //RIGHT FACING
-      this.BB_front = new BoundingBox(
-        this.x + 200 - gameEngine.camera.x,
-        this.y - 400 - gameEngine.camera.y,
-        400,
-        600
-      );
-      this.BB_top = new BoundingBox(
-        this.x + 200 - gameEngine.camera.x,
-        this.y - 400 - gameEngine.camera.y,
-        400,
-        600
-      );
-    }
-
     this.cooldownTimer.checkCooldown();
     if (this.inUse) {
       gameEngine.entities.forEach((enemy) => {
-        if (
-          enemy.hostile &&
-          (this.BB_top.collide(enemy.BB) || this.BB_front.collide(enemy.BB))
-        ) {
+        if (enemy.hostile && (this.BB1.collide(enemy.BB) || this.BB2.collide(enemy.BB))) {
           if (enemy.currentIFrameTimer === 0) {
             console.log("Cosmic Blade hit a enemy");
-            enemy.health -= this.effect;
+            enemy.health -= this.effect + params.DARK_ENERGY.meleeAttack;
+            console.log(enemy.health);
             enemy.currentIFrameTimer = enemy.maxIFrameTimer;
+            gameEngine.addEntityFirst(
+              new DamageIndicator(enemy.x, enemy.y, this.effect + params.DARK_ENERGY.meleeAttack)
+            );
+          }
+          if (enemy instanceof MoleculeProjectile) {
+            enemy.removeFromWorld = true;
           }
         }
       });
@@ -178,6 +165,7 @@ class CosmicBladeAbility {
       }
     }
 
+    this.updateBB();
     //update x and y to follow player
     this.x = player.x;
     this.y = player.y;
@@ -186,18 +174,8 @@ class CosmicBladeAbility {
   //Required - draw collision BB here
   draw(ctx) {
     if (debug && this.inUse) {
-      ctx.strokeRect(
-        this.BB_front.x,
-        this.BB_front.y,
-        this.BB_front.height,
-        this.BB_front.width
-      );
-      ctx.strokeRect(
-        this.BB_top.x,
-        this.BB_top.y,
-        this.BB_top.height,
-        this.BB_top.width
-      );
+      ctx.strokeRect(this.BB1.x - gameEngine.camera.x, this.BB1.y - gameEngine.camera.y, this.BB1.width, this.BB1.height);
+      ctx.strokeRect(this.BB2.x - gameEngine.camera.x, this.BB2.y - gameEngine.camera.y, this.BB2.width, this.BB2.height);
     }
   }
 }

@@ -13,7 +13,7 @@ class Molecule {
     this.dead = false;
     this.paused = true;
     this.currentIFrameTimer = 0;
-    this.maxIFrameTimer = 20;
+    this.maxIFrameTimer = 50;
     
     //Changed to center point
     this.projectileBuffer = 150;
@@ -143,6 +143,11 @@ class Molecule {
       if (this.currentIFrameTimer > 0) {
         this.currentIFrameTimer -= 1;
         // console.log(this.currentIFrameTimer);
+      }
+      //if enemy is dead, remove from game
+      if (this.health <= 0) {
+        this.dead = true;
+        this.removeFromWorld = true;
       }
     }
   }
