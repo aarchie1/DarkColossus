@@ -306,6 +306,7 @@ class SceneManager {
         this.game.camera.y = 0;
         this.player = new GameCharacter(this.game, CANVAS_WIDTH/3, 0);
         player = this.player; //update global player reference
+        player.health = 10 + params.DARK_ENERGY.hp;
         equipAbilities(params.INVENTORY.dnaSlot1); //equip abilities
         equipAbilities(params.INVENTORY.dnaSlot2);
         this.game.addEntity(this.player);
