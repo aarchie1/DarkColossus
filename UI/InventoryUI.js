@@ -238,10 +238,11 @@ class InventoryUI {
     }
 
     closeInventory() {
-      if (this.game.keys.KeyE) {
+      if (this.game.keys.KeyE || this.game.controllerButtonX) {
         params.STATE = "gameplay";
         this.removeFromWorld = true;
         gameEngine.keys.KeyE = false;
+        this.game.controllerButtonX = false;
       }
     }
 }

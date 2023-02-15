@@ -67,7 +67,7 @@ class GameCharacter {
     if (params.INVENTORY.dnaSlot1 != null) params.INVENTORY.dnaSlot1.update();
     if (params.INVENTORY.dnaSlot2 != null) params.INVENTORY.dnaSlot2.update();
 
-    if (keypress("Escape") || this.game.controllerButtonY) {
+    if (keypress("Escape") || this.game.controllerButtonStart) {
       this.game.PAUSED = !this.game.PAUSED;
     }
 
@@ -288,7 +288,7 @@ class GameCharacter {
   }
 
   abilityControls() {
-    if (this.game.keys.ArrowUp) {
+    if (this.game.keys.ArrowUp || (this.game.controllerButtonLB && !this.game.controllerButtonX)) {
       if (
         params.INVENTORY.dnaSlot1 != null &&
         params.INVENTORY.dnaSlot1.sigmaAbility != null
@@ -297,7 +297,7 @@ class GameCharacter {
       }
     }
 
-    if (this.game.keys.ArrowUp && KeyboardEvent.shiftKey) {
+    if ((this.game.keys.ArrowUp && KeyboardEvent.shiftKey) || (this.controllerButtonLB && this.controllerButtonX)) {
       if (
         params.INVENTORY.dnaSlot2 != null &&
         params.INVENTORY.dnaSlot2.sigmaAbility != null
@@ -306,7 +306,7 @@ class GameCharacter {
       }
     }
 
-    if (this.game.keys.ArrowRight) {
+      if (this.game.keys.ArrowRight || (this.game.controllerButtonRB && !this.game.controllerButtonX)) {
       if (
         params.INVENTORY.dnaSlot1 != null &&
         params.INVENTORY.dnaSlot1.alphaAbility != null
@@ -315,7 +315,7 @@ class GameCharacter {
       }
     }
 
-    if (this.game.keys.ArrowRight && KeyboardEvent.shiftKey) {
+    if ((this.game.keys.ArrowRight && KeyboardEvent.shiftKey) || (this.game.controllerButtonRB && this.game.controllerButtonX)) {
       if (
         params.INVENTORY.dnaSlot2 != null &&
         params.INVENTORY.dnaSlot2.alphaAbility != null
@@ -324,7 +324,7 @@ class GameCharacter {
       }
     }
 
-    if (this.game.keys.ArrowLeft) {
+      if (this.game.keys.ArrowLeft || (this.game.controllerButtonLT && !this.game.controllerButtonX)) {
       if (
         params.INVENTORY.dnaSlot1 != null &&
         params.INVENTORY.dnaSlot1.epsilonAbility != null
@@ -333,7 +333,7 @@ class GameCharacter {
       }
     }
 
-    if (this.game.keys.ArrowLeft && KeyboardEvent.shiftKey) {
+    if ((this.game.keys.ArrowLeft && KeyboardEvent.shiftKey) || (this.game.controllerButtonLT && this.game.controllerButtonX)) {
       if (
         params.INVENTORY.dnaSlot2 != null &&
         params.INVENTORY.dnaSlot2.epsilonAbility != null
@@ -342,7 +342,7 @@ class GameCharacter {
       }
     }
 
-    if (this.game.keys.ArrowDown) {
+      if (this.game.keys.ArrowDown || (this.game.controllerButtonRT && !this.game.controllerButtonX)) {
       if (
         params.INVENTORY.dnaSlot1 != null &&
         params.INVENTORY.dnaSlot1.betaAbility != null
@@ -351,7 +351,7 @@ class GameCharacter {
       }
     }
 
-    if (this.game.keys.ArrowDown && KeyboardEvent.shiftKey) {
+    if ((this.game.keys.ArrowDown && KeyboardEvent.shiftKey) || (this.game.controllerButtonRT && this.game.controllerButtonX)) {
       if (
         params.INVENTORY.dnaSlot2 != null &&
         params.INVENTORY.dnaSlot2.betaAbility != null
@@ -637,7 +637,7 @@ class GameCharacter {
           ctx.fillText("Cooldown Rarity: " + params.INVENTORY.dnaSlot1.sigmaAbility.cooldownRarity, debugX, debugY + 320);
           ctx.fillText("Cooldown: " + params.INVENTORY.dnaSlot1.sigmaAbility.cooldown, debugX, debugY + 340);
           let remainingSeconds = (params.INVENTORY.dnaSlot1.sigmaAbility.cooldownTimer != null) ? params.INVENTORY.dnaSlot1.sigmaAbility.cooldownTimer.getRemainingSeconds() : -1;
-          ctx.fillText("Cooldown Seconds Remaining: " + remainingSeconds, debugX, debugY + 360);
+          ctx.fillText("Cooldown Seconds Remaining: " + params.INVENTORY.dnaSlot1.sigmaAbility.cooldownTimer.getRemainingSeconds(), debugX, debugY + 360);
         }
 
         if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.alphaAbility != null){
@@ -650,7 +650,6 @@ class GameCharacter {
           let remainingSeconds = (params.INVENTORY.dnaSlot1.alphaAbility.cooldownTimer != null) ? params.INVENTORY.dnaSlot1.alphaAbility.cooldownTimer.getRemainingSeconds() : -1;
           ctx.fillText("Cooldown Seconds Remaining: " + remainingSeconds, debugX, debugY + 520);
         }
-        
         if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.epsilonAbility != null){
           ctx.fillText("Epsilon Ability: " + params.INVENTORY.dnaSlot1.epsilonAbility.name, debugX, debugY + 560);
           ctx.fillText("In Use: " + params.INVENTORY.dnaSlot1.epsilonAbility.inUse, debugX, debugY + 580);

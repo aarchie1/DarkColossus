@@ -52,6 +52,15 @@ class GameEngine {
         this.controllerButtonB = false;
         this.controllerButtonX = false;
         this.controllerButtonY = false;
+        this.controllerButtonStart = false;
+        this.controllerButtonMenu = false;
+        this.controllerButtonLB = false;
+        this.controllerButtonRB = false;
+        this.controllerButtonRT = false;
+        this.controllerButtonLT = false;
+        this.controllerButtonLogo = false; // does not work with xbox gamebar installed
+        this.controllerButtonLeftStick = false;
+
         this.gamepad = null;
         this.darkEnergy = new DarkEnergy();
         params.DARK_ENERGY = this.darkEnergy;
@@ -167,11 +176,20 @@ class GameEngine {
             this.controllerButtonB = gamepad.buttons[1].pressed;
             this.controllerButtonX = gamepad.buttons[2].pressed;
             this.controllerButtonY = gamepad.buttons[3].pressed;
-
+            this.controllerButtonLB = gamepad.buttons[4].pressed;
+            this.controllerButtonRB = gamepad.buttons[5].pressed;
+            this.controllerButtonLT = gamepad.buttons[6].pressed;
+            this.controllerButtonRT = gamepad.buttons[7].pressed;
+            this.controllerButtonSelect = gamepad.buttons[8].pressed;
+            this.controllerButtonStart = gamepad.buttons[9].pressed;
+            this.controllerButtonLeftStick = gamepad.buttons[10].pressed;
             this.controllerButtonUp = gamepad.buttons[12].pressed || gamepad.axes[0] < -0.3;
             this.controllerButtonDown = gamepad.buttons[13].pressed || gamepad.axes[0] > 0.3;
             this.controllerButtonLeft = gamepad.buttons[14].pressed || gamepad.axes[0] < -0.3;
             this.controllerButtonRight = gamepad.buttons[15].pressed || gamepad.axes[0] > 0.3;
+            this.controllerButtonLogo = gamepad.buttons[16].pressed;
+
+
         }
     }
 
@@ -195,7 +213,7 @@ class GameEngine {
             }
         }
 
-        if (keypress("KeyB")) toggleDebug();
+        if (keypress("KeyB") /*|| this.controllerButtonMenu*/) toggleDebug();
     };
     
     loop() {
@@ -207,6 +225,12 @@ class GameEngine {
             //Global single press
             this.keys.KeyE = false;
             this.keys.KeyP = false;
+            this.controllerButtonX = false;
+            this.controllerButtonMenu = false;
+            this.controllerButtonLeft = false;
+            this.controllerButtonRight = false;
+            this.controllerButtonUp = false;
+            this.controllerButtonDown = false;
 
             //menu specific single presses
             if (params.STATE == "MENU") {
@@ -219,6 +243,11 @@ class GameEngine {
                 this.keys.KeyS = false;
                 this.keys.KeyA = false;
                 this.keys.KeyD = false;
+                this.controllerButtonA = false;
+                this.controllerButtonLeft = false;
+                this.controllerButtonRight = false;
+                this.controllerButtonUp = false;
+                this.controllerButtonDown = false;
             }
 
 
