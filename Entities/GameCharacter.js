@@ -637,7 +637,7 @@ class GameCharacter {
           ctx.fillText("Cooldown Rarity: " + params.INVENTORY.dnaSlot1.sigmaAbility.cooldownRarity, debugX, debugY + 320);
           ctx.fillText("Cooldown: " + params.INVENTORY.dnaSlot1.sigmaAbility.cooldown, debugX, debugY + 340);
           let remainingSeconds = (params.INVENTORY.dnaSlot1.sigmaAbility.cooldownTimer != null) ? params.INVENTORY.dnaSlot1.sigmaAbility.cooldownTimer.getRemainingSeconds() : -1;
-          ctx.fillText("Cooldown Seconds Remaining: " + params.INVENTORY.dnaSlot1.sigmaAbility.cooldownTimer.getRemainingSeconds(), debugX, debugY + 360);
+          //ctx.fillText("Cooldown Seconds Remaining: " + params.INVENTORY.dnaSlot1.sigmaAbility.cooldownTimer.getRemainingSeconds(), debugX, debugY + 360);
         }
 
         if (params.INVENTORY.dnaSlot1 != null && params.INVENTORY.dnaSlot1.alphaAbility != null){
