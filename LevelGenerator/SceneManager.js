@@ -406,6 +406,12 @@ class Title_Screen_Background {
 */
 
 
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './Fonts/fontface.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+
         // Single option to begin game
         ctx.textAlign = "center";
         ctx.fillStyle = "black";
@@ -447,6 +453,13 @@ class Death_Screen_Background {
         ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) - this.width * 2, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
         ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) + this.width * 3, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
         ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) - this.width * 3, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+
+
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './Fonts/fontface.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
 
         // Single option to begin game
         ctx.textAlign = "center";
