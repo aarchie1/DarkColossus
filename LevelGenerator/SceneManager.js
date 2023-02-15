@@ -50,6 +50,20 @@ class SceneManager {
         this.rightXLimit = 160000;
 
 
+        for (let i = 0; i < level.dnaPickup.length; i++) {
+            let dna = level.dnaPickup[i];
+            this.game.addEntity(new DnaItemDrop(this.game, dna.x, dna.y));
+        }
+
+        for (let i = 0; i < level.reaper.length; i++) {
+            let enemy = level.reaper[i];
+            this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
+        }
+
+        for (let i = 0; i < level.molecule.length; i++) {
+            let enemy = level.molecule[i];
+            this.game.addEntity(new Molecule(this.game, enemy.x, enemy.y, 2));
+        }
 
         //Portals
         for (let i = 0; i < level.portal.length; i++) {
@@ -104,20 +118,7 @@ class SceneManager {
 
 
 
-        for (let i = 0; i < level.dnaPickup.length; i++) {
-            let dna = level.dnaPickup[i];
-            this.game.addEntity(new DnaItemDrop(this.game, dna.x, dna.y));
-        }
 
-        for (let i = 0; i < level.reaper.length; i++) {
-            let enemy = level.reaper[i];
-            this.game.addEntityFirst(new Reaper(this.game, enemy.x, enemy.y, 2));
-        }
-
-        for (let i = 0; i < level.molecule.length; i++) {
-            let enemy = level.molecule[i];
-            this.game.addEntityFirst(new Molecule(this.game, enemy.x, enemy.y, 2));
-        }
         
         //add background
         gameEngine.addEntity(new Background(this.game));
