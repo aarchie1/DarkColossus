@@ -13,12 +13,15 @@ ASSET_MANAGER.queueDownload("./Sprites/Player/player_falling_left.png");
 
 //Abilities
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/cosmic_blade.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/cosmic_blade_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/soul_grab.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/supersonic.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/supersonic_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/emp.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/astral_beam_right.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/astral_beam_left.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/atomic_left.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/atomic_right.png");
 
 //Abilities Icons
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/emp_icon.png");
@@ -81,6 +84,7 @@ ASSET_MANAGER.queueDownload("./Sprites/UI/ability_hud_basic.png");
 ASSET_MANAGER.queueDownload("./Sprites/UI/ability_hud.png");
 ASSET_MANAGER.queueDownload("./Sprites/UI/hp_cross.png");
 ASSET_MANAGER.queueDownload("./Sprites/UI/title_screen.png");
+ASSET_MANAGER.queueDownload("./Sprites/UI/pause_screen.png");
 
 // music
 ASSET_MANAGER.queueDownload("./Music/flute.mp4");
@@ -95,8 +99,7 @@ ASSET_MANAGER.downloadAll(() => {
 	const ctx = canvas.getContext("2d");
 	params.CANVAS = ctx;
 	gameEngine.init(ctx);
-	params.HUD = new hud(gameEngine);
-	gameEngine.addEntity(params.HUD);
+
 	params.INVENTORY = new Inventory(gameEngine);
 	gameEngine.addEntity(params.INVENTORY);
 	gameEngine.addEntity(new SceneManager(gameEngine));

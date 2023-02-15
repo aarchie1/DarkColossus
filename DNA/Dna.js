@@ -104,25 +104,60 @@ class DNA {
     toString() {
 
 
-        let string = `DNA Overall rarity: ${this.rarity}
-                        \nSigma:` +
-                              `\n   Name: ${this.sigmaAbility.name}` +
-                                `\n   CooldownRarity: ${this.sigmaAbility.cooldownRarity}` +
-                                `\n   EffectRarity: ${this.sigmaAbility.effectRarity}` +
-                                `\n   CooldownSeconds: ${this.sigmaAbility.cooldown}` +
-                                `\n   EffectModifer: ${this.sigmaAbility.effect}` +
-                        `\nAlpha:` +
-                                `\n   Name: ${this.alphaAbility.name}` +
-                                `\n   CooldownRarity: ${this.alphaAbility.cooldownRarity}` +
-                                `\n   EffectRarity: ${this.alphaAbility.effectRarity}` +
-                                `\n   CooldownSeconds: ${this.alphaAbility.cooldown}` +
-                                `\n   EffectModifer: ${this.alphaAbility.effect}` +
-                        `\nBeta:` +
-                                `\n   Name: ${this.betaAbility.name}` +
-                                `\n   CooldownRarity: ${this.betaAbility.cooldownRarity}` +
-                                `\n   EffectRarity: ${this.betaAbility.effectRarity}` +
-                                `\n   CooldownSeconds: ${this.betaAbility.cooldown}` +
-                                `\n   EffectModifer: ${this.betaAbility.effect}`;
+        let string = `DNA Overall rarity: ${this.rarity}`;
+
+        if (this.sigmaAbility != null){
+            string += `\nSigma:` +
+                        `\n   Name: ${this.sigmaAbility.name}` +
+                        `\n   CooldownRarity: ${this.sigmaAbility.cooldownRarity}` +
+                        `\n   EffectRarity: ${this.sigmaAbility.effectRarity}` +
+                        `\n   CooldownSeconds: ${this.sigmaAbility.cooldown}` +
+                        `\n   EffectModifer: ${this.sigmaAbility.effect}`;
+        } else {
+            string += `\nSigma: null`;
+        }
+
+        if (this.alphaAbility != null){
+            string += `\nAlpha:` +
+                        `\n   Name: ${this.alphaAbility.name}` +
+                        `\n   CooldownRarity: ${this.alphaAbility.cooldownRarity}` +
+                        `\n   EffectRarity: ${this.alphaAbility.effectRarity}` +
+                        `\n   CooldownSeconds: ${this.alphaAbility.cooldown}` +
+                        `\n   EffectModifer: ${this.alphaAbility.effect}`;
+        } else {
+            string += `\nAlpha: null`;
+        }
+
+        if (this.betaAbility != null){
+            string += `\nBeta:` +
+                        `\n   Name: ${this.betaAbility.name}` +
+                        `\n   CooldownRarity: ${this.betaAbility.cooldownRarity}` +
+                        `\n   EffectRarity: ${this.betaAbility.effectRarity}` +
+                        `\n   CooldownSeconds: ${this.betaAbility.cooldown}` +
+                        `\n   EffectModifer: ${this.betaAbility.effect}`;
+        } else {
+            string += `\nBeta: null`;
+        }
+        
+
+                        // \nSigma:` +
+                        //       `\n   Name: ${this.sigmaAbility.name}` +
+                        //         `\n   CooldownRarity: ${this.sigmaAbility.cooldownRarity}` +
+                        //         `\n   EffectRarity: ${this.sigmaAbility.effectRarity}` +
+                        //         `\n   CooldownSeconds: ${this.sigmaAbility.cooldown}` +
+                        //         `\n   EffectModifer: ${this.sigmaAbility.effect}` +
+                        // `\nAlpha:` +
+                        //         `\n   Name: ${this.alphaAbility.name}` +
+                        //         `\n   CooldownRarity: ${this.alphaAbility.cooldownRarity}` +
+                        //         `\n   EffectRarity: ${this.alphaAbility.effectRarity}` +
+                        //         `\n   CooldownSeconds: ${this.alphaAbility.cooldown}` +
+                        //         `\n   EffectModifer: ${this.alphaAbility.effect}` +
+                        // `\nBeta:` +
+                        //         `\n   Name: ${this.betaAbility.name}` +
+                        //         `\n   CooldownRarity: ${this.betaAbility.cooldownRarity}` +
+                        //         `\n   EffectRarity: ${this.betaAbility.effectRarity}` +
+                        //         `\n   CooldownSeconds: ${this.betaAbility.cooldown}` +
+                        //         `\n   EffectModifer: ${this.betaAbility.effect}`;
 
         if (this.epsilonAbility != null){
             string += `\nEpsilon:` +

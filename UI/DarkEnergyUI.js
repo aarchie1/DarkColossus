@@ -122,7 +122,7 @@ class DarkEnergyUI {
         this.decreaseStat();
         this.closeDarkEnergyUI();
 
-        if(keypress("KeyW") && this.state == this.BROWSE) {
+        if((keypress("KeyW") || this.game.controllerButtonUp) && this.state == this.BROWSE) {
             if(this.currentSlot < 2) {
                 this.currentSlot += 12;
             } else {
@@ -130,7 +130,7 @@ class DarkEnergyUI {
             }
         }
 
-        if(keypress("KeyA") && this.state == this.BROWSE) {
+        if ((keypress("KeyA") || this.game.controllerButtonLeft) && this.state == this.BROWSE) {
             if(this.currentSlot % 2 == 0) {
                 this.currentSlot += 1;
             } else {
@@ -138,7 +138,7 @@ class DarkEnergyUI {
             }
         }
 
-        if(keypress("KeyS") && this.state == this.BROWSE) {
+        if ((keypress("KeyS") || this.game.controllerButtonDown) && this.state == this.BROWSE) {
             if(this.currentSlot > 11) {
                 this.currentSlot -= 12;
             } else {
@@ -146,7 +146,7 @@ class DarkEnergyUI {
             }
         }
 
-        if(keypress("KeyD") && this.state == this.BROWSE) {
+        if ((keypress("KeyD") || this.game.controllerButtonRight) && this.state == this.BROWSE) {
             if(this.currentSlot % 2 == 1) {
                 this.currentSlot -= 1;
             } else {
@@ -154,7 +154,7 @@ class DarkEnergyUI {
             }
         }
 
-        if(keypress("KeyX") && this.state == this.BROWSE) {
+        if ((keypress("KeyX") || this.game.controllerButtonA) && this.state == this.BROWSE) {
             this.game.darkEnergy.currency += 1000;
         }
 
@@ -180,10 +180,11 @@ class DarkEnergyUI {
     }
 
     closeDarkEnergyUI() {
-        if (this.game.keys.KeyE) {
+        if (this.game.keys.KeyE || this.game.controllerButtonX) {
             params.STATE = "gameplay";
             this.removeFromWorld = true;
             gameEngine.keys.KeyE = false;
+            GameEngine.controllerButtonX = false;
         }
     }
 
