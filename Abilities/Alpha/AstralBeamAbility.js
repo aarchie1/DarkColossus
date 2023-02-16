@@ -20,7 +20,6 @@ class AstralBeamAbility {
         this.BB1_TAIL = new BoundingBox(100, 100, CANVAS_WIDTH-100, CANVAS_HEIGHT-100);
         this.BB2_UPPER_ARM = new BoundingBox(100, 100, CANVAS_WIDTH-100, CANVAS_HEIGHT-100);
         this.BB3_LOWER_ARM = new BoundingBox(100, 100, CANVAS_WIDTH-100, CANVAS_HEIGHT-100);
-        this.enemiesHit = [];
     }
 
     onEquip() {
@@ -93,7 +92,7 @@ class AstralBeamAbility {
     //Required
     update() {
         //round to the nearest tenth
-        this.damage = Math.round(this.effect * params.DARK_ENERGY.rangedAttack * 10) / 10;
+        this.damage = Math.round(this.effect * (params.DARK_ENERGY.rangedAttack+1) * 10) / 10;
         this.cooldownTimer.checkCooldown();
 
         if (player.facing == 0) { //RIGHT FACING
@@ -108,14 +107,20 @@ class AstralBeamAbility {
 
         if (this.inUse) {
             gameEngine.entities.forEach((enemy) => {
-                if ( (enemy.hostile) && !this.enemiesHit.includes(enemy) 
-                    && (this.BB1_TAIL.collide(enemy.BB) || this.BB2_UPPER_ARM
-                    .collide(enemy.BB) || this.BB3_LOWER_ARM.collide(enemy.BB))) {
+                if ( enemy.hostile && 
+                      (this.BB1_TAIL.collide(enemy.BB) || this.BB2_UPPER_ARM.collide(enemy.BB) || this.BB3_LOWER_ARM.collide(enemy.BB) ) &&
+                      (player.animations[4][0].currentFrame() >= 5 || player.animations[4][1].currentFrame() >= 5) &&
+                     enemy.currentIFrameTimer == 0) {
                     console.log('Astral Beam HIT');
-                    this.enemiesHit.push(enemy);
+                    enemy.currentIFrameTimer = enemy.maxIFrameTimer;
                     enemy.health -= this.damage;
-                    if ( !(enemy instanceof MoleculeProjectile))
-                        gameEngine.addEntityFirst(new DamageIndicator(enemy.x+30, enemy.y, this.damage));
+                    if (enemy instanceof Molecule) {
+                        console.log("Molecule hit: " + enemy.x + ' ' + enemy.y);
+                        console.log(enemy.BB.x + ' ' + enemy.BB.y);
+
+                    }
+                
+                    if ( !(enemy instanceof MoleculeProjectile)) gameEngine.addEntityFirst(new DamageIndicator(enemy.x+30, enemy.y, this.damage));
                 }
            })
         } 
