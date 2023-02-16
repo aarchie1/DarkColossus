@@ -30,6 +30,7 @@ class EMPAbility {
     //This runs when the Character presses the ability button
     onUse() {
         if (this.inUse || (this.cooldownTimer.checkCooldown()) ) return;
+        gameEngine.addEntityFirst(new AbilityIndicatorEffect(this.icon));
         player.animations[4][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/emp.png"), 0, 0, 1200, 1164, 7, 0.1, 0, false);
         player.animations[4][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/emp.png"), 0, 0, 1200, 1164, 7, 0.1, 0, false);
         
