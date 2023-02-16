@@ -444,13 +444,21 @@ class Title_Screen_Background {
         ctx.fillText("ESC to Pause", CANVAS_WIDTH / 2, 700);
 
 
-
-
     }
+
     update() {
-
+        //check if any controls are pressed in game controller
+        if (isAnyControllerButtonPressed()){
+            params.HUD = new hud(gameEngine);
+            gameEngine.addEntity(params.HUD);
+            //add dna to inventory
+            for (let i = 0; i < 5; i++)
+                params.INVENTORY.inventory.push(getRandomDNA());
             
-
+            params.INVENTORY.dnaSlot1 = params.INVENTORY.inventory[0];
+            equipAbilities(params.INVENTORY.dnaSlot1);
+            this.game.camera.loadHub();
+        }
     }
 }
 
@@ -499,7 +507,11 @@ class Death_Screen_Background {
 
     update() {
 
-
+        //check if any controls are pressed in game controller
+        if (isAnyControllerButtonPressed()){
+            this.game.camera.gameOver = false;
+            this.game.camera.loadHub();
+        }
 
     }
 }

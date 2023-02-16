@@ -41,6 +41,8 @@ class CosmicBladeAbility {
   //This runs when the Character presses the ability button
   onUse() {
     if (this.inUse || this.cooldownTimer.checkCooldown()) return;
+    gameEngine.addEntityFirst(new AbilityIndicatorEffect(this.icon));
+
     player.animations[4][0] = new Animator(
       ASSET_MANAGER.getAsset("./Sprites/Abilities/cosmic_blade.png"),
       0,
