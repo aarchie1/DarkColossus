@@ -9,6 +9,7 @@ class SceneManager {
         this.transition = false;
         this.player = new GameCharacter(this.game, 0, 0);
         player = this.player;
+        this.restoreDarkEnergy();
 
 
         // splits the X axis into 5 sections [  |  |  |  |  ] <-- map, playable area --> [  |xx|xx|xx|  ]
@@ -125,6 +126,12 @@ class SceneManager {
     
         
     };
+
+    restoreDarkEnergy() {
+        player.health = 10 + params.DARK_ENERGY.hp;
+        player.JUMP_ACC = -1300 - (this.game.darkEnergy.jumpHeight * 10);
+        player.MAX_RUN = 800 + (this.game.darkEnergy.movementSpeed * 10);
+    }
 
     randomizeLevel() {
 
@@ -308,6 +315,7 @@ class SceneManager {
         player = this.player; //update global player reference
         equipAbilities(params.INVENTORY.dnaSlot1); //equip abilities
         equipAbilities(params.INVENTORY.dnaSlot2);
+        this.restoreDarkEnergy();
         this.game.addEntity(this.player);
     }
 
