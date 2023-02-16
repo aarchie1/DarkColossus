@@ -2,6 +2,7 @@ class Inventory {
 
     constructor(game) {
         this.inventory = [];
+        
 
         //test data
 

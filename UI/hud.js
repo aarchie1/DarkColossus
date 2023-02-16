@@ -73,6 +73,7 @@ class hud {
         this.drawAbilityHud(ctx);
 
         //this.pauseControl(ctx);
+
     }
 
     drawDarkEnergyHud(ctx) {

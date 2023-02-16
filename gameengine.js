@@ -165,6 +165,11 @@ class GameEngine {
             this.entities[i].draw(this.ctx, this);
         }
 
+        if (this.PAUSED) {
+            const image = new Image();
+            image.src = "./Sprites/UI/pause_screen.png";
+            this.ctx.drawImage(image, 0, 0);
+        }
     };
 
     gamepadUpdate() {
@@ -188,8 +193,6 @@ class GameEngine {
             this.controllerButtonLeft = gamepad.buttons[14].pressed || gamepad.axes[0] < -0.3;
             this.controllerButtonRight = gamepad.buttons[15].pressed || gamepad.axes[0] > 0.3;
             this.controllerButtonLogo = gamepad.buttons[16].pressed;
-
-
         }
     }
 
@@ -244,11 +247,9 @@ class GameEngine {
                 this.keys.KeyA = false;
                 this.keys.KeyD = false;
                 this.controllerButtonA = false;
-                this.controllerButtonLeft = false;
-                this.controllerButtonRight = false;
-                this.controllerButtonUp = false;
-                this.controllerButtonDown = false;
+
             }
+            
 
 
         } else {
@@ -264,3 +265,16 @@ class GameEngine {
 };
 
 // KV Le was here :)
+
+
+function isAnyControllerButtonPressed() {
+    let gamepad = gameEngine.gamepad;
+    if (gamepad != null) {
+        for (let i = 0; i < gamepad.buttons.length; i++) {
+            if (gamepad.buttons[i].pressed) {
+                return true;
+            }
+        }
+    }
+    return false;
+}

@@ -6,6 +6,7 @@ class DNA {
         this.betaAbility = betaAbility; //left
         this.epsilonAbility = epsilonAbility; //right
         this.rarity = rarity;
+        this.image = ASSET_MANAGER.getAsset("./Sprites/DNA/dna_basic.png");
         //set image
         switch (this.rarity) {
             case 1:
@@ -96,6 +97,7 @@ class DNA {
             ctx.lineTo(x + slotSize/2.6 + offset + distance - slotSize * c, y + slotSize/2.6 - offset - distance + slotSize * c);
             ctx.stroke();
         }
+
         ctx.drawImage(this.image, x, y, slotSize, slotSize);
     }
 

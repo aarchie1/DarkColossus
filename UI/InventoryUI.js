@@ -36,7 +36,9 @@ class InventoryUI {
        // this.drawSpliceInformation(ctx, CANVAS_WIDTH/1.5, 0, getPredictedDna(this.inventory[this.spliceSlot1], this.inventory[this.spliceSlot2]));
       }
 
-      ctx.fillStyle = "#994B50";
+      ctx.fillStyle = "#e09fa4"//"#994B50";
+
+      //ctx.fillStyle = "#994B50";
       //make the rect transparent
       ctx.globalAlpha = .8;
       ctx.fillRect(this.x, this.y, this.columns*this.slotSize, this.rows*this.slotSize);
