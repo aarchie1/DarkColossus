@@ -8,6 +8,7 @@ const params = {
     DARK_ENERGY : null, 
     CANVAS : null,
     TIMER : null,
+    RESURRECTS: 0,
 };
 
 
