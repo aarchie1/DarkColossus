@@ -9,7 +9,7 @@ class SceneManager {
         this.transition = false;
         this.player = new GameCharacter(this.game, 0, 0);
         player = this.player;
-        this.restoreDarkEnergy();
+        this.restoreDarkEnergy(); //restores DE
 
 
         // splits the X axis into 5 sections [  |  |  |  |  ] <-- map, playable area --> [  |xx|xx|xx|  ]
