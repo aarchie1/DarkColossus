@@ -24,6 +24,7 @@ class ExtraJump {
 
     onUnequip() {
         player.MAX_JUMPS--;
+
     }
 
     //This runs when the Character presses the ability button
@@ -40,6 +41,7 @@ class ExtraJump {
     //Edit these to change the cooldown of the ability based on rarity
     setCooldown(cooldownRarity) { 
         return 0;
+
     }
 
 
