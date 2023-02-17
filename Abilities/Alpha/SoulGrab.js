@@ -3,10 +3,10 @@ class SoulGrabAbility {
     //Necessary properties for all abilities
     this.name = "Soul Grab";
     this.icon = ASSET_MANAGER.getAsset(
-      "./Sprites/Abilities/Icons/cosmic_blade_icon.png"
+      "./Sprites/Abilities/Icons/soul_grab_icon.png"
     );
     this.inUseIcon = ASSET_MANAGER.getAsset(
-      "./Sprites/Abilities/Icons/cosmic_blade_in_use_icon.png"
+      "./Sprites/Abilities/Icons/soul_grab_in_use_icon.png"
     );
     this.dominant = true;
     this.effect = this.setEffect(effectRarity);
@@ -22,7 +22,7 @@ class SoulGrabAbility {
 
     //Ability specific properties
     this.updateBB();
-    this.animationflag = false;
+    this.animationflag = true;
     this.hitCount = 0;
   }
 
@@ -30,8 +30,8 @@ class SoulGrabAbility {
     this.lastBB1 = this.BB1;
     if (player.facing === 0) {
       this.BB = new BoundingBox(player.x + 200, player.y - 100, 600, 400);
-    } else {
-      this.BB = new BoundingBox(player.x, player.y, 500, 100);
+    } else if (player.facing === 1) {
+      this.BB = new BoundingBox(player.x - 550, player.y - 100, 600, 400);
     }
   }
   onEquip() {}
@@ -41,7 +41,7 @@ class SoulGrabAbility {
   //This runs when the Character presses the ability button
   onUse() {
     if (this.inUse || this.cooldownTimer.checkCooldown()) return;
-    this.animationflag = false;
+    this.animationflag = true;
     //check if there is a reaper within range
     gameEngine.entities.forEach((enemy) => {
       if (enemy.hostile && this.BB.collide(enemy.BB)) {
@@ -65,7 +65,7 @@ class SoulGrabAbility {
         false
       );
       player.animations[4][1] = new Animator(
-        ASSET_MANAGER.getAsset("./Sprites/Abilities/soul_grab_right.png"),
+        ASSET_MANAGER.getAsset("./Sprites/Abilities/soul_grab_left.png"),
         0,
         0,
         1024,
@@ -75,16 +75,18 @@ class SoulGrabAbility {
         0,
         false
       );
-      player.animations[4][0].yOffset = -25;
-      player.animations[4][0].xOffset = 200;
-      player.animations[4][1].yOffset = 0;
-      player.animations[4][1].xOffset = 0;
+        player.animations[4][0].yOffset = -25;
+        player.animations[4][0].xOffset = 200;
+        player.animations[4][1].yOffset = -25;
+        player.animations[4][1].xOffset = -900;
+     
+
       this.inUse = true;
       player.usingAbility = true;
       console.log("Soul Grab started");
       this.hitCount = 0;
     } else {
-      this.animationflag = false;
+      this.animationflag = true;
       this.onEnd();
     }
   }
@@ -138,7 +140,7 @@ class SoulGrabAbility {
             enemy.removeFromWorld = true;
             enemy.currentIFrameTimer = enemy.maxIFrameTimer;
             this.hitCount++;
-          } 
+          }
         }
       });
     }

@@ -15,6 +15,7 @@ ASSET_MANAGER.queueDownload("./Sprites/Player/player_falling_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/cosmic_blade.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/cosmic_blade_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/soul_grab_right.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/soul_grab_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/supersonic.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/supersonic_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/emp.png");
