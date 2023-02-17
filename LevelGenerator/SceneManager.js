@@ -51,6 +51,20 @@ class SceneManager {
         this.rightXLimit = 160000;
 
 
+        for (let i = 0; i < level.dnaPickup.length; i++) {
+            let dna = level.dnaPickup[i];
+            this.game.addEntity(new DnaItemDrop(this.game, dna.x, dna.y));
+        }
+
+        for (let i = 0; i < level.reaper.length; i++) {
+            let enemy = level.reaper[i];
+            this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
+        }
+
+        for (let i = 0; i < level.molecule.length; i++) {
+            let enemy = level.molecule[i];
+            this.game.addEntity(new Molecule(this.game, enemy.x, enemy.y, 2));
+        }
 
         //Portals
         for (let i = 0; i < level.portal.length; i++) {
@@ -105,20 +119,7 @@ class SceneManager {
 
 
 
-        for (let i = 0; i < level.dnaPickup.length; i++) {
-            let dna = level.dnaPickup[i];
-            this.game.addEntity(new DnaItemDrop(this.game, dna.x, dna.y));
-        }
 
-        for (let i = 0; i < level.reaper.length; i++) {
-            let enemy = level.reaper[i];
-            this.game.addEntityFirst(new Reaper(this.game, enemy.x, enemy.y, 2));
-        }
-
-        for (let i = 0; i < level.molecule.length; i++) {
-            let enemy = level.molecule[i];
-            this.game.addEntityFirst(new Molecule(this.game, enemy.x, enemy.y, 2));
-        }
         
         //add background
         gameEngine.addEntity(new Background(this.game));
@@ -186,8 +187,6 @@ class SceneManager {
         this.game.addEntity(new Cross_Background(this.game, 250, 200));
         this.game.addEntity(new Background(this.game));
     
-
-
     }
 
     loadTitleScreen() {
@@ -200,8 +199,10 @@ class SceneManager {
             onclick = null
             params.HUD = new hud(gameEngine);
             gameEngine.addEntity(params.HUD);
-            this.loadHub()
-    
+            //add dna to inventory
+            for (let i = 0; i < 5; i++)
+                params.INVENTORY.inventory.push(getRandomDNA());
+            this.loadHub();
         };
     }
 
@@ -313,6 +314,7 @@ class SceneManager {
         this.game.camera.y = 0;
         this.player = new GameCharacter(this.game, CANVAS_WIDTH/3, 0);
         player = this.player; //update global player reference
+        player.health = 10 + params.DARK_ENERGY.hp;
         equipAbilities(params.INVENTORY.dnaSlot1); //equip abilities
         equipAbilities(params.INVENTORY.dnaSlot2);
         this.restoreDarkEnergy();
@@ -450,14 +452,21 @@ class Title_Screen_Background {
         ctx.fillText("ESC to Pause", CANVAS_WIDTH / 2, 700);
 
 
-
-
-
     }
+
     update() {
-
+        //check if any controls are pressed in game controller
+        if (isAnyControllerButtonPressed()){
+            params.HUD = new hud(gameEngine);
+            gameEngine.addEntity(params.HUD);
+            //add dna to inventory
+            for (let i = 0; i < 5; i++)
+                params.INVENTORY.inventory.push(getRandomDNA());
             
-
+            params.INVENTORY.dnaSlot1 = params.INVENTORY.inventory[0];
+            equipAbilities(params.INVENTORY.dnaSlot1);
+            this.game.camera.loadHub();
+        }
     }
 }
 
@@ -503,9 +512,14 @@ class Death_Screen_Background {
 
 
     }
+
     update() {
 
-
+        //check if any controls are pressed in game controller
+        if (isAnyControllerButtonPressed()){
+            this.game.camera.gameOver = false;
+            this.game.camera.loadHub();
+        }
 
     }
 }

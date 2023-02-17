@@ -7,7 +7,9 @@ class AstralBeamAbility {
         this.inUseIcon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/astral_beam_in_use_icon.png");
         this.dominant = false;
         this.effect = this.setEffect(effectRarity);
-        this.description = 'Eviscerate enemies in a line of sight dealing' + this.effect + 'dmg';
+        //round to 1 decimal places
+        this.effect = Math.round(this.effect * 10) / 10;
+        this.description = 'Eviscerate enemies in a line of sight dealing ' + this.effect + ' dmg';
         this.effectRarity = effectRarity;
         this.cooldownRarity = cooldownRarity;
         this.cooldown = this.setCooldown(this.cooldownRarity);
@@ -18,7 +20,6 @@ class AstralBeamAbility {
         this.BB1_TAIL = new BoundingBox(100, 100, CANVAS_WIDTH-100, CANVAS_HEIGHT-100);
         this.BB2_UPPER_ARM = new BoundingBox(100, 100, CANVAS_WIDTH-100, CANVAS_HEIGHT-100);
         this.BB3_LOWER_ARM = new BoundingBox(100, 100, CANVAS_WIDTH-100, CANVAS_HEIGHT-100);
-        this.enemiesHit = [];
     }
 
     onEquip() {
@@ -32,6 +33,7 @@ class AstralBeamAbility {
     //This runs when the Character presses the ability button
     onUse() {
         if (this.inUse || (this.cooldownTimer.checkCooldown()) ) return;
+        gameEngine.addEntityFirst(new AbilityIndicatorEffect(this.icon));
         player.animations[4][0] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/astral_beam_right.png"), 0, 0, 320, 320, 10, 0.09, 0, false);
         player.animations[4][1] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Abilities/astral_beam_left.png"), 0, 0, 320, 320, 10, 0.09, 0, false);
         player.animations[4][0].yOffset = -50;
@@ -55,17 +57,17 @@ class AstralBeamAbility {
     setCooldown(cooldownRarity) { 
         switch (cooldownRarity) {
             case 1:
-                // Basic cooldown 8-15 seconds
-                return Math.floor(Math.random() * 7) + 8;
+                // Basic cooldown 7-10 seconds
+                return Math.floor(Math.random() * 3) + 7;
             case 2:
-                // Uncommon cooldown 5-8 seconds
-                return Math.floor(Math.random() * 3) + 5;
+                // Uncommon cooldown 5-6 seconds
+                return Math.floor(Math.random() * 1) + 5;
             case 3:
-                // Rare cooldown 2-5 seconds
-                return Math.floor(Math.random() * 3) + 2;
+                // Rare cooldown 3-5 seconds
+                return Math.floor(Math.random() * 2) + 3;
             case 4:
                 // Godlike cooldown 1-2 seconds
-                return Math.floor(Math.random() * 2) + 1;
+                return Math.floor(Math.random() * 1) + 1;
         }
     }
 
@@ -91,29 +93,29 @@ class AstralBeamAbility {
     //Required
     update() {
         //round to the nearest tenth
-        this.damage = Math.round(this.effect * params.DARK_ENERGY.rangedAttack * 10) / 10;
+        this.damage = Math.round(this.effect * (params.DARK_ENERGY.rangedAttack+1) * 10) / 10;
         this.cooldownTimer.checkCooldown();
 
         if (player.facing == 0) { //RIGHT FACING
-            this.BB1_TAIL = new BoundingBox(player.x+175 - gameEngine.camera.x, player.y - gameEngine.camera.y -2, CANVAS_WIDTH, 15);
-            this.BB2_UPPER_ARM = new BoundingBox(player.x + 270 - gameEngine.camera.x, player.y + 132 - gameEngine.camera.y, CANVAS_WIDTH, 15);
-            this.BB3_LOWER_ARM = new BoundingBox(player.x + 230 - gameEngine.camera.x, player.y + 172 - gameEngine.camera.y, CANVAS_WIDTH, 15);
+            this.BB1_TAIL = new BoundingBox(player.x+175, player.y-2, CANVAS_WIDTH, 15);
+            this.BB2_UPPER_ARM = new BoundingBox(player.x + 270, player.y + 132, CANVAS_WIDTH, 15);
+            this.BB3_LOWER_ARM = new BoundingBox(player.x + 230, player.y + 172, CANVAS_WIDTH, 15);
         } else {
-            this.BB1_TAIL = new BoundingBox(-100, player.y - gameEngine.camera.y, player.x + 180 - gameEngine.camera.x, 15);
-            this.BB2_UPPER_ARM = new BoundingBox(-100, player.y - gameEngine.camera.y + 132, player.x + 82 - gameEngine.camera.x, 15);
-            this.BB3_LOWER_ARM = new BoundingBox(-100, player.y + 172 - gameEngine.camera.y, player.x + 128 - gameEngine.camera.x, 15);
+            this.BB1_TAIL = new BoundingBox(-100, player.y, player.x + 180, 15);
+            this.BB2_UPPER_ARM = new BoundingBox(-100, player.y + 132, player.x + 82, 15);
+            this.BB3_LOWER_ARM = new BoundingBox(-100, player.y + 172 , player.x + 128, 15);
         }
 
         if (this.inUse) {
             gameEngine.entities.forEach((enemy) => {
-                if ( (enemy.hostile) && !this.enemiesHit.includes(enemy) 
-                    && (this.BB1_TAIL.collide(enemy.BB) || this.BB2_UPPER_ARM
-                    .collide(enemy.BB) || this.BB3_LOWER_ARM.collide(enemy.BB))) {
+                if ( enemy.hostile && 
+                      (this.BB1_TAIL.collide(enemy.BB) || this.BB2_UPPER_ARM.collide(enemy.BB) || this.BB3_LOWER_ARM.collide(enemy.BB) ) &&
+                      (player.animations[4][0].currentFrame() >= 5 || player.animations[4][1].currentFrame() >= 5) &&
+                     enemy.currentIFrameTimer == 0) {
                     console.log('Astral Beam HIT');
-                    this.enemiesHit.push(enemy);
+                    enemy.currentIFrameTimer = enemy.maxIFrameTimer;
                     enemy.health -= this.damage;
-                    if ( !(enemy instanceof MoleculeProjectile))
-                        gameEngine.addEntityFirst(new DamageIndicator(enemy.x+30, enemy.y, this.damage));
+                    if ( !(enemy instanceof MoleculeProjectile)) gameEngine.addEntityFirst(new DamageIndicator(enemy.x+30, enemy.y, this.damage));
                 }
            })
         } 
@@ -131,9 +133,9 @@ class AstralBeamAbility {
              )
             ) { //draw the bounding box for each laser
             ctx.fillStyle = '#DF8652';
-            ctx.fillRect(this.BB1_TAIL.x, this.BB1_TAIL.y, this.BB1_TAIL.width, this.BB1_TAIL.height);
-            ctx.fillRect(this.BB2_UPPER_ARM.x, this.BB2_UPPER_ARM.y, this.BB2_UPPER_ARM.width, this.BB2_UPPER_ARM.height);
-            ctx.fillRect(this.BB3_LOWER_ARM.x, this.BB3_LOWER_ARM.y, this.BB3_LOWER_ARM.width, this.BB3_LOWER_ARM.height);
+            ctx.fillRect(this.BB1_TAIL.x - gameEngine.camera.x, this.BB1_TAIL.y - gameEngine.camera.y, this.BB1_TAIL.width, this.BB1_TAIL.height);
+            ctx.fillRect(this.BB2_UPPER_ARM.x- gameEngine.camera.x, this.BB2_UPPER_ARM.y- gameEngine.camera.y, this.BB2_UPPER_ARM.width, this.BB2_UPPER_ARM.height);
+            ctx.fillRect(this.BB3_LOWER_ARM.x- gameEngine.camera.x, this.BB3_LOWER_ARM.y- gameEngine.camera.y, this.BB3_LOWER_ARM.width, this.BB3_LOWER_ARM.height);
         }
         
     }

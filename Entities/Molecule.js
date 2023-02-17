@@ -12,7 +12,8 @@ class Molecule {
     this.health = 10;
     this.dead = false;
     this.paused = true;
-
+    this.currentIFrameTimer = 0;
+    this.maxIFrameTimer = 25;
     
     //Changed to center point
     this.projectileBuffer = 150;
@@ -34,7 +35,7 @@ class Molecule {
 
   updateBB() {
     this.lastBB = this.BB;
-    this.BB = new BoundingBox(this.x - 75 - this.game.camera.x, this.y + 50 - this.game.camera.y, 100, 100);
+    this.BB = new BoundingBox(this.x+75, this.y+50, 100, 100);
   }
 
   update() {
@@ -138,6 +139,16 @@ class Molecule {
       // Update Facing direction
       if (this.velocity.x < 0) this.facing = 1;
       if (this.velocity.x > 0) this.facing = 0;
+
+      if (this.currentIFrameTimer > 0) {
+        this.currentIFrameTimer -= 1;
+        // console.log(this.currentIFrameTimer);
+      }
+      //if enemy is dead, remove from game
+      if (this.health <= 0) {
+        this.dead = true;
+        this.removeFromWorld = true;
+      }
     }
   }
 

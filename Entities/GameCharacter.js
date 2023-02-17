@@ -248,7 +248,7 @@ class GameCharacter {
     this.abilityControls();
 
     // Check if player is out of bounds
-    if (this.y > 1000) {
+    if (this.y > 1700) {
       this.dead = true;
       this.game.camera.gameOver = true;
     }
@@ -268,7 +268,7 @@ class GameCharacter {
     if (
       !this.game.PAUSED &&
       params.STATE == "gameplay" &&
-      (this.game.keys.Space || this.game.controllerButtonA) &&
+      (this.game.keys.Space || this.game.controllerButtonRT) &&
       this.JUMPS > 0
     ) {
       this.JUMPS--;
@@ -288,7 +288,7 @@ class GameCharacter {
   }
 
   abilityControls() {
-    if (this.game.keys.ArrowUp || (this.game.controllerButtonLB && !this.game.controllerButtonX)) {
+    if (this.game.keys.ArrowUp || (this.game.controllerButtonY)) {
       if (
         params.INVENTORY.dnaSlot1 != null &&
         params.INVENTORY.dnaSlot1.sigmaAbility != null
@@ -297,7 +297,7 @@ class GameCharacter {
       }
     }
 
-    if ((this.game.keys.ArrowUp && KeyboardEvent.shiftKey) || (this.controllerButtonLB && this.controllerButtonX)) {
+    if ((this.game.keys.ArrowUp && KeyboardEvent.shiftKey) || (this.controllerButtonLT && this.controllerButtonY)) {
       if (
         params.INVENTORY.dnaSlot2 != null &&
         params.INVENTORY.dnaSlot2.sigmaAbility != null
@@ -306,7 +306,7 @@ class GameCharacter {
       }
     }
 
-      if (this.game.keys.ArrowRight || (this.game.controllerButtonRB && !this.game.controllerButtonX)) {
+      if (this.game.keys.ArrowRight || (this.game.controllerButtonB)) {
       if (
         params.INVENTORY.dnaSlot1 != null &&
         params.INVENTORY.dnaSlot1.alphaAbility != null
@@ -315,7 +315,7 @@ class GameCharacter {
       }
     }
 
-    if ((this.game.keys.ArrowRight && KeyboardEvent.shiftKey) || (this.game.controllerButtonRB && this.game.controllerButtonX)) {
+    if ((this.game.keys.ArrowRight && KeyboardEvent.shiftKey) || (this.game.controllerButtonLT && this.game.controllerButtonB)) {
       if (
         params.INVENTORY.dnaSlot2 != null &&
         params.INVENTORY.dnaSlot2.alphaAbility != null
@@ -324,7 +324,7 @@ class GameCharacter {
       }
     }
 
-      if (this.game.keys.ArrowLeft || (this.game.controllerButtonLT && !this.game.controllerButtonX)) {
+      if (this.game.keys.ArrowLeft || (this.game.controllerButtonX)) {
       if (
         params.INVENTORY.dnaSlot1 != null &&
         params.INVENTORY.dnaSlot1.epsilonAbility != null
@@ -342,7 +342,7 @@ class GameCharacter {
       }
     }
 
-      if (this.game.keys.ArrowDown || (this.game.controllerButtonRT && !this.game.controllerButtonX)) {
+      if (this.game.keys.ArrowDown || (this.game.controllerButtonA)) {
       if (
         params.INVENTORY.dnaSlot1 != null &&
         params.INVENTORY.dnaSlot1.betaAbility != null
@@ -351,7 +351,7 @@ class GameCharacter {
       }
     }
 
-    if ((this.game.keys.ArrowDown && KeyboardEvent.shiftKey) || (this.game.controllerButtonRT && this.game.controllerButtonX)) {
+    if ((this.game.keys.ArrowDown && KeyboardEvent.shiftKey) || (this.game.controllerButtonLT && this.game.controllerButtonA)) {
       if (
         params.INVENTORY.dnaSlot2 != null &&
         params.INVENTORY.dnaSlot2.betaAbility != null
@@ -528,17 +528,6 @@ class GameCharacter {
         this.y - this.game.camera.y,
         1
       );
-    }
-
-
-    if (this.game.PAUSED) {
-
-        const image = new Image();
-        image.src = "./Sprites/UI/pause_screen.png";
-
-        ctx.drawImage(image, 0, 0);
-        
-
     }
 
     //DEBUG (I probably should have put it all in one if statement oops lmao)

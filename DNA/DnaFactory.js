@@ -162,7 +162,7 @@ function dnaInfoWindow(ctx, x, y, dna) {
     let windowHeight = CANVAS_HEIGHT / 1.8;
     let xIconOffset = 35;
     let yIconOffset = 20;
-    let xNameOffset = 45;
+    let xNameOffset = 30;
     let yNameOffset = 15;
     let xCooldownOffset = 230;
     let yCooldownOffset = -55;

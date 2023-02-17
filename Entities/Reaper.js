@@ -15,6 +15,8 @@ class Reaper {
     this.elapsedTime = 0;
     this.attackDistance = 0;
     this.health = 10;
+    this.currentIFrameTimer = 0;
+    this.maxIFrameTimer = 25;
     this.dead = false;
     this.paused = true;
     this.updateBB();
@@ -134,6 +136,10 @@ class Reaper {
     }
     if (this.health <= 0) {
       this.removeFromWorld = true;
+    }
+    if (this.currentIFrameTimer > 0) {
+      this.currentIFrameTimer -= 1;
+      // console.log(this.currentIFrameTimer);
     }
   }
 
