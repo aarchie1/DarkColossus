@@ -42,6 +42,8 @@ ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/slippery_icon.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/slippery_in_use_icon.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/willpower_icon.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/willpower_in_use_icon.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/soul_grab_icon.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/soul_grab_in_use_icon.png");
 
 //Enemies
 ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_full.png");
