@@ -1,17 +1,19 @@
-class CosmicBladeAbility {
+class SoulGrabAbility {
   constructor(cooldownRarity, effectRarity) {
     //Necessary properties for all abilities
-    this.name = "Cosmic Blade";
+    this.name = "Soul Grab";
     this.icon = ASSET_MANAGER.getAsset(
-      "./Sprites/Abilities/Icons/cosmic_blade_icon.png"
+      "./Sprites/Abilities/Icons/soul_grab_icon.png"
     );
     this.inUseIcon = ASSET_MANAGER.getAsset(
-      "./Sprites/Abilities/Icons/cosmic_blade_in_use_icon.png"
+      "./Sprites/Abilities/Icons/soul_grab_in_use_icon.png"
     );
-    this.dominant = false;
+    this.dominant = true;
     this.effect = this.setEffect(effectRarity);
     this.description =
-      "Attack the enemy with a giant sword dealing " + this.effect + " damage";
+      "Snatch the soul of a reaper sending him to the grave " +
+      this.effect +
+      " damage";
     this.effectRarity = effectRarity;
     this.cooldownRarity = cooldownRarity;
     this.cooldown = this.setCooldown(this.cooldownRarity);
@@ -20,19 +22,17 @@ class CosmicBladeAbility {
 
     //Ability specific properties
     this.updateBB();
-    
+    this.animationflag = true;
+    this.hitCount = 0;
   }
 
   updateBB() {
     this.lastBB1 = this.BB1;
     if (player.facing === 0) {
-      this.BB1 = new BoundingBox(player.x, player.y - 650, 500, 100);
-      this.BB2 = new BoundingBox(player.x+400, player.y - 600, 300, 900);
-    } else {
-      this.BB1 = new BoundingBox(player.x-200, player.y - 650, 500, 100);
-      this.BB2 = new BoundingBox(player.x-400, player.y - 600, 300, 900);
+      this.BB = new BoundingBox(player.x + 200, player.y - 100, 600, 400);
+    } else if (player.facing === 1) {
+      this.BB = new BoundingBox(player.x - 550, player.y - 100, 600, 400);
     }
-    
   }
   onEquip() {}
 
@@ -41,38 +41,54 @@ class CosmicBladeAbility {
   //This runs when the Character presses the ability button
   onUse() {
     if (this.inUse || this.cooldownTimer.checkCooldown()) return;
-    gameEngine.addEntityFirst(new AbilityIndicatorEffect(this.icon));
+    this.animationflag = true;
+    //check if there is a reaper within range
+    gameEngine.entities.forEach((enemy) => {
+      if (enemy.hostile && this.BB.collide(enemy.BB)) {
+        if (enemy instanceof Reaper) {
+          this.animationflag = true;
+        }
+      }
+    });
 
-    player.animations[4][0] = new Animator(
-      ASSET_MANAGER.getAsset("./Sprites/Abilities/cosmic_blade.png"),
-      0,
-      0,
-      1200,
-      1164,
-      4,
-      0.115,
-      0,
-      false
-    );
-    player.animations[4][1] = new Animator(
-      ASSET_MANAGER.getAsset("./Sprites/Abilities/cosmic_blade_left.png"),
-      0,
-      0,
-      1200,
-      1164,
-      4,
-      0.115,
-      0,
-      false
-    );
+    if (this.animationflag) {
+      gameEngine.addEntityFirst(new AbilityIndicatorEffect(this.icon));
+      player.animations[4][0] = new Animator(
+        ASSET_MANAGER.getAsset("./Sprites/Abilities/soul_grab_right.png"),
+        0,
+        0,
+        1024,
+        512,
+        4,
+        0.115,
+        0,
+        false
+      );
+      player.animations[4][1] = new Animator(
+        ASSET_MANAGER.getAsset("./Sprites/Abilities/soul_grab_left.png"),
+        0,
+        0,
+        1024,
+        512,
+        4,
+        0.115,
+        0,
+        false
+      );
+        player.animations[4][0].yOffset = -25;
+        player.animations[4][0].xOffset = 200;
+        player.animations[4][1].yOffset = -25;
+        player.animations[4][1].xOffset = -900;
+     
 
-    player.animations[4][0].yOffset = -650;
-    player.animations[4][0].xOffset = -450;
-    player.animations[4][1].yOffset = -650;
-    player.animations[4][1].xOffset = -500;
-    this.inUse = true;
-    player.usingAbility = true;
-    console.log("Cosmic Blade started");
+      this.inUse = true;
+      player.usingAbility = true;
+      console.log("Soul Grab started");
+      this.hitCount = 0;
+    } else {
+      this.animationflag = true;
+      this.onEnd();
+    }
   }
 
   //The ability will call this itself
@@ -81,7 +97,7 @@ class CosmicBladeAbility {
     this.cooldownTimer.startCooldown();
     player.usingAbility = false;
     this.inUse = false;
-    console.log("Cosmic Blade ended");
+    console.log("Soul Grab ended");
   }
 
   //Edit these to change the cooldown of the ability based on rarity
@@ -106,7 +122,7 @@ class CosmicBladeAbility {
       case 3:
       case 4:
         //damge between 1 and 3
-        return Math.floor(Math.random() * 3) + 1;
+        return 5;
       default:
         console.log("Effect rarity not found");
         return -1;
@@ -118,19 +134,12 @@ class CosmicBladeAbility {
     this.cooldownTimer.checkCooldown();
     if (this.inUse) {
       gameEngine.entities.forEach((enemy) => {
-        if (enemy.hostile && (this.BB1.collide(enemy.BB) || this.BB2.collide(enemy.BB)) &&
-        (player.animations[4][0].currentFrame() >= 2|| player.animations[4][1].currentFrame() >= 2)) {
-          if (enemy.currentIFrameTimer === 0) {
-            console.log("Cosmic Blade hit a enemy");
-            enemy.health -= this.effect + params.DARK_ENERGY.meleeAttack;
-            console.log(enemy.health);
-            enemy.currentIFrameTimer = enemy.maxIFrameTimer;
-            gameEngine.addEntityFirst(
-              new DamageIndicator(enemy.x, enemy.y, this.effect + params.DARK_ENERGY.meleeAttack)
-            );
-          }
-          if (enemy instanceof MoleculeProjectile) {
+        if (enemy.hostile && this.BB.collide(enemy.BB)) {
+          if (enemy instanceof Reaper && this.hitCount < 1) {
+            console.log("Sould Grab hit a enemy");
             enemy.removeFromWorld = true;
+            enemy.currentIFrameTimer = enemy.maxIFrameTimer;
+            this.hitCount++;
           }
         }
       });
@@ -160,8 +169,12 @@ class CosmicBladeAbility {
   //Required - draw collision BB here
   draw(ctx) {
     if (debug && this.inUse) {
-      ctx.strokeRect(this.BB1.x - gameEngine.camera.x, this.BB1.y - gameEngine.camera.y, this.BB1.width, this.BB1.height);
-      ctx.strokeRect(this.BB2.x - gameEngine.camera.x, this.BB2.y - gameEngine.camera.y, this.BB2.width, this.BB2.height);
+      ctx.strokeRect(
+        this.BB.x - gameEngine.camera.x,
+        this.BB.y - gameEngine.camera.y,
+        this.BB.width,
+        this.BB.height
+      );
     }
   }
 }
