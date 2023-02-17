@@ -1,11 +1,11 @@
-class TemplateAbility {
+class ExtraJump {
 
     constructor(cooldownRarity, effectRarity) {
         //Necessary properties for all abilities
-        this.name = '';
-        this.description = '' + this.effect + '';
-        this.icon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/INSERT_ICON_HERE.png");
-        this.inUseIcon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/INSERT_ICON_HERE.png");
+        this.name = 'Extra Jump';
+        this.description = 'Allows you to jump one more time in the air!';
+        this.icon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/extra_jump_icon.png");
+        this.inUseIcon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/extra_jump_in_use_icon.png");
         this.dominant = false;
         this.cooldownRarity = cooldownRarity;
         this.effectRarity = effectRarity;
@@ -19,11 +19,11 @@ class TemplateAbility {
     }
 
     onEquip() {
-        player.MAX_JUMPS = 3;
+        player.MAX_JUMPS++;
     }
 
     onUnequip() {
-        player.MAX_JUMPS = 2;
+        player.MAX_JUMPS--;
     }
 
     //This runs when the Character presses the ability button
@@ -39,7 +39,7 @@ class TemplateAbility {
 
     //Edit these to change the cooldown of the ability based on rarity
     setCooldown(cooldownRarity) { 
-
+        return 0;
     }
 
 
