@@ -45,7 +45,8 @@ LevelAssets
 
 Abilities
     cosmic_blade            1200x1164   4frames
-    soul_grab_with_enemy_right 1024x512    4frames
+    soul_grab_right         1024x512    4frames
+    soul_grab_left          1024x512    4frames
     supersonic              320x256     9frames  
     supersonic_left         320x256     9frames
     emp                     1200x1164   7frames
@@ -54,7 +55,6 @@ Abilities
     atomic_left             256x256     3frames
     atomic_right            256x256     3frames
     atomic_projectile       64x64       1frame
-      
 
 UI
     DE_UI_Design            1050x675    1frame
