@@ -91,18 +91,7 @@ class CosmicBladeAbility {
       case 2:
       case 3:
       case 4:
-        // Basic cooldown 20-30 seconds
-        //return Math.floor(Math.random() * 5) + 20;
         return 0;
-      // case 2:
-      //     // Uncommon cooldown 15-20 seconds
-      //     return Math.floor(Math.random() * 5) + 15;
-      // case 3:
-      //     // Rare cooldown 12-14 seconds
-      //     return Math.floor(Math.random() * 2) + 12;
-      // case 4:
-      //     // Godlike cooldown 7-11 seconds
-      //     return Math.floor(Math.random() * 4) + 7;
       default:
         console.log("Cooldown rarity not found");
     }
@@ -113,17 +102,11 @@ class CosmicBladeAbility {
   setEffect(effectRarity) {
     switch (effectRarity) {
       case 1:
-        // Basic damage gets damage between 1 and 3
-        return Math.floor(Math.random() * 3) + 1;
       case 2:
-        // Uncommon damage gets damage between 3 and 5
-        return Math.floor(Math.random() * 3) + 3;
       case 3:
-        // Rare damage gets damage between 5 and 7
-        return Math.floor(Math.random() * 3) + 5;
       case 4:
-        // Godlike damage gets damage between 7 and 10
-        return Math.floor(Math.random() * 4) + 7;
+        //damge between 1 and 3
+        return Math.floor(Math.random() * 3) + 1;
       default:
         console.log("Effect rarity not found");
         return -1;
@@ -135,7 +118,8 @@ class CosmicBladeAbility {
     this.cooldownTimer.checkCooldown();
     if (this.inUse) {
       gameEngine.entities.forEach((enemy) => {
-        if (enemy.hostile && (this.BB1.collide(enemy.BB) || this.BB2.collide(enemy.BB))) {
+        if (enemy.hostile && (this.BB1.collide(enemy.BB) || this.BB2.collide(enemy.BB)) &&
+        (player.animations[4][0].currentFrame() >= 2|| player.animations[4][1].currentFrame() >= 2)) {
           if (enemy.currentIFrameTimer === 0) {
             console.log("Cosmic Blade hit a enemy");
             enemy.health -= this.effect + params.DARK_ENERGY.meleeAttack;
