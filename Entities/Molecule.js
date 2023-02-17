@@ -13,7 +13,7 @@ class Molecule {
     this.dead = false;
     this.paused = true;
     this.currentIFrameTimer = 0;
-    this.maxIFrameTimer = 25;
+    this.maxIFrameTimer = 50;
     
     //Changed to center point
     this.projectileBuffer = 150;
