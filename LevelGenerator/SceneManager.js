@@ -129,7 +129,7 @@ class SceneManager {
     };
 
     restoreDarkEnergy() {
-        player.health = 10 + params.DARK_ENERGY.hp;
+        player.health = player.health + params.DARK_ENERGY.hp;
         player.JUMP_ACC = -1300 - (this.game.darkEnergy.jumpHeight * 10);
         player.MAX_RUN = 800 + (this.game.darkEnergy.movementSpeed * 10);
     }
@@ -314,7 +314,7 @@ class SceneManager {
         this.game.camera.y = 0;
         this.player = new GameCharacter(this.game, CANVAS_WIDTH/3, 0);
         player = this.player; //update global player reference
-        player.health = 10 + params.DARK_ENERGY.hp;
+        player.health = player.health + params.DARK_ENERGY.hp;
         equipAbilities(params.INVENTORY.dnaSlot1); //equip abilities
         equipAbilities(params.INVENTORY.dnaSlot2);
         this.restoreDarkEnergy();

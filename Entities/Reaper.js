@@ -116,9 +116,6 @@ class Reaper {
       ) {
         if (this.elapsedTime > this.attackRate) {
           this.state = 3;
-          if (this.facing === 1 ) {
-            this.animationXOffset = +55;
-          }
           if (this.animations[this.state][this.facing].isDone()) {
             this.animations[this.state][this.facing].elapsedTime = 0;
             this.state = this.size;
@@ -264,8 +261,8 @@ class Reaper {
     this.animations[this.state][this.facing].drawFrame(
       this.game.clockTick,
       ctx,
-      this.x - this.animationXOffset - this.game.camera.x,
-      this.y - this.animationYOffset - this.game.camera.y,
+      this.x - this.game.camera.x,
+      this.y - this.game.camera.y,
       1
     );
     if (debug)
