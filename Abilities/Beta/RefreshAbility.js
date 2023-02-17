@@ -113,12 +113,19 @@ class RefreshAbility {
     setCooldown(cooldownRarity) { 
         switch (cooldownRarity) {
             case 1:
+                // Basic cooldown
+                return Math.floor(Math.random() * 10) + 15;
             case 2:
+                // Uncommon cooldown
+                return Math.floor(Math.random() * 10) + 10;
             case 3:
+                // Rare cooldown
+                return Math.floor(Math.random() * 10) + 5;
             case 4:
-                return 5;
+                // Godlike cooldown
+                return Math.floor(Math.random() * 10) + 1;
             default:
-                console.log("Cooldown rarity not found");
+                console.log('Cooldown rarity not found');
         }
 
         return 0;
