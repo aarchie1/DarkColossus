@@ -22,7 +22,7 @@ class SoulGrabAbility {
 
     //Ability specific properties
     this.updateBB();
-    this.animationflag = true;
+    this.animationflag = false;
     this.hitCount = 0;
   }
 
@@ -41,7 +41,7 @@ class SoulGrabAbility {
   //This runs when the Character presses the ability button
   onUse() {
     if (this.inUse || this.cooldownTimer.checkCooldown()) return;
-    this.animationflag = true;
+    this.animationflag = false;
     //check if there is a reaper within range
     gameEngine.entities.forEach((enemy) => {
       if (enemy.hostile && this.BB.collide(enemy.BB)) {
@@ -86,7 +86,7 @@ class SoulGrabAbility {
       console.log("Soul Grab started");
       this.hitCount = 0;
     } else {
-      this.animationflag = true;
+      this.animationflag = false;
       this.onEnd();
     }
   }
