@@ -50,6 +50,13 @@ class SceneManager {
         let yBoundMax = -800;
         this.rightXLimit = 160000;
 
+        this.game.addEntity(new Platform(this.game, 1000, 500, 884, 496,
+            ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_large.png"), new BoundingBox(1000, 640, 740, 100)));
+        // add invisible wall to platform
+        this.game.addEntity(new InvisibleWall(this.game, 1000, 500));
+        // spawn reaper on platform
+        this.game.addEntityFirst(new Reaper(this.game, 1200, 300, 2));
+    
 
         for (let i = 0; i < level.dnaPickup.length; i++) {
             let dna = level.dnaPickup[i];
