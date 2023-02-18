@@ -49,14 +49,6 @@ class SceneManager {
         let yBoundMin = 600;
         let yBoundMax = -800;
         this.rightXLimit = 160000;
-
-        this.game.addEntity(new Platform(this.game, 1000, 500, 884, 496,
-            ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_large.png"), new BoundingBox(1000, 640, 740, 100)));
-        // add invisible wall to platform
-        this.game.addEntity(new InvisibleWall(this.game, 1000, 500));
-        this.game.addEntity(new InvisibleWall(this.game, 1800, 500));
-        // spawn reaper on platform
-        this.game.addEntityFirst(new Reaper(this.game, 1200, 300, 2));
     
 
         for (let i = 0; i < level.dnaPickup.length; i++) {
@@ -64,15 +56,15 @@ class SceneManager {
             this.game.addEntity(new DnaItemDrop(this.game, dna.x, dna.y));
         }
 
-        // for (let i = 0; i < level.reaper.length; i++) {
-        //     let enemy = level.reaper[i];
-        //     this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
-        // }
+        for (let i = 0; i < level.reaper.length; i++) {
+            let enemy = level.reaper[i];
+            this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
+        }
 
-        // for (let i = 0; i < level.molecule.length; i++) {
-        //     let enemy = level.molecule[i];
-        //     this.game.addEntity(new Molecule(this.game, enemy.x, enemy.y, 2));
-        // }
+        for (let i = 0; i < level.molecule.length; i++) {
+            let enemy = level.molecule[i];
+            this.game.addEntity(new Molecule(this.game, enemy.x, enemy.y, 2));
+        }
 
         //Portals
         for (let i = 0; i < level.portal.length; i++) {
