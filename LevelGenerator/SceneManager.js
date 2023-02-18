@@ -64,15 +64,15 @@ class SceneManager {
             this.game.addEntity(new DnaItemDrop(this.game, dna.x, dna.y));
         }
 
-        for (let i = 0; i < level.reaper.length; i++) {
-            let enemy = level.reaper[i];
-            this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
-        }
+        // for (let i = 0; i < level.reaper.length; i++) {
+        //     let enemy = level.reaper[i];
+        //     this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
+        // }
 
-        for (let i = 0; i < level.molecule.length; i++) {
-            let enemy = level.molecule[i];
-            this.game.addEntity(new Molecule(this.game, enemy.x, enemy.y, 2));
-        }
+        // for (let i = 0; i < level.molecule.length; i++) {
+        //     let enemy = level.molecule[i];
+        //     this.game.addEntity(new Molecule(this.game, enemy.x, enemy.y, 2));
+        // }
 
         //Portals
         for (let i = 0; i < level.portal.length; i++) {
@@ -138,8 +138,8 @@ class SceneManager {
 
     restoreDarkEnergy() {
         player.health = player.health + params.DARK_ENERGY.hp;
-        player.JUMP_ACC = -1300 - (this.game.darkEnergy.jumpHeight * 10);
-        player.MAX_RUN = 800 + (this.game.darkEnergy.movementSpeed * 10);
+        player.JUMP_ACC = player.JUMP_ACC - (this.game.darkEnergy.jumpHeight * 10);
+        player.MAX_RUN = player.MAX_RUN + (this.game.darkEnergy.movementSpeed * 10);
     }
 
     randomizeLevel() {
