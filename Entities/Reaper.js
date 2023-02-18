@@ -109,18 +109,18 @@ class Reaper {
             }
           }
         } //check if reaper is colliding with invisible wall
+        //check if reaper is colliding with invisible wall
         if (entity instanceof InvisibleWall) {
-          if (this.BB.collide(entity.BB)) {
-            // if reapers moving left reverse x velocity
-            if (this.velocity.x < 0) {
-              // this.velocity.x = -this.velocity.x;
-              this.velocity.x = 0;
-              
-            }
-            //if reaper is moving right reverse x velocity
-            if (this.velocity.x > 0) {
-              this.velocity.x = -this.velocity.x;
-            }
+          if (this.BB.collide(entity.BB) && this.x <= player.x) {
+            this.x = entity.BB.left - this.BB.width*2;
+            this.velocity.x = 0;
+            this.updateBB();
+
+          } else if (this.BB.collide(entity.BB) && this.x > player.x) {
+            this.x = entity.BB.right;
+            this.velocity.x = 0;
+            this.updateBB();
+
           }
         }
       });
