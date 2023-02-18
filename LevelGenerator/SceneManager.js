@@ -49,13 +49,6 @@ class SceneManager {
         let yBoundMin = 600;
         let yBoundMax = -800;
         this.rightXLimit = 160000;
-
-        this.game.addEntity(new Platform(this.game, 1000, 500, 884, 496,
-            ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_large.png"), new BoundingBox(1000, 640, 740, 100)));
-        // add invisible wall to platform
-        this.game.addEntity(new InvisibleWall(this.game, 1000, 500));
-        // spawn reaper on platform
-        this.game.addEntityFirst(new Reaper(this.game, 1200, 300, 2));
     
 
         for (let i = 0; i < level.dnaPickup.length; i++) {
@@ -136,9 +129,9 @@ class SceneManager {
     };
 
     restoreDarkEnergy() {
-        player.health = 10 + params.DARK_ENERGY.hp;
-        player.JUMP_ACC = -1300 - (this.game.darkEnergy.jumpHeight * 10);
-        player.MAX_RUN = 800 + (this.game.darkEnergy.movementSpeed * 10);
+        player.health = player.health + params.DARK_ENERGY.hp;
+        player.JUMP_ACC = player.JUMP_ACC - (this.game.darkEnergy.jumpHeight * 10);
+        player.MAX_RUN = player.MAX_RUN + (this.game.darkEnergy.movementSpeed * 10);
     }
 
     randomizeLevel() {
@@ -321,7 +314,7 @@ class SceneManager {
         this.game.camera.y = 0;
         this.player = new GameCharacter(this.game, CANVAS_WIDTH/3, 0);
         player = this.player; //update global player reference
-        player.health = 10 + params.DARK_ENERGY.hp;
+        player.health = player.health + params.DARK_ENERGY.hp;
         equipAbilities(params.INVENTORY.dnaSlot1); //equip abilities
         equipAbilities(params.INVENTORY.dnaSlot2);
         this.restoreDarkEnergy();

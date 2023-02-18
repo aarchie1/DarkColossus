@@ -10,7 +10,8 @@ class Reaper {
     this.velocity = { x: 0, y: 0 };
     this.hostile = true;
     this.damage = 1;
-    
+    this.colidingWithWall = false;
+
     this.attackRate = 2;
     this.elapsedTime = 0;
     this.attackDistance = 0;
@@ -108,18 +109,18 @@ class Reaper {
             }
           }
         } //check if reaper is colliding with invisible wall
+        //check if reaper is colliding with invisible wall
         if (entity instanceof InvisibleWall) {
-          if (this.BB.collide(entity.BB)) {
-            // if reapers moving left reverse x velocity
-            if (this.velocity.x < 0) {
-              // this.velocity.x = -this.velocity.x;
-              this.velocity.x = 0;
-              
-            }
-            //if reaper is moving right reverse x velocity
-            if (this.velocity.x > 0) {
-              this.velocity.x = -this.velocity.x;
-            }
+          if (this.BB.collide(entity.BB) && this.x <= player.x) {
+            this.x = entity.BB.left - this.BB.width*2;
+            this.velocity.x = 0;
+            this.updateBB();
+
+          } else if (this.BB.collide(entity.BB) && this.x > player.x) {
+            this.x = entity.BB.right;
+            this.velocity.x = 0;
+            this.updateBB();
+
           }
         }
       });
@@ -130,9 +131,6 @@ class Reaper {
       ) {
         if (this.elapsedTime > this.attackRate) {
           this.state = 3;
-          if (this.facing === 1 ) {
-            this.animationXOffset = +55;
-          }
           if (this.animations[this.state][this.facing].isDone()) {
             this.animations[this.state][this.facing].elapsedTime = 0;
             this.state = this.size;
@@ -278,8 +276,8 @@ class Reaper {
     this.animations[this.state][this.facing].drawFrame(
       this.game.clockTick,
       ctx,
-      this.x - this.animationXOffset - this.game.camera.x,
-      this.y - this.animationYOffset - this.game.camera.y,
+      this.x - this.game.camera.x,
+      this.y - this.game.camera.y,
       1
     );
     if (debug)
