@@ -10,7 +10,8 @@ class Reaper {
     this.velocity = { x: 0, y: 0 };
     this.hostile = true;
     this.damage = 1;
-    
+    this.colidingWithWall = false;
+
     this.attackRate = 2;
     this.elapsedTime = 0;
     this.attackDistance = 0;

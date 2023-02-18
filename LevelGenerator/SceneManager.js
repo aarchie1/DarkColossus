@@ -54,6 +54,7 @@ class SceneManager {
             ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_large.png"), new BoundingBox(1000, 640, 740, 100)));
         // add invisible wall to platform
         this.game.addEntity(new InvisibleWall(this.game, 1000, 500));
+        this.game.addEntity(new InvisibleWall(this.game, 1800, 500));
         // spawn reaper on platform
         this.game.addEntityFirst(new Reaper(this.game, 1200, 300, 2));
     
