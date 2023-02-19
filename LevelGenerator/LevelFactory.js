@@ -48,7 +48,7 @@ function getLevelModifierText(modifierNumber) {
 
 
 function getLevel(levelNumber) {
-    let sections = [flatSection, ascendingSteppingStonesSection, descendingSteppingStonesSection, verticalSection, dnaPickupSection];//hordeFightSection, , dnaPickupSection, flatSection];
+    let sections = [flatSection, ascendingSteppingStonesSection, descendingSteppingStonesSection, dnaPickupSection];//hordeFightSection, , dnaPickupSection, flatSection];verticalSection
     let view = {x: CANVAS_WIDTH, y: CANVAS_HEIGHT};
 
     const levelModifier = currentLevelModifier;//Math.floor(Math.random() * 11); //num between 0 and 10
@@ -77,6 +77,7 @@ function getLevel(levelNumber) {
         platformSmall: [],
         platformLarge: [],
         platformHub: [],
+        invisibleWall: [],
         hazardGrowthShort: [],
         hazardGrowthTall: [],
         dnaPickup: [],
@@ -113,22 +114,27 @@ function getLevel(levelNumber) {
         let buildSection = sections[Math.floor(Math.random() * sections.length)];
         buildSection();
     }
-    checkpointSection(); //build this last no matter what to go to next level
 
     //iterate through all platforms and have a chance to spawn a reaper or molecule
-    level.platformGround.forEach(platform => { addEnemiesNearPlatform(platform); addHazardOnPlatform(platform);});
-    level.platformTiny.forEach(platform => { addEnemiesNearPlatform(platform); addHazardOnPlatform(platform);});
-    level.platformSmall.forEach(platform => { addEnemiesNearPlatform(platform); addHazardOnPlatform(platform);});
-    level.platformLarge.forEach(platform => { addEnemiesNearPlatform(platform); addHazardOnPlatform(platform);});
+    level.platformGround.forEach(platform => { addMoleculeNearPlatform(platform); addReaperNearPlatform(platform, 600, 30); addHazardOnPlatform(platform);});
+    level.platformTiny.forEach(platform => { addMoleculeNearPlatform(platform); addHazardOnPlatform(platform);});
+    level.platformSmall.forEach(platform => { addMoleculeNearPlatform(platform); addHazardOnPlatform(platform);});
+    level.platformLarge.forEach(platform => { addReaperNearPlatform(platform, 600, 200); addMoleculeNearPlatform(platform); addHazardOnPlatform(platform);});
 
-    function addEnemiesNearPlatform(platform) {
-        if (Math.random() < BASE_ENEMY_SPAWN_RATE + (levelNumber)) { 
-            level.reaper.push({x: platform.x + randomNumberInRange(-500, 500), y: platform.y + randomNumberInRange(-500, 500)});
-        }
+    checkpointSection(); //build this last no matter what to go to next level
+
+    function addReaperNearPlatform(platform, x, y) {
         if (Math.random() < BASE_ENEMY_SPAWN_RATE + (levelNumber)) {
-            level.molecule.push({x: platform.x + randomNumberInRange(-500, 500), y: platform.y + randomNumberInRange(-500, 500)});
+            level.reaper.push({x: platform.x + randomNumberInRange(50, x), y: platform.y - y});
         }
     }
+
+    function addMoleculeNearPlatform(platform) {
+        if (Math.random() < BASE_ENEMY_SPAWN_RATE + (levelNumber)) {
+            level.molecule.push({x: platform.x + randomNumberInRange(-500, 500), y: platform.y - randomNumberInRange(0, 500)});
+        }
+    }
+
 
 
     function addHazardOnPlatform(platform) {
@@ -205,6 +211,8 @@ function getLevel(levelNumber) {
                 break;
             case PLATFORM_LARGE:
                 level.platformLarge.push({x: x, y: y, moving: moving});
+                level.invisibleWall.push({x: x+40, y: y});
+                level.invisibleWall.push({x: x + PLATFORM_LARGE.w-60, y: y});
                 break;
             case PLATFORM_GROUND:
                 level.platformGround.push({x: x, y: y, moving: moving});
@@ -219,7 +227,7 @@ function getLevel(levelNumber) {
         for (let i = 0; i < numberOfPlatforms; i++) {
             let platformType = choosePlatformType();
             addPlatform(platformType, startX, startY, (Math.random() < 0.5) ? true : false);
-            startX += randomNumberInRange(platformType.w, platformType.w * 2);
+            startX += randomNumberInRange(platformType.w, platformType.w + 400);
             startY -= Math.min(randomNumberInRange(platformType.h, PLAYER.h * 2), PLAYER.h);  
         }
     }
@@ -229,18 +237,22 @@ function getLevel(levelNumber) {
         for (let i = 0; i < numberOfPlatforms; i++) {
             let platformType = choosePlatformType();
             addPlatform(platformType, startX, startY, (Math.random() < 0.5) ? true : false);
-            startX += randomNumberInRange(platformType.w, platformType.w * 2);
+            startX += randomNumberInRange(platformType.w, platformType.w +400);
             startY = Math.min(startY + randomNumberInRange(platformType.h, PLAYER.h), GROUND_HEIGHT);  
+            if (startY == GROUND_HEIGHT) break;
         }
     }
 
     function flatSection() {
-        descendingSteppingStonesSection();
-        for (let i = 0; i < randomNumberInRange(2, 5); i++) {
+        while (startY < GROUND_HEIGHT) descendingSteppingStonesSection();
+        level.invisibleWall.push({x: startX+10, y: startY});
+        for (let i = 0; i < randomNumberInRange(1, 4); i++) {
             let platformType = PLATFORM_GROUND;
             addPlatform(platformType, startX, startY, false);
             startX += platformType.w;
         }
+        level.invisibleWall.push({x: startX, y: startY});
+        
     }
         
     function hordeFightSection() {
@@ -279,11 +291,11 @@ function getLevel(levelNumber) {
             let prevPlatformType = null;
             for (let j = 0; j < numberOfPlatforms; j++) {
                 let platformType = (Math.random() < 0.5) ? PLATFORM_SMALL : PLATFORM_TINY;
-                addPlatform(platformType, randomNumberInRange(tempStartX, 1600), startY, false);
+                addPlatform(platformType, randomNumberInRange(tempStartX, 1000), startY, false);
                 prevPlatformType = platformType;
             }
             //startY -= randomNumberInRange(PLAYER.h*1.5, PLAYER.h * 2.5);
-            startY -= Math.min(randomNumberInRange(prevPlatformType.h, PLAYER.h * 1.5), PLAYER.h);  
+            startY -= Math.max(randomNumberInRange(prevPlatformType.h, PLAYER.h * 1.5), PLAYER.h);  
 
         }
         startX += PLAYER.w;
@@ -291,16 +303,14 @@ function getLevel(levelNumber) {
 
     function dnaPickupSection() {
         //add a large platform with a dna pickup in the middle
-        descendingSteppingStonesSection();
 
-        addPlatform(PLATFORM_GROUND, startX, startY, false);
-        level.dnaPickup.push({x: startX + PLATFORM_GROUND.w/2, y: startY - 170});
-        startX += PLATFORM_GROUND.w;
+        addPlatform(PLATFORM_LARGE, startX, startY, false);
+        level.dnaPickup.push({x: startX + PLATFORM_LARGE.w/2, y: startY - 170});
+        startX += PLATFORM_LARGE.w + PLAYER.w;
     }
 
     function checkpointSection() {
         //create three large platforms with a checkpoint in the middle of each
-
         
         for (let i = 0; i < 3; i++) {
             addPlatform(PLATFORM_LARGE, startX, startY, false);

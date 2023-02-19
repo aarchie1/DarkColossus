@@ -167,7 +167,7 @@ class CosmicBladeAbility {
 
   //Required - draw collision BB here
   draw(ctx) {
-    if (debug && this.inUse) {
+    if (debug && this.inUse && (player.animations[4][0].currentFrame() >= 2|| player.animations[4][1].currentFrame() >= 2)) {
       ctx.strokeRect(this.BB1.x - gameEngine.camera.x, this.BB1.y - gameEngine.camera.y, this.BB1.width, this.BB1.height);
       ctx.strokeRect(this.BB2.x - gameEngine.camera.x, this.BB2.y - gameEngine.camera.y, this.BB2.width, this.BB2.height);
     }

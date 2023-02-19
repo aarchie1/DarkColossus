@@ -115,6 +115,13 @@ class SceneManager {
                 ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_tiny.png"), new BoundingBox(x+7, y + 90, 160, 100)));
         }
 
+        //invisible walls
+        for (let i = 0; i < level.invisibleWall.length; i++) {
+            let wall = level.invisibleWall[i];      
+            this.game.addEntity(new InvisibleWall(this.game, wall.x, wall.y));
+        }
+
+
 
 
 

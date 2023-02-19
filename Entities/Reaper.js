@@ -111,15 +111,14 @@ class Reaper {
             }
           }
         } //check if reaper is colliding with invisible wall
-        //check if reaper is colliding with invisible wall
         if (entity instanceof InvisibleWall) {
           if (this.BB.collide(entity.BB) && this.x <= player.x) {
-            this.x = entity.BB.left - this.BB.width*2;
+            this.x -= this.width;
             this.velocity.x = 0;
             this.updateBB();
 
           } else if (this.BB.collide(entity.BB) && this.x > player.x) {
-            this.x = entity.BB.right;
+            this.x += this.width;
             this.velocity.x = 0;
             this.updateBB();
 
