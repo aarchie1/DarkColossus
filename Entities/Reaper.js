@@ -4,6 +4,8 @@ class Reaper {
     const TICK = this.game.clockTick;
     this.fallAcc = 400;
     this.reaper = this;
+    this.width = 256;
+    this.height = 256;
     this.player = this.game.camera.player;
     this.facing = 1; // 0 = right, 1 == left
     this.state = size; //0 = weak 1 = normal 2 = strong 3 = attacking

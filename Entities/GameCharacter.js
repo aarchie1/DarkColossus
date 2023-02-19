@@ -244,6 +244,17 @@ class GameCharacter {
     if (this.velocity.x < 0) this.facing = 1;
     if (this.velocity.x > 0) this.facing = 0;
 
+    //Create particle under and behind player feet
+    if (this.state == 1 && this.facing == 1 && this.animations[1][1].currentFrame() % 3 == 0 && !this.usingAbility){
+
+      params.PARTICLE_SYSTEM.createParticleEffect(this.x + 200 - gameEngine.camera.x, this.y+256 - gameEngine.camera.y, 1+3*(Math.abs(this.velocity.x)/this.MAX_RUN), 5, '#330000', 10, 3, 0.3, -1, 1);
+    } else if (this.state == 1 && this.facing == 0 && this.animations[1][0].currentFrame() % 3 == 0 && !this.usingAbility){
+      params.PARTICLE_SYSTEM.createParticleEffect(this.x + 100 - gameEngine.camera.x, this.y+256 - gameEngine.camera.y, 1+3*(Math.abs(this.velocity.x)/this.MAX_RUN), 5, '#330000', 10, 3, 0.3, -1, 1);
+
+    }
+
+
+
     // Pass control to abilities
     this.abilityControls();
 
@@ -271,6 +282,7 @@ class GameCharacter {
       (this.game.keys.Space || this.game.controllerButtonRT) &&
       this.JUMPS > 0
     ) {
+
       this.JUMPS--;
       this.velocity.y = this.JUMP_ACC;
       if (this.facing == 0) {

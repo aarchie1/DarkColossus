@@ -104,10 +104,11 @@ ASSET_MANAGER.downloadAll(() => {
 	const ctx = canvas.getContext("2d");
 	params.CANVAS = ctx;
 	gameEngine.init(ctx);
-
+	params.PARTICLE_SYSTEM = new ParticleEffectSystem();
 	params.INVENTORY = new Inventory(gameEngine);
 	gameEngine.addEntity(params.INVENTORY);
 	gameEngine.addEntity(new SceneManager(gameEngine));
+	gameEngine.addEntity(params.PARTICLE_SYSTEM);
 
 	// Janky way of getting music to start, you have to interact with the volume bar first
 	// var l = document.getElementById('volume');

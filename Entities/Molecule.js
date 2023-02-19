@@ -6,6 +6,8 @@ class Molecule {
     this.player = this.game.camera.player;
     this.hostile = true;
 
+    this.width = 256;
+    this.height = 256;
     this.facing = 1; // 0 = right, 1 == left
     this.state = size; // 0 = low 1 = half,  2 = full, 3 = attack
     this.velocity = { x: 0, y: 0 };

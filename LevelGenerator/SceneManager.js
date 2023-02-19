@@ -304,11 +304,11 @@ class SceneManager {
 
         //set removeFromWorld to true for everything in this.game.entities except Inventory, DarkEnergy, SceneManager, etc.
         this.game.entities.forEach(function (entity) {
-            if (!(entity instanceof Inventory || entity instanceof DarkEnergy || entity instanceof SceneManager || entity instanceof hud)) {
+            if (!(entity instanceof Inventory || entity instanceof DarkEnergy || entity instanceof SceneManager || entity instanceof hud || entity instanceof ParticleEffectSystem)) {
                 entity.removeFromWorld = true;
             }
         });
-
+ 
         //SET ALL ABILITIES TO NOT IN USE TO PREVENT BUG
         if (params.INVENTORY.dnaSlot1 != null) {
             let dna = params.INVENTORY.dnaSlot1;

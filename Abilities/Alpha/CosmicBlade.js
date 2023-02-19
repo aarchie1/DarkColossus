@@ -132,6 +132,10 @@ class CosmicBladeAbility {
             gameEngine.addEntityFirst(
               new DamageIndicator(enemy.x, enemy.y, this.effect + params.DARK_ENERGY.meleeAttack)
             );
+
+            //(x, y, particleCount, particleSize, particleColor, xSpeed, ySpeed, sizeDecrement)
+            params.PARTICLE_SYSTEM.createParticleEffect(enemy.x + enemy.width/2 - gameEngine.camera.x, enemy.y + enemy.height/2 - gameEngine.camera.y, 50, 14, '#330000', 12, 25, 0.55);
+
           }
           if (enemy instanceof MoleculeProjectile) {
             enemy.removeFromWorld = true;

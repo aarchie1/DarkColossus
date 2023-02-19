@@ -110,12 +110,16 @@ class AstralBeamAbility {
             gameEngine.entities.forEach((enemy) => {
                 if ( enemy.hostile && 
                       (this.BB1_TAIL.collide(enemy.BB) || this.BB2_UPPER_ARM.collide(enemy.BB) || this.BB3_LOWER_ARM.collide(enemy.BB) ) &&
-                      (player.animations[4][0].currentFrame() >= 5 || player.animations[4][1].currentFrame() >= 5) &&
-                     enemy.currentIFrameTimer == 0) {
-                    console.log('Astral Beam HIT');
-                    enemy.currentIFrameTimer = enemy.maxIFrameTimer;
-                    enemy.health -= this.damage;
-                    if ( !(enemy instanceof MoleculeProjectile)) gameEngine.addEntityFirst(new DamageIndicator(enemy.x+30, enemy.y, this.damage));
+                      (player.animations[4][0].currentFrame() >= 5 || player.animations[4][1].currentFrame() >= 5)) {
+                    
+                        params.PARTICLE_SYSTEM.createParticleEffect(enemy.x + enemy.width/2 - gameEngine.camera.x, enemy.y + enemy.height/2 - gameEngine.camera.y, 50, 14, '#330000', 12, 25, 0.55);
+                    
+                    if (enemy.currentIFrameTimer == 0){
+                        console.log('Astral Beam HIT');
+                        enemy.currentIFrameTimer = enemy.maxIFrameTimer;
+                        enemy.health -= this.damage;
+                        if ( !(enemy instanceof MoleculeProjectile)) gameEngine.addEntityFirst(new DamageIndicator(enemy.x+30, enemy.y, this.damage));
+                    }
                 }
            })
         } 
