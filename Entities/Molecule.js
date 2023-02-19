@@ -150,6 +150,9 @@ class Molecule {
       if (this.health <= 0) {
         this.dead = true;
         this.removeFromWorld = true;
+        this.game.addEntityFirst(new DarkEnergyItemDrop(this.game, this.x, this.y));
+
+
       }
     }
   }
