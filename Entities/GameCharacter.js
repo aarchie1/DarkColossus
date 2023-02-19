@@ -33,6 +33,8 @@ class GameCharacter {
     this.animationYOffset = 0;
     this.animations = [];
     this.loadAnimations();
+
+    this.brightness = 100;
   }
 
   updateBB() {
@@ -210,6 +212,7 @@ class GameCharacter {
             this.game.addEntityFirst(
               new DamageIndicator(this.x+150, this.y, entity.damage)
             );
+            this.brightness = 200;
           }
           if (
             entity instanceof MoleculeProjectile &&
@@ -222,6 +225,7 @@ class GameCharacter {
             this.game.camera.game.addEntityFirst(
               new DamageIndicator(this.x+250, this.y, entity.damage)
             );
+            this.brightness = 200;
           }
         }
       }
@@ -524,6 +528,10 @@ class GameCharacter {
   }
   draw(ctx) {
 
+
+    ctx.filter = "brightness" + "(" + this.brightness + "%)";
+    if (this.brightness > 100) this.brightness -= 2;
+
     if (this.usingAbility){
       this.animations[4][this.facing].drawFrame(
         this.game.clockTick,
@@ -540,7 +548,10 @@ class GameCharacter {
         this.y - this.game.camera.y,
         1
       );
+
     }
+    ctx.filter = "none"
+
 
     //DEBUG (I probably should have put it all in one if statement oops lmao)
     ctx.fillStyle = "white";
@@ -602,6 +613,7 @@ class GameCharacter {
         if (debug) ctx.fillText("Facing: Unknown", debugX, debugY + 100);
         break;
     }
+    
 
     if (debug) ctx.fillText("Jump Acceleration: " + this.JUMP_ACC, debugX, debugY + 240);
     if (debug) ctx.fillText("Max Run Speed: " + this.MAX_RUN, debugX, debugY + 220);

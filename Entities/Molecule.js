@@ -149,6 +149,7 @@ class Molecule {
       //if enemy is dead, remove from game
       if (this.health <= 0) {
         this.dead = true;
+        params.PARTICLE_SYSTEM.createParticleEffect(this.x + this.width/2 - gameEngine.camera.x, this.y + this.height/2 - gameEngine.camera.y, 50, 14, '#FF3232', 23, 5, 0.55);
         this.removeFromWorld = true;
         this.game.addEntityFirst(new DarkEnergyItemDrop(this.game, this.x, this.y));
 

@@ -57,17 +57,13 @@ class AstralBeamAbility {
     setCooldown(cooldownRarity) { 
         switch (cooldownRarity) {
             case 1:
-                // Basic cooldown 7-10 seconds
-                return Math.floor(Math.random() * 3) + 7;
+                return 4;
             case 2:
-                // Uncommon cooldown 5-6 seconds
-                return Math.floor(Math.random() * 1) + 5;
+                return 3;
             case 3:
-                // Rare cooldown 3-5 seconds
-                return Math.floor(Math.random() * 2) + 3;
+                return 2;
             case 4:
-                // Godlike cooldown 1-2 seconds
-                return Math.floor(Math.random() * 1) + 1;
+                return 1;
         }
     }
 
@@ -76,14 +72,14 @@ class AstralBeamAbility {
     setEffect(effectRarity) {
         switch (effectRarity) {
             case 1:
-                // Basic effect 0.2-0.5 per hit
-                return (Math.random() * 0.3) + 0.2;
+                // Basic effect 0.5-0.8 per hit
+                return (Math.random() * 0.3) + 0.5;
             case 2:
-                // Uncommon effect 0.5-1 per hit
-                return (Math.random() * 0.5) + 0.5;
+                // Uncommon effect 0.8-1.5 per hit
+                return (Math.random() * 0.7) + 0.8;
             case 3:
-                // Rare effect 1-2 per hit
-                return (Math.random() + 1);
+                // Rare effect 1.5-2.5 per hit
+                return (Math.random() + 1) + 1.5;
             case 4:
                 // Godlike effect 2-5 per hit
                 return (Math.random() * 3) + 2;
@@ -112,9 +108,9 @@ class AstralBeamAbility {
                       (this.BB1_TAIL.collide(enemy.BB) || this.BB2_UPPER_ARM.collide(enemy.BB) || this.BB3_LOWER_ARM.collide(enemy.BB) ) &&
                       (player.animations[4][0].currentFrame() >= 5 || player.animations[4][1].currentFrame() >= 5)) {
                     
-                        params.PARTICLE_SYSTEM.createParticleEffect(enemy.x + enemy.width/2 - gameEngine.camera.x, enemy.y + enemy.height/2 - gameEngine.camera.y, 50, 14, '#330000', 12, 25, 0.55);
+                        params.PARTICLE_SYSTEM.createParticleEffect(enemy.x + enemy.width/2 - gameEngine.camera.x, enemy.y + enemy.height/2 - gameEngine.camera.y, 3, 10, '#FF995D', 10, 25, 0.55);
                     
-                    if (enemy.currentIFrameTimer == 0){
+                    if (enemy.currentIFrameTimer < enemy.maxIFrameTimer/1.2){
                         console.log('Astral Beam HIT');
                         enemy.currentIFrameTimer = enemy.maxIFrameTimer;
                         enemy.health -= this.damage;
