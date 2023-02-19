@@ -100,13 +100,17 @@ class CosmicBladeAbility {
 
   //Edit these to change the effect of the ability based on rarity
   setEffect(effectRarity) {
+
+    //damge between 1 and 3
     switch (effectRarity) {
       case 1:
-      case 2:
-      case 3:
-      case 4:
-        //damge between 1 and 3
         return Math.floor(Math.random() * 3) + 1;
+      case 2:
+        return Math.floor(Math.random() * 3) + 2;
+      case 3:
+        return Math.floor(Math.random() * 3) + 3;
+      case 4:
+        return Math.floor(Math.random() * 3) + 4;
       default:
         console.log("Effect rarity not found");
         return -1;

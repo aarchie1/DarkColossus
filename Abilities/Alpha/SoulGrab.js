@@ -75,9 +75,9 @@ class SoulGrabAbility {
         0,
         false
       );
-        player.animations[4][0].yOffset = -25;
+        player.animations[4][0].yOffset = -225;
         player.animations[4][0].xOffset = 200;
-        player.animations[4][1].yOffset = -25;
+        player.animations[4][1].yOffset = -225;
         player.animations[4][1].xOffset = -900;
      
 

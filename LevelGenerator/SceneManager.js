@@ -200,9 +200,16 @@ class SceneManager {
             params.HUD = new hud(gameEngine);
             gameEngine.addEntity(params.HUD);
             //add dna to inventory
-            for (let i = 0; i < 5; i++)
+            for (let i = 0; i < 3; i++)
                 params.INVENTORY.inventory.push(getRandomDNA());
-            this.loadHub();
+
+            params.INVENTORY.inventory[0].epsilonAbility = null;
+            params.INVENTORY.inventory[0].betaAbility = null;
+            params.INVENTORY.inventory[0].alphaAbility = new CosmicBladeAbility(3, 3);
+            params.INVENTORY.inventory[0].sigmaAbility = null;
+            params.INVENTORY.dnaSlot1 = params.INVENTORY.inventory[0];
+            equipAbilities(params.INVENTORY.dnaSlot1);
+            gameEngine.camera.loadHub();
         };
     }
 
@@ -460,9 +467,14 @@ class Title_Screen_Background {
             params.HUD = new hud(gameEngine);
             gameEngine.addEntity(params.HUD);
             //add dna to inventory
-            for (let i = 0; i < 5; i++)
+            for (let i = 0; i < 3; i++)
                 params.INVENTORY.inventory.push(getRandomDNA());
+
             
+            params.INVENTORY.inventory[0].epsilonAbility = null;
+            params.INVENTORY.inventory[0].betaAbility = null;
+            params.INVENTORY.inventory[0].alphaAbility = new CosmicBlade(3, 3);
+            params.INVENTORY.inventory[0].sigmaAbility = null;
             params.INVENTORY.dnaSlot1 = params.INVENTORY.inventory[0];
             equipAbilities(params.INVENTORY.dnaSlot1);
             this.game.camera.loadHub();

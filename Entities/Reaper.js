@@ -15,9 +15,9 @@ class Reaper {
     this.attackRate = 2;
     this.elapsedTime = 0;
     this.attackDistance = 0;
-    this.health = 10;
+    this.health = 5;
     this.currentIFrameTimer = 0;
-    this.maxIFrameTimer = 50;
+    this.maxIFrameTimer = 42;
     this.dead = false;
     this.paused = true;
     this.updateBB();
