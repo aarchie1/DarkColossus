@@ -72,7 +72,7 @@ function getLevel(levelNumber) {
 
     let level = {
         levelNumber: levelNumber,
-        platformGround: [{x:0, y:800}],
+        platformGround: [],
         platformTiny: [],
         platformSmall: [],
         platformLarge: [],
@@ -121,6 +121,7 @@ function getLevel(levelNumber) {
     level.platformSmall.forEach(platform => { addMoleculeNearPlatform(platform); addHazardOnPlatform(platform);});
     level.platformLarge.forEach(platform => { addReaperNearPlatform(platform, 600, 200); addMoleculeNearPlatform(platform); addHazardOnPlatform(platform);});
 
+    level.platformGround.push({x: 0, y: 800});
     checkpointSection(); //build this last no matter what to go to next level
 
     function addReaperNearPlatform(platform, x, y) {
