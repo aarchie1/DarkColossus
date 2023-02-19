@@ -148,6 +148,8 @@ class Reaper {
     }
     if (this.health <= 0) {
       this.removeFromWorld = true;
+      //this.game.darkEnergy.currency += 2;
+      this.game.addEntityFirst(new DarkEnergyItemDrop(this.game, this.x, this.y));
     }
     if (this.currentIFrameTimer > 0) {
       this.currentIFrameTimer -= 1;
