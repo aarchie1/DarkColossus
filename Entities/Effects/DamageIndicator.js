@@ -4,7 +4,7 @@ class DamageIndicator {
         this.timerStart = 20 + (damage+1) + Math.pow(damage, 1.7);
         this.timer = this.timerStart;
         this.alpha = 1;
-        this.randomOffset = 100;
+        this.randomOffset = 50;
         this.randomX = Math.random() * this.randomOffset - this.randomOffset*2;
         this.randomY = Math.random() * this.randomOffset/2 - this.randomOffset;
 
@@ -25,7 +25,7 @@ class DamageIndicator {
         ctx.fillStyle = "white";
         ctx.globalAlpha = this.timer / this.timerStart;
 
-        ctx.fillText(this.damage, this.x + 50 - gameEngine.camera.x - 4 + this.randomX, this.y - gameEngine.camera.y - 4 - (50 - this.timer/2) * 2 + this.randomY);
+        ctx.fillText(this.damage, this.x - gameEngine.camera.x - 4 + this.randomX, this.y - gameEngine.camera.y - 4 - (50 - this.timer/2) * 2 + this.randomY);
         ctx.globalAlpha = 1;
 
     }

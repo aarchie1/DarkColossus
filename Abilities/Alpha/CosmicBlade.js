@@ -130,7 +130,7 @@ class CosmicBladeAbility {
             console.log(enemy.health);
             enemy.currentIFrameTimer = enemy.maxIFrameTimer;
             gameEngine.addEntityFirst(
-              new DamageIndicator(enemy.x, enemy.y, this.effect + params.DARK_ENERGY.meleeAttack)
+              new DamageIndicator(enemy.x+enemy.width/2, enemy.y, this.effect + params.DARK_ENERGY.meleeAttack)
             );
 
             //(x, y, particleCount, particleSize, particleColor, xSpeed, ySpeed, sizeDecrement)

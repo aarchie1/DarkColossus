@@ -19,7 +19,7 @@ class GameCharacter {
     this.state = 2;
 
     //Base Stats
-    this.health = 10;
+    this.health = 5;
 
     this.facing = 0; // 0 = right, 1 == left
     this.state = 0; //0 = idle, 1 = running, 2 = falling 3 = jumping, 4 = attacking
