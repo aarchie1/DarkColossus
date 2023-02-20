@@ -9,6 +9,7 @@ const params = {
     CANVAS : null,
     TIMER : null,
     PARTICLE_SYSTEM: null,
+    LEVEL_MODIFIER: -1,
 };
 
 

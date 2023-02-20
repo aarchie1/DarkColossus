@@ -1,5 +1,6 @@
 class HordeFightManager {
     constructor(enemies, leftBound, rightBound) {
+
         this.enemies = enemies;
         this.enemyInstances = [];
         this.enemiesStartingCount = enemies.length;
@@ -25,7 +26,7 @@ class HordeFightManager {
         gameEngine.addEntityFirst(this.rightBoundGrowthHazard);
 
         this.enemies.forEach(enemy => {
-            if (Math.random() < 0.5) {
+            if ( params.LEVEL_MODIFIER == REAPERS_ONLY || (params.LEVEL_MODIFIER != MOLECULES_ONLY && Math.random() < 0.5) ) {
                 this.enemyInstances.push(new Reaper(gameEngine, enemy.x, enemy.y, 2));
                 //hacky fix to make sure the HUD is always on top of the entities
                 for (let i = 0; i < gameEngine.entities.length; i++) {

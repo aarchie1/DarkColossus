@@ -4,13 +4,13 @@ const NO_MODIFER = 0;
 const REAPERS_ONLY = 1;
 const MOLECULES_ONLY = 2;
 const NO_ENEMIES = 3;
-const HALF_HP = 4;
+const EASY_PLATFORMING = 4;
 const DOUBLE_REWARDS = 5;
 const NO_FIGHTS = 6;
 const ENEMIES_FASTER = 7;
 const REAPERS_DOUBLE_HP = 8;
 const PROJECTILES_DOUBLE_DAMAGE = 9;
-const PHYSICAL_DOUBLE_DAMAGE = 10;
+const DNA_PICKUP_SECTIONS_ONLY = 10;
 
 const BASE_ENEMY_SPAWN_RATE = 0.3;
 
@@ -27,8 +27,8 @@ function getLevelModifierText(modifierNumber) {
             return "Molecule Dimension";
         case NO_ENEMIES:
             return "Empty Abyss";
-        case HALF_HP:
-            return "Half Health Reality";
+        case EASY_PLATFORMING:
+            return "Speed Zone";
         case DOUBLE_REWARDS:
             return "Double Rewards Realm";
         case NO_FIGHTS:
@@ -39,8 +39,8 @@ function getLevelModifierText(modifierNumber) {
             return "Strong Enemies Hell";
         case PROJECTILES_DOUBLE_DAMAGE:
             return "Projectile Power Space";
-        case PHYSICAL_DOUBLE_DAMAGE:
-            return "Physical Power Space";
+        case DNA_PICKUP_SECTIONS_ONLY:
+            return "Lucid Dream";
     }
 }
 
@@ -49,10 +49,12 @@ function getLevelModifierText(modifierNumber) {
 
 function getLevel(levelNumber) {
     let sections = [hordeFightSection, flatSection, ascendingSteppingStonesSection, descendingSteppingStonesSection, dnaPickupSection];//hordeFightSection, , dnaPickupSection, flatSection];verticalSection
+    let easyPlatformingSections = [flatSection, dnaPickupSection, hordeFightSection];
+    let luckySections = [dnaPickupSection];
     let view = {x: CANVAS_WIDTH, y: CANVAS_HEIGHT};
 
     const levelModifier = currentLevelModifier;//Math.floor(Math.random() * 11); //num between 0 and 10
-
+    params.LEVEL_MODIFIER = levelModifier;
     const PLATFORM_SMALL = {w: 256, h: 256};
     const PLATFORM_TINY = {w: 184, h: 284};
     const PLATFORM_LARGE = {w: 884, h: 496};
@@ -111,24 +113,31 @@ function getLevel(levelNumber) {
 
     let numberOfSections = 2 + params.LEVEL; //randomNumberInRange(3, 7 + levelNumber);
 
-    //BUILD LEVEL
-    for(let i = 0; i < numberOfSections; i++) {
-        let buildSection = sections[Math.floor(Math.random() * sections.length)];
-        buildSection();
+    function buildNormalLevel() {
+        for (let i = 0; i < numberOfSections; i++) {
+            let buildSection = sections[Math.floor(Math.random() * sections.length)];
+            buildSection();
+        }
+        addEnemies();
     }
 
-    //iterate through all platforms and have a chance to spawn a reaper or molecule
-    level.platformGround.forEach(platform => { addMoleculeNearPlatform(platform); addReaperNearPlatform(platform, 600, 30); addHazardOnPlatform(platform);});
-    level.platformTiny.forEach(platform => { addMoleculeNearPlatform(platform); addHazardOnPlatform(platform);});
-    level.platformSmall.forEach(platform => { addMoleculeNearPlatform(platform); addHazardOnPlatform(platform);});
-    level.platformLarge.forEach(platform => { addReaperNearPlatform(platform, 600, 200); addMoleculeNearPlatform(platform); addHazardOnPlatform(platform);});
-
-    level.platformGround.push({x: 0, y: 800});
-
-    if (Math.random() < 1.1) {
-        growthChaseLevel();
+    function buildEasyPlatformingLevel() {
+        for (let i = 0; i < numberOfSections; i++) {
+            let buildSection = easyPlatformingSections[Math.floor(Math.random() * easyPlatformingSections.length)];
+            buildSection();
+        }
+        addEnemies();
     }
-    checkpointSection(); //build this last no matter what to go to next level
+
+    function buildLuckyLevel() {
+        for (let i = 0; i < numberOfSections; i++) {
+            let buildSection = luckySections[Math.floor(Math.random() * luckySections.length)];
+            buildSection();
+        }
+        addEnemies();
+    }
+
+
 
     function addReaperNearPlatform(platform, x, y) {
         if (Math.random() < BASE_ENEMY_SPAWN_RATE + (levelNumber)) {
@@ -156,40 +165,50 @@ function getLevel(levelNumber) {
     //Filter level after its been built based off level modifier
     switch(levelModifier) {
         case NO_MODIFER:
+            buildNormalLevel();
             break;
         case REAPERS_ONLY:
+            buildNormalLevel();
             level.molecule = [];
             break;
         case MOLECULES_ONLY:
+            buildNormalLevel();
             level.reaper = [];
             break;
         case NO_ENEMIES:
+            buildNormalLevel();
             level.molecule = [];
             level.reaper = [];
+            level.hordeFightManager = [];
             break;
         case NO_FIGHTS:
+            buildNormalLevel();
             level.reaper = [];
             level.molecule = [];
+            level.hordeFightManager = [];
             break;
         case ENEMIES_FASTER:
+            buildNormalLevel();
             level.reaper.forEach(reaper => reaper.speed = reaper.speed * 2);
             level.molecule.forEach(molecule => molecule.speed = molecule.speed * 2);
             break;
         case REAPERS_DOUBLE_HP:
+            buildNormalLevel();
             level.reaper.forEach(reaper => reaper.hp = reaper.hp * 2);
             break;
         case PROJECTILES_DOUBLE_DAMAGE:
+            buildNormalLevel();
             level.reaper.forEach(reaper => reaper.projectileDamage = reaper.projectileDamage * 2);
             level.molecule.forEach(molecule => molecule.projectileDamage = molecule.projectileDamage * 2);
             break;
-        case PHYSICAL_DOUBLE_DAMAGE:
-            level.reaper.forEach(reaper => reaper.physicalDamage = reaper.physicalDamage * 2);
-            level.molecule.forEach(molecule => molecule.physicalDamage = molecule.physicalDamage * 2);
+        case DNA_PICKUP_SECTIONS_ONLY:
+            buildLuckyLevel();
             break;
-        case HALF_HP:
-            level.reaper.forEach(reaper => reaper.hp = reaper.hp / 2);
+        case EASY_PLATFORMING:
+            buildEasyPlatformingLevel();
             break;
         case DOUBLE_REWARDS:
+            buildNormalLevel();
             level.reaper.forEach(reaper => reaper.reward = reaper.reward * 2);
             level.molecule.forEach(molecule => molecule.reward = molecule.reward * 2);
             break;
@@ -332,7 +351,24 @@ function getLevel(levelNumber) {
         }
 
 
-    }         
+    }        
+
+    function addEnemies() {
+        //iterate through all platforms and have a chance to spawn a reaper or molecule
+        level.platformGround.forEach(platform => { addMoleculeNearPlatform(platform); addReaperNearPlatform(platform, 600, 30); addHazardOnPlatform(platform);});
+        level.platformTiny.forEach(platform => { addMoleculeNearPlatform(platform); addHazardOnPlatform(platform);});
+        level.platformSmall.forEach(platform => { addMoleculeNearPlatform(platform); addHazardOnPlatform(platform);});
+        level.platformLarge.forEach(platform => { addReaperNearPlatform(platform, 600, 200); addMoleculeNearPlatform(platform); addHazardOnPlatform(platform);});
+    }
+    level.platformGround.push({x: 0, y: 800});
+
+    if (Math.random() < 0.2) {
+        growthChaseLevel();
+        level.hordeFightManager = [];
+    } 
+
+    checkpointSection(); //build this last no matter what to go to next level
+
     return level;
 
 }
