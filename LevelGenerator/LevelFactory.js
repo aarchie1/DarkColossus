@@ -85,6 +85,7 @@ function getLevel(levelNumber) {
         reaper: [],
         molecule: [],
         hordeFightManager: [],
+        growthChaseManager: [],
         background: [{x:0, y:0}],
         player: [{x: view.x/2, y: view.y - 256}],
     }
@@ -123,6 +124,10 @@ function getLevel(levelNumber) {
     level.platformLarge.forEach(platform => { addReaperNearPlatform(platform, 600, 200); addMoleculeNearPlatform(platform); addHazardOnPlatform(platform);});
 
     level.platformGround.push({x: 0, y: 800});
+
+    if (Math.random() < 1.1) {
+        growthChaseLevel();
+    }
     checkpointSection(); //build this last no matter what to go to next level
 
     function addReaperNearPlatform(platform, x, y) {
@@ -222,6 +227,10 @@ function getLevel(levelNumber) {
 
 
         }
+    }
+
+    function growthChaseLevel() {
+        level.growthChaseManager.push({x: 0});
     }
 
     function ascendingSteppingStonesSection() {

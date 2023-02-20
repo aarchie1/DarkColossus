@@ -147,6 +147,11 @@ class SceneManager {
             this.game.addEntity(new HordeFightManager(hordeFightManager.enemies, hordeFightManager.leftBound, hordeFightManager.rightBound));
         }
 
+        //Growth Chase Manager
+        for (let i = 0; i < level.growthChaseManager.length; i++) {
+            this.game.addEntity(new GrowthChaseManager());
+        }
+
 
 
 

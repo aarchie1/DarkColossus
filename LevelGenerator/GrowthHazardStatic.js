@@ -12,13 +12,24 @@ class GrowthHazardStatic {
 
     update() {
         if (this.BB.collide(player.BB)) {
-            player.velocity.x *= -1;
+            if (this.height < 1800) {
+                player.velocity.x += 0.5;
+                player.x += 0.5;
+            } else {
+                player.velocity.x *= -1;
+            }
             if (player.currentIFrameTimer <= 0){
                 player.health--;
-                player.currentIFrameTimer = player.maxIFrameTimer;
+                player.currentIFrameTimer = player.maxIFrameTimer/2;
             }
         }
+        this.updateBB();
     }
+
+    updateBB() {
+        this.BB = new BoundingBox(this.x, this.y, this.width, this.height);
+    }
+
 
 
     draw(ctx) {
