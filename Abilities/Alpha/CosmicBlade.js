@@ -26,11 +26,11 @@ class CosmicBladeAbility {
   updateBB() {
     this.lastBB1 = this.BB1;
     if (player.facing === 0) {
-      this.BB1 = new BoundingBox(player.x, player.y - 650, 500, 100);
-      this.BB2 = new BoundingBox(player.x+400, player.y - 600, 300, 900);
+      this.BB1 = new BoundingBox(player.x, player.y - 650, 500, 400);
+      this.BB2 = new BoundingBox(player.x+300, player.y - 600, 400, 1000);
     } else {
-      this.BB1 = new BoundingBox(player.x-200, player.y - 650, 500, 100);
-      this.BB2 = new BoundingBox(player.x-400, player.y - 600, 300, 900);
+      this.BB1 = new BoundingBox(player.x-200, player.y - 650, 500, 400);
+      this.BB2 = new BoundingBox(player.x-300, player.y - 600, 400, 1000);
     }
     
   }

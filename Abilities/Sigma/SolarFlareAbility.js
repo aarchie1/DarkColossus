@@ -113,7 +113,7 @@ class SolarFlareAbility {
                       (this.BB1.collide(enemy.BB) ) &&
                       (player.animations[4][0].currentFrame() >= 5 || player.animations[4][1].currentFrame() >= 5)) {
                     
-                        params.PARTICLE_SYSTEM.createParticleEffect(enemy.x + enemy.width/2 - gameEngine.camera.x, enemy.y + enemy.height/2 - gameEngine.camera.y, 3, 10, '#FF995D', 10, 25, 0.55);
+                        params.PARTICLE_SYSTEM.createParticleEffect(enemy.x + enemy.width/2 - gameEngine.camera.x, enemy.y + enemy.height/2 - gameEngine.camera.y, 8, 20, '#FF995D', 40, 40, 0.35);
                     
                     if (enemy.currentIFrameTimer < enemy.maxIFrameTimer/1.2){
                         console.log('Solar Flare HIT');

@@ -387,7 +387,7 @@ class SceneManager {
 
     loadDeathCutscene() {
         //random int between 1 and 18
-        let deathCount = Math.floor(Math.random() * 18) + 1;
+        let deathCount = Math.floor(Math.random() * 34) + 1;
         let deathText = [];
         switch (deathCount) {
             case 1:
@@ -503,6 +503,120 @@ class SceneManager {
                     "No death, no peace"
                 ];
                 break;
+            case 19:
+                deathText = [
+                    "You died. Painful.",
+                    "But not as painful as losing everyone you ever loved"
+                ];
+                break;
+            case 20:
+                deathText = [
+                    "Your persistence is respected",
+                    "But respect does not bring back the dead"
+                ]
+                break;
+            case 21:
+                deathText = [
+                    "If you could go back in time...",
+                    "Would you have lived your life differently?"
+                ];
+                break;
+            case 22:
+                deathText = [
+                    "There was never a different outcome",  
+                    "You were always going to die",
+                    "A failure"
+                ];
+                break;
+            case 23:
+                deathText = [
+                    "The screeches of the Molecules pierce your ears",
+                    "You are consumed by terror"
+                ];
+                break;
+            case 24:
+                deathText = [
+                    "Reapers repurpose your consciousness for their own use",
+                    "You become scythe fodder"
+                ];
+                break;
+            case 25:
+                deathText = [
+                    "The pressure to perform is too much",
+                    "You can't take it anymore"
+                ];
+                break;
+            case 26:
+                deathText = [
+                    "I once heard of the Dark Angel",
+                    "A being of pure darkness",
+                    "Prophesized to bring the end of the universe",
+                    "Or bring about a new beginning",
+                    "I wonder if it's true...",
+                    "What is your name, lost soul?"
+                ];
+                break;
+            case 27:
+                deathText = [
+                    "Lost soul, you have lost your mind completely",
+                    "There's nothing left for you here",
+                    "Why do you keep fighting?"
+                ];
+                break;
+            case 28:
+                deathText = [
+                    "If you ever have a chance to go back in time...",
+                    "You should splice DNA to make yourself stronger"
+                ];
+                break;
+            case 29:
+                deathText = [
+                    "The Dark Colossus senses your presence",
+                    "It is angered by your continued existence",
+                    "It will not let you live"
+                ];
+                break;
+            case 30:
+                deathText = [
+                    "Lost soul...",
+                    "What was your home world like?"
+                ];
+                break;
+            case 31:
+                deathText = [
+                    "Lost soul...",
+                    "What was your favorite food?"
+                ];
+                break;
+            case 32:
+                deathText = [
+                    "The eerie landscape of the Dark Colossus' domain",
+                    "It feels unnatural",
+                    "Like you're being watched"
+                ];
+                break;
+            case 33:
+                deathText = [
+                    "As you die, you wonder...",
+                    "Did those who died before you share this feeling?"
+                ];
+                break;
+            case 34:
+                deathText = [
+                    "How many times have you died?",
+                    "Is this your first time?",
+                    "Or have you died many times before?",
+                    "You can't remember..."
+                ];
+                break;
+            case 35:
+                deathText = [
+                    "Your grave is dug before you by the Reapers",
+                    "All you can do is watch as they bury you"
+                ];
+                break;
+
+
         }
         
         gameEngine.addEntityFirst(new TextCutscene(deathText, 0.01));
