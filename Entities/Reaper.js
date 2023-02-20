@@ -11,15 +11,16 @@ class Reaper {
     this.state = size; //0 = weak 1 = normal 2 = strong 3 = attacking
     this.velocity = { x: 0, y: 0 };
     this.hostile = true;
-    this.damage = 1;
+    this.damage = params.LEVEL;
     this.colidingWithWall = false;
 
-    this.attackRate = 2;
+    this.attackRate = 2 + params.LEVEL*0.1;
     this.elapsedTime = 0;
     this.attackDistance = 0;
-    this.health = 5;
+    this.health = 4 + params.LEVEL;
+    this.maxHealth = this.health;
     this.currentIFrameTimer = 0;
-    this.maxIFrameTimer = 42;
+    this.maxIFrameTimer = 40;
     this.dead = false;
     this.paused = true;
     this.updateBB();
@@ -152,7 +153,9 @@ class Reaper {
        //(x, y, particleCount, particleSize, particleColor, xSpeed, ySpeed, sizeDecrement)
        params.PARTICLE_SYSTEM.createParticleEffect(this.x + this.width/2 - gameEngine.camera.x, this.y + this.height/2 - gameEngine.camera.y, 50, 14, '#FF3232', 23, 5, 0.55);
       //this.game.darkEnergy.currency += 2;
-      this.game.addEntityFirst(new DarkEnergyItemDrop(this.game, this.x, this.y));
+      for (let i = 0; i < 1 + params.LEVEL/2; i++)
+        this.game.addEntityFirst(new DarkEnergyItemDrop(this.game, this.x + (Math.random() * 100 - 50), this.y));
+
     }
     if (this.currentIFrameTimer > 0) {
       this.currentIFrameTimer -= 1;
@@ -278,6 +281,24 @@ class Reaper {
     );
   }
   draw(ctx) {
+
+    if (this.health != this.maxHealth){
+      ctx.fillStyle = "red";
+      ctx.fillRect(
+        this.x - this.game.camera.x,
+        this.y - this.game.camera.y - 10,
+        this.width/1.5,
+        5
+      );
+      ctx.fillStyle = "green";
+      ctx.fillRect(
+        this.x - this.game.camera.x,
+        this.y - this.game.camera.y - 10,
+        this.width/1.5 * (this.health / this.maxHealth),
+        5
+      );
+    }
+
     this.animations[this.state][this.facing].drawFrame(
       this.game.clockTick,
       ctx,

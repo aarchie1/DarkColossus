@@ -8,10 +8,10 @@ class MoleculeProjectile {
     });
     const TICK = this.game.clockTick;
     
-    this.damage = 1;
+    this.damage = params.LEVEL;
     this.hostile = true;
     this.health = 1;
-    this.maxSpeed = 500; // pixels per second
+    this.maxSpeed = 500 + params.LEVEL; // pixels per second
 
     let dist = getDistance(this, this.target);
 

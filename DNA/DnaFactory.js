@@ -112,10 +112,7 @@ function getAbilityFromParents(parent1, parent2) {
 }
 
 function getRarityFromParents(parent1Rarity, parent2Rarity) {
-    let rarityRange = Math.abs(parent1Rarity - parent2Rarity);
-    let rarity = Math.round(Math.random() * rarityRange) +
-        Math.min(parent1Rarity, parent2Rarity);
-    return rarity;
+    return Math.floor((parent1Rarity + parent2Rarity) / 2);
 }
 
 function calculateDnaRarity(sigmaCooldownRarity,

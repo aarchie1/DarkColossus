@@ -263,12 +263,13 @@ class GameCharacter {
     this.abilityControls();
 
     // Check if player is out of bounds
-    if (this.y > 1700) {
+    if (this.y > 1700 && !this.dead) {
       this.dead = true;
       this.game.camera.gameOver = true;
+      
     }
 
-    if (this.health <= 0) {
+    if (this.health <= 0 && !this.dead) {
       this.dead = true;
       this.game.camera.gameOver = true;
     }

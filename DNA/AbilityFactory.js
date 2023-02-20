@@ -29,9 +29,9 @@ function getAbility(abilityType) {
 
 function searchAbilityPool(abilityPool) {
     //PUT ALL ABILITIES HERE
-    let sigmaAbilityPool = [EMPAbility, SoulGrabAbility, AstralBeamAbility, null];
-    let alphaAbilityPool = [CosmicBladeAbility, SupersonicAbility, null];
-    let betaAbilityPool = [RefreshAbility, ExtraJump, null];
+    let sigmaAbilityPool = [SolarFlareAbility, EMPAbility, SoulGrabAbility, null, null, null];
+    let alphaAbilityPool = [CosmicBladeAbility, SupersonicAbility, AstralBeamAbility, null, null, null];
+    let betaAbilityPool = [RefreshAbility, ExtraJump, null, null];
 
     switch (abilityPool) {
         case 'sigma':
@@ -58,11 +58,11 @@ function searchAbilityPool(abilityPool) {
 
 function getRarity() {
     let random = Math.random();
-    if (random < 0.5) {
+    if (random < 0.5 - (params.LEVEL*0.03)) {
         return 1; //basic 50%
-    } else if (random < 0.8) {
+    } else if (random < 0.8 - (params.LEVEL*0.02)) {
         return 2; //uncommon 30%
-    } else if (random < 0.95) {
+    } else if (random < 0.95 - (params.LEVEL*0.01)) {
         return 3; //rare 15%
     } else {
         return 4; //godly 5%

@@ -97,9 +97,8 @@ class EMPAbility {
 
     //Required
     update() {
+        this.BB = new BoundingBox(player.x - 256 - CANVAS_WIDTH/3, player.y - 156 - CANVAS_HEIGHT/2, CANVAS_WIDTH, CANVAS_HEIGHT*1.5);
 
-        this.BB.x = player.x - CANVAS_WIDTH/2 + 100;
-        this.BB.y = player.y - CANVAS_HEIGHT/2 + 100;
         this.cooldownTimer.checkCooldown()
         if (this.inUse) {
             gameEngine.entities.forEach((enemy) => {
