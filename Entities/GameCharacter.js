@@ -20,7 +20,8 @@ class GameCharacter {
 
     //Base Stats
     this.health = 5;
-
+    this.width = 256;
+    this.height = 256;
     this.facing = 0; // 0 = right, 1 == left
     this.state = 0; //0 = idle, 1 = running, 2 = falling 3 = jumping, 4 = attacking
     this.velocity = { x: 0, y: 0 };
@@ -64,6 +65,8 @@ class GameCharacter {
     const MAX_FALL = this.MAX_FALL;
     const FALL_ACC = this.FALL_ACC;
     const TICK = this.game.clockTick;
+    console.log("health: " + this.health);
+
 
     // Call ability update methods at all times
     if (params.INVENTORY.dnaSlot1 != null) params.INVENTORY.dnaSlot1.update();

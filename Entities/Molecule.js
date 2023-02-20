@@ -21,8 +21,8 @@ class Molecule {
     //Changed to center point
     this.projectileBuffer = 150;
 
-    this.attackDistance = 400;
-    this.fireRate = 2;
+    this.attackDistance = Math.random() * 200 + 300;
+    this.fireRate = 1 + params.LEVEL;
     this.elapsedTime = 0;
 
     this.updateBB();

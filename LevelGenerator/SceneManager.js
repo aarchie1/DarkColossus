@@ -250,6 +250,7 @@ class SceneManager {
 
     loadDeathScreen() {
         this.clearLevel();
+        params.DARK_ENERGY.currency = Math.floor(params.DARK_ENERGY.currency * 0.5);
         this.game.addEntityFirst(new Death_Screen_Background(this.game));
         gameEngine.camera.gameOver = false;
         let timer = 100;
