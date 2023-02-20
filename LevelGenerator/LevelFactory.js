@@ -48,7 +48,7 @@ function getLevelModifierText(modifierNumber) {
 
 
 function getLevel(levelNumber) {
-    let sections = [flatSection, ascendingSteppingStonesSection, descendingSteppingStonesSection, dnaPickupSection];//hordeFightSection, , dnaPickupSection, flatSection];verticalSection
+    let sections = [hordeFightSection]//[flatSection, ascendingSteppingStonesSection, descendingSteppingStonesSection, dnaPickupSection];//hordeFightSection, , dnaPickupSection, flatSection];verticalSection
     let view = {x: CANVAS_WIDTH, y: CANVAS_HEIGHT};
 
     const levelModifier = currentLevelModifier;//Math.floor(Math.random() * 11); //num between 0 and 10
@@ -80,10 +80,12 @@ function getLevel(levelNumber) {
         invisibleWall: [],
         hazardGrowthShort: [],
         hazardGrowthTall: [],
+        hazardGrowthTallStatic: [],
         dnaPickup: [],
         portal: [],
         reaper: [],
         molecule: [],
+        hordeFightManager: [],
         background: [{x:0, y:0}],
         player: [{x: view.x/2, y: view.y - 256}],
     }
@@ -107,7 +109,7 @@ function getLevel(levelNumber) {
     let startX = view.x;
     let startY = GROUND_HEIGHT;
 
-    let numberOfSections = 2 + params.LEVEL; //randomNumberInRange(3, 7 + levelNumber);
+    let numberOfSections = 0 + params.LEVEL; //randomNumberInRange(3, 7 + levelNumber);
 
     //BUILD LEVEL
     for(let i = 0; i < numberOfSections; i++) {
@@ -139,12 +141,12 @@ function getLevel(levelNumber) {
 
 
     function addHazardOnPlatform(platform) {
-        if (Math.random() < 0.15 + (levelNumber/100)*2) {
-            level.hazardGrowthShort.push({x: platform.x + randomNumberInRange(0, 500), y: platform.y + randomNumberInRange(0, 500)});
-        }
-        if (Math.random() < 0.15 + (levelNumber/100)*2) {
-            level.hazardGrowthTall.push({x: platform.x + randomNumberInRange(-500, 500), y: platform.y + randomNumberInRange(-500, 500)});
-        }
+        // if (Math.random() < 0.15 + (levelNumber/100)*2) {
+        //     level.hazardGrowthShort.push({x: platform.x + randomNumberInRange(0, 500), y: platform.y + randomNumberInRange(0, 500)});
+        // }
+        // if (Math.random() < 0.15 + (levelNumber/100)*2) {
+        //     level.hazardGrowthTall.push({x: platform.x + randomNumberInRange(-500, 500), y: platform.y + randomNumberInRange(-500, 500)});
+        // }
     }
 
     //Filter level after its been built based off level modifier
@@ -245,7 +247,7 @@ function getLevel(levelNumber) {
     }
 
     function flatSection() {
-        while (startY < GROUND_HEIGHT) descendingSteppingStonesSection();
+        descendToGroundSection();
         level.invisibleWall.push({x: startX+10, y: startY});
         for (let i = 0; i < randomNumberInRange(1, 4); i++) {
             let platformType = PLATFORM_GROUND;
@@ -255,32 +257,32 @@ function getLevel(levelNumber) {
         level.invisibleWall.push({x: startX, y: startY});
         
     }
+
+    function descendToGroundSection() {
+        while (startY < GROUND_HEIGHT) descendingSteppingStonesSection();
+    }
         
     function hordeFightSection() {
-        //add two platforms side by side and a tall growth on the ends
-        let tempStartX = startX;
-        addPlatform(PLATFORM_LARGE, startX, startY, false);
-        startX += 256;
-        addPlatform(PLATFORM_LARGE, startX + 256, startY, false);
-        startX += 256;
-        level.hazardGrowthTall.push({x: startX, y: startY - 256});
-        level.hazardGrowthTall.push({x: startX, y: startY - 512});
+        descendToGroundSection();
+        let leftSideOfArena = startX;
+        addPlatform(PLATFORM_GROUND, startX, startY, false);
+        let leftPlatform = level.platformGround[level.platformGround.length - 1];
+        startX += PLATFORM_GROUND.w;
+        addPlatform(PLATFORM_GROUND, startX, startY, false);
+        let rightPlatform = level.platformGround[level.platformGround.length - 1];
+        startX += PLATFORM_GROUND.w;
+        let rightSideOfArena = startX;
+        level.invisibleWall.push({x: leftSideOfArena+20, y: GROUND_HEIGHT});
+        level.invisibleWall.push({x: rightSideOfArena-30, y: GROUND_HEIGHT});
+        let numberOfEnemies = randomNumberInRange(5, 20 + params.LEVEL);
+        let enemiesAdded = [];
 
-        //add reapers and molecules between tempStartX and startX
-        let numberOfEnemies = randomNumberInRange(5, 20 +levelNumber);
         for (let i = 0; i < numberOfEnemies; i++) {
-            let enemyType = Math.floor(Math.random() * 2);
-            let x = randomNumberInRange(tempStartX, startX);
-            let y = randomNumberInRange(startY - 256, startY - 512);
-            switch(enemyType) {
-                case 0:
-                    level.reaper.push({x: x, y: y});
-                    break;
-                case 1:
-                    level.molecule.push({x: x, y: y});
-                    break;
-            }
+            let spawnX = Math.random() * (rightSideOfArena- 200 -leftSideOfArena) + leftSideOfArena+200;
+            enemiesAdded.push({x: spawnX, y: GROUND_HEIGHT - 100 - Math.random(500)});
         }
+
+        level.hordeFightManager.push({enemies: enemiesAdded, leftBound: leftSideOfArena, rightBound: rightSideOfArena});
     }
 
     function verticalSection() {

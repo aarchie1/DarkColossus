@@ -56,15 +56,35 @@ class SceneManager {
             this.game.addEntity(new DnaItemDrop(this.game, dna.x, dna.y));
         }
 
-        for (let i = 0; i < level.reaper.length; i++) {
-            let enemy = level.reaper[i];
-            this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
+        // for (let i = 0; i < level.reaper.length; i++) {
+        //     let enemy = level.reaper[i];
+        //     this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
+        // }
+
+        // for (let i = 0; i < level.molecule.length; i++) {
+        //     let enemy = level.molecule[i];
+        //     this.game.addEntity(new Molecule(this.game, enemy.x, enemy.y, 2));
+        // }
+
+        //Hazard Growth Tall
+        for (let i = 0; i < level.hazardGrowthTall.length; i++) {
+            let hazard = level.hazardGrowthTall[i];
+            this.game.addEntity(new GrowthHazard(hazard.x, hazard.y, GROWTH_HAZARD_TALL));
         }
 
-        for (let i = 0; i < level.molecule.length; i++) {
-            let enemy = level.molecule[i];
-            this.game.addEntity(new Molecule(this.game, enemy.x, enemy.y, 2));
+        //Hazard Growth Short
+        for (let i = 0; i < level.hazardGrowthShort.length; i++) {
+            let hazard = level.hazardGrowthShort[i];
+            this.game.addEntity(new GrowthHazard(hazard.x, hazard.y, GROWTH_HAZARD_SHORT));
         }
+
+        //Hazard Growth Tall Static
+        for (let i = 0; i < level.hazardGrowthTallStatic.length; i++) {
+            let hazard = level.hazardGrowthTallStatic[i];
+            this.game.addEntity(new GrowthHazardStatic(hazard.x, hazard.y));
+        }
+
+
 
         //Portals
         for (let i = 0; i < level.portal.length; i++) {
@@ -121,7 +141,11 @@ class SceneManager {
             this.game.addEntity(new InvisibleWall(this.game, wall.x, wall.y));
         }
 
-
+        //HordeFightManager
+        for (let i = 0; i < level.hordeFightManager.length; i++) {
+            let hordeFightManager = level.hordeFightManager[i];
+            this.game.addEntity(new HordeFightManager(hordeFightManager.enemies, hordeFightManager.leftBound, hordeFightManager.rightBound));
+        }
 
 
 

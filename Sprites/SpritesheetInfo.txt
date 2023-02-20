@@ -41,6 +41,9 @@ LevelAssets
     portal                  364x364     4frames
     hazard_growth_short     256x256     7frames
     hazard_growth_tall      256x512     9frames
+    hazard_growth_tall_static 256x512     1frames
+
+
     dark_energy             64x64       1frame
 
 Abilities

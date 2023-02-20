@@ -72,6 +72,7 @@ ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/portal.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/workbench.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/Hazards/hazard_growth_short.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/Hazards/hazard_growth_tall.png");
+ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/Hazards/hazard_growth_tall_static.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/dark_energy.png");
 
 //DNA
