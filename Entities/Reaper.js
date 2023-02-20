@@ -113,12 +113,12 @@ class Reaper {
         } //check if reaper is colliding with invisible wall
         if (entity instanceof InvisibleWall) {
           if (this.BB.collide(entity.BB) && this.x <= player.x) {
-            this.x -= this.width;
+            this.x -= 1;
             this.velocity.x = 0;
             this.updateBB();
 
           } else if (this.BB.collide(entity.BB) && this.x > player.x) {
-            this.x += this.width;
+            this.x += 1;
             this.velocity.x = 0;
             this.updateBB();
 
