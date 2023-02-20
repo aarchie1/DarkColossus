@@ -1,7 +1,7 @@
 class DamageIndicator {
     constructor(x, y, damage) {
         Object.assign(this, { x, y, damage });
-        this.timerStart = 20 + (damage+1) + Math.pow(damage, 1.7);
+        this.timerStart = 20 + Math.pow(damage, 1.3);
         this.timer = this.timerStart;
         this.alpha = 1;
         this.randomOffset = 50;

@@ -48,7 +48,7 @@ function getLevelModifierText(modifierNumber) {
 
 
 function getLevel(levelNumber) {
-    let sections = [hordeFightSection]//[flatSection, ascendingSteppingStonesSection, descendingSteppingStonesSection, dnaPickupSection];//hordeFightSection, , dnaPickupSection, flatSection];verticalSection
+    let sections = [hordeFightSection, flatSection, ascendingSteppingStonesSection, descendingSteppingStonesSection, dnaPickupSection];//hordeFightSection, , dnaPickupSection, flatSection];verticalSection
     let view = {x: CANVAS_WIDTH, y: CANVAS_HEIGHT};
 
     const levelModifier = currentLevelModifier;//Math.floor(Math.random() * 11); //num between 0 and 10
@@ -64,7 +64,6 @@ function getLevel(levelNumber) {
     const MOLECULE = {w: 256, h: 256};
     const PLAYER = {w: 256, h: 256};
 
-    const GROUND_HEIGHT = 700;
 
     const randomNumberInRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
     const vertical = () => (Math.random() < 0.5) ? -1 : 1;
@@ -109,7 +108,7 @@ function getLevel(levelNumber) {
     let startX = view.x;
     let startY = GROUND_HEIGHT;
 
-    let numberOfSections = 0 + params.LEVEL; //randomNumberInRange(3, 7 + levelNumber);
+    let numberOfSections = 2 + params.LEVEL; //randomNumberInRange(3, 7 + levelNumber);
 
     //BUILD LEVEL
     for(let i = 0; i < numberOfSections; i++) {
@@ -278,8 +277,8 @@ function getLevel(levelNumber) {
         let enemiesAdded = [];
 
         for (let i = 0; i < numberOfEnemies; i++) {
-            let spawnX = Math.random() * (rightSideOfArena- 200 -leftSideOfArena) + leftSideOfArena+200;
-            enemiesAdded.push({x: spawnX, y: GROUND_HEIGHT - 100 - Math.random(500)});
+            let spawnX = Math.random() * (rightSideOfArena- 600 - leftSideOfArena) + leftSideOfArena+200;
+            enemiesAdded.push({x: spawnX, y: GROUND_HEIGHT - 100 - Math.random()*500});
         }
 
         level.hordeFightManager.push({enemies: enemiesAdded, leftBound: leftSideOfArena, rightBound: rightSideOfArena});
@@ -329,3 +328,4 @@ function getLevel(levelNumber) {
 
 }
 
+const GROUND_HEIGHT = 700;

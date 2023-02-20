@@ -56,15 +56,15 @@ class SceneManager {
             this.game.addEntity(new DnaItemDrop(this.game, dna.x, dna.y));
         }
 
-        // for (let i = 0; i < level.reaper.length; i++) {
-        //     let enemy = level.reaper[i];
-        //     this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
-        // }
+        for (let i = 0; i < level.reaper.length; i++) {
+            let enemy = level.reaper[i];
+            this.game.addEntity(new Reaper(this.game, enemy.x, enemy.y, 2));
+        }
 
-        // for (let i = 0; i < level.molecule.length; i++) {
-        //     let enemy = level.molecule[i];
-        //     this.game.addEntity(new Molecule(this.game, enemy.x, enemy.y, 2));
-        // }
+        for (let i = 0; i < level.molecule.length; i++) {
+            let enemy = level.molecule[i];
+            this.game.addEntity(new Molecule(this.game, enemy.x, enemy.y, 2));
+        }
 
         //Hazard Growth Tall
         for (let i = 0; i < level.hazardGrowthTall.length; i++) {

@@ -4,9 +4,10 @@ class GrowthHazardStatic {
         this.x = x;
         this.y = y;
         this.image = ASSET_MANAGER.getAsset("./Sprites/LevelAssets/Hazards/hazard_growth_tall_static.png")     
-        this.width = 256;
-        this.height = 512;
+        this.width = 226;
+        this.height = 1859;
         this.BB = new BoundingBox(this.x, this.y, this.width, this.height);
+        console.log("created static growth hazard, x: " + this.x + ", y: " + this.y);
     }
 
     update() {
@@ -18,8 +19,6 @@ class GrowthHazardStatic {
             }
         }
     }
-
-
 
 
     draw(ctx) {

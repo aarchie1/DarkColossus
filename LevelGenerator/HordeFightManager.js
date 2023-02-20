@@ -9,6 +9,8 @@ class HordeFightManager {
         this.fightStarted = false;
         this.win = false;
         this.timeUntilRemoveFromWorld = 15;
+        this.leftBoundGrowthHazard = new GrowthHazardStatic(this.leftBound, GROUND_HEIGHT-1500, GROWTH_HAZARD_TALL);
+        this.rightBoundGrowthHazard = new GrowthHazardStatic(this.rightBound-200, GROUND_HEIGHT - 1500);
 
         //console log every enemy's x and y
         console.log("HordeFightManager created with " + this.enemies.length + " enemies");
@@ -19,6 +21,9 @@ class HordeFightManager {
     }
 
     onPlayerEnterHordeFight() {
+        gameEngine.addEntityFirst(this.leftBoundGrowthHazard);
+        gameEngine.addEntityFirst(this.rightBoundGrowthHazard);
+
         this.enemies.forEach(enemy => {
             if (Math.random() < 0.5) {
                 this.enemyInstances.push(new Reaper(gameEngine, enemy.x, enemy.y, 2));
@@ -45,6 +50,7 @@ class HordeFightManager {
             }
         });
         this.fightStarted = true;
+
         
     }
 
@@ -71,6 +77,9 @@ class HordeFightManager {
                 let y = Math.random() * 200 + 500;
                 gameEngine.addEntityFirst(new DarkEnergyItemDrop(gameEngine, x, y)); 
             }
+
+            this.leftBoundGrowthHazard.removeFromWorld = true;
+            this.rightBoundGrowthHazard.removeFromWorld = true;
         }
     }
 
