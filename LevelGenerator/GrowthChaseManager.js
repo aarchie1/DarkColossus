@@ -4,7 +4,7 @@ class GrowthChaseManager {
         this.growthChaser = new GrowthHazardStatic(300, GROUND_HEIGHT - 1000);
         this.growthChaser.width = this.growthChaser.width/2;
         this.growthChaser.height = this.growthChaser.height/1.3;
-        this.speed = player.MAX_RUN*0.005;
+        this.speed = player.MAX_RUN*0.004;
 
         console.log("GrowthChaseManager created");
     }

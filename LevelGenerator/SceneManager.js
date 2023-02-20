@@ -181,7 +181,6 @@ class SceneManager {
 
 
     loadHub() {
-        params.LEVEL = 0;
         this.clearLevel();
         
         this.rightXLimit = 2000//4400;
