@@ -11,13 +11,13 @@ class Reaper {
     this.state = size; //0 = weak 1 = normal 2 = strong 3 = attacking
     this.velocity = { x: 0, y: 0 };
     this.hostile = true;
-    this.damage = 1;
+    this.damage = params.LEVEL;
     this.colidingWithWall = false;
 
-    this.attackRate = 2;
+    this.attackRate = 2 + params.LEVEL*0.1;
     this.elapsedTime = 0;
     this.attackDistance = 0;
-    this.health = 5;
+    this.health = 4 + params.LEVEL;
     this.currentIFrameTimer = 0;
     this.maxIFrameTimer = 42;
     this.dead = false;

@@ -11,7 +11,7 @@ class Molecule {
     this.facing = 1; // 0 = right, 1 == left
     this.state = size; // 0 = low 1 = half,  2 = full, 3 = attack
     this.velocity = { x: 0, y: 0 };
-    this.health = 5;
+    this.health = 4 + params.LEVEL;
     this.dead = false;
     this.paused = true;
     this.currentIFrameTimer = 0;
