@@ -45,6 +45,14 @@ class Molecule {
     const TICK = this.game.clockTick;
     this.elapsedTime += this.game.clockTick;
 
+    //Update Molecule Visual based off health
+    if (this.health <= this.maxHealth/3) {
+      this.size = 0;
+    } else if (this.health <= this.maxHealth/1.5) {
+      this.size = 1;
+    }
+
+
     if (this.paused && this.game.camera.player.x > this.x - 1000) {
       this.paused = false;
     }

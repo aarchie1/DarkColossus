@@ -7,7 +7,7 @@ class Portal {
         this.height = 364;
         this.x = x;
         this.y = y;
-        this.levelModifier = Math.floor(Math.random() * 10);
+        this.levelModifier = Math.min(Math.floor(Math.random() * 11), 10);
         this.levelModifierText = getLevelModifierText(this.levelModifier);
 
         this.BB = new BoundingBox(this.x, this.y, this.width, this.height);
