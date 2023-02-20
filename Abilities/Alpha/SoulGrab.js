@@ -75,9 +75,9 @@ class SoulGrabAbility {
         0,
         false
       );
-        player.animations[4][0].yOffset = -25;
+        player.animations[4][0].yOffset = -225;
         player.animations[4][0].xOffset = 200;
-        player.animations[4][1].yOffset = -25;
+        player.animations[4][1].yOffset = -225;
         player.animations[4][1].xOffset = -900;
      
 
@@ -103,15 +103,14 @@ class SoulGrabAbility {
   //Edit these to change the cooldown of the ability based on rarity
   setCooldown(cooldownRarity) {
     switch (cooldownRarity) {
-      case 1:
-      case 2:
-      case 3:
-      case 4:
-        return 0;
+      case 1: return 5;
+      case 2: return 4;
+      case 3: return 3;
+      case 4: return 2;
       default:
         console.log("Cooldown rarity not found");
+        return 0;
     }
-    return 0;
   }
 
   //Edit these to change the effect of the ability based on rarity

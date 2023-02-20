@@ -4,6 +4,8 @@ class Reaper {
     const TICK = this.game.clockTick;
     this.fallAcc = 400;
     this.reaper = this;
+    this.width = 256;
+    this.height = 256;
     this.player = this.game.camera.player;
     this.facing = 1; // 0 = right, 1 == left
     this.state = size; //0 = weak 1 = normal 2 = strong 3 = attacking
@@ -15,9 +17,9 @@ class Reaper {
     this.attackRate = 2;
     this.elapsedTime = 0;
     this.attackDistance = 0;
-    this.health = 10;
+    this.health = 5;
     this.currentIFrameTimer = 0;
-    this.maxIFrameTimer = 50;
+    this.maxIFrameTimer = 42;
     this.dead = false;
     this.paused = true;
     this.updateBB();
@@ -109,15 +111,14 @@ class Reaper {
             }
           }
         } //check if reaper is colliding with invisible wall
-        //check if reaper is colliding with invisible wall
         if (entity instanceof InvisibleWall) {
           if (this.BB.collide(entity.BB) && this.x <= player.x) {
-            this.x = entity.BB.left - this.BB.width*2;
+            this.x -= this.width;
             this.velocity.x = 0;
             this.updateBB();
 
           } else if (this.BB.collide(entity.BB) && this.x > player.x) {
-            this.x = entity.BB.right;
+            this.x += this.width;
             this.velocity.x = 0;
             this.updateBB();
 
@@ -148,6 +149,8 @@ class Reaper {
     }
     if (this.health <= 0) {
       this.removeFromWorld = true;
+       //(x, y, particleCount, particleSize, particleColor, xSpeed, ySpeed, sizeDecrement)
+       params.PARTICLE_SYSTEM.createParticleEffect(this.x + this.width/2 - gameEngine.camera.x, this.y + this.height/2 - gameEngine.camera.y, 50, 14, '#FF3232', 23, 5, 0.55);
       //this.game.darkEnergy.currency += 2;
       this.game.addEntityFirst(new DarkEnergyItemDrop(this.game, this.x, this.y));
     }

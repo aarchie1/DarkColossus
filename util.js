@@ -8,6 +8,8 @@ const params = {
     DARK_ENERGY : null, 
     CANVAS : null,
     TIMER : null,
+    PARTICLE_SYSTEM: null,
+    LEVEL_MODIFIER: -1,
 };
 
 

@@ -100,13 +100,17 @@ class CosmicBladeAbility {
 
   //Edit these to change the effect of the ability based on rarity
   setEffect(effectRarity) {
+
+    //damge between 1 and 3
     switch (effectRarity) {
       case 1:
-      case 2:
-      case 3:
-      case 4:
-        //damge between 1 and 3
         return Math.floor(Math.random() * 3) + 1;
+      case 2:
+        return Math.floor(Math.random() * 3) + 2;
+      case 3:
+        return Math.floor(Math.random() * 3) + 3;
+      case 4:
+        return Math.floor(Math.random() * 3) + 4;
       default:
         console.log("Effect rarity not found");
         return -1;
@@ -126,8 +130,12 @@ class CosmicBladeAbility {
             console.log(enemy.health);
             enemy.currentIFrameTimer = enemy.maxIFrameTimer;
             gameEngine.addEntityFirst(
-              new DamageIndicator(enemy.x, enemy.y, this.effect + params.DARK_ENERGY.meleeAttack)
+              new DamageIndicator(enemy.x+enemy.width/2, enemy.y, this.effect + params.DARK_ENERGY.meleeAttack)
             );
+
+            //(x, y, particleCount, particleSize, particleColor, xSpeed, ySpeed, sizeDecrement)
+            params.PARTICLE_SYSTEM.createParticleEffect(enemy.x + enemy.width/2 - gameEngine.camera.x, enemy.y + enemy.height/2 - gameEngine.camera.y, 50, 14, '#330000', 12, 25, 0.55);
+
           }
           if (enemy instanceof MoleculeProjectile) {
             enemy.removeFromWorld = true;
@@ -159,7 +167,7 @@ class CosmicBladeAbility {
 
   //Required - draw collision BB here
   draw(ctx) {
-    if (debug && this.inUse) {
+    if (debug && this.inUse && (player.animations[4][0].currentFrame() >= 2|| player.animations[4][1].currentFrame() >= 2)) {
       ctx.strokeRect(this.BB1.x - gameEngine.camera.x, this.BB1.y - gameEngine.camera.y, this.BB1.width, this.BB1.height);
       ctx.strokeRect(this.BB2.x - gameEngine.camera.x, this.BB2.y - gameEngine.camera.y, this.BB2.width, this.BB2.height);
     }

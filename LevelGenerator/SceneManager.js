@@ -66,6 +66,26 @@ class SceneManager {
             this.game.addEntity(new Molecule(this.game, enemy.x, enemy.y, 2));
         }
 
+        //Hazard Growth Tall
+        for (let i = 0; i < level.hazardGrowthTall.length; i++) {
+            let hazard = level.hazardGrowthTall[i];
+            this.game.addEntity(new GrowthHazard(hazard.x, hazard.y, GROWTH_HAZARD_TALL));
+        }
+
+        //Hazard Growth Short
+        for (let i = 0; i < level.hazardGrowthShort.length; i++) {
+            let hazard = level.hazardGrowthShort[i];
+            this.game.addEntity(new GrowthHazard(hazard.x, hazard.y, GROWTH_HAZARD_SHORT));
+        }
+
+        //Hazard Growth Tall Static
+        for (let i = 0; i < level.hazardGrowthTallStatic.length; i++) {
+            let hazard = level.hazardGrowthTallStatic[i];
+            this.game.addEntity(new GrowthHazardStatic(hazard.x, hazard.y));
+        }
+
+
+
         //Portals
         for (let i = 0; i < level.portal.length; i++) {
             let portal = level.portal[i];
@@ -115,6 +135,22 @@ class SceneManager {
                 ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_tiny.png"), new BoundingBox(x+7, y + 90, 160, 100)));
         }
 
+        //invisible walls
+        for (let i = 0; i < level.invisibleWall.length; i++) {
+            let wall = level.invisibleWall[i];      
+            this.game.addEntity(new InvisibleWall(this.game, wall.x, wall.y));
+        }
+
+        //HordeFightManager
+        for (let i = 0; i < level.hordeFightManager.length; i++) {
+            let hordeFightManager = level.hordeFightManager[i];
+            this.game.addEntity(new HordeFightManager(hordeFightManager.enemies, hordeFightManager.leftBound, hordeFightManager.rightBound));
+        }
+
+        //Growth Chase Manager
+        for (let i = 0; i < level.growthChaseManager.length; i++) {
+            this.game.addEntity(new GrowthChaseManager());
+        }
 
 
 
@@ -135,7 +171,6 @@ class SceneManager {
     }
 
     randomizeLevel() {
-
 
 
     }
@@ -200,9 +235,16 @@ class SceneManager {
             params.HUD = new hud(gameEngine);
             gameEngine.addEntity(params.HUD);
             //add dna to inventory
-            for (let i = 0; i < 5; i++)
+            for (let i = 0; i < 3; i++)
                 params.INVENTORY.inventory.push(getRandomDNA());
-            this.loadHub();
+
+            params.INVENTORY.inventory[0].epsilonAbility = null;
+            params.INVENTORY.inventory[0].betaAbility = null;
+            params.INVENTORY.inventory[0].alphaAbility = new CosmicBladeAbility(3, 3);
+            params.INVENTORY.inventory[0].sigmaAbility = null;
+            params.INVENTORY.dnaSlot1 = params.INVENTORY.inventory[0];
+            equipAbilities(params.INVENTORY.dnaSlot1);
+            gameEngine.camera.loadHub();
         };
     }
 
@@ -297,11 +339,11 @@ class SceneManager {
 
         //set removeFromWorld to true for everything in this.game.entities except Inventory, DarkEnergy, SceneManager, etc.
         this.game.entities.forEach(function (entity) {
-            if (!(entity instanceof Inventory || entity instanceof DarkEnergy || entity instanceof SceneManager || entity instanceof hud)) {
+            if (!(entity instanceof Inventory || entity instanceof DarkEnergy || entity instanceof SceneManager || entity instanceof hud || entity instanceof ParticleEffectSystem)) {
                 entity.removeFromWorld = true;
             }
         });
-
+ 
         //SET ALL ABILITIES TO NOT IN USE TO PREVENT BUG
         if (params.INVENTORY.dnaSlot1 != null) {
             let dna = params.INVENTORY.dnaSlot1;
@@ -460,9 +502,14 @@ class Title_Screen_Background {
             params.HUD = new hud(gameEngine);
             gameEngine.addEntity(params.HUD);
             //add dna to inventory
-            for (let i = 0; i < 5; i++)
+            for (let i = 0; i < 3; i++)
                 params.INVENTORY.inventory.push(getRandomDNA());
+
             
+            params.INVENTORY.inventory[0].epsilonAbility = null;
+            params.INVENTORY.inventory[0].betaAbility = null;
+            params.INVENTORY.inventory[0].alphaAbility = new CosmicBlade(3, 3);
+            params.INVENTORY.inventory[0].sigmaAbility = null;
             params.INVENTORY.dnaSlot1 = params.INVENTORY.inventory[0];
             equipAbilities(params.INVENTORY.dnaSlot1);
             this.game.camera.loadHub();

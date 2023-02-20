@@ -6,14 +6,16 @@ class Molecule {
     this.player = this.game.camera.player;
     this.hostile = true;
 
+    this.width = 256;
+    this.height = 256;
     this.facing = 1; // 0 = right, 1 == left
     this.state = size; // 0 = low 1 = half,  2 = full, 3 = attack
     this.velocity = { x: 0, y: 0 };
-    this.health = 10;
+    this.health = 5;
     this.dead = false;
     this.paused = true;
     this.currentIFrameTimer = 0;
-    this.maxIFrameTimer = 50;
+    this.maxIFrameTimer = 42;
     
     //Changed to center point
     this.projectileBuffer = 150;
@@ -147,6 +149,7 @@ class Molecule {
       //if enemy is dead, remove from game
       if (this.health <= 0) {
         this.dead = true;
+        params.PARTICLE_SYSTEM.createParticleEffect(this.x + this.width/2 - gameEngine.camera.x, this.y + this.height/2 - gameEngine.camera.y, 50, 14, '#FF3232', 23, 5, 0.55);
         this.removeFromWorld = true;
         this.game.addEntityFirst(new DarkEnergyItemDrop(this.game, this.x, this.y));
 
