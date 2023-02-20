@@ -620,7 +620,7 @@ class SceneManager {
 
         }
         
-        gameEngine.addEntityFirst(new TextCutscene(deathText, 0.01));
+        gameEngine.addEntityFirst(new TextCutscene(deathText, 0.02));
     }
 
     // For death condition
