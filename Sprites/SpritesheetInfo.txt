@@ -55,6 +55,8 @@ Abilities
     atomic_left             256x256     3frames
     atomic_right            256x256     3frames
     atomic_projectile       64x64       1frame
+    solar_flare             612x612     13frames
+    solar_flare_hit_box     1920x1080   8frames (NOTE: solar_flare_hit_box animation must be started on solar_flare animation frame 5. Their animation will end together.)
 
 UI
     DE_UI_Design            1050x675    1frame
