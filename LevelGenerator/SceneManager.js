@@ -182,7 +182,7 @@ class SceneManager {
 
     loadHub() {
         this.clearLevel();
-        
+        params.LEVEL = 0;
         this.rightXLimit = 2000//4400;
         this.leftXLimit = 0//-1800;
         //Create Inventory UI
@@ -243,21 +243,33 @@ class SceneManager {
             params.INVENTORY.inventory[0].sigmaAbility = null;
             params.INVENTORY.dnaSlot1 = params.INVENTORY.inventory[0];
             equipAbilities(params.INVENTORY.dnaSlot1);
-            gameEngine.camera.loadHub();
+            //gameEngine.camera.loadHub();
+            gameEngine.camera.loadOpening();
         };
     }
 
     loadDeathScreen() {
         this.clearLevel();
         this.game.addEntityFirst(new Death_Screen_Background(this.game));
+        gameEngine.camera.gameOver = false;
+        let timer = 100;
+        // addEventListener('click', (event) => { });
 
-        addEventListener('click', (event) => { });
+        // onclick = (event) => {
+        //     onclick = null
+        //     gameEngine.camera.gameOver = false;
+        //     gameEngine.camera.loadDeathCutscene();
+        //     //gameEngine.camera.loadHub();
 
-        onclick = (event) => {
-            onclick = null
-            this.gameOver = false;
-            this.loadHub();
-        };
+
+        // };
+
+        // while (timer > 0) {
+        //     timer = timer - 0.0000001
+        // }
+
+        gameEngine.camera.gameOver = false;
+        gameEngine.camera.loadDeathCutscene();
     }
 
 
@@ -287,7 +299,8 @@ class SceneManager {
         //if (this.player.y > lowerBoundY && !(this.player.y - lowerBoundY != lowerYLimit)) this.y = this.player.y - lowerBoundY;
 
         if (this.gameOver) {
-            this.loadDeathScreen();
+           this.loadDeathScreen();
+           player.removeFromWorld = true;
         }
 
     };
@@ -298,7 +311,7 @@ class SceneManager {
 
     //This function adds a slight smoothing to the camera movement
     xCameraSmoothing() {
-        const SMOOTHING = 0.003;
+        const SMOOTHING = 0.006;
         let max = 300; 
         let min = -300;
         let target = 0;
@@ -360,6 +373,139 @@ class SceneManager {
         equipAbilities(params.INVENTORY.dnaSlot2);
         this.restoreDarkEnergy();
         this.game.addEntity(this.player);
+    }
+
+    loadOpening() {
+        let openingText = [
+            "The universe has ended",
+            "Consumed by the infinite void",
+            "All that remains is a battle of reprisal",
+            "Between the Dark Colossus and the last soul to resist it"
+        ];
+        gameEngine.addEntityFirst(new TextCutscene(openingText, 0.01));
+    }
+
+    loadDeathCutscene() {
+        //random int between 1 and 18
+        let deathCount = Math.floor(Math.random() * 18) + 1;
+        let deathText = [];
+        switch (deathCount) {
+            case 1:
+                deathText = [
+                    "Your soul fades away into the void",
+                    "The Dark Colossus grows stronger with every death"
+                ];
+                break;
+            case 2:
+                deathText = [
+                    "You have failed to save the universe once",
+                    "But you can still take revenge"
+                ];
+                break;
+            case 3:
+                deathText = [
+                    "You die again...",
+                    "The Cosmic Blade fails you",
+                    "But you can't give up now"
+                ];
+                break;
+            case 4:
+                deathText = [
+                    "The Reapers laugh at your defeat",
+                    "Your efforts were valiant, but not enough"
+                ];
+                break;
+            case 5:
+                deathText = [
+                    "The Reapers feast on your soul",
+                    "The Molecules tear you apart"
+                ];
+                break;
+            case 6:
+                deathText = [
+                    "The end is near",
+                    "The Dark Colossus cackles in triumph",
+                    "Your fate is sealed"
+                ];
+                break;
+            case 7:
+                deathText = [
+                    "The Molecules continue their onslaught",
+                    "Your sacrifice was in vain"
+                ];
+                break;
+
+            case 8:
+                deathText = [
+                    "The Astral Beam fizzles out",
+                    "What will you do now?"
+                ];
+                break;
+            case 9:
+                deathText = [
+                    "The Solar Flare engulfs you",
+                    "You are consumed by the flames",
+                ];
+                break;
+            case 10:
+                deathText = [
+                    "The Dark Colossus looms over you",
+                    "You are powerless to stop it",
+                ];
+                break;
+            case 11:
+                deathText = [
+                    "Tell me, lost soul...",
+                    "Why do you fight when the universe is already lost?"
+                ];
+                break;
+            case 12:
+                deathText = [
+                    "You are consumed by the infinite void",
+                    "How dissapointing"
+                ];
+                break;
+            case 13:
+                deathText = [
+                    "Even with the power of Dark Energy...",
+                    "You are still no match for the Dark Colossus"
+                ];
+                break;
+            case 14:
+                deathText = [
+                    "Tell me, lost soul...",
+                    "What was your family like?"
+                ];
+                break;
+            case 15:
+                deathText = [
+                    "Tell me, lost soul...",
+                    "Did you ever love anyone?"
+                ];
+                break;
+            case 16:
+                deathText = [
+                    "Tell me, lost soul...",
+                    "How heavy is the weight of life?"
+                ];
+                break;
+            case 17:
+                deathText = [
+                    "Your insides are torn apart",
+                    "Ripped apart atom by atom",
+                    "You become among the Molecules"
+                ];
+                break;
+            case 18:
+                deathText = [
+                    "Your consciousness is lost to the void",
+                    "Frozen in a moment of time",
+                    "No death, no peace"
+                ];
+                break;
+        }
+        
+        gameEngine.addEntityFirst(new TextCutscene(deathText, 0.01));
     }
 
     // For death condition
@@ -564,8 +710,11 @@ class Death_Screen_Background {
         //check if any controls are pressed in game controller
         if (isAnyControllerButtonPressed()){
             this.game.camera.gameOver = false;
-            this.game.camera.loadHub();
+           // this.game.camera.loadHub();
         }
 
     }
+
+    
 }
+

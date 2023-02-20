@@ -11,9 +11,7 @@ class SoulGrabAbility {
     this.dominant = true;
     this.effect = this.setEffect(effectRarity);
     this.description =
-      "Snatch the soul of a reaper sending him to the grave " +
-      this.effect +
-      " damage";
+      "Snatch the soul of a reaper sending him to the grave ";
     this.effectRarity = effectRarity;
     this.cooldownRarity = cooldownRarity;
     this.cooldown = this.setCooldown(this.cooldownRarity);

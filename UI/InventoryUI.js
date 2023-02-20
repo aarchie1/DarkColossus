@@ -75,14 +75,27 @@ class InventoryUI {
       );
       ctx.globalAlpha = 1;
 
-      let end = (this.rows*this.columns*this.currentPage) + (this.rows*this.columns);
-      for (let i = this.currentPage*this.rows*this.columns; i < end; i++) {
+      ctx.globalAlpha = 1;
+
+      let end = (this.rows * this.columns * this.currentPage) + (this.rows * this.columns);
+      for (let i = this.currentPage * this.rows * this.columns; i < end; i++) {
         let dna = this.inventory[i];
         let x = this.x + (i % this.columns) * this.slotSize;
         let row = Math.floor(i / this.columns);
         let y = this.y + row * this.slotSize - (this.currentPage * this.rows * this.slotSize);
+
         if (dna != null) dna.drawDna(ctx, x, y, this.slotSize);
+
+        // Draw an "E" on the dna in slot1
+        if (dna === params.INVENTORY.dnaSlot1 && dna != null) {
+          ctx.fillStyle = "#FFFFFF";
+          ctx.font = "30px Arial";
+          ctx.fillText("E", x + 10, y + 30);
+        }
       }
+
+
+
 
       this.drawControls(ctx);
      }
@@ -91,9 +104,9 @@ class InventoryUI {
 
       //Controls
       this.equipSlot1();
-      this.equipSlot2();
+     // this.equipSlot2();
       this.sellDna();
-      this.toggleMode();
+     // this.toggleMode();
       this.closeInventory();
 
       //Move Cursor Left
@@ -149,7 +162,9 @@ class InventoryUI {
       ctx.textAlign = "center";
       ctx.font = this.font;
       if(this.state == this.BROWSE){
-        ctx.fillText("1: Equip slot 1   2: Equip slot 2   3: Sell   4:Splice", CANVAS_WIDTH/2, this.y - 20);
+        //ctx.fillText("1: Equip slot 1   2: Equip slot 2   3: Sell   4:Splice", CANVAS_WIDTH/2, this.y - 20);
+        ctx.fillText("1: Equip DNA      3: Sell", CANVAS_WIDTH/2, this.y - 20);
+
       } else if (this.state == this.SPLICE) {
         ctx.fillText("1: Select slot 1   2: Select slot 2   3: Splice   4:Browse", CANVAS_WIDTH/2, this.y - 20);
       }
