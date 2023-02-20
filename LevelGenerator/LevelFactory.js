@@ -362,7 +362,7 @@ function getLevel(levelNumber) {
     }
     level.platformGround.push({x: 0, y: 800});
 
-    if (Math.random() < 0.2) {
+    if (Math.random() < 1) {
         growthChaseLevel();
         level.hordeFightManager = [];
     } 
