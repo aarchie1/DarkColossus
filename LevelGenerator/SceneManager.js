@@ -768,7 +768,7 @@ class Title_Screen_Background {
             
             params.INVENTORY.inventory[0].epsilonAbility = null;
             params.INVENTORY.inventory[0].betaAbility = null;
-            params.INVENTORY.inventory[0].alphaAbility = new CosmicBlade(3, 3);
+            params.INVENTORY.inventory[0].alphaAbility = new CosmicBladeAbility(3, 3);
             params.INVENTORY.inventory[0].sigmaAbility = null;
             params.INVENTORY.dnaSlot1 = params.INVENTORY.inventory[0];
             equipAbilities(params.INVENTORY.dnaSlot1);
