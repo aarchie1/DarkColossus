@@ -9,8 +9,9 @@ class SolarFlareAbility {
         this.effect = this.setEffect(effectRarity);
         //round to 1 decimal places
         this.effect = Math.round(this.effect * 10) / 10;
-        this.description = 'Unleash the power of the sun dealing ' + this.effect + ' dmg on screen';
         this.effectRarity = effectRarity;
+        this.damage = Math.round(this.effectRarity * ((params.DARK_ENERGY.meleeAttack+1) * this.effect) *10) / 10;
+        this.description = 'Unleash the power of the sun dealing ' + this.damage + ' dmg per hit';
         this.cooldownRarity = cooldownRarity;
         this.cooldown = this.setCooldown(this.cooldownRarity);
         this.cooldownTimer = new AbilityCooldown(this.cooldown);
@@ -68,42 +69,36 @@ class SolarFlareAbility {
     setCooldown(cooldownRarity) { 
         switch (cooldownRarity) {
             case 1:
-                return 6;
+                return 7;
             case 2:
-                return 5;
+                return 6;
             case 3:
-                return 4;
+                return 5;
             case 4:
-                return 3;
+                return 4;
         }
         return 1;
     }
 
-
-
-    //Strength of laser per hit
     setEffect(effectRarity) {
         switch (effectRarity) {
             case 1:
-                // Basic effect 1-2 per hit
-                return Math.random() * 1 + 1;
+                return 0.5;
             case 2:
-                // Basic effect 3-5 per hit
-                return Math.random() * 2 + 3;
+                return 1
             case 3:
-                // Basic effect 6-8 per hit
-                return Math.random() * 2 + 6;
+                return 2
             case 4:
-                // Basic effect 9-11 per hit
-                return Math.random() * 2 + 9;
+                return 4
         }
     }
 
     //Required
     update() {
+        this.damage = Math.round(this.effectRarity * ((params.DARK_ENERGY.meleeAttack+1) * this.effect) *10) / 10;
+
         this.BB1 = new BoundingBox(player.x - 256 - CANVAS_WIDTH/3, player.y - 156 - CANVAS_HEIGHT/2, CANVAS_WIDTH, CANVAS_HEIGHT*1.5);
         //round to the nearest tenth
-        this.damage = Math.round(this.effect * (params.DARK_ENERGY.meleeAttack+1) * 10) / 10;
         this.cooldownTimer.checkCooldown();
 
         if (this.inUse) {

@@ -27,7 +27,7 @@ class DarkEnergyUI {
         this.currentSlot = 0;
 
         //Stats in printable format
-        this.statIncreaseAmount = 20;
+        this.statIncreaseAmount = 50;
         this.deInfo = [
             "Melee Attack Bonus: " + this.game.darkEnergy.meleeAttack,
             "Ranged Attack Bonus: " + this.game.darkEnergy.rangedAttack,
@@ -154,9 +154,10 @@ class DarkEnergyUI {
             }
         }
 
-        if ((keypress("KeyX") || this.game.controllerButtonA) && this.state == this.BROWSE) {
-            this.game.darkEnergy.currency += 1000;
-        }
+        //commented out for live build since leaderboards are up too
+        // if ((keypress("KeyX") || this.game.controllerButtonA) && this.state == this.BROWSE) {
+        //     this.game.darkEnergy.currency += 1000;
+        // }
 
         // this.deInfo = [
         //     "Melee Attack Bonus: " + this.game.darkEnergy.meleeAttack,
