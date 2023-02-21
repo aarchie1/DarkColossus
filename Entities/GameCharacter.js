@@ -19,7 +19,7 @@ class GameCharacter {
     this.state = 2;
 
     //Base Stats
-    this.health = 10;
+    this.health = 5;
 
     this.facing = 0; // 0 = right, 1 == left
     this.state = 0; //0 = idle, 1 = running, 2 = falling 3 = jumping, 4 = attacking
@@ -33,6 +33,8 @@ class GameCharacter {
     this.animationYOffset = 0;
     this.animations = [];
     this.loadAnimations();
+
+    this.brightness = 100;
   }
 
   updateBB() {
@@ -210,6 +212,7 @@ class GameCharacter {
             this.game.addEntityFirst(
               new DamageIndicator(this.x+150, this.y, entity.damage)
             );
+            this.brightness = 200;
           }
           if (
             entity instanceof MoleculeProjectile &&
@@ -222,6 +225,7 @@ class GameCharacter {
             this.game.camera.game.addEntityFirst(
               new DamageIndicator(this.x+250, this.y, entity.damage)
             );
+            this.brightness = 200;
           }
         }
       }
@@ -244,14 +248,27 @@ class GameCharacter {
     if (this.velocity.x < 0) this.facing = 1;
     if (this.velocity.x > 0) this.facing = 0;
 
+    //Create particle under and behind player feet
+    if (this.state == 1 && this.facing == 1 && this.animations[1][1].currentFrame() % 3 == 0 && !this.usingAbility){
+
+      params.PARTICLE_SYSTEM.createParticleEffect(this.x + 200 - gameEngine.camera.x, this.y+256 - gameEngine.camera.y, 1+3*(Math.abs(this.velocity.x)/this.MAX_RUN), 5, '#330000', 10, 3, 0.3, -1, 1);
+    } else if (this.state == 1 && this.facing == 0 && this.animations[1][0].currentFrame() % 3 == 0 && !this.usingAbility){
+      params.PARTICLE_SYSTEM.createParticleEffect(this.x + 100 - gameEngine.camera.x, this.y+256 - gameEngine.camera.y, 1+3*(Math.abs(this.velocity.x)/this.MAX_RUN), 5, '#330000', 10, 3, 0.3, -1, 1);
+
+    }
+
+
+
     // Pass control to abilities
     this.abilityControls();
 
     // Check if player is out of bounds
-    if (this.y > 1700) {
+    if (this.y > 1700 && !this.dead) {
       this.dead = true;
       this.game.camera.gameOver = true;
+      
     }
+
 
     if (this.health <= 0) {
       if(params.RESURRECTS > 0) {
@@ -262,6 +279,7 @@ class GameCharacter {
         this.game.camera.gameOver = true;
       }
       
+
     }
 
     if (this.currentIFrameTimer > 0) {
@@ -277,6 +295,7 @@ class GameCharacter {
       (this.game.keys.Space || this.game.controllerButtonRT) &&
       this.JUMPS > 0
     ) {
+
       this.JUMPS--;
       this.velocity.y = this.JUMP_ACC;
       if (this.facing == 0) {
@@ -518,6 +537,10 @@ class GameCharacter {
   }
   draw(ctx) {
 
+
+    ctx.filter = "brightness" + "(" + this.brightness + "%)";
+    if (this.brightness > 100) this.brightness -= 2;
+
     if (this.usingAbility){
       this.animations[4][this.facing].drawFrame(
         this.game.clockTick,
@@ -534,7 +557,10 @@ class GameCharacter {
         this.y - this.game.camera.y,
         1
       );
+
     }
+    ctx.filter = "none"
+
 
     //DEBUG (I probably should have put it all in one if statement oops lmao)
     ctx.fillStyle = "white";
@@ -596,6 +622,7 @@ class GameCharacter {
         if (debug) ctx.fillText("Facing: Unknown", debugX, debugY + 100);
         break;
     }
+    
 
     if (debug) ctx.fillText("Jump Acceleration: " + this.JUMP_ACC, debugX, debugY + 240);
     if (debug) ctx.fillText("Max Run Speed: " + this.MAX_RUN, debugX, debugY + 220);

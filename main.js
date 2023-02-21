@@ -14,7 +14,8 @@ ASSET_MANAGER.queueDownload("./Sprites/Player/player_falling_left.png");
 //Abilities
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/cosmic_blade.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/cosmic_blade_left.png");
-ASSET_MANAGER.queueDownload("./Sprites/Abilities/soul_grab.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/soul_grab_right.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/soul_grab_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/supersonic.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/supersonic_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/emp.png");
@@ -22,6 +23,8 @@ ASSET_MANAGER.queueDownload("./Sprites/Abilities/astral_beam_right.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/astral_beam_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/atomic_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/atomic_right.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/solar_flare.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/solar_flare_hit_box.png");
 
 //Abilities Icons
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/emp_icon.png");
@@ -44,6 +47,10 @@ ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/willpower_icon.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/willpower_in_use_icon.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/soul_grab_icon.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/soul_grab_in_use_icon.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/resurrect_icon.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/resurrect_in_use_icon.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/solar_flare_icon.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/Icons/solar_flare_in_use_icon.png");
 
 //Enemies
 ASSET_MANAGER.queueDownload("./Sprites/Molecule/molecule_full.png");
@@ -69,6 +76,7 @@ ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/portal.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/workbench.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/Hazards/hazard_growth_short.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/Hazards/hazard_growth_tall.png");
+ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/Hazards/hazard_growth_tall_static.png");
 ASSET_MANAGER.queueDownload("./Sprites/LevelAssets/dark_energy.png");
 
 //DNA
@@ -101,10 +109,11 @@ ASSET_MANAGER.downloadAll(() => {
 	const ctx = canvas.getContext("2d");
 	params.CANVAS = ctx;
 	gameEngine.init(ctx);
-
+	params.PARTICLE_SYSTEM = new ParticleEffectSystem();
 	params.INVENTORY = new Inventory(gameEngine);
 	gameEngine.addEntity(params.INVENTORY);
 	gameEngine.addEntity(new SceneManager(gameEngine));
+	gameEngine.addEntity(params.PARTICLE_SYSTEM);
 
 	// Janky way of getting music to start, you have to interact with the volume bar first
 	// var l = document.getElementById('volume');

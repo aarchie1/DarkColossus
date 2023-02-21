@@ -6,14 +6,17 @@ class Molecule {
     this.player = this.game.camera.player;
     this.hostile = true;
 
+    this.width = 256;
+    this.height = 256;
     this.facing = 1; // 0 = right, 1 == left
     this.state = size; // 0 = low 1 = half,  2 = full, 3 = attack
     this.velocity = { x: 0, y: 0 };
-    this.health = 10;
+    this.health = 4 + params.LEVEL;
+    this.maxHealth = this.health;
     this.dead = false;
     this.paused = true;
     this.currentIFrameTimer = 0;
-    this.maxIFrameTimer = 25;
+    this.maxIFrameTimer = 40;
     
     //Changed to center point
     this.projectileBuffer = 150;
@@ -147,7 +150,10 @@ class Molecule {
       //if enemy is dead, remove from game
       if (this.health <= 0) {
         this.dead = true;
+        params.PARTICLE_SYSTEM.createParticleEffect(this.x + this.width/2 - gameEngine.camera.x, this.y + this.height/2 - gameEngine.camera.y, 50, 14, '#FF3232', 23, 5, 0.55);
         this.removeFromWorld = true;
+        for (let i = 0; i < 1 + params.LEVEL/2; i++)
+          this.game.addEntityFirst(new DarkEnergyItemDrop(this.game, this.x + (Math.random() * 100 - 50), this.y));
       }
     }
   }
@@ -243,6 +249,24 @@ class Molecule {
     );
   }
   draw(ctx) {
+
+    if (this.health != this.maxHealth){
+      ctx.fillStyle = "red";
+      ctx.fillRect(
+        this.x - this.game.camera.x,
+        this.y - this.game.camera.y - 10,
+        this.width/1.5,
+        5
+      );
+      ctx.fillStyle = "green";
+      ctx.fillRect(
+        this.x - this.game.camera.x,
+        this.y - this.game.camera.y - 10,
+        this.width/1.5 * (this.health / this.maxHealth),
+        5
+      );
+    }
+
     if (this.state === 3) {
       this.animations[this.size][this.facing].drawFrame(
         this.game.clockTick,

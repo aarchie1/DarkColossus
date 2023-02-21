@@ -262,7 +262,7 @@ class DarkEnergyUI {
                     if((this.game.darkEnergy.currency - cost >= 0) && this.game.darkEnergy.hp < 10) {
                         this.game.darkEnergy.currency -= cost;
                         this.game.darkEnergy.hp++;
-                        player.health = 10 + this.game.darkEnergy.hp;
+                        player.health = player.health + this.game.darkEnergy.hp;
                         break;
                     } else {
                         break;

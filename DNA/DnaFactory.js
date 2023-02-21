@@ -112,10 +112,7 @@ function getAbilityFromParents(parent1, parent2) {
 }
 
 function getRarityFromParents(parent1Rarity, parent2Rarity) {
-    let rarityRange = Math.abs(parent1Rarity - parent2Rarity);
-    let rarity = Math.round(Math.random() * rarityRange) +
-        Math.min(parent1Rarity, parent2Rarity);
-    return rarity;
+    return Math.floor((parent1Rarity + parent2Rarity) / 2);
 }
 
 function calculateDnaRarity(sigmaCooldownRarity,
@@ -183,24 +180,24 @@ function dnaInfoWindow(ctx, x, y, dna) {
     ctx.font = "28px Arial";
     //ctx.fillText(getRarityAsString(dna.rarity) + " DNA", x + windowWidth / 2, y);
 
-    if (dna.alphaAbility != null) {
-        ctx.drawImage(dna.alphaAbility.icon, x + xIconOffset, y + yGap - yIconOffset, 98, 98);
-        ctx.fillText(dna.alphaAbility.name, x + xNameOffset, y + yGap * 4 + yNameOffset);
-        drawRarityColoredText(ctx, dna.alphaAbility.cooldown + "s", x + xCooldownOffset, y + yCooldownOffset + yGap * 3, dna.alphaAbility.cooldownRarity);
-        wrapText(ctx, dna.alphaAbility.description, x + xDescriptionOffset, y + yDescriptionOffset + yGap * 4, windowWidth/1.5, fontHeight, getRarityColor(dna.alphaAbility.effectRarity));
-    } else {
-        ctx.fillText("No Alpha Ability", x + xDescriptionOffset, y + yGap * 4 + yNameOffset);
-    }
-
-
     if (dna.sigmaAbility != null) {
-        ctx.drawImage(dna.sigmaAbility.icon, x + xIconOffset, y + yGap * 6 - yIconOffset, 98, 98);
-        ctx.fillText(dna.sigmaAbility.name, x + xNameOffset, y + yGap * 9 + yNameOffset);
-        drawRarityColoredText(ctx, dna.sigmaAbility.cooldown + "s", x + xCooldownOffset, y + yCooldownOffset + yGap * 8, dna.sigmaAbility.cooldownRarity);
-        wrapText(ctx, dna.sigmaAbility.description, x + xDescriptionOffset, y + yDescriptionOffset + yGap * 9, windowWidth/1.5, fontHeight, getRarityColor(dna.sigmaAbility.effectRarity));
+        ctx.drawImage(dna.sigmaAbility.icon, x + xIconOffset, y + yGap - yIconOffset, 98, 98);
+        ctx.fillText(dna.sigmaAbility.name, x + xNameOffset, y + yGap * 4 + yNameOffset);
+        drawRarityColoredText(ctx, dna.sigmaAbility.cooldown + "s", x + xCooldownOffset, y + yCooldownOffset + yGap * 3, dna.sigmaAbility.cooldownRarity);
+        wrapText(ctx, dna.sigmaAbility.description, x + xDescriptionOffset, y + yDescriptionOffset + yGap * 4, windowWidth/1.5, fontHeight, getRarityColor(dna.sigmaAbility.effectRarity));
     } else {
-        ctx.fillText("No Sigma Ability", x + xDescriptionOffset, y + yGap * 9 + yNameOffset);
+        ctx.fillText("No Sigma Ability", x + xDescriptionOffset, y + yGap * 4 + yNameOffset);
     }
+    
+    if (dna.alphaAbility != null) {
+        ctx.drawImage(dna.alphaAbility.icon, x + xIconOffset, y + yGap * 6 - yIconOffset, 98, 98);
+        ctx.fillText(dna.alphaAbility.name, x + xNameOffset, y + yGap * 9 + yNameOffset);
+        drawRarityColoredText(ctx, dna.alphaAbility.cooldown + "s", x + xCooldownOffset, y + yCooldownOffset + yGap * 8, dna.alphaAbility.cooldownRarity);
+        wrapText(ctx, dna.alphaAbility.description, x + xDescriptionOffset, y + yDescriptionOffset + yGap * 9, windowWidth/1.5, fontHeight, getRarityColor(dna.alphaAbility.effectRarity));
+    } else {
+        ctx.fillText("No Alpha Ability", x + xDescriptionOffset, y + yGap * 9 + yNameOffset);
+    }
+    
 
     if (dna.betaAbility != null) {
         ctx.drawImage(dna.betaAbility.icon, x + xIconOffset, y + yGap * 11 - yIconOffset, 98, 98);

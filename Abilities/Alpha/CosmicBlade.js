@@ -26,11 +26,11 @@ class CosmicBladeAbility {
   updateBB() {
     this.lastBB1 = this.BB1;
     if (player.facing === 0) {
-      this.BB1 = new BoundingBox(player.x, player.y - 650, 500, 100);
-      this.BB2 = new BoundingBox(player.x+400, player.y - 600, 300, 900);
+      this.BB1 = new BoundingBox(player.x, player.y - 650, 500, 400);
+      this.BB2 = new BoundingBox(player.x+300, player.y - 600, 400, 1000);
     } else {
-      this.BB1 = new BoundingBox(player.x-200, player.y - 650, 500, 100);
-      this.BB2 = new BoundingBox(player.x-400, player.y - 600, 300, 900);
+      this.BB1 = new BoundingBox(player.x-200, player.y - 650, 500, 400);
+      this.BB2 = new BoundingBox(player.x-300, player.y - 600, 400, 1000);
     }
     
   }
@@ -91,18 +91,7 @@ class CosmicBladeAbility {
       case 2:
       case 3:
       case 4:
-        // Basic cooldown 20-30 seconds
-        //return Math.floor(Math.random() * 5) + 20;
         return 0;
-      // case 2:
-      //     // Uncommon cooldown 15-20 seconds
-      //     return Math.floor(Math.random() * 5) + 15;
-      // case 3:
-      //     // Rare cooldown 12-14 seconds
-      //     return Math.floor(Math.random() * 2) + 12;
-      // case 4:
-      //     // Godlike cooldown 7-11 seconds
-      //     return Math.floor(Math.random() * 4) + 7;
       default:
         console.log("Cooldown rarity not found");
     }
@@ -111,19 +100,17 @@ class CosmicBladeAbility {
 
   //Edit these to change the effect of the ability based on rarity
   setEffect(effectRarity) {
+
+    //damge between 1 and 3
     switch (effectRarity) {
       case 1:
-        // Basic damage gets damage between 1 and 3
         return Math.floor(Math.random() * 3) + 1;
       case 2:
-        // Uncommon damage gets damage between 3 and 5
-        return Math.floor(Math.random() * 3) + 3;
+        return Math.floor(Math.random() * 3) + 2;
       case 3:
-        // Rare damage gets damage between 5 and 7
-        return Math.floor(Math.random() * 3) + 5;
+        return Math.floor(Math.random() * 3) + 3;
       case 4:
-        // Godlike damage gets damage between 7 and 10
-        return Math.floor(Math.random() * 4) + 7;
+        return Math.floor(Math.random() * 3) + 4;
       default:
         console.log("Effect rarity not found");
         return -1;
@@ -135,15 +122,20 @@ class CosmicBladeAbility {
     this.cooldownTimer.checkCooldown();
     if (this.inUse) {
       gameEngine.entities.forEach((enemy) => {
-        if (enemy.hostile && (this.BB1.collide(enemy.BB) || this.BB2.collide(enemy.BB))) {
+        if (enemy.hostile && (this.BB1.collide(enemy.BB) || this.BB2.collide(enemy.BB)) &&
+        (player.animations[4][0].currentFrame() >= 2|| player.animations[4][1].currentFrame() >= 2)) {
           if (enemy.currentIFrameTimer === 0) {
             console.log("Cosmic Blade hit a enemy");
             enemy.health -= this.effect + params.DARK_ENERGY.meleeAttack;
             console.log(enemy.health);
             enemy.currentIFrameTimer = enemy.maxIFrameTimer;
             gameEngine.addEntityFirst(
-              new DamageIndicator(enemy.x, enemy.y, this.effect + params.DARK_ENERGY.meleeAttack)
+              new DamageIndicator(enemy.x+enemy.width/2, enemy.y, this.effect + params.DARK_ENERGY.meleeAttack)
             );
+
+            //(x, y, particleCount, particleSize, particleColor, xSpeed, ySpeed, sizeDecrement)
+            params.PARTICLE_SYSTEM.createParticleEffect(enemy.x + enemy.width/2 - gameEngine.camera.x, enemy.y + enemy.height/2 - gameEngine.camera.y, 50, 14, '#330000', 12, 25, 0.55);
+
           }
           if (enemy instanceof MoleculeProjectile) {
             enemy.removeFromWorld = true;
@@ -175,7 +167,7 @@ class CosmicBladeAbility {
 
   //Required - draw collision BB here
   draw(ctx) {
-    if (debug && this.inUse) {
+    if (debug && this.inUse && (player.animations[4][0].currentFrame() >= 2|| player.animations[4][1].currentFrame() >= 2)) {
       ctx.strokeRect(this.BB1.x - gameEngine.camera.x, this.BB1.y - gameEngine.camera.y, this.BB1.width, this.BB1.height);
       ctx.strokeRect(this.BB2.x - gameEngine.camera.x, this.BB2.y - gameEngine.camera.y, this.BB2.width, this.BB2.height);
     }

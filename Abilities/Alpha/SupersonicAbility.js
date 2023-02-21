@@ -100,9 +100,10 @@ class SupersonicAbility{
                         
                         enemy.health -= this.damage;
 
-
-                        if ( !(enemy instanceof MoleculeProjectile))
-                             gameEngine.addEntityFirst(new DamageIndicator(enemy.x+30, enemy.y, this.damage));
+                        if ( !(enemy instanceof MoleculeProjectile)){
+                            gameEngine.addEntityFirst(new DamageIndicator(enemy.x+enemy.width/2, enemy.y, this.damage));
+                            params.PARTICLE_SYSTEM.createParticleEffect(enemy.x + enemy.width/2 - gameEngine.camera.x, enemy.y + enemy.height/2 - gameEngine.camera.y, 50, 14, '#330000', 12, 25, 0.55);
+                        }
                      }
                 }
            })

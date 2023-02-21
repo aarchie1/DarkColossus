@@ -56,17 +56,17 @@ class EMPAbility {
     setCooldown(cooldownRarity) { 
         switch (cooldownRarity) {
             case 1:
-                // Basic cooldown 15-20 seconds
-                return Math.floor(Math.random() * 5) + 15;
+                // Basic cooldown 8-10 seconds
+                return Math.floor(Math.random() * 2) + 8;
             case 2:
-                // Uncommon cooldown 10-15 seconds
-                return Math.floor(Math.random() * 5) + 10;
+                // Uncommon cooldown 6-8 seconds
+                return Math.floor(Math.random() * 2) + 6;
             case 3:
-                // Rare cooldown 6-10 seconds
-                return Math.floor(Math.random() * 4) + 6;
-            case 4:
-                // Godlike cooldown 4-6 seconds
+                // Rare cooldown 4-6 seconds
                 return Math.floor(Math.random() * 2) + 4;
+            case 4:
+                // Godlike cooldown 3-4 seconds
+                return Math.floor(Math.random() * 1) + 3;
             default:
                 console.log('Cooldown rarity not found');
         }
@@ -97,9 +97,8 @@ class EMPAbility {
 
     //Required
     update() {
+        this.BB = new BoundingBox(player.x - 256 - CANVAS_WIDTH/3, player.y - 156 - CANVAS_HEIGHT/2, CANVAS_WIDTH, CANVAS_HEIGHT*1.5);
 
-        this.BB.x = player.x - CANVAS_WIDTH/2 + 100;
-        this.BB.y = player.y - CANVAS_HEIGHT/2 + 100;
         this.cooldownTimer.checkCooldown()
         if (this.inUse) {
             gameEngine.entities.forEach((enemy) => {
