@@ -18,6 +18,11 @@ class TextCutscene {
             this.opacity = 0;
           }
       }
+
+      if (isAnyInputDetected() && this.opacity > 0.5) {
+        this.removeFromWorld = true;
+        gameEngine.camera.loadHub();
+      }
     }
   
     draw(ctx) {

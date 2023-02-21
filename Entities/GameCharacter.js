@@ -65,7 +65,6 @@ class GameCharacter {
     const MAX_FALL = this.MAX_FALL;
     const FALL_ACC = this.FALL_ACC;
     const TICK = this.game.clockTick;
-    console.log("health: " + this.health);
 
 
     // Call ability update methods at all times

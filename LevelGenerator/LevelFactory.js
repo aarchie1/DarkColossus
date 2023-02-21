@@ -6,7 +6,7 @@ const MOLECULES_ONLY = 2;
 const NO_ENEMIES = 3;
 const EASY_PLATFORMING = 4;
 const DOUBLE_REWARDS = 5;
-const NO_FIGHTS = 6;
+const NO_MODIFER2 = 6;
 const ENEMIES_FASTER = 7;
 const REAPERS_DOUBLE_HP = 8;
 const PROJECTILES_DOUBLE_DAMAGE = 9;
@@ -31,8 +31,8 @@ function getLevelModifierText(modifierNumber) {
             return "Speed Zone";
         case DOUBLE_REWARDS:
             return "Double Rewards Realm";
-        case NO_FIGHTS:
-            return "Pacifist Reality";
+        case NO_MODIFER2:
+            return "Shadow Realm";
         case ENEMIES_FASTER:
             return "Fast Enemies Hell";
         case REAPERS_DOUBLE_HP:
@@ -181,11 +181,8 @@ function getLevel(levelNumber) {
             level.reaper = [];
             level.hordeFightManager = [];
             break;
-        case NO_FIGHTS:
+        case NO_MODIFER2:
             buildNormalLevel();
-            level.reaper = [];
-            level.molecule = [];
-            level.hordeFightManager = [];
             break;
         case ENEMIES_FASTER:
             buildNormalLevel();

@@ -34,7 +34,7 @@ class SceneManager {
 
         this.xCameraOffset = 0;
         this.yCameraOffset = 0;
-        this.loadTitleScreen(); //This will replace this.loadHub() when we have a title screen
+        this.loadOpening(); //This will replace this.loadHub() when we have a title screen
 
     };
 
@@ -223,6 +223,21 @@ class SceneManager {
     
     }
 
+    loadImportantEntities() {
+        params.HUD = new hud(gameEngine);
+            gameEngine.addEntity(params.HUD);
+            //add dna to inventory
+            for (let i = 0; i < 3; i++)
+                params.INVENTORY.inventory.push(getRandomDNA());
+
+            params.INVENTORY.inventory[0].epsilonAbility = null;
+            params.INVENTORY.inventory[0].betaAbility = null;
+            params.INVENTORY.inventory[0].alphaAbility = new CosmicBladeAbility(3, 3);
+            params.INVENTORY.inventory[0].sigmaAbility = null;
+            params.INVENTORY.dnaSlot1 = params.INVENTORY.inventory[0];
+            equipAbilities(params.INVENTORY.dnaSlot1);
+    }
+
     loadTitleScreen() {
 
         this.game.addEntity(new Title_Screen_Background(this.game));
@@ -243,8 +258,8 @@ class SceneManager {
             params.INVENTORY.inventory[0].sigmaAbility = null;
             params.INVENTORY.dnaSlot1 = params.INVENTORY.inventory[0];
             equipAbilities(params.INVENTORY.dnaSlot1);
-            //gameEngine.camera.loadHub();
-            gameEngine.camera.loadOpening();
+            gameEngine.camera.loadHub();
+            //gameEngine.camera.loadOpening();
         };
     }
 
@@ -254,23 +269,18 @@ class SceneManager {
         this.game.addEntityFirst(new Death_Screen_Background(this.game));
         gameEngine.camera.gameOver = false;
         let timer = 100;
-        // addEventListener('click', (event) => { });
+        addEventListener('click', (event) => { });
 
-        // onclick = (event) => {
-        //     onclick = null
-        //     gameEngine.camera.gameOver = false;
-        //     gameEngine.camera.loadDeathCutscene();
-        //     //gameEngine.camera.loadHub();
+        onclick = (event) => {
+            onclick = null
+            gameEngine.camera.gameOver = false;
+            gameEngine.camera.loadDeathCutscene();
+            //gameEngine.camera.loadHub();
 
 
-        // };
+        };
 
-        // while (timer > 0) {
-        //     timer = timer - 0.0000001
-        // }
-
-        gameEngine.camera.gameOver = false;
-        gameEngine.camera.loadDeathCutscene();
+        //gameEngine.camera.loadDeathCutscene();
     }
 
 
@@ -377,6 +387,7 @@ class SceneManager {
     }
 
     loadOpening() {
+        this.loadImportantEntities();
         let openingText = [
             "The universe has ended",
             "Consumed by the infinite void",
@@ -785,8 +796,9 @@ class Death_Screen_Background {
         this.x = 0;
         this.y = 0
         this.scrollSpeed = 0.02;
+        this.timer = 0;
         this.image = ASSET_MANAGER.getAsset("./Sprites/UI/title_screen.png");
-
+        getLeaderboard(NAME, params.LEVEL);
     }
 
     draw(ctx) {
@@ -811,22 +823,38 @@ class Death_Screen_Background {
         ctx.textAlign = "center";
         ctx.fillStyle = "black";
         ctx.font = "100px Angel";
-        ctx.fillText("YOU DIED", CANVAS_WIDTH / 2 - 2, 600 - 2);
+        ctx.fillText(NAME + " DIED", CANVAS_WIDTH / 2 - 2, 150 - 2);
         ctx.fillStyle = "white";
         ctx.font = "100px Angel";
-        ctx.fillText("YOU DIED", CANVAS_WIDTH / 2, 600);
+        ctx.fillText(NAME + " DIED", CANVAS_WIDTH / 2, 150);
 
-
-
+        // Draw the leaderboard
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 50px Arial';
+        ctx.textAlign = 'left';
+        ctx.fillText('Leaderboard - Highest Level', CANVAS_WIDTH / 3 - 50, 250);
+        for (let i = 0; i < 10; i++) {
+          if (ALL_TIME_LEADERBOARD == undefined || ALL_TIME_LEADERBOARD.leaderboard == undefined || ALL_TIME_LEADERBOARD.leaderboard[i] == undefined) continue;
+          const entry = ALL_TIME_LEADERBOARD.leaderboard[i];
+          console.log(ALL_TIME_LEADERBOARD);
+          console.log(entry);
+          ctx.fillStyle = '#fff';
+          ctx.textAlign = 'left';
+          let fontSize = 45 
+          ctx.font = fontSize + 'px Arial';
+          ctx.fillText(`Lv${entry.score} - ${entry.name} ${entry.time}`, CANVAS_WIDTH / 3 - 50, 300 + i*fontSize*1.5);
+        }
     }
 
     update() {
-
         //check if any controls are pressed in game controller
-        if (isAnyControllerButtonPressed()){
+        if (this.timer > 1 && (isAnyControllerButtonPressed() || isAnyKeyPressed()) ){
             this.game.camera.gameOver = false;
            // this.game.camera.loadHub();
+           this.removeFromWorld = true;
+           gameEngine.camera.loadDeathCutscene();
         }
+        this.timer += 0.01
 
     }
 
