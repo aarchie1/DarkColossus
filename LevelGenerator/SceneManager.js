@@ -822,10 +822,10 @@ class Death_Screen_Background {
         // Single option to begin game
         ctx.textAlign = "center";
         ctx.fillStyle = "black";
-        ctx.font = "100px Angel";
+        ctx.font = "100px StrangeDreams";
         ctx.fillText(NAME + " DIED", CANVAS_WIDTH / 2 - 2, 150 - 2);
         ctx.fillStyle = "white";
-        ctx.font = "100px Angel";
+        ctx.font = "100px StrangeDreams";
         ctx.fillText(NAME + " DIED", CANVAS_WIDTH / 2, 150);
 
         // Draw the leaderboard
@@ -838,6 +838,8 @@ class Death_Screen_Background {
           const entry = ALL_TIME_LEADERBOARD.leaderboard[i];
           console.log(ALL_TIME_LEADERBOARD);
           console.log(entry);
+
+          //AJ EDIT HERE
           ctx.fillStyle = '#fff';
           ctx.textAlign = 'left';
           let fontSize = 45 

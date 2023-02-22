@@ -22,7 +22,7 @@ class Molecule {
     this.projectileBuffer = 150;
 
     this.attackDistance = Math.random() * 200 + 300;
-    this.fireRate = 1 + params.LEVEL;
+    this.fireRate = 1 + params.LEVEL//MOLECULE_FIRE_RATE;
     this.elapsedTime = 0;
 
     this.updateBB();

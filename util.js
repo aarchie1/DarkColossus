@@ -10,6 +10,7 @@ const params = {
     TIMER : null,
     PARTICLE_SYSTEM: null,
     LEVEL_MODIFIER: -1,
+    FONT : "StrangeDreams",
 };
 
 

@@ -10,7 +10,9 @@ class SolarFlareAbility {
         //round to 1 decimal places
         this.effect = Math.round(this.effect * 10) / 10;
         this.effectRarity = effectRarity;
+
         this.damage = Math.round(this.effectRarity * ((params.DARK_ENERGY.meleeAttack+1) * this.effect) *10) / 10;
+        
         this.description = 'Unleash the power of the sun dealing ' + this.damage + ' dmg per hit';
         this.cooldownRarity = cooldownRarity;
         this.cooldown = this.setCooldown(this.cooldownRarity);

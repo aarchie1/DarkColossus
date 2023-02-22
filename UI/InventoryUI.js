@@ -1,7 +1,7 @@
 class InventoryUI {
     constructor(game) {
         params.STATE = "menu";
-        this.font = "20px Arial",
+        this.font = "20px " + params.FONT;
         this.fontColor = "#FFFFFF"
         this.BROWSE = 1;
         this.SPLICE = 2;
@@ -170,7 +170,7 @@ class InventoryUI {
       }
 
       //draw on the left and right side of the inventory to indicate that there are more pages
-      ctx.font = "50px Arial";
+      ctx.font = "50px "  + params.FONT;
       if (this.currentPage > 0) {
         ctx.fillText("<", this.x - 40, this.y + this.slotSize * this.rows/2);
       }

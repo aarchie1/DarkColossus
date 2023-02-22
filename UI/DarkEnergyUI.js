@@ -155,9 +155,9 @@ class DarkEnergyUI {
         }
 
         //commented out for live build since leaderboards are up too
-        // if ((keypress("KeyX") || this.game.controllerButtonA) && this.state == this.BROWSE) {
-        //     this.game.darkEnergy.currency += 1000;
-        // }
+        if ((keypress("KeyX") || this.game.controllerButtonA) && this.state == this.BROWSE) {
+           // this.game.darkEnergy.currency += 1000;
+        }
 
         // this.deInfo = [
         //     "Melee Attack Bonus: " + this.game.darkEnergy.meleeAttack,
@@ -287,7 +287,7 @@ class DarkEnergyUI {
                     if((this.game.darkEnergy.currency - cost >= 0) && this.game.darkEnergy.hp < 10) {
                         this.game.darkEnergy.currency -= cost;
                         this.game.darkEnergy.hp++;
-                        player.health = player.health + this.game.darkEnergy.hp;
+                        player.health = player.baseHealth + this.game.darkEnergy.hp;
                         break;
                     } else {
                         break;

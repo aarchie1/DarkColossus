@@ -19,6 +19,7 @@ class GameCharacter {
     this.state = 2;
 
     //Base Stats
+    this.baseHealth = 5;
     this.health = 5;
     this.width = 256;
     this.height = 256;
@@ -208,7 +209,7 @@ class GameCharacter {
             this.currentIFrameTimer === 0 && !this.usingAbility
           ) {
             // subtract reaper damage from player health
-            this.health -= entity.damage;
+            this.health -= entity.damage - params.DARK_ENERGY.meleeDefense;
             this.health = Math.max(this.health, 0);
             this.currentIFrameTimer = this.maxIFrameTimer;
             this.game.addEntityFirst(
@@ -221,7 +222,7 @@ class GameCharacter {
             this.currentIFrameTimer == 0 &&  !this.usingAbility
           ) {
             // subtract molecule damage from player health
-            this.health -= entity.damage;
+            this.health -= entity.damage - params.DARK_ENERGY.rangedDefense;
             this.currentIFrameTimer = this.maxIFrameTimer;
             entity.removeFromWorld = true;
             this.game.camera.game.addEntityFirst(
