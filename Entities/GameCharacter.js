@@ -10,7 +10,7 @@ class GameCharacter {
     this.MIN_RUN = 50;
     this.MAX_RUN = 800;
     this.RUN_ACC = 2500;
-    this.DEC_SKID = 5000;
+    this.DEC_SKID = 7000;
     this.DEC_REL = 1500;
     this.FALL_ACC = 2700;
     this.MAX_JUMPS = 2;
@@ -20,7 +20,7 @@ class GameCharacter {
 
     //Base Stats
     this.baseHealth = 5;
-    this.health = 5;
+    this.health = this.baseHealth + params.DARK_ENERGY.hp;
     this.width = 256;
     this.height = 256;
     this.facing = 0; // 0 = right, 1 == left
@@ -36,7 +36,7 @@ class GameCharacter {
     this.animations = [];
     this.loadAnimations();
 
-    this.brightness = 100;
+    this.brightness = 150;
   }
 
   updateBB() {
@@ -173,6 +173,31 @@ class GameCharacter {
       }
     }
 
+    //Ability to move while jumping
+    if (this.state == 3){
+      if (
+        (this.game.keys.KeyD && !this.game.keys.KeyA) ||
+        (this.game.controllerButtonRight && !this.game.controllerButtonLeft)
+      ) {
+
+        if (Math.abs(this.velocity.x) < MIN_RUN) {
+          this.velocity.x += MIN_RUN;
+        } else {
+          this.velocity.x += RUN_ACC * TICK;
+        }
+      } else if (
+        (this.game.keys.KeyA && !this.game.keys.keyD) ||
+        (this.game.controllerButtonLeft && !this.game.controllerButtonRight)
+      ) {
+
+        if (Math.abs(this.velocity.x) >= MIN_RUN) {
+          this.velocity.x -= MIN_RUN;
+        } else {
+          this.velocity.x -= RUN_ACC * TICK;
+        }
+      }
+    }
+
     this.velocity.y += FALL_ACC * TICK;
     if (this.velocity.x >= MAX_RUN) this.velocity.x = MAX_RUN;
     if (this.velocity.x <= -MAX_RUN) this.velocity.x = -MAX_RUN;
@@ -209,7 +234,7 @@ class GameCharacter {
             this.currentIFrameTimer === 0 && !this.usingAbility
           ) {
             // subtract reaper damage from player health
-            this.health -= entity.damage - params.DARK_ENERGY.meleeDefense;
+            this.health -= Math.max(0, entity.damage - params.DARK_ENERGY.meleeDefense);
             this.health = Math.max(this.health, 0);
             this.currentIFrameTimer = this.maxIFrameTimer;
             this.game.addEntityFirst(
@@ -222,7 +247,7 @@ class GameCharacter {
             this.currentIFrameTimer == 0 &&  !this.usingAbility
           ) {
             // subtract molecule damage from player health
-            this.health -= entity.damage - params.DARK_ENERGY.rangedDefense;
+            this.health -= Math.max(0, entity.damage - params.DARK_ENERGY.rangedDefense);
             this.currentIFrameTimer = this.maxIFrameTimer;
             entity.removeFromWorld = true;
             this.game.camera.game.addEntityFirst(

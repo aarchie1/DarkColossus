@@ -10,14 +10,14 @@ class CosmicBladeAbility {
     );
     this.dominant = false;
     this.effect = this.setEffect(effectRarity);
-    this.description =
-      "Attack the enemy with a giant sword dealing " + this.effect + " damage";
     this.effectRarity = effectRarity;
     this.cooldownRarity = cooldownRarity;
     this.cooldown = this.setCooldown(this.cooldownRarity);
     this.cooldownTimer = new AbilityCooldown(this.cooldown);
     this.inUse = false;
-
+    this.damage = Math.round(this.effectRarity * 0.9 * (params.DARK_ENERGY.meleeAttack+1) * 10) / 10;
+    this.description =
+      "Attack the enemy with a giant sword dealing " + this.damage + " damage";
     //Ability specific properties
     this.updateBB();
     
@@ -119,6 +119,7 @@ class CosmicBladeAbility {
 
   //Required
   update() {
+    this.damage = Math.round(this.effectRarity * 0.9 * (params.DARK_ENERGY.meleeAttack+1) * 10) / 10;
     this.cooldownTimer.checkCooldown();
     if (this.inUse) {
       gameEngine.entities.forEach((enemy) => {
@@ -126,11 +127,11 @@ class CosmicBladeAbility {
         (player.animations[4][0].currentFrame() >= 2|| player.animations[4][1].currentFrame() >= 2)) {
           if (enemy.currentIFrameTimer === 0) {
             console.log("Cosmic Blade hit a enemy");
-            enemy.health -= this.effect + params.DARK_ENERGY.meleeAttack;
+            enemy.health -= this.damage;
             console.log(enemy.health);
             enemy.currentIFrameTimer = enemy.maxIFrameTimer;
             gameEngine.addEntityFirst(
-              new DamageIndicator(enemy.x+enemy.width/2, enemy.y, this.effect + params.DARK_ENERGY.meleeAttack)
+              new DamageIndicator(enemy.x+enemy.width/2, enemy.y, this.damage)
             );
 
             //(x, y, particleCount, particleSize, particleColor, xSpeed, ySpeed, sizeDecrement)

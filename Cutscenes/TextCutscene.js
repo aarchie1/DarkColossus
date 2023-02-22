@@ -19,10 +19,10 @@ class TextCutscene {
           }
       }
 
-      // if (isAnyInputDetected() && this.opacity > 0.5) {
-      //   this.removeFromWorld = true;
-      //   gameEngine.camera.loadHub();
-      // }
+      if (isAnyInputDetected() && this.opacity > 0.5) {
+        this.removeFromWorld = true;
+        gameEngine.camera.loadHub();
+      }
     }
   
     draw(ctx) {

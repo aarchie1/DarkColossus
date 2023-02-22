@@ -5,8 +5,8 @@ class SlipperyAbility {
         this.name = 'Slippery';
         this.effect = this.setEffect(effectRarity);
         this.description = 'Increase movement speed; decreased ground friction. ' + '(' + this.effect + ')';
-        this.icon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/atomic_icon.png");
-        this.inUseIcon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/atomic_in_use_icon.png");
+        this.icon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/slippery_icon.png");
+        this.inUseIcon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/slippery_in_use_icon.png");
         this.dominant = false;
         this.cooldownRarity = cooldownRarity;
         this.effectRarity = effectRarity;

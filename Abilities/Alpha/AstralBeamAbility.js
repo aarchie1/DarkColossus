@@ -9,12 +9,14 @@ class AstralBeamAbility {
         this.effect = this.setEffect(effectRarity);
         //round to 1 decimal places
         this.effect = Math.round(this.effect * 10) / 10;
-        this.description = 'Eviscerate enemies in a line of sight dealing ' + this.effect + ' dmg';
         this.effectRarity = effectRarity;
         this.cooldownRarity = cooldownRarity;
         this.cooldown = this.setCooldown(this.cooldownRarity);
         this.cooldownTimer = new AbilityCooldown(this.cooldown);
         this.inUse = false;
+        this.damage = Math.round(this.effectRarity * 1.5 * (params.DARK_ENERGY.rangedAttack+1) * 10) / 10;
+        this.description = 'Eviscerate enemies in a line of sight dealing ' + this.damage + ' dmg';
+
 
         //Ability specific properties
         this.BB1_TAIL = new BoundingBox(100, 100, CANVAS_WIDTH-100, CANVAS_HEIGHT-100);
@@ -89,7 +91,7 @@ class AstralBeamAbility {
     //Required
     update() {
         //round to the nearest tenth
-        this.damage = Math.round(this.effect * (params.DARK_ENERGY.rangedAttack+1) * 10) / 10;
+        this.damage = Math.round(this.effectRarity * 1.5 * (params.DARK_ENERGY.rangedAttack+1) * 10) / 10;
         this.cooldownTimer.checkCooldown();
 
         if (player.facing == 0) { //RIGHT FACING

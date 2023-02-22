@@ -7,11 +7,9 @@ class SolarFlareAbility {
         this.inUseIcon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/solar_flare_in_use_icon.png");
         this.dominant = false;
         this.effect = this.setEffect(effectRarity);
-        //round to 1 decimal places
-        this.effect = Math.round(this.effect * 10) / 10;
         this.effectRarity = effectRarity;
 
-        this.damage = Math.round(this.effectRarity * ((params.DARK_ENERGY.meleeAttack+1) * this.effect) *10) / 10;
+        this.damage = Math.round(this.effectRarity * 0.3 * ((params.DARK_ENERGY.meleeAttack+1)) *10) / 10;
         
         this.description = 'Unleash the power of the sun dealing ' + this.damage + ' dmg per hit';
         this.cooldownRarity = cooldownRarity;
@@ -97,7 +95,7 @@ class SolarFlareAbility {
 
     //Required
     update() {
-        this.damage = Math.round(this.effectRarity * ((params.DARK_ENERGY.meleeAttack+1) * this.effect) *10) / 10;
+        this.damage = Math.round(this.effectRarity * 0.3 * ((params.DARK_ENERGY.meleeAttack+1)) *10) / 10;
 
         this.BB1 = new BoundingBox(player.x - 256 - CANVAS_WIDTH/3, player.y - 156 - CANVAS_HEIGHT/2, CANVAS_WIDTH, CANVAS_HEIGHT*1.5);
         //round to the nearest tenth
