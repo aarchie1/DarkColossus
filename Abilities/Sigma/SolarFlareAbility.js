@@ -8,10 +8,7 @@ class SolarFlareAbility {
         this.dominant = false;
         this.effect = this.setEffect(effectRarity);
         this.effectRarity = effectRarity;
-
-        this.damage = Math.round(this.effectRarity * 0.3 * ((params.DARK_ENERGY.meleeAttack+1)) *10) / 10;
-        
-        this.description = 'Unleash the power of the sun dealing ' + this.damage + ' dmg per hit';
+        this.updateDamage();
         this.cooldownRarity = cooldownRarity;
         this.cooldown = this.setCooldown(this.cooldownRarity);
         this.cooldownTimer = new AbilityCooldown(this.cooldown);
@@ -93,10 +90,14 @@ class SolarFlareAbility {
         }
     }
 
+    updateDamage() {
+        this.damage = Math.round(this.effectRarity * 0.3 * ((params.DARK_ENERGY.meleeAttack+1)) *10) / 10;
+        this.description = 'Unleash the power of the sun dealing ' + this.damage + ' dmg per hit';
+    }
+
     //Required
     update() {
-        this.damage = Math.round(this.effectRarity * 0.3 * ((params.DARK_ENERGY.meleeAttack+1)) *10) / 10;
-
+        this.updateDamage();
         this.BB1 = new BoundingBox(player.x - 256 - CANVAS_WIDTH/3, player.y - 156 - CANVAS_HEIGHT/2, CANVAS_WIDTH, CANVAS_HEIGHT*1.5);
         //round to the nearest tenth
         this.cooldownTimer.checkCooldown();

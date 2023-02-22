@@ -15,9 +15,7 @@ class CosmicBladeAbility {
     this.cooldown = this.setCooldown(this.cooldownRarity);
     this.cooldownTimer = new AbilityCooldown(this.cooldown);
     this.inUse = false;
-    this.damage = Math.round(this.effectRarity * 0.9 * (params.DARK_ENERGY.meleeAttack+1) * 10) / 10;
-    this.description =
-      "Attack the enemy with a giant sword dealing " + this.damage + " damage";
+    this.updateDamage();
     //Ability specific properties
     this.updateBB();
     
@@ -117,9 +115,15 @@ class CosmicBladeAbility {
     }
   }
 
+  updateDamage() {
+    this.damage = Math.round(this.effectRarity * 0.9 * (params.DARK_ENERGY.meleeAttack+1) * 10) / 10;
+    this.description =
+      "Attack the enemy with a giant sword dealing " + this.damage + " damage";
+  }
+
   //Required
   update() {
-    this.damage = Math.round(this.effectRarity * 0.9 * (params.DARK_ENERGY.meleeAttack+1) * 10) / 10;
+    this.updateDamage();
     this.cooldownTimer.checkCooldown();
     if (this.inUse) {
       gameEngine.entities.forEach((enemy) => {

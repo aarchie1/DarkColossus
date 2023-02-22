@@ -18,9 +18,7 @@ class SupersonicAbility{
         this.originalAnimationLeft = player.animations[1][1];
         this.speedIncrease = 500;
         this.enemiesHit = [];
-        this.damage = Math.round(this.effectRarity * 0.5 * (params.DARK_ENERGY.meleeAttack+1) * 10) / 10;
-        this.description = 'Passive | Increases speed, deals ' + this.damage + ' dmg while moving at max speed';
-
+        this.updateDamage();
 
 
         //set effect to random number between 1 and 15
@@ -88,9 +86,13 @@ class SupersonicAbility{
         }
     }
 
-    update() {
+    updateDamage() {
         this.damage = Math.round(this.effectRarity * 0.5 * (params.DARK_ENERGY.meleeAttack+1) * 10) / 10;
+        this.description = 'Passive | Increases speed, deals ' + this.damage + ' dmg while moving at max speed';
+    }
 
+    update() {
+        this.updateDamage();
         if (Math.abs(player.velocity.x) == player.MAX_RUN && player.state == 1) {
             this.inUse = true;
            // this.effect = Math.floor(Math.random() * 15) + 1;
