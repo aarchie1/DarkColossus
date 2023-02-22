@@ -5,7 +5,6 @@ class DarkEnergy {
         //Attack stats
         this.meleeAttack = 0;
         this.rangedAttack = 0;
-        this.attackSpeed = 0;
 
         //Movement stats
         this.movementSpeed = 0;
@@ -17,11 +16,8 @@ class DarkEnergy {
         this.hp = 0;
 
         //Special stats
+        this.healthDropRate = 0;
         this.dnaDropRate = 0;
-        this.sigmaChance = 0;
-        this.alphaChance = 0;
-        this.betaChance = 0;
-        this.epsilonChance = 0;
         this.darkEnergyChance = 0;
 
 

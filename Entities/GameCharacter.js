@@ -272,9 +272,17 @@ class GameCharacter {
       
     }
 
-    if (this.health <= 0 && !this.dead) {
-      this.dead = true;
-      this.game.camera.gameOver = true;
+
+    if (this.health <= 0) {
+      if(params.RESURRECTS > 0) {
+        
+
+      } else {
+        this.dead = true;
+        this.game.camera.gameOver = true;
+      }
+      
+
     }
 
     if (this.currentIFrameTimer > 0) {
