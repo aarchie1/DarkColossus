@@ -40,7 +40,7 @@ class SceneManager {
 
     loadLevel() {
         this.clearLevel();
-
+        gameEngine.addEntityFirst(new HpEffect());
         params.LEVEL += 1;
         let level = getLevel(params.LEVEL);
         console.log("Loading Level: " + params.LEVEL);
