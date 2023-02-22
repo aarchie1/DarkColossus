@@ -6,7 +6,7 @@ class DarkEnergyUI {
         this.state = this.BROWSE;
 
         //Build menu information
-        this.rows = 7;
+        this.rows = 5;
         this.columns = 2;
         this.x = CANVAS_WIDTH/2;
         this.y = CANVAS_HEIGHT/2;
@@ -31,17 +31,13 @@ class DarkEnergyUI {
         this.deInfo = [
             "Melee Attack Bonus: " + this.game.darkEnergy.meleeAttack,
             "Ranged Attack Bonus: " + this.game.darkEnergy.rangedAttack,
-            "Attack Speed Bonus: " + this.game.darkEnergy.attackSpeed,
+            "Health Drop Bonus: " + this.game.darkEnergy.healthDropRate,
             "Movement Speed Bonus: " + this.game.darkEnergy.movementSpeed,
             "Jump Height Bonus: " + this.game.darkEnergy.jumpHeight,
             "Melee Defense Bonus: " + this.game.darkEnergy.meleeDefense,
             "Ranged Defense Bonus: " + this.game.darkEnergy.rangedDefense,
             "HP Bonus: " + this.game.darkEnergy.hp,
             "DNA Drop Rate Bonus: " + this.game.darkEnergy.dnaDropRate,
-            "Sigma Chance Bonus: " + this.game.darkEnergy.sigmaChance,
-            "Alpha Chance Bonus: " + this.game.darkEnergy.alphaChance,
-            "Beta Chance Bonus: " + this.game.darkEnergy.betaChance,
-            "Epsilon Chance Bonus: " + this.game.darkEnergy.epsilonChance,
             "Dark Energy Gather Bonus: " + this.game.darkEnergy.darkEnergyChance,
         ];
     }
@@ -89,7 +85,7 @@ class DarkEnergyUI {
         let m = 0;
         ctx.font = "25px Arial";
         ctx.fillStyle = "#FFFFFF";
-        for(let i = 0; i < 7; i++) {
+        for(let i = 0; i < this.rows; i++) {
             for(let j = 0; j < 2; j++) {
                 if(j % 2 == 0) {
                     ctx.fillText(this.deInfo[m++], this.gridStartX + this.firstColXOffset, this.gridStartY + this.initialRowOffset + (this.followingRowOffset * i));
@@ -161,17 +157,13 @@ class DarkEnergyUI {
         this.deInfo = [
             "Melee Attack Bonus: " + this.game.darkEnergy.meleeAttack,
             "Ranged Attack Bonus: " + this.game.darkEnergy.rangedAttack,
-            "Attack Speed Bonus: " + this.game.darkEnergy.attackSpeed,
+            "Health Drop Bonus: " + this.game.darkEnergy.healthDropRate,
             "Movement Speed Bonus: " + this.game.darkEnergy.movementSpeed,
             "Jump Height Bonus: " + this.game.darkEnergy.jumpHeight,
             "Melee Defense Bonus: " + this.game.darkEnergy.meleeDefense,
             "Ranged Defense Bonus: " + this.game.darkEnergy.rangedDefense,
             "HP Bonus: " + this.game.darkEnergy.hp,
             "DNA Drop Rate Bonus: " + this.game.darkEnergy.dnaDropRate,
-            "Sigma Chance Bonus: " + this.game.darkEnergy.sigmaChance,
-            "Alpha Chance Bonus: " + this.game.darkEnergy.alphaChance,
-            "Beta Chance Bonus: " + this.game.darkEnergy.betaChance,
-            "Epsilon Chance Bonus: " + this.game.darkEnergy.epsilonChance,
             "Dark Energy Gather Bonus: " + this.game.darkEnergy.darkEnergyChance,
         ];
 
@@ -211,10 +203,10 @@ class DarkEnergyUI {
                         break;
                     }
                 case 2:
-                    cost = Math.ceil(this.game.darkEnergy.attackSpeed + this.statIncreaseAmount);
+                    cost = Math.ceil(this.game.darkEnergy.healthDropRate + this.statIncreaseAmount);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
-                        this.game.darkEnergy.attackSpeed++;
+                        this.game.darkEnergy.healthDropRate++;
                         break;
                     } else {
                         break;
@@ -277,42 +269,6 @@ class DarkEnergyUI {
                         break;
                     }
                 case 9:
-                    cost = Math.ceil(this.game.darkEnergy.sigmaChance + this.statIncreaseAmount);
-                    if(this.game.darkEnergy.currency - cost >= 0) {
-                        this.game.darkEnergy.currency -= cost;
-                        this.game.darkEnergy.sigmaChance++;
-                        break;
-                    } else {
-                        break;
-                    }
-                case 10:
-                    cost = Math.ceil(this.game.darkEnergy.alphaChance + this.statIncreaseAmount);
-                    if(this.game.darkEnergy.currency - cost >= 0) {
-                        this.game.darkEnergy.currency -= cost;
-                        this.game.darkEnergy.alphaChance++;
-                        break;
-                    } else {
-                        break;
-                    }
-                case 11:
-                    cost = Math.ceil(this.game.darkEnergy.betaChance + this.statIncreaseAmount);
-                    if(this.game.darkEnergy.currency - cost >= 0) {
-                        this.game.darkEnergy.currency -= cost;
-                        this.game.darkEnergy.betaChance++;
-                        break;
-                    } else {
-                        break;
-                    }
-                case 12:
-                    cost = Math.ceil(this.game.darkEnergy.epsilonChance + this.statIncreaseAmount);
-                    if(this.game.darkEnergy.currency - cost >= 0) {
-                        this.game.darkEnergy.currency -= cost;
-                        this.game.darkEnergy.epsilonChance++;
-                        break;
-                    } else {
-                        break;
-                    }
-                case 13:
                     cost = Math.ceil(this.game.darkEnergy.darkEnergyChance + this.statIncreaseAmount);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
@@ -321,6 +277,8 @@ class DarkEnergyUI {
                     } else {
                         break;
                     }
+                default:
+                    break;
             }
 
         }
