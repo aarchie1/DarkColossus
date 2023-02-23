@@ -3,7 +3,6 @@ class ExtraJump {
     constructor(cooldownRarity, effectRarity) {
         //Necessary properties for all abilities
         this.name = 'Extra Jump';
-        this.description = 'Allows you to jump one more time in the air!';
         this.icon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/extra_jump_icon.png");
         this.inUseIcon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/extra_jump_in_use_icon.png");
         this.dominant = false;
@@ -11,6 +10,7 @@ class ExtraJump {
         this.effectRarity = effectRarity;
         this.cooldown = this.setCooldown(cooldownRarity);
         this.effect = this.setEffect(effectRarity);
+        this.description = 'Allows you to jump ' + this.effect + ' more time(s) in the air!';
         this.currentCooldown = 0;
         this.inUse = false;
 
@@ -19,11 +19,11 @@ class ExtraJump {
     }
 
     onEquip() {
-        player.MAX_JUMPS++;
+        player.MAX_JUMPS += this.effect;
     }
 
     onUnequip() {
-        player.MAX_JUMPS--;
+        player.MAX_JUMPS -= this.effect;
 
     }
 
@@ -47,7 +47,16 @@ class ExtraJump {
 
     //Edit these to change the power of the ability based on rarity
     setEffect(effectRarity) {
-
+        switch (effectRarity) {
+            case 1:
+                return 1;
+            case 2:
+                return 2;
+            case 3:
+                return 3;
+            case 4:
+                return 4;                
+        }
     }
 
     //Required

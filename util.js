@@ -1,6 +1,5 @@
 /** Global Parameters Object */
 const params = { 
-    BLOCKWIDTH: 256,
     STATE : "gameplay",
     LEVEL: 0, 
     INVENTORY : null,
@@ -8,12 +7,9 @@ const params = {
     DARK_ENERGY : null, 
     CANVAS : null,
     TIMER : null,
-
     RESURRECTS: 0,
-
     PARTICLE_SYSTEM: null,
     LEVEL_MODIFIER: -1,
-
     FONT : "StrangeDreams",
 
 };
@@ -22,7 +18,6 @@ const params = {
 let CANVAS_HEIGHT = 0;
 let CANVAS_WIDTH = 0;
 let player = null;
-
 let debug = false;
 
 function toggleDebug() {

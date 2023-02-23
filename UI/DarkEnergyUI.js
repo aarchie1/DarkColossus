@@ -173,25 +173,17 @@ class DarkEnergyUI {
         // ];
 
         this.deInfo = [
-
-            "Melee Attack+: " + this.game.darkEnergy.meleeAttack + "          Cost: " + this.cost(this.game.darkEnergy.meleeAttack, this.statIncreaseAmount),
+            "Melee Attack+: " + this.game.darkEnergy.meleeAttack + "             Cost: " + this.cost(this.game.darkEnergy.meleeAttack, this.statIncreaseAmount),
             "Ranged Attack+: " + this.game.darkEnergy.rangedAttack + "          Cost: " + this.cost(this.game.darkEnergy.rangedAttack, this.statIncreaseAmount),
             "Health Drop Bonus: " + this.game.darkEnergy.healthDropRate + "          Cost: " + this.cost(this.game.darkEnergy.healthDropRate, this.statIncreaseAmount),
-            "Attack Speed+: " + this.game.darkEnergy.attackSpeed + "          Cost: " + this.cost(this.game.darkEnergy.attackSpeed, this.statIncreaseAmount),
             "Movement Speed+: " + this.game.darkEnergy.movementSpeed + "          Cost: " + this.cost(this.game.darkEnergy.movementSpeed, this.statIncreaseAmount),
             "Jump Height+: " + this.game.darkEnergy.jumpHeight + "          Cost: " + this.cost(this.game.darkEnergy.jumpHeight, this.statIncreaseAmount),
             "Melee Defense+: " + this.game.darkEnergy.meleeDefense + "          Cost: " + this.cost(this.game.darkEnergy.meleeDefense, this.statIncreaseAmount),
             "Ranged Defense+: " + this.game.darkEnergy.rangedDefense + "          Cost: " + this.cost(this.game.darkEnergy.rangedDefense, this.statIncreaseAmount),
-            "HP+: " + this.game.darkEnergy.hp + "          Cost: " + this.cost(this.game.darkEnergy.hp, this.statIncreaseAmount),
+            "HP+: " + this.game.darkEnergy.hp + "                              Cost: " + this.cost(this.game.darkEnergy.hp, this.statIncreaseAmount),
             "DNA Drop Rate+: " + this.game.darkEnergy.dnaDropRate + "          Cost: " + this.cost(this.game.darkEnergy.dnaDropRate, this.statIncreaseAmount),
             "Dark Energy Gather+: " + this.game.darkEnergy.darkEnergyChance + "          Cost: " + this.cost(this.game.darkEnergy.darkEnergyChance, this.statIncreaseAmount),
-
         ];
-
-
-
-
-        
     }
 
     closeDarkEnergyUI() {
@@ -230,16 +222,8 @@ class DarkEnergyUI {
                     } else {
                         break;
                     }
+
                 case 2:
-                    cost = Math.ceil(this.game.darkEnergy.healthDropRate + this.statIncreaseAmount);
-                    if(this.game.darkEnergy.currency - cost >= 0) {
-                        this.game.darkEnergy.currency -= cost;
-                        this.game.darkEnergy.healthDropRate++;
-                        break;
-                    } else {
-                        break;
-                    }
-                case 3:
                     cost = Math.ceil(this.game.darkEnergy.movementSpeed + this.statIncreaseAmount);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
@@ -249,7 +233,7 @@ class DarkEnergyUI {
                     } else {
                         break;
                     }
-                case 4:
+                case 3:
                     cost = Math.ceil((this.game.darkEnergy.jumpHeight + 1) * this.statIncreaseAmount);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
@@ -259,7 +243,7 @@ class DarkEnergyUI {
                     } else {
                         break;
                     }
-                case 5:
+                case 4:
                     cost = Math.ceil(this.game.darkEnergy.meleeDefense + this.statIncreaseAmount);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
@@ -268,7 +252,7 @@ class DarkEnergyUI {
                     } else {
                         break;
                     }
-                case 6:
+                case 5:
                     cost = Math.ceil(this.game.darkEnergy.rangedDefense + this.statIncreaseAmount);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
@@ -277,7 +261,7 @@ class DarkEnergyUI {
                     } else {
                         break;
                     }
-                case 7:
+                case 6:
                     cost = Math.ceil(this.game.darkEnergy.hp + this.statIncreaseAmount);
                     if((this.game.darkEnergy.currency - cost >= 0) && this.game.darkEnergy.hp < 10) {
                         this.game.darkEnergy.currency -= cost;
@@ -287,7 +271,7 @@ class DarkEnergyUI {
                     } else {
                         break;
                     }
-                case 8:
+                case 7:
                     cost = Math.ceil(this.game.darkEnergy.dnaDropRate + this.statIncreaseAmount);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
@@ -296,7 +280,8 @@ class DarkEnergyUI {
                     } else {
                         break;
                     }
-                case 9:
+                
+                case 8:
                     cost = Math.ceil(this.game.darkEnergy.darkEnergyChance + this.statIncreaseAmount);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
@@ -307,6 +292,16 @@ class DarkEnergyUI {
                     }
                 default:
                     break;
+                    
+                case 9:
+                    cost = Math.ceil(this.game.darkEnergy.healthDropRate + this.statIncreaseAmount);
+                    if(this.game.darkEnergy.currency - cost >= 0) {
+                        this.game.darkEnergy.currency -= cost;
+                        this.game.darkEnergy.healthDropRate++;
+                        break;
+                    } else {
+                        break;
+                    }
             }
 
         }

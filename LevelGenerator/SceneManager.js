@@ -9,6 +9,7 @@ class SceneManager {
         this.transition = false;
         this.player = new GameCharacter(this.game, 0, 0);
         player = this.player;
+        this.playerCurrentHealth = this.player.health;
         this.restoreDarkEnergy(); //restores DE
 
 
@@ -40,8 +41,9 @@ class SceneManager {
 
     loadLevel() {
         this.clearLevel();
-
+        gameEngine.addEntityFirst(new HpEffect());
         params.LEVEL += 1;
+        updateGameBalancing();
         let level = getLevel(params.LEVEL);
         console.log("Loading Level: " + params.LEVEL);
         let xBoundMin = 1300;
@@ -153,19 +155,25 @@ class SceneManager {
         }
 
 
-
-
-
         
         //add background
         gameEngine.addEntity(new Background(this.game));
         
+
+        for (let i = 0; i < 100; i++){
+            //Random x coordinate between 0 and CANVAS_WIDTH
+            let x = Math.random() * CANVAS_WIDTH;
+            //Random y coordinate between 0 and CANVAS_HEIGHT
+            let y = Math.random() * CANVAS_HEIGHT;
+            params.PARTICLE_SYSTEM.createParticleEffect(x - gameEngine.camera.x, y - gameEngine.camera.y, 3, 120, '#330000', 40, 40, 4);
+
+        }
     
         
     };
 
     restoreDarkEnergy() {
-        player.health = player.health + params.DARK_ENERGY.hp;
+        player.health = player.baseHealth + params.DARK_ENERGY.hp;
         player.JUMP_ACC = player.JUMP_ACC - (this.game.darkEnergy.jumpHeight * 10);
         player.MAX_RUN = player.MAX_RUN + (this.game.darkEnergy.movementSpeed * 10);
     }
@@ -178,7 +186,6 @@ class SceneManager {
     loadBoss(){
 
     }
-
 
     loadHub() {
         this.clearLevel();
@@ -220,6 +227,16 @@ class SceneManager {
 
         this.game.addEntity(new Cross_Background(this.game, 250, 200));
         this.game.addEntity(new Background(this.game));
+
+        
+        for (let i = 0; i < 100; i++){
+            //Random x coordinate between 0 and CANVAS_WIDTH
+            let x = Math.random() * CANVAS_WIDTH;
+            //Random y coordinate between 0 and CANVAS_HEIGHT
+            let y = Math.random() * CANVAS_HEIGHT;
+            params.PARTICLE_SYSTEM.createParticleEffect(x - gameEngine.camera.x, y - gameEngine.camera.y, 3, 120, 'black', 40, 40, 4);
+
+        }
     
     }
 
@@ -249,8 +266,8 @@ class SceneManager {
             params.HUD = new hud(gameEngine);
             gameEngine.addEntity(params.HUD);
             //add dna to inventory
-            for (let i = 0; i < 3; i++)
-                params.INVENTORY.inventory.push(getRandomDNA());
+            //for (let i = 0; i < 3; i++)
+                //params.INVENTORY.inventory.push(getRandomDNA());
 
             params.INVENTORY.inventory[0].epsilonAbility = null;
             params.INVENTORY.inventory[0].betaAbility = null;
@@ -314,6 +331,8 @@ class SceneManager {
            player.removeFromWorld = true;
         }
 
+        if (player != null) this.playerCurrentHealth = player.health;
+
     };
 
     draw(ctx) {
@@ -354,13 +373,6 @@ class SceneManager {
     
 
     clearLevel() {
-        //IF THINGS GO BAD UNCOMMENT THIS
-        //remove everything from this.game.entities except Inventory, DarkEnergy, SceneManager, etc.
-        // this.game.entities = this.game.entities.filter(function (entity) {
-        //     return entity instanceof Inventory || entity instanceof DarkEnergy || entity instanceof SceneManager || entity instanceof hud;
-        // });
-
-        //set removeFromWorld to true for everything in this.game.entities except Inventory, DarkEnergy, SceneManager, etc.
         this.game.entities.forEach(function (entity) {
             if (!(entity instanceof Inventory || entity instanceof DarkEnergy || entity instanceof SceneManager || entity instanceof hud || entity instanceof ParticleEffectSystem)) {
                 entity.removeFromWorld = true;
@@ -379,7 +391,7 @@ class SceneManager {
         this.game.camera.y = 0;
         this.player = new GameCharacter(this.game, CANVAS_WIDTH/3, 0);
         player = this.player; //update global player reference
-        player.health = player.health + params.DARK_ENERGY.hp;
+        player.health = this.playerCurrentHealth;
         equipAbilities(params.INVENTORY.dnaSlot1); //equip abilities
         equipAbilities(params.INVENTORY.dnaSlot2);
         this.restoreDarkEnergy();
@@ -398,8 +410,8 @@ class SceneManager {
     }
 
     loadDeathCutscene() {
-        //random int between 1 and 18
-        let deathCount = Math.floor(Math.random() * 34) + 1;
+        //random int between 1 and 36
+        let deathCount = Math.floor(Math.random() * 36) + 1;
         let deathText = [];
         switch (deathCount) {
             case 1:
@@ -627,8 +639,13 @@ class SceneManager {
                     "All you can do is watch as they bury you"
                 ];
                 break;
-
-
+            case 36:
+                deathText = [
+                    "Amswer me, lost soul...",
+                    "Do you ever feel...",
+                    "Like someone's watching you, " + NAME + "?" 
+                ];
+                break;
         }
         
         gameEngine.addEntityFirst(new TextCutscene(deathText, 0.01));
@@ -822,17 +839,25 @@ class Death_Screen_Background {
         // Single option to begin game
         ctx.textAlign = "center";
         ctx.fillStyle = "black";
-        ctx.font = "100px StrangeDreams";
-        ctx.fillText(NAME + " DIED", CANVAS_WIDTH / 2 - 2, 150 - 2);
-        ctx.fillStyle = "white";
-        ctx.font = "100px StrangeDreams";
-        ctx.fillText(NAME + " DIED", CANVAS_WIDTH / 2, 150);
 
-        // Draw the leaderboard
+        ctx.font = "60px StrangeDreams";
+        ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2 - 2, 120 - 2);
+        ctx.fillStyle = "white";
+        ctx.font = "60px StrangeDreams";
+        ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2, 120);
+        ctx.font = "50px StrangeDreams";
+        ctx.fillText("Leaderboards", CANVAS_WIDTH / 2, 240);
+
+
+
+        // Draw the Highest Level leaderboard
         ctx.fillStyle = '#fff';
         ctx.font = 'bold 50px Arial';
         ctx.textAlign = 'left';
-        ctx.fillText('Leaderboard - Highest Level', CANVAS_WIDTH / 3 - 50, 250);
+        let xAlign = 300;
+        let yAlign = 350;
+        ctx.fillText('Highest Level', xAlign, yAlign);
+
         for (let i = 0; i < 10; i++) {
           if (ALL_TIME_LEADERBOARD == undefined || ALL_TIME_LEADERBOARD.leaderboard == undefined || ALL_TIME_LEADERBOARD.leaderboard[i] == undefined) continue;
           const entry = ALL_TIME_LEADERBOARD.leaderboard[i];
@@ -844,8 +869,30 @@ class Death_Screen_Background {
           ctx.textAlign = 'left';
           let fontSize = 45 
           ctx.font = fontSize + 'px Arial';
-          ctx.fillText(`Lv${entry.score} - ${entry.name} ${entry.time}`, CANVAS_WIDTH / 3 - 50, 300 + i*fontSize*1.5);
+          ctx.fillText(`Lv${entry.score} - ${entry.name} ${entry.time}`, xAlign, yAlign+50 + i*fontSize*1.5);
         }
+
+        // Draw the Dark Colossus Best Time leaderboard
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 50px Arial';
+        ctx.textAlign = 'left';
+        xAlign = 1000;
+        ctx.fillText('Dark Colossus Best Time', xAlign, yAlign);
+        //put text that says coming soon
+        ctx.fillText('Coming Soon', xAlign+100, yAlign+50);
+        // for (let i = 0; i < 10; i++) {
+        //     if (DARK_COLOSSUS_LEADERBOARD == undefined || DARK_COLOSSUS_LEADERBOARD.leaderboard == undefined || DARK_COLOSSUS_LEADERBOARD.leaderboard[i] == undefined) continue;
+        //     const entry = DARK_COLOSSUS_LEADERBOARD.leaderboard[i];
+        //     console.log(DARK_COLOSSUS_LEADERBOARD);
+        //     console.log(entry);
+    
+        //     //AJ EDIT HERE
+        //     ctx.fillStyle = '#fff';
+        //     ctx.textAlign = 'left';
+        //     let fontSize = 45 
+        //     ctx.font = fontSize + 'px Arial';
+        //     ctx.fillText(`${entry.time} - ${entry.name} Lv${entry.score}`, xAlign, yAlign + i*fontSize*1.5);
+        // }
     }
 
     update() {

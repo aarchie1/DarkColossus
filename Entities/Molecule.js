@@ -11,22 +11,20 @@ class Molecule {
     this.facing = 1; // 0 = right, 1 == left
     this.state = size; // 0 = low 1 = half,  2 = full, 3 = attack
     this.velocity = { x: 0, y: 0 };
-    this.health = 4 + params.LEVEL;
+    this.health = ENEMY_HEALTH;
     this.maxHealth = this.health;
     this.dead = false;
     this.paused = true;
     this.currentIFrameTimer = 0;
-    this.maxIFrameTimer = 40;
+    this.maxIFrameTimer = ENEMY_IFRAME;
     
     //Changed to center point
     this.projectileBuffer = 150;
 
     this.attackDistance = Math.random() * 200 + 300;
-    this.fireRate = 1 + params.LEVEL//MOLECULE_FIRE_RATE;
+    this.fireRate = MOLECULE_FIRE_RATE;
     this.elapsedTime = 0;
-
     this.updateBB();
-
     this.animationXOffset = 0;
     this.animationYOffset = 0;
     this.animations = [];
@@ -56,6 +54,12 @@ class Molecule {
     if (this.paused && this.game.camera.player.x > this.x - 1000) {
       this.paused = false;
     }
+
+    if (this.disabled) 
+      //(x, y, particleCount, particleSize, particleColor, xSpeed, ySpeed, sizeDecrement)
+      params.PARTICLE_SYSTEM.createParticleEffect(this.x + this.width/2 - gameEngine.camera.x, this.y + this.height/2 - gameEngine.camera.y, 1, 20, '#330000', 5, 2, 0.3);
+    
+      this.updateBB();
 
     if (!this.paused && !this.dead && !this.disabled) {
       // If not paused, activate molecule AI
@@ -118,7 +122,6 @@ class Molecule {
 
       this.x += this.velocity.x * TICK;
       this.y += this.velocity.y * TICK;
-      this.updateBB();
 
       //change state to attacking if in range
       if (
@@ -160,8 +163,7 @@ class Molecule {
         this.dead = true;
         params.PARTICLE_SYSTEM.createParticleEffect(this.x + this.width/2 - gameEngine.camera.x, this.y + this.height/2 - gameEngine.camera.y, 50, 14, '#FF3232', 23, 5, 0.55);
         this.removeFromWorld = true;
-        for (let i = 0; i < 1 + params.LEVEL/DARK_ENERGY_DROPS_PER_ENEMY; i++)
-          this.game.addEntityFirst(new DarkEnergyItemDrop(this.game, this.x + (Math.random() * 100 - 50), this.y));
+        dropItems(this.x, this.y);
       }
     }
   }

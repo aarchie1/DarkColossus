@@ -7,13 +7,9 @@ class SolarFlareAbility {
         this.inUseIcon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/solar_flare_in_use_icon.png");
         this.dominant = false;
         this.effect = this.setEffect(effectRarity);
-        //round to 1 decimal places
-        this.effect = Math.round(this.effect * 10) / 10;
-        this.effectRarity = effectRarity;
 
-        this.damage = Math.round(this.effectRarity * ((params.DARK_ENERGY.meleeAttack+1) * this.effect) *10) / 10;
-        
-        this.description = 'Unleash the power of the sun dealing ' + this.damage + ' dmg per hit';
+        this.effectRarity = effectRarity;
+        this.updateDamage();
         this.cooldownRarity = cooldownRarity;
         this.cooldown = this.setCooldown(this.cooldownRarity);
         this.cooldownTimer = new AbilityCooldown(this.cooldown);
@@ -26,7 +22,6 @@ class SolarFlareAbility {
         this.frameSpeed = 0.09;
         this.initializeSolarFlareHitBoxAnimation();
         this.BB1 = new BoundingBox(player.x, player.y - 650, 500, 100);
-
     }
 
     onEquip() {
@@ -95,10 +90,14 @@ class SolarFlareAbility {
         }
     }
 
+    updateDamage() {
+        this.damage = Math.round(this.effectRarity * 0.3 * ((params.DARK_ENERGY.meleeAttack+1)) *10) / 10;
+        this.description = 'Unleash the power of the sun dealing ' + this.damage + ' dmg per hit';
+    }
+
     //Required
     update() {
-        this.damage = Math.round(this.effectRarity * ((params.DARK_ENERGY.meleeAttack+1) * this.effect) *10) / 10;
-
+        this.updateDamage();
         this.BB1 = new BoundingBox(player.x - 256 - CANVAS_WIDTH/3, player.y - 156 - CANVAS_HEIGHT/2, CANVAS_WIDTH, CANVAS_HEIGHT*1.5);
         //round to the nearest tenth
         this.cooldownTimer.checkCooldown();
