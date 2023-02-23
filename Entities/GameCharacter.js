@@ -28,7 +28,7 @@ class GameCharacter {
     this.velocity = { x: 0, y: 0 };
     this.dead = false;
     this.currentIFrameTimer = 0;
-    this.maxIFrameTimer = 20;
+    this.maxIFrameTimer = 65;
     this.usingAbility = false;
     this.updateBB();
     this.animationXOffset = 0;
