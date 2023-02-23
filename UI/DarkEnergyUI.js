@@ -27,7 +27,7 @@ class DarkEnergyUI {
         this.currentSlot = 0;
 
         //Stats in printable format
-        this.statIncreaseAmount = 20;
+        this.statIncreaseAmount = 50;
         this.deInfo = [
             "Melee Attack Bonus: " + this.game.darkEnergy.meleeAttack,
             "Ranged Attack Bonus: " + this.game.darkEnergy.rangedAttack,
@@ -150,22 +150,45 @@ class DarkEnergyUI {
             }
         }
 
+        //commented out for live build since leaderboards are up too
         if ((keypress("KeyX") || this.game.controllerButtonA) && this.state == this.BROWSE) {
-            this.game.darkEnergy.currency += 1000;
+           // this.game.darkEnergy.currency += 1000;
         }
 
+        // this.deInfo = [
+        //     "Melee Attack Bonus: " + this.game.darkEnergy.meleeAttack,
+        //     "Ranged Attack Bonus: " + this.game.darkEnergy.rangedAttack,
+        //     "Attack Speed Bonus: " + this.game.darkEnergy.attackSpeed,
+        //     "Movement Speed Bonus: " + this.game.darkEnergy.movementSpeed,
+        //     "Jump Height Bonus: " + this.game.darkEnergy.jumpHeight,
+        //     "Melee Defense Bonus: " + this.game.darkEnergy.meleeDefense,
+        //     "Ranged Defense Bonus: " + this.game.darkEnergy.rangedDefense,
+        //     "HP Bonus: " + this.game.darkEnergy.hp,
+        //     "DNA Drop Rate Bonus: " + this.game.darkEnergy.dnaDropRate,
+        //     "Sigma Chance Bonus: " + this.game.darkEnergy.sigmaChance,
+        //     "Alpha Chance Bonus: " + this.game.darkEnergy.alphaChance,
+        //     "Beta Chance Bonus: " + this.game.darkEnergy.betaChance,
+        //     "Epsilon Chance Bonus: " + this.game.darkEnergy.epsilonChance,
+        //     "Dark Energy Gather Bonus: " + this.game.darkEnergy.darkEnergyChance,
+        // ];
+
         this.deInfo = [
-            "Melee Attack Bonus: " + this.game.darkEnergy.meleeAttack,
-            "Ranged Attack Bonus: " + this.game.darkEnergy.rangedAttack,
-            "Health Drop Bonus: " + this.game.darkEnergy.healthDropRate,
-            "Movement Speed Bonus: " + this.game.darkEnergy.movementSpeed,
-            "Jump Height Bonus: " + this.game.darkEnergy.jumpHeight,
-            "Melee Defense Bonus: " + this.game.darkEnergy.meleeDefense,
-            "Ranged Defense Bonus: " + this.game.darkEnergy.rangedDefense,
-            "HP Bonus: " + this.game.darkEnergy.hp,
-            "DNA Drop Rate Bonus: " + this.game.darkEnergy.dnaDropRate,
-            "Dark Energy Gather Bonus: " + this.game.darkEnergy.darkEnergyChance,
+
+            "Melee Attack+: " + this.game.darkEnergy.meleeAttack + "          Cost: " + this.cost(this.game.darkEnergy.meleeAttack, this.statIncreaseAmount),
+            "Ranged Attack+: " + this.game.darkEnergy.rangedAttack + "          Cost: " + this.cost(this.game.darkEnergy.rangedAttack, this.statIncreaseAmount),
+            "Health Drop Bonus: " + this.game.darkEnergy.healthDropRate + "          Cost: " + this.cost(this.game.darkEnergy.healthDropRate, this.statIncreaseAmount),
+            "Attack Speed+: " + this.game.darkEnergy.attackSpeed + "          Cost: " + this.cost(this.game.darkEnergy.attackSpeed, this.statIncreaseAmount),
+            "Movement Speed+: " + this.game.darkEnergy.movementSpeed + "          Cost: " + this.cost(this.game.darkEnergy.movementSpeed, this.statIncreaseAmount),
+            "Jump Height+: " + this.game.darkEnergy.jumpHeight + "          Cost: " + this.cost(this.game.darkEnergy.jumpHeight, this.statIncreaseAmount),
+            "Melee Defense+: " + this.game.darkEnergy.meleeDefense + "          Cost: " + this.cost(this.game.darkEnergy.meleeDefense, this.statIncreaseAmount),
+            "Ranged Defense+: " + this.game.darkEnergy.rangedDefense + "          Cost: " + this.cost(this.game.darkEnergy.rangedDefense, this.statIncreaseAmount),
+            "HP+: " + this.game.darkEnergy.hp + "          Cost: " + this.cost(this.game.darkEnergy.hp, this.statIncreaseAmount),
+            "DNA Drop Rate+: " + this.game.darkEnergy.dnaDropRate + "          Cost: " + this.cost(this.game.darkEnergy.dnaDropRate, this.statIncreaseAmount),
+            "Dark Energy Gather+: " + this.game.darkEnergy.darkEnergyChance + "          Cost: " + this.cost(this.game.darkEnergy.darkEnergyChance, this.statIncreaseAmount),
+
         ];
+
+
 
 
         
@@ -179,6 +202,11 @@ class DarkEnergyUI {
             GameEngine.controllerButtonX = false;
         }
     }
+
+    cost(stat, increaseAmount) {
+        return Math.ceil(stat + increaseAmount);
+    }
+
 
     increaseStat() {
         let cost = 0;
@@ -254,7 +282,7 @@ class DarkEnergyUI {
                     if((this.game.darkEnergy.currency - cost >= 0) && this.game.darkEnergy.hp < 10) {
                         this.game.darkEnergy.currency -= cost;
                         this.game.darkEnergy.hp++;
-                        player.health = player.health + this.game.darkEnergy.hp;
+                        player.health = player.baseHealth + this.game.darkEnergy.hp;
                         break;
                     } else {
                         break;

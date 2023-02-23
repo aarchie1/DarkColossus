@@ -21,7 +21,7 @@ class hud {
     draw(ctx) {
         
         //draw current level text on screen top right corner if not level 0
-        ctx.font = "50px Arial";
+        ctx.font = "50px " + params.FONT;
         ctx.fillStyle = "white";
         ctx.textAlign = "left";
         if (params.LEVEL == 0) {
@@ -93,7 +93,7 @@ class hud {
             let beta = params.INVENTORY.dnaSlot1.betaAbility;
             let epsilon = params.INVENTORY.dnaSlot1.epsilonAbility;
             ctx.fillStyle = "white";
-            ctx.font = "50px Arial";
+            ctx.font = "50px " + params.FONT;
             
             //TOP
             if (sigma) {
@@ -170,10 +170,10 @@ class hud {
             ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
             ctx.fillRect(0, 0, 1400, 900);
             ctx.fillStyle = "white";
-            ctx.font = "50px Arial";
+            ctx.font = "50px " + params.FONT;
             ctx.textAlign = "center";
             ctx.fillText("PAUSED", 700, 100);
-            ctx.font = "30px Arial";
+            ctx.font = "30px " + params.FONT;
             ctx.fillText("Press 'P' to resume", 700, 150);
             ctx.fillText("Press 'R' to restart", 700, 200);
             ctx.fillText("Press 'ESC' to return to main menu", 700, 250);

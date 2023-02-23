@@ -153,7 +153,7 @@ class Reaper {
        //(x, y, particleCount, particleSize, particleColor, xSpeed, ySpeed, sizeDecrement)
        params.PARTICLE_SYSTEM.createParticleEffect(this.x + this.width/2 - gameEngine.camera.x, this.y + this.height/2 - gameEngine.camera.y, 50, 14, '#FF3232', 23, 5, 0.55);
       //this.game.darkEnergy.currency += 2;
-      for (let i = 0; i < 1 + params.LEVEL/2; i++)
+      for (let i = 0; i < 1 + params.LEVEL/DARK_ENERGY_DROPS_PER_ENEMY; i++)
         this.game.addEntityFirst(new DarkEnergyItemDrop(this.game, this.x + (Math.random() * 100 - 50), this.y));
 
     }

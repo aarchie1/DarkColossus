@@ -18,6 +18,11 @@ class TextCutscene {
             this.opacity = 0;
           }
       }
+
+      if (isAnyInputDetected() && this.opacity > 0.5) {
+        this.removeFromWorld = true;
+        gameEngine.camera.loadHub();
+      }
     }
   
     draw(ctx) {
@@ -25,7 +30,7 @@ class TextCutscene {
       ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
       ctx.textAlign = 'center';
-      ctx.font = '70px Arial';
+      ctx.font = '70px ' + params.FONT;
       ctx.fillText(this.sentences[this.currentSentence], ctx.canvas.width / 2, ctx.canvas.height / 2);
     }
   }

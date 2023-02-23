@@ -21,8 +21,8 @@ class Molecule {
     //Changed to center point
     this.projectileBuffer = 150;
 
-    this.attackDistance = 400;
-    this.fireRate = 2;
+    this.attackDistance = Math.random() * 200 + 300;
+    this.fireRate = 1 + params.LEVEL//MOLECULE_FIRE_RATE;
     this.elapsedTime = 0;
 
     this.updateBB();
@@ -44,6 +44,14 @@ class Molecule {
   update() {
     const TICK = this.game.clockTick;
     this.elapsedTime += this.game.clockTick;
+
+    //Update Molecule Visual based off health
+    if (this.health <= this.maxHealth/3) {
+      this.size = 0;
+    } else if (this.health <= this.maxHealth/1.5) {
+      this.size = 1;
+    }
+
 
     if (this.paused && this.game.camera.player.x > this.x - 1000) {
       this.paused = false;
@@ -152,7 +160,7 @@ class Molecule {
         this.dead = true;
         params.PARTICLE_SYSTEM.createParticleEffect(this.x + this.width/2 - gameEngine.camera.x, this.y + this.height/2 - gameEngine.camera.y, 50, 14, '#FF3232', 23, 5, 0.55);
         this.removeFromWorld = true;
-        for (let i = 0; i < 1 + params.LEVEL/2; i++)
+        for (let i = 0; i < 1 + params.LEVEL/DARK_ENERGY_DROPS_PER_ENEMY; i++)
           this.game.addEntityFirst(new DarkEnergyItemDrop(this.game, this.x + (Math.random() * 100 - 50), this.y));
       }
     }

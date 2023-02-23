@@ -278,3 +278,16 @@ function isAnyControllerButtonPressed() {
     }
     return false;
 }
+
+function isAnyKeyPressed() {
+    for (let key in gameEngine.keys) {
+        if (gameEngine.keys[key]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function isAnyInputDetected() {
+    return isAnyControllerButtonPressed() || isAnyKeyPressed();
+}

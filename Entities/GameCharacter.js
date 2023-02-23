@@ -19,8 +19,10 @@ class GameCharacter {
     this.state = 2;
 
     //Base Stats
+    this.baseHealth = 5;
     this.health = 5;
-
+    this.width = 256;
+    this.height = 256;
     this.facing = 0; // 0 = right, 1 == left
     this.state = 0; //0 = idle, 1 = running, 2 = falling 3 = jumping, 4 = attacking
     this.velocity = { x: 0, y: 0 };
@@ -64,6 +66,7 @@ class GameCharacter {
     const MAX_FALL = this.MAX_FALL;
     const FALL_ACC = this.FALL_ACC;
     const TICK = this.game.clockTick;
+
 
     // Call ability update methods at all times
     if (params.INVENTORY.dnaSlot1 != null) params.INVENTORY.dnaSlot1.update();
@@ -206,7 +209,7 @@ class GameCharacter {
             this.currentIFrameTimer === 0 && !this.usingAbility
           ) {
             // subtract reaper damage from player health
-            this.health -= entity.damage;
+            this.health -= entity.damage - params.DARK_ENERGY.meleeDefense;
             this.health = Math.max(this.health, 0);
             this.currentIFrameTimer = this.maxIFrameTimer;
             this.game.addEntityFirst(
@@ -219,7 +222,7 @@ class GameCharacter {
             this.currentIFrameTimer == 0 &&  !this.usingAbility
           ) {
             // subtract molecule damage from player health
-            this.health -= entity.damage;
+            this.health -= entity.damage - params.DARK_ENERGY.rangedDefense;
             this.currentIFrameTimer = this.maxIFrameTimer;
             entity.removeFromWorld = true;
             this.game.camera.game.addEntityFirst(
