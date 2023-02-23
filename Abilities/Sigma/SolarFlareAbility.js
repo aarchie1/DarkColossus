@@ -7,6 +7,7 @@ class SolarFlareAbility {
         this.inUseIcon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/solar_flare_in_use_icon.png");
         this.dominant = false;
         this.effect = this.setEffect(effectRarity);
+
         this.effectRarity = effectRarity;
         this.updateDamage();
         this.cooldownRarity = cooldownRarity;
@@ -21,7 +22,6 @@ class SolarFlareAbility {
         this.frameSpeed = 0.09;
         this.initializeSolarFlareHitBoxAnimation();
         this.BB1 = new BoundingBox(player.x, player.y - 650, 500, 100);
-
     }
 
     onEquip() {

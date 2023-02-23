@@ -839,6 +839,7 @@ class Death_Screen_Background {
         // Single option to begin game
         ctx.textAlign = "center";
         ctx.fillStyle = "black";
+
         ctx.font = "60px StrangeDreams";
         ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2 - 2, 120 - 2);
         ctx.fillStyle = "white";
@@ -856,6 +857,7 @@ class Death_Screen_Background {
         let xAlign = 300;
         let yAlign = 350;
         ctx.fillText('Highest Level', xAlign, yAlign);
+
         for (let i = 0; i < 10; i++) {
           if (ALL_TIME_LEADERBOARD == undefined || ALL_TIME_LEADERBOARD.leaderboard == undefined || ALL_TIME_LEADERBOARD.leaderboard[i] == undefined) continue;
           const entry = ALL_TIME_LEADERBOARD.leaderboard[i];
@@ -878,8 +880,6 @@ class Death_Screen_Background {
         ctx.fillText('Dark Colossus Best Time', xAlign, yAlign);
         //put text that says coming soon
         ctx.fillText('Coming Soon', xAlign+100, yAlign+50);
-
-
         // for (let i = 0; i < 10; i++) {
         //     if (DARK_COLOSSUS_LEADERBOARD == undefined || DARK_COLOSSUS_LEADERBOARD.leaderboard == undefined || DARK_COLOSSUS_LEADERBOARD.leaderboard[i] == undefined) continue;
         //     const entry = DARK_COLOSSUS_LEADERBOARD.leaderboard[i];
@@ -893,7 +893,6 @@ class Death_Screen_Background {
         //     ctx.font = fontSize + 'px Arial';
         //     ctx.fillText(`${entry.time} - ${entry.name} Lv${entry.score}`, xAlign, yAlign + i*fontSize*1.5);
         // }
-
     }
 
     update() {

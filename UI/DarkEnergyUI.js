@@ -152,7 +152,7 @@ class DarkEnergyUI {
 
         //commented out for live build since leaderboards are up too
         if ((keypress("KeyX") || this.game.controllerButtonA) && this.state == this.BROWSE) {
-            this.game.darkEnergy.currency += 1000;
+           // this.game.darkEnergy.currency += 1000;
         }
 
         // this.deInfo = [
@@ -175,13 +175,15 @@ class DarkEnergyUI {
         this.deInfo = [
             "Melee Attack+: " + this.game.darkEnergy.meleeAttack + "          Cost: " + this.cost(this.game.darkEnergy.meleeAttack, this.statIncreaseAmount),
             "Ranged Attack+: " + this.game.darkEnergy.rangedAttack + "          Cost: " + this.cost(this.game.darkEnergy.rangedAttack, this.statIncreaseAmount),
+            "Health Drop Bonus: " + this.game.darkEnergy.healthDropRate + "          Cost: " + this.cost(this.game.darkEnergy.healthDropRate, this.statIncreaseAmount),
+            "Attack Speed+: " + this.game.darkEnergy.attackSpeed + "          Cost: " + this.cost(this.game.darkEnergy.attackSpeed, this.statIncreaseAmount),
             "Movement Speed+: " + this.game.darkEnergy.movementSpeed + "          Cost: " + this.cost(this.game.darkEnergy.movementSpeed, this.statIncreaseAmount),
             "Jump Height+: " + this.game.darkEnergy.jumpHeight + "          Cost: " + this.cost(this.game.darkEnergy.jumpHeight, this.statIncreaseAmount),
             "Melee Defense+: " + this.game.darkEnergy.meleeDefense + "          Cost: " + this.cost(this.game.darkEnergy.meleeDefense, this.statIncreaseAmount),
             "Ranged Defense+: " + this.game.darkEnergy.rangedDefense + "          Cost: " + this.cost(this.game.darkEnergy.rangedDefense, this.statIncreaseAmount),
             "HP+: " + this.game.darkEnergy.hp + "          Cost: " + this.cost(this.game.darkEnergy.hp, this.statIncreaseAmount),
             "DNA Drop Rate+: " + this.game.darkEnergy.dnaDropRate + "          Cost: " + this.cost(this.game.darkEnergy.dnaDropRate, this.statIncreaseAmount),
-            "Dark Energy Drop Rate+: " + this.game.darkEnergy.darkEnergyChance + "          Cost: " + this.cost(this.game.darkEnergy.darkEnergyChance, this.statIncreaseAmount),
+            "Dark Energy Gather+: " + this.game.darkEnergy.darkEnergyChance + "          Cost: " + this.cost(this.game.darkEnergy.darkEnergyChance, this.statIncreaseAmount),
             "Health Drop Rate+: " + this.game.darkEnergy.healthDropRate,
         ];
     }

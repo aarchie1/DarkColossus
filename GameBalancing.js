@@ -1,3 +1,4 @@
+
 function updateGameBalancing() {
   DARK_ENERGY_DROPS_PER_ENEMY = 5; //higher number = less drops
   ENEMY_IFRAME = 30; //higher number = longer invincibility frames
@@ -15,3 +16,4 @@ function dropItems(x, y) {
         gameEngine.addEntityFirst(new HealthItemDrop(gameEngine, x + (Math.random() * 200 - 100), y));
     }
 }
+

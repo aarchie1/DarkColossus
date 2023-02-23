@@ -24,9 +24,7 @@ class Molecule {
     this.attackDistance = Math.random() * 200 + 300;
     this.fireRate = MOLECULE_FIRE_RATE;
     this.elapsedTime = 0;
-
     this.updateBB();
-
     this.animationXOffset = 0;
     this.animationYOffset = 0;
     this.animations = [];
