@@ -11,7 +11,7 @@ class SceneManager {
         player = this.player;
         this.playerCurrentHealth = this.player.health;
         this.restoreDarkEnergy(); //restores DE
-
+        
 
         // splits the X axis into 5 sections [  |  |  |  |  ] <-- map, playable area --> [  |xx|xx|xx|  ]
         this.quadX = 1650 / 5;
@@ -35,7 +35,8 @@ class SceneManager {
 
         this.xCameraOffset = 0;
         this.yCameraOffset = 0;
-        this.loadOpening(); //This will replace this.loadHub() when we have a title screen
+        //this.loadOpening(); //This will replace this.loadHub() when we have a title screen
+        this.loadWelcomeScreen();
 
     };
 
@@ -255,6 +256,16 @@ class SceneManager {
             equipAbilities(params.INVENTORY.dnaSlot1);
     }
 
+    loadWelcomeScreen() {
+        this.game.addEntity(new Welcome_Screen_Background(this.game));
+        this.game.addEntityFirst(new WelcomeScreenUI(this.game, 400, 400, 400, 80, 'white'));
+        //this.loadOpening();
+
+
+
+    }
+
+
     loadTitleScreen() {
 
         this.game.addEntity(new Title_Screen_Background(this.game));
@@ -299,6 +310,7 @@ class SceneManager {
 
         //gameEngine.camera.loadDeathCutscene();
     }
+
 
 
     update() {
@@ -715,6 +727,33 @@ class Cross_Background {
     }
 }
 
+class Welcome_Screen_Background {
+    constructor(game) {
+        this.game = game;
+        this.width = 1920;
+        this.height = 1080;
+        this.x = 0;
+        this.y = 0
+        this.scrollSpeed = 0.02;
+        this.image = ASSET_MANAGER.getAsset("./Sprites/UI/welcome_screen.png");
+        
+    }
+
+    draw(ctx) {
+
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed), this.y - (this.game.camera.y * this.scrollSpeed), this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) + this.width, this.y - (this.game.camera.y * this.scrollSpeed), this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) - this.width, this.y - (this.game.camera.y * this.scrollSpeed), this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) + this.width * 2, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) - this.width * 2, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) + this.width * 3, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+        ctx.drawImage(this.image, this.x - (this.game.camera.x * this.scrollSpeed) - this.width * 3, this.y - (this.game.camera.y * this.scrollSpeed) + this.height, this.width, this.height);
+    }
+    update() {
+
+    }
+}
+
 class Title_Screen_Background {
     constructor(game) {
         this.game = game;
@@ -814,7 +853,7 @@ class Death_Screen_Background {
         this.y = 0
         this.scrollSpeed = 0.02;
         this.timer = 0;
-        this.image = ASSET_MANAGER.getAsset("./Sprites/UI/title_screen.png");
+        this.image = ASSET_MANAGER.getAsset("./Sprites/UI/leaderboards_screen.png");
         getLeaderboard(NAME, params.LEVEL);
     }
 
@@ -841,12 +880,11 @@ class Death_Screen_Background {
         ctx.fillStyle = "black";
 
         ctx.font = "60px StrangeDreams";
-        ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2 - 2, 120 - 2);
+        ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2 - 2, 150 - 2);
         ctx.fillStyle = "white";
         ctx.font = "60px StrangeDreams";
-        ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2, 120);
+        ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2, 150);
         ctx.font = "50px StrangeDreams";
-        ctx.fillText("Leaderboards", CANVAS_WIDTH / 2, 240);
 
 
 
@@ -854,9 +892,8 @@ class Death_Screen_Background {
         ctx.fillStyle = '#fff';
         ctx.font = 'bold 50px Arial';
         ctx.textAlign = 'left';
-        let xAlign = 300;
-        let yAlign = 350;
-        ctx.fillText('Highest Level', xAlign, yAlign);
+        let xAlign = 297;
+        let yAlign = 330;
 
         for (let i = 0; i < 10; i++) {
           if (ALL_TIME_LEADERBOARD == undefined || ALL_TIME_LEADERBOARD.leaderboard == undefined || ALL_TIME_LEADERBOARD.leaderboard[i] == undefined) continue;
@@ -867,7 +904,7 @@ class Death_Screen_Background {
           //AJ EDIT HERE
           ctx.fillStyle = '#fff';
           ctx.textAlign = 'left';
-          let fontSize = 45 
+          let fontSize = 25 
           ctx.font = fontSize + 'px Arial';
           ctx.fillText(`Lv${entry.score} - ${entry.name} ${entry.time}`, xAlign, yAlign+50 + i*fontSize*1.5);
         }
@@ -877,9 +914,7 @@ class Death_Screen_Background {
         ctx.font = 'bold 50px Arial';
         ctx.textAlign = 'left';
         xAlign = 1000;
-        ctx.fillText('Dark Colossus Best Time', xAlign, yAlign);
         //put text that says coming soon
-        ctx.fillText('Coming Soon', xAlign+100, yAlign+50);
         // for (let i = 0; i < 10; i++) {
         //     if (DARK_COLOSSUS_LEADERBOARD == undefined || DARK_COLOSSUS_LEADERBOARD.leaderboard == undefined || DARK_COLOSSUS_LEADERBOARD.leaderboard[i] == undefined) continue;
         //     const entry = DARK_COLOSSUS_LEADERBOARD.leaderboard[i];
@@ -910,3 +945,90 @@ class Death_Screen_Background {
     
 }
 
+/*class ControlsBackground {
+    constructor(game) {
+        this.game = game;
+        this.x = 0;
+        this.y = 0;
+        this.width = 1920;
+        this.height = 1080;
+        this.image = ASSET_MANAGER.getAsset("./Sprites/UI/controls.png");
+    }
+
+    draw(ctx) {
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+    }
+
+    update() {
+
+    }
+}*/
+
+class WelcomeScreenUI {
+    constructor(game) {
+        //initializing state
+        this.game = game;
+        this.width = 450;
+        this.height = 100;
+        this.gridStartX = 140;
+        this.gridStartY = 480;
+        this.option = 1;
+        this.controlsImage = false;
+        this.leaderboardImage = false;
+    };
+
+
+
+    draw(ctx) {
+
+        console.log("draw");
+        ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
+        ctx.fillRect(this.gridStartX, this.gridStartY, this.width, this.height);
+
+
+        const image = new Image();
+        image.src = "./Sprites/UI/controls.png";
+        if (this.controlsImage) {
+            ctx.drawImage(image, 0, 0);
+            
+        }
+
+
+    }
+
+
+
+    update() {
+        console.log("update");
+
+        if ((keypress("KeyW") || this.game.controllerButtonUp)) {
+            if (this.option > 1) {
+                this.option -= 1;
+                this.gridStartY -= 115;
+            }
+        }
+
+        if ((keypress("KeyS") || this.game.controllerButtonDown)) {
+            if (this.option < 3) {
+                this.option += 1;
+                this.gridStartY += 115;
+            }
+        }
+
+        if (keypress("Enter") || this.game.controllerButtonA) {
+            if (this.option === 1) {
+               gameEngine.camera.loadOpening();
+            }
+            if (this.option === 2) {
+                this.option = 1;
+                this.controlsImage = true;
+
+            }
+            if (this.option === 3) {
+                // load leaderboards KEVIN
+                // use leaderboards_screen.png as background
+            }
+        }
+    }
+
+}
