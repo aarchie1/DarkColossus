@@ -73,7 +73,7 @@ class GameCharacter {
     if (params.INVENTORY.dnaSlot2 != null) params.INVENTORY.dnaSlot2.update();
 
     if (keypress("Escape") || this.game.controllerButtonStart) {
-      this.game.PAUSED = !this.game.PAUSED;
+        this.game.PAUSED = !this.game.PAUSED;
     }
 
     // Ground Physics

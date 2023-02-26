@@ -118,7 +118,8 @@ class DarkEnergyUI {
         this.decreaseStat();
         this.closeDarkEnergyUI();
 
-        if((keypress("KeyW") || this.game.controllerButtonUp) && this.state == this.BROWSE) {
+        if ((keypress("KeyW") || this.game.controllerButtonUp_press) && this.state == this.BROWSE) {
+            this.game.controllerButtonUp_press = false;
             if(this.currentSlot < 2) {
                 this.currentSlot += 12;
             } else {
@@ -126,7 +127,8 @@ class DarkEnergyUI {
             }
         }
 
-        if ((keypress("KeyA") || this.game.controllerButtonLeft) && this.state == this.BROWSE) {
+        if ((keypress("KeyA") || this.game.controllerButtonLeft_press) && this.state == this.BROWSE) {
+            this.game.controllerButtonLeft_press = false;
             if(this.currentSlot % 2 == 0) {
                 this.currentSlot += 1;
             } else {
@@ -134,7 +136,8 @@ class DarkEnergyUI {
             }
         }
 
-        if ((keypress("KeyS") || this.game.controllerButtonDown) && this.state == this.BROWSE) {
+        if ((keypress("KeyS") || this.game.controllerButtonDown_press) && this.state == this.BROWSE) {
+            this.game.controllerButtonDown_press = false;
             if(this.currentSlot > 11) {
                 this.currentSlot -= 12;
             } else {
@@ -142,7 +145,8 @@ class DarkEnergyUI {
             }
         }
 
-        if ((keypress("KeyD") || this.game.controllerButtonRight) && this.state == this.BROWSE) {
+        if ((keypress("KeyD") || this.game.controllerButtonRight_press) && this.state == this.BROWSE) {
+            this.game.controllerButtonRight_press = false;
             if(this.currentSlot % 2 == 1) {
                 this.currentSlot -= 1;
             } else {
@@ -151,9 +155,9 @@ class DarkEnergyUI {
         }
 
         //commented out for live build since leaderboards are up too
-        if ((keypress("KeyX") || this.game.controllerButtonA) && this.state == this.BROWSE) {
+       // if ((keypress("KeyX") || this.game.controllerButtonB_press) && this.state == this.BROWSE) {
            // this.game.darkEnergy.currency += 1000;
-        }
+        //}
 
         // this.deInfo = [
         //     "Melee Attack Bonus: " + this.game.darkEnergy.meleeAttack,
@@ -187,11 +191,11 @@ class DarkEnergyUI {
     }
 
     closeDarkEnergyUI() {
-        if (this.game.keys.KeyE || this.game.controllerButtonX) {
+        if (this.game.keys.KeyE || this.game.controllerButtonX_press) {
             params.STATE = "gameplay";
             this.removeFromWorld = true;
             gameEngine.keys.KeyE = false;
-            GameEngine.controllerButtonX = false;
+            this.game.controllerButtonX_press = false;
         }
     }
 
@@ -202,7 +206,7 @@ class DarkEnergyUI {
 
     increaseStat() {
         let cost = 0;
-        if(keypress("Digit1") && this.state == this.BROWSE) {
+        if((keypress("Digit1") || this.game.controllerButtonY_press) && this.state == this.BROWSE) {
             switch (this.currentSlot) {
                 case 0:
                     cost = Math.ceil(this.game.darkEnergy.meleeAttack + this.statIncreaseAmount);
