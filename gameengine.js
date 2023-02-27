@@ -195,8 +195,6 @@ class GameEngine {
         let gamepad = this.gamepad;
         if (gamepad != null) {
 
-
-
             // button presses with no cooldown
             this.controllerButtonA = gamepad.buttons[0].pressed;
             this.controllerButtonB = gamepad.buttons[1].pressed;
@@ -214,7 +212,6 @@ class GameEngine {
             this.controllerButtonLeft = gamepad.buttons[14].pressed || gamepad.axes[0] < -0.3;
             this.controllerButtonRight = gamepad.buttons[15].pressed || gamepad.axes[0] > 0.3;
 
-
             // set interval for button presses
             let currentTime = Date.now() / 1000;
             // check is consecutive button presses are allowed
@@ -223,7 +220,7 @@ class GameEngine {
                 this.newTime = false;
             }
             // check if button is pressed and if it is allowed to be pressed assign button press to true
-            if ((currentTime > this.nextPress) && (this.controllerButtonX || this.controllerButtonY || this.controllerButtonDown || this.controllerButtonLeft || this.controllerButtonRight || this.controllerButtonUp)) {
+            if ((currentTime > this.nextPress)) {
                 this.buttonPressAllowed = true;
                 this.newTime = true;
 
@@ -260,7 +257,6 @@ class GameEngine {
                 this.controllerButtonSelect_press = false;
             }
 
-
         }
     }
 
@@ -284,7 +280,7 @@ class GameEngine {
             }
         }
 
-        if (keypress("KeyB") /*|| this.controllerButtonMenu*/) toggleDebug();
+        if (keypress("KeyB") || this.controllerButtonSelect_press) toggleDebug();
     };
     
     loop() {

@@ -193,10 +193,10 @@ class InventoryUI {
     }
 
     equipSlot1() {
-        if ((keypress("Digit1") || this.game.controllerButtonA_press) && this.state == this.BROWSE && !this.game.PAUSED) {
-            this.game.controllerButtonA_press = false;
-        unequipAbilities(params.INVENTORY.dnaSlot1);
-        params.INVENTORY.dnaSlot1 = this.inventory[this.currentDna];
+        if ((keypress("Digit1") || this.game.controllerButtonA) && this.state == this.BROWSE && !this.game.PAUSED) {
+            this.game.controllerButtonA = false;
+            unequipAbilities(params.INVENTORY.dnaSlot1);
+            params.INVENTORY.dnaSlot1 = this.inventory[this.currentDna];
 
         //If moving from slot2 to slot1, dont unequip or equip the abilities, just swap the slots
         if (params.INVENTORY.dnaSlot1 === params.INVENTORY.dnaSlot2) {
@@ -225,8 +225,7 @@ class InventoryUI {
     }
 
     sellDna() {
-        if ((keypress("Digit3") || this.game.controllerButtonY_press) && this.state == this.BROWSE && !this.game.PAUSED) {
-            this.game.controllerButtonY_press = false;
+      if ((keypress("Digit3") || this.game.controllerButtonY_press) && this.state == this.BROWSE && !this.game.PAUSED){
         if(this.inventory[this.currentDna] == null) return;
         //check if current dna is equipped
         if (this.inventory[this.currentDna] === params.INVENTORY.dnaSlot1) {

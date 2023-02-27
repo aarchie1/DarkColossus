@@ -1001,21 +1001,21 @@ class WelcomeScreenUI {
     update() {
         console.log("update");
 
-        if ((keypress("KeyW") || this.game.controllerButtonUp)) {
+        if ((keypress("KeyW") || this.game.controllerButtonUp_press)) {
             if (this.option > 1) {
                 this.option -= 1;
                 this.gridStartY -= 115;
             }
         }
 
-        if ((keypress("KeyS") || this.game.controllerButtonDown)) {
+        if ((keypress("KeyS") || this.game.controllerButtonDown_press)) {
             if (this.option < 3) {
                 this.option += 1;
                 this.gridStartY += 115;
             }
         }
 
-        if (keypress("Enter") || this.game.controllerButtonA) {
+        if (keypress("Enter") || this.game.controllerButtonA_press) {
             if (this.option === 1) {
                gameEngine.camera.loadOpening();
             }

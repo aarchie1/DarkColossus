@@ -72,7 +72,7 @@ class GameCharacter {
     if (params.INVENTORY.dnaSlot1 != null) params.INVENTORY.dnaSlot1.update();
     if (params.INVENTORY.dnaSlot2 != null) params.INVENTORY.dnaSlot2.update();
 
-    if (keypress("Escape") || this.game.controllerButtonStart) {
+    if (keypress("Escape") || this.game.controllerButtonStart_press) {
         this.game.PAUSED = !this.game.PAUSED;
     }
 
