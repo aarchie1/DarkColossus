@@ -154,8 +154,6 @@ class SceneManager {
         for (let i = 0; i < level.growthChaseManager.length; i++) {
             this.game.addEntity(new GrowthChaseManager());
         }
-
-
         
         //add background
         gameEngine.addEntity(new Background(this.game));
@@ -185,6 +183,7 @@ class SceneManager {
     }
 
     loadBoss(){
+        this.loadLevel();
 
     }
 
@@ -215,11 +214,16 @@ class SceneManager {
         }));
 
         //Create Portal Interactable
-        let startingPortal = new Portal(this.game, 1800, 750, this)
+        let startingPortal = new Portal(this.game, 1600, 750, this)
         startingPortal.levelModifier = 0;
-        startingPortal.levelTextModifier = "";
-
+        startingPortal.levelModifierText = "";
         this.game.addEntity(startingPortal);
+
+        //Create Boss Portal Interactable
+        let bossPortal = new Portal(this.game, 2100, 750, this)
+        bossPortal.levelModifier = -2;
+        bossPortal.levelModifierText = "Fight the Dark Colossus";
+        this.game.addEntity(bossPortal);
 
         //this.game.addEntity(new Platform(this.game, 1, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(0, 830, 1600, 400)));
         ///spawn three of those platforms next to each other but spawn one of them in the middle of the screen and the other two on the sides

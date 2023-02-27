@@ -50,6 +50,8 @@ class DarkColossus {
         this.upperRightArm = null;
         this.lowerRightArm = null;
         this.lowerLeftArm = null;
+
+        this.armList = [this.upperLeftArm, this.upperRightArm, this.lowerRightArm, this.lowerLeftArm];
   }
 
   update() {
@@ -64,4 +66,39 @@ class DarkColossus {
   CrossLaser() {
 
   }
+}
+
+class DarkColossusArm {
+    constructor() {
+        this.hostile = true;
+        this.damage = 1;
+        this.attackRate = 2;
+        this.elapsedTime = 0;
+        this.attackDistance = 0;
+        this.health = 100;
+        this.currentIFrameTimer = 0;
+        this.maxIFrameTimer = 42;
+        this.dead = false;
+        this.paused = true;
+        this.updateBB();
+        this.animationXOffset = 0;
+        this.animationYOffset = 0;
+        this.animations = [];
+        this.loadAnimations();
+        this.moves = [this.CrossLaser()];
+        this.maxMoveTimeInterval = 1;
+        this.currentMoveTimeInterval = 0;
+    }
+
+    update() {
+
+    }
+
+    draw(ctx) {
+
+    }
+
+    CrossLaser() {
+
+    }
 }

@@ -99,6 +99,16 @@ ASSET_MANAGER.queueDownload("./Sprites/UI/welcome_screen.png");
 ASSET_MANAGER.queueDownload("./Sprites/UI/leaderboards_screen.png");
 ASSET_MANAGER.queueDownload("./Sprites/UI/controls.png");
 
+//Boss
+ASSET_MANAGER.queueDownload("./Sprites/Boss/boss_body.png");
+ASSET_MANAGER.queueDownload("./Sprites/Boss/boss_bottom_left_arm.png");
+ASSET_MANAGER.queueDownload("./Sprites/Boss/boss_bottom_right_arm.png");
+ASSET_MANAGER.queueDownload("./Sprites/Boss/boss_top_left_arm.png");
+ASSET_MANAGER.queueDownload("./Sprites/Boss/boss_top_right_arm.png");
+ASSET_MANAGER.queueDownload("./Sprites/Boss/boss_cross.png");
+ASSET_MANAGER.queueDownload("./Sprites/Boss/boss_portal.png");
+ASSET_MANAGER.queueDownload("./Sprites/Boss/boss_ring_healing.png");
+ASSET_MANAGER.queueDownload("./Sprites/Boss/boss_ring.png");
 
 
 // music
