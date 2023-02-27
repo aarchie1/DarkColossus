@@ -27,7 +27,7 @@ class Interactable {
     }
 
     update() {
-        if ((this.game.keys.KeyE || this.game.controllerButtonX) && !this.game.PAUSED) {
+        if ((this.game.keys.KeyE || this.game.controllerButtonX_press) && !this.game.PAUSED) {
             if (this.BB.collide(player.BB)) {
                 this.action();
             } 

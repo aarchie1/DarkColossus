@@ -195,7 +195,7 @@ class SceneManager {
         this.leftXLimit = 0//-1800;
         //Create Inventory UI
         let inventoryBB = new BoundingBox(1200, 835, 248, 200);
-        this.game.addEntity(new FloatingObject(1320, 835, 242, 194, 5, 0, "Press E for Inventory"));
+        this.game.addEntity(new FloatingObject(1320, 835, 242, 194, 5, 0, "Interact for Inventory"));
         this.game.addEntity(new Interactable(this.game, 1200, 835, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), inventoryBB, () => {
             //check if inventory is already open
             if (params.STATE != "menu") {
@@ -205,7 +205,7 @@ class SceneManager {
         }));
 
         //Create DE UI
-        this.game.addEntity(new FloatingObject(520, 835, 242, 194, 5, 0, "Press E for Dark Energy"));
+        this.game.addEntity(new FloatingObject(520, 835, 242, 194, 5, 0, "Interact for Dark Energy"));
 
         this.game.addEntity(new Interactable(this.game, 400, 835, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), new BoundingBox(400, 835, 248, 200), () => {
             if (params.STATE != "menu") {
@@ -1001,21 +1001,21 @@ class WelcomeScreenUI {
     update() {
         console.log("update");
 
-        if ((keypress("KeyW") || this.game.controllerButtonUp)) {
+        if ((keypress("KeyW") || this.game.controllerButtonUp_press)) {
             if (this.option > 1) {
                 this.option -= 1;
                 this.gridStartY -= 115;
             }
         }
 
-        if ((keypress("KeyS") || this.game.controllerButtonDown)) {
+        if ((keypress("KeyS") || this.game.controllerButtonDown_press)) {
             if (this.option < 3) {
                 this.option += 1;
                 this.gridStartY += 115;
             }
         }
 
-        if (keypress("Enter") || this.game.controllerButtonA) {
+        if (keypress("Enter") || this.game.controllerButtonA_press) {
             if (this.option === 1) {
                gameEngine.camera.loadOpening();
             }

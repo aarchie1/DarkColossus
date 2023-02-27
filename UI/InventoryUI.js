@@ -110,7 +110,7 @@ class InventoryUI {
       this.closeInventory();
 
       //Move Cursor Left
-      if (!this.pressed && (this.game.keys.KeyA || this.game.controllerButtonLeft)) {
+      if (!this.pressed && (this.game.keys.KeyA || this.game.controllerButtonLeft_press)) {
         if (this.currentSlot == 0 || this.currentSlot % this.columns == 0) {
           if (this.currentPage > 0) {
             this.prevPage();
@@ -123,7 +123,7 @@ class InventoryUI {
         }
 
       //Move Cursor Right
-      } else if (!this.pressed && (this.game.keys.KeyD || this.game.controllerButtonRight)) {
+      } else if (!this.pressed && (this.game.keys.KeyD || this.game.controllerButtonRight_press)) {
         if ((this.currentSlot+1) % (this.columns) == 0) {
           if (this.currentPage < this.inventory.length / (this.columns * this.rows) - 1) {
             this.nextPage();
@@ -137,13 +137,13 @@ class InventoryUI {
         }
 
       //Move Cursor Down
-      } else if (keypress("KeyS") || this.game.controllerButtonDown) {
+      } else if (keypress("KeyS") || this.game.controllerButtonDown_press) {
         this.currentSlot = (this.currentSlot + this.columns) % (this.columns * this.rows);
         //this.nextPage();
        //this.currentPage++;
 
       //Move cursor up or wrap to bottom
-      } else if (keypress("KeyW") || this.game.controllerButtonUp) {
+      } else if (keypress("KeyW") || this.game.controllerButtonUp_press) {
         this.currentSlot = (this.currentSlot - this.columns + this.rows * this.columns) % (this.columns * this.rows);
         //this.prevPage();
       } 
@@ -193,9 +193,10 @@ class InventoryUI {
     }
 
     equipSlot1() {
-      if (keypress("Digit1") && this.state == this.BROWSE && !this.game.PAUSED){
-        unequipAbilities(params.INVENTORY.dnaSlot1);
-        params.INVENTORY.dnaSlot1 = this.inventory[this.currentDna];
+        if ((keypress("Digit1") || this.game.controllerButtonA) && this.state == this.BROWSE && !this.game.PAUSED) {
+            this.game.controllerButtonA = false;
+            unequipAbilities(params.INVENTORY.dnaSlot1);
+            params.INVENTORY.dnaSlot1 = this.inventory[this.currentDna];
 
         //If moving from slot2 to slot1, dont unequip or equip the abilities, just swap the slots
         if (params.INVENTORY.dnaSlot1 === params.INVENTORY.dnaSlot2) {
@@ -224,7 +225,7 @@ class InventoryUI {
     }
 
     sellDna() {
-      if (keypress("Digit3") && this.state == this.BROWSE && !this.game.PAUSED){
+      if ((keypress("Digit3") || this.game.controllerButtonY_press) && this.state == this.BROWSE && !this.game.PAUSED){
         if(this.inventory[this.currentDna] == null) return;
         //check if current dna is equipped
         if (this.inventory[this.currentDna] === params.INVENTORY.dnaSlot1) {
@@ -255,11 +256,11 @@ class InventoryUI {
     }
 
     closeInventory() {
-      if (this.game.keys.KeyE || this.game.controllerButtonX) {
+      if (this.game.keys.KeyE || this.game.controllerButtonX_press) {
         params.STATE = "gameplay";
         this.removeFromWorld = true;
         gameEngine.keys.KeyE = false;
-        this.game.controllerButtonX = false;
+        this.game.controllerButtonX_press = false;
       }
     }
 }
