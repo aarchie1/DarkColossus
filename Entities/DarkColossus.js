@@ -69,18 +69,46 @@ class DarkColossus {
      
   }
 
-  draw(ctx) {
-    //draw body
-    console.log("drawing body, X: " + this.x + " Y: " + this.y + "");
-    this.animations[BODY].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x, this.y - gameEngine.cameraY, 1);
-  
-}
+    draw(ctx) {
+        //draw body
+        console.log("drawing body, X: " + this.x + " Y: " + this.y + "");
+        this.animations[BODY].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x, this.y - gameEngine.camera.y, 1);
+        //draw upper left arm
+        this.animations[UPPER_LEFT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x, this.y - gameEngine.camera.y, 1);
+        //draw upper right arm
+        this.animations[UPPER_RIGHT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x, this.y - gameEngine.camera.y, 1);
+        //draw lower left arm
+        this.animations[LOWER_LEFT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x, this.y - gameEngine.camera.y, 1);
+        //draw lower right arm
+        this.animations[LOWER_RIGHT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x, this.y - gameEngine.camera.y, 1);
+        //draw ring
+        ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_ring.png"), this.x - gameEngine.camera.x - 100, this.y - gameEngine.camera.y - 100, 700, 700);
 
-  loadAnimations() {
-    this.animations[BODY] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_body.png"), 0, 0, 512, 512, 8, this.frameSpeed, 0, true);
-    // this.solarFlareHitBoxAnimation.yOffset = -730;
-    // this.solarFlareHitBoxAnimation.xOffset = -790;
-  }
+    }
+    loadAnimations() {
+        this.animations[BODY] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_body.png"), 0, 0, 512, 512, 8, 0.2, 0, true);
+        this.animations[BODY].yOffset = 0;
+        this.animations[BODY].xOffset = 0;
+
+        this.animations[UPPER_LEFT_ARM] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_top_left_arm.png"), 0, 0, 320, 320, 6, 0.2, 0, true);
+        this.animations[UPPER_LEFT_ARM].yOffset = 0;
+        this.animations[UPPER_LEFT_ARM].xOffset = 400;
+
+        this.animations[UPPER_RIGHT_ARM] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_top_right_arm.png"), 0, 0, 320, 320, 6, 0.2, 0, true);
+        this.animations[UPPER_RIGHT_ARM].yOffset = 0;
+        this.animations[UPPER_RIGHT_ARM].xOffset = 0;
+
+        this.animations[LOWER_LEFT_ARM] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_bottom_left_arm.png"), 0, 0, 320, 320, 6, 0.2, 0, true);
+        this.animations[LOWER_LEFT_ARM].yOffset = 0;
+        this.animations[LOWER_LEFT_ARM].xOffset = 0;
+
+        this.animations[LOWER_RIGHT_ARM] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_bottom_right_arm.png"), 0, 0, 320, 320, 6, 0.2, 0, true);
+        this.animations[LOWER_RIGHT_ARM].yOffset = 0;
+        this.animations[LOWER_RIGHT_ARM].xOffset = 0;
+
+
+
+    }
 
 }
 

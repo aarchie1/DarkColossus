@@ -70,7 +70,7 @@ class SceneManager {
         }
 
         for (let i = 0; i < level.boss.length; i++) {
-            this.game.addEntity(new DarkColossus(level.boss[i].x, level.boss[i].y));
+            this.game.addEntityFirst(new DarkColossus(level.boss[i].x, level.boss[i].y));
         }
 
         //Hazard Growth Tall

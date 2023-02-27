@@ -80,4 +80,4 @@ Boss
     boss_top_right_arm      320x320     6frames
     boss_cross              244x270     1frame
     boss_ring_healing       700x700     1frame
-    boss_ring_healing       700x700     1frame
+    boss_ring                  700x700     1frame
