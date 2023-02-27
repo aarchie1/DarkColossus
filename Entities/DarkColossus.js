@@ -1,11 +1,19 @@
+const PHASE_ONE = 1;
+const PHASE_TWO = 2;
+const PHASE_THREE = 3;
+
+const BODY = 4;
+const UPPER_LEFT_ARM = 5;
+const UPPER_RIGHT_ARM = 6;
+const LOWER_LEFT_ARM = 7;
+const LOWER_RIGHT_ARM = 8;
+const RING = 9;
+
 class DarkColossus {
-    constructor() {
-        const TICK = this.game.clockTick;
+    constructor(x, y) {
         // this.width = 256;
         // this.height = 256;
-        const PHASE_ONE = 1;
-        const PHASE_TWO = 2;
-        const PHASE_THREE = 3;
+        
 
         //PHASE 1/PHASE 2 LOOP
             //1) Every 30 seconds, enter PHASE 2
@@ -25,8 +33,10 @@ class DarkColossus {
             //Cross Laser
             //Arm Laser
 
+        this.x = x;
+        this.y = y;
         this.state = PHASE_ONE;
-        const MAX_HEALTH = 10000;
+        const MAX_HEALTH = 1000;
         this.hostile = true;
         this.damage = 1;
         this.attackRate = 2;
@@ -37,21 +47,21 @@ class DarkColossus {
         this.maxIFrameTimer = 42;
         this.dead = false;
         this.paused = true;
-        this.updateBB();
-        this.animationXOffset = 0;
-        this.animationYOffset = 0;
+        //this.updateBB();
         this.animations = [];
+        this.frameSpeed = 0.2;
         this.loadAnimations();
-        this.moves = [this.CrossLaser()];
+        //this.moves = [this.CrossLaser()];
         this.maxMoveTimeInterval = 1;
         this.currentMoveTimeInterval = 0;
+
 
         this.upperLeftArm = null;
         this.upperRightArm = null;
         this.lowerRightArm = null;
         this.lowerLeftArm = null;
 
-        this.armList = [this.upperLeftArm, this.upperRightArm, this.lowerRightArm, this.lowerLeftArm];
+        this.partList = [this.upperLeftArm, this.upperRightArm, this.lowerRightArm, this.lowerLeftArm];
   }
 
   update() {
@@ -60,45 +70,53 @@ class DarkColossus {
   }
 
   draw(ctx) {
-
-  }
-
-  CrossLaser() {
-
-  }
+    //draw body
+    console.log("drawing body, X: " + this.x + " Y: " + this.y + "");
+    this.animations[BODY].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x, this.y - gameEngine.cameraY, 1);
+  
 }
 
-class DarkColossusArm {
-    constructor() {
-        this.hostile = true;
-        this.damage = 1;
-        this.attackRate = 2;
-        this.elapsedTime = 0;
-        this.attackDistance = 0;
-        this.health = 100;
-        this.currentIFrameTimer = 0;
-        this.maxIFrameTimer = 42;
-        this.dead = false;
-        this.paused = true;
-        this.updateBB();
-        this.animationXOffset = 0;
-        this.animationYOffset = 0;
-        this.animations = [];
-        this.loadAnimations();
-        this.moves = [this.CrossLaser()];
-        this.maxMoveTimeInterval = 1;
-        this.currentMoveTimeInterval = 0;
-    }
+  loadAnimations() {
+    this.animations[BODY] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_body.png"), 0, 0, 512, 512, 8, this.frameSpeed, 0, true);
+    // this.solarFlareHitBoxAnimation.yOffset = -730;
+    // this.solarFlareHitBoxAnimation.xOffset = -790;
+  }
 
-    update() {
-
-    }
-
-    draw(ctx) {
-
-    }
-
-    CrossLaser() {
-
-    }
 }
+
+// class DarkColossusArm {
+//     constructor() {
+//         this.hostile = true;
+//         this.damage = 1;
+//         this.attackRate = 2;
+//         this.elapsedTime = 0;
+//         this.attackDistance = 0;
+//         this.health = 100;
+//         this.currentIFrameTimer = 0;
+//         this.maxIFrameTimer = 42;
+//         this.dead = false;
+//         this.paused = true;
+//         this.updateBB();
+//         this.animationXOffset = 0;
+//         this.animationYOffset = 0;
+//         this.animations = [];
+//         this.loadAnimations();
+//         this.moves = [this.CrossLaser()];
+//         this.maxMoveTimeInterval = 1;
+//         this.currentMoveTimeInterval = 0;
+//     }
+
+//     update() {
+
+//     }
+
+//     draw(ctx) {
+
+//     }
+
+//     CrossLaser() {
+
+//     }
+
+        
+//}

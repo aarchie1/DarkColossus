@@ -69,6 +69,10 @@ class SceneManager {
             this.game.addEntity(new Molecule(this.game, enemy.x, enemy.y, 2));
         }
 
+        for (let i = 0; i < level.boss.length; i++) {
+            this.game.addEntity(new DarkColossus(level.boss[i].x, level.boss[i].y));
+        }
+
         //Hazard Growth Tall
         for (let i = 0; i < level.hazardGrowthTall.length; i++) {
             let hazard = level.hazardGrowthTall[i];
