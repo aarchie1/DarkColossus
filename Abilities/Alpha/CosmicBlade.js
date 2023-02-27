@@ -85,11 +85,18 @@ class CosmicBladeAbility {
   //Edit these to change the cooldown of the ability based on rarity
   setCooldown(cooldownRarity) {
     switch (cooldownRarity) {
+      //case 1 cooldown is 1.5 seconds
       case 1:
+        return 1.25;
+      //case 2 cooldown is 1.25 seconds
       case 2:
+        return 1;
+      //case 3 cooldown is 1 second
       case 3:
+        return .75;
+      //case 4 cooldown is 0.75 seconds
       case 4:
-        return 0;
+        return 0.5;
       default:
         console.log("Cooldown rarity not found");
     }
