@@ -130,7 +130,7 @@ class CosmicBladeAbility {
         if (enemy.hostile && (this.BB1.collide(enemy.BB) || this.BB2.collide(enemy.BB)) &&
         (player.animations[4][0].currentFrame() >= 2|| player.animations[4][1].currentFrame() >= 2)) {
           if (enemy.currentIFrameTimer === 0) {
-            console.log("Cosmic Blade hit a enemy");
+            //console.log("Cosmic Blade hit a enemy");
             enemy.health -= this.damage;
             console.log(enemy.health);
             enemy.currentIFrameTimer = enemy.maxIFrameTimer;
@@ -142,9 +142,9 @@ class CosmicBladeAbility {
             params.PARTICLE_SYSTEM.createParticleEffect(enemy.x + enemy.width/2 - gameEngine.camera.x, enemy.y + enemy.height/2 - gameEngine.camera.y, 50, 14, '#330000', 12, 25, 0.55);
 
           }
-          if (enemy instanceof MoleculeProjectile) {
-            enemy.removeFromWorld = true;
-          }
+          // if (enemy instanceof MoleculeProjectile) {
+          //   enemy.removeFromWorld = true;
+          // }
         }
       });
     }
