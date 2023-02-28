@@ -87,7 +87,7 @@ class DarkEnergyUI {
         ctx.font = "25px Arial";
         ctx.fillStyle = "#FFFFFF";
         for(let i = 0; i < this.rows; i++) {
-            for(let j = 0; j < 2; j++) {
+            for(let j = 0; j < this.columns; j++) {
                 if(j % 2 == 0) {
                     ctx.fillText(this.deInfo[m++], this.gridStartX + this.firstColXOffset, this.gridStartY + this.initialRowOffset + (this.followingRowOffset * i));
                 } else {
@@ -122,7 +122,7 @@ class DarkEnergyUI {
         if ((keypress("KeyW") || this.game.controllerButtonUp_press) && this.state == this.BROWSE) {
             this.game.controllerButtonUp_press = false;
             if(this.currentSlot < 2) {
-                this.currentSlot += 12;
+                this.currentSlot += 8;
             } else {
                 this.currentSlot -= 2;
             }
@@ -139,8 +139,8 @@ class DarkEnergyUI {
 
         if ((keypress("KeyS") || this.game.controllerButtonDown_press) && this.state == this.BROWSE) {
             this.game.controllerButtonDown_press = false;
-            if(this.currentSlot > 11) {
-                this.currentSlot -= 12;
+            if(this.currentSlot > 7) {
+                this.currentSlot -= 8;
             } else {
                 this.currentSlot += 2;
             }
