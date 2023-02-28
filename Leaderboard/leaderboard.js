@@ -1,5 +1,6 @@
 
 let ALL_TIME_LEADERBOARD = null
+let BOSS_LEADERBOARD = null
 
 async function getLeaderboard(theName, theScore) {
   console.log(theName, theScore)
@@ -16,6 +17,23 @@ async function getLeaderboard(theName, theScore) {
       console.log('parsed json', json) // access json.body here
       ALL_TIME_LEADERBOARD = json;
 
+    })
+}
+
+async function getBossLeaderboard(theName, bossTime) {
+  console.log(theName, bossTime)
+    fetch("https://dark-colossus.herokuapp.com/submitBossTime", {
+      method: 'POST',
+      body: JSON.stringify({name: theName, bossTime: bossTime}),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(json => {
+      console.log('parsed json', json) // access json.body here
+      BOSS_LEADERBOARD = json;
     })
 }
 
@@ -44,7 +62,7 @@ submitBtn.addEventListener('click', () => {
   
   if (NAME) {
     // Hide the input form
-  console.log("BUTTON CLICKED");
+    console.log("BUTTON CLICKED");
 
     inputContainer.style.display = 'none';
     // Show the canvas
@@ -55,9 +73,29 @@ submitBtn.addEventListener('click', () => {
     script.src = "./main.js";
     document.body.appendChild(script);
   
-    //document.head.appendChild(script);
   }
 });
+
+inputContainer.addEventListener('submit', (event) => {
+  event.preventDefault(); // prevent the default form submission behavior
+  NAME = nameInput.value;
+  
+  if (NAME) {
+    // Hide the input form
+    console.log("BUTTON CLICKED");
+
+    inputContainer.style.display = 'none';
+    // Show the canvas
+    canvas.style.display = 'block';
+
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "./main.js";
+    document.body.appendChild(script);
+  
+  }
+});
+
 
 
 

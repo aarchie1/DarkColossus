@@ -37,6 +37,7 @@ class Animator {
     };
 
     currentFrame() {
+        this.totalTime = this.frameCount * this.frameDuration;
         return Math.floor(this.elapsedTime / this.frameDuration);
     };
 

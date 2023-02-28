@@ -71,3 +71,13 @@ DNA
     dna_uncommon            116x116     1frame
     dna_rare                116x116     1frame
     dna_godly               116x116     1frame
+
+Boss
+    boss_body               512x512     8frames
+    boss_bottom_left_arm    320x320     6frames
+    boss_bottom_right_arm   320x320     6frames
+    boss_top_left_arm       320x320     6frames
+    boss_top_right_arm      320x320     6frames
+    boss_cross              244x270     1frame
+    boss_ring_healing       700x700     1frame
+    boss_ring                  700x700     1frame
