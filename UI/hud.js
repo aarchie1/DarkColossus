@@ -26,6 +26,8 @@ class hud {
         ctx.textAlign = "left";
         if (params.LEVEL == 0) {
             ctx.fillText("Awakening Cross", this.locationTitleX, this.locationTitleY);
+        } else if (currentLevelModifier == BOSS) {
+            ctx.fillText(getLevelModifierText(currentLevelModifier) + " ", this.locationTitleX, this.locationTitleY);
         } else {
             ctx.fillText(getLevelModifierText(currentLevelModifier) + " " + params.LEVEL, this.locationTitleX, this.locationTitleY);
         }
@@ -64,8 +66,10 @@ class hud {
         for (let i = 0; i < player.health; i++) {
             if (i < 10) {
                 ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/UI/hp_cross.png"), 50 + (i * 55), 150, 64, 64);
-            } else {
+            } else if (i < 20){
                 ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/UI/hp_cross.png"), 50 + ((i - 10) * 55), 205, 64, 64);
+            } else {
+                ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/UI/hp_cross.png"), 50 + ((i*2 - 10) * 55), 205, 64, 64);
             }
         }
 

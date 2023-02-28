@@ -43,7 +43,7 @@ function getLevelModifierText(modifierNumber) {
         case DNA_PICKUP_SECTIONS_ONLY:
             return "Lucid Dream";
         case BOSS:
-            return "Dark Colossus Fight";
+            return "A Place You Shouldn't Be";
     }
 }
 
@@ -362,7 +362,7 @@ function getLevel(levelNumber) {
         startX -= PLATFORM_GROUND.w
         startX -= PLATFORM_SMALL.w;
         let bossX = startX + PLATFORM_LARGE.w;
-        let bossY = 500;
+        let bossY = 300;
         addPlatform(PLATFORM_SMALL, startX, startY - PLATFORM_SMALL.h, false);
         addPlatform(PLATFORM_SMALL, startX, startY - PLATFORM_SMALL.h*2.5, false);
         startX += PLATFORM_SMALL.w + 25;

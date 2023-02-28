@@ -35,8 +35,8 @@ class SceneManager {
 
         this.xCameraOffset = 0;
         this.yCameraOffset = 0;
-        //this.loadOpening(); //This will replace this.loadHub() when we have a title screen
-        this.loadWelcomeScreen();
+        this.loadOpening(); //This will replace this.loadHub() when we have a title screen
+        //this.loadWelcomeScreen();
 
     };
 
@@ -70,7 +70,9 @@ class SceneManager {
         }
 
         for (let i = 0; i < level.boss.length; i++) {
-            this.game.addEntityFirst(new DarkColossus(level.boss[i].x, level.boss[i].y));
+            let boss = new DarkColossus(level.boss[i].x, level.boss[i].y);
+            this.game.addEntity(boss);
+            this.game.addEntityFirst(new DarkColossusHud(boss));
         }
 
         //Hazard Growth Tall

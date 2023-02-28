@@ -8,6 +8,10 @@ const UPPER_RIGHT_ARM = 6;
 const LOWER_LEFT_ARM = 7;
 const LOWER_RIGHT_ARM = 8;
 const RING = 9;
+const CROSS = 10;
+
+const MAX_HEALTH = 1000;
+
 
 class DarkColossus {
     constructor(x, y) {
@@ -36,7 +40,6 @@ class DarkColossus {
         this.x = x;
         this.y = y;
         this.state = PHASE_ONE;
-        const MAX_HEALTH = 1000;
         this.hostile = true;
         this.damage = 1;
         this.attackRate = 2;
@@ -49,44 +52,70 @@ class DarkColossus {
         this.paused = true;
         //this.updateBB();
         this.animations = [];
-        this.frameSpeed = 0.2;
+        this.baseFrameSpeed = 0.25;
+        this.frameSpeed = this.baseFrameSpeed;
         this.loadAnimations();
         //this.moves = [this.CrossLaser()];
         this.maxMoveTimeInterval = 1;
         this.currentMoveTimeInterval = 0;
-
 
         this.upperLeftArm = null;
         this.upperRightArm = null;
         this.lowerRightArm = null;
         this.lowerLeftArm = null;
 
-        this.partList = [this.upperLeftArm, this.upperRightArm, this.lowerRightArm, this.lowerLeftArm];
+        this.armHp = 100;
+        this.upperLeftArmHp = this.armHp;
+        this.upperRightArmHp = this.armHp;
+        this.lowerRightArmHp = this.armHp;
+        this.lowerLeftArmHp = this.armHp;
+
+        this.upperLeftArmBB = null;
+        this.upperRightArmBB = null;
+        this.lowerRightArmBB = null;
+        this.lowerLeftArmBB = null;
+
+        this.t = 0;
+        this.bodyT = 0;
+        this.amplitude = 50;
+
+
   }
 
   update() {
     //Chance
+    this.t += 0.01;
+    this.bodyT += 0.005;
+    if (this.animations[BODY].currentFrame() === 0) {
+        this.animations[BODY].frameDuration = Math.max(this.baseFrameSpeed - (Math.abs(Math.sin(this.bodyT) * 0.25)), 0.05);
+    }
      
   }
 
     draw(ctx) {
-        //draw body
-        console.log("drawing body, X: " + this.x + " Y: " + this.y + "");
-        this.animations[BODY].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x, this.y - gameEngine.camera.y, 1);
-        //draw upper left arm
-        this.animations[UPPER_LEFT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x, this.y - gameEngine.camera.y, 1);
-        //draw upper right arm
-        this.animations[UPPER_RIGHT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x, this.y - gameEngine.camera.y, 1);
-        //draw lower left arm
-        this.animations[LOWER_LEFT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x, this.y - gameEngine.camera.y, 1);
-        //draw lower right arm
-        this.animations[LOWER_RIGHT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x, this.y - gameEngine.camera.y, 1);
-        //draw ring
-        ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_ring.png"), this.x - gameEngine.camera.x - 100, this.y - gameEngine.camera.y - 100, 700, 700);
 
+
+
+        //draw cross
+        ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_cross.png"), this.x - gameEngine.camera.x + 145, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude - 300, 244, 270);
+   
+        //draw body
+        this.animations[BODY].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude, 1);
+        //draw upper left arm
+        this.animations[UPPER_LEFT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x - 700, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude - 190, 1);
+        //draw upper right arm
+        this.animations[UPPER_RIGHT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x + 475, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude - 190, 1);
+        // //draw lower left arm
+        this.animations[LOWER_LEFT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x - 300, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude +400, 1);
+        // //draw lower right arm
+        this.animations[LOWER_RIGHT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x + 475, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude + 400, 1);
+        // //draw ring
+        ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_ring.png"), this.x - gameEngine.camera.x - 100, this.y - gameEngine.camera.y - 100 + Math.sin(this.t) * this.amplitude, 700, 700);
+    
     }
+
     loadAnimations() {
-        this.animations[BODY] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_body.png"), 0, 0, 512, 512, 8, 0.2, 0, true);
+        this.animations[BODY] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_body.png"), 0, 0, 512, 512, 8, this.frameSpeed, 0, true);
         this.animations[BODY].yOffset = 0;
         this.animations[BODY].xOffset = 0;
 
@@ -105,46 +134,11 @@ class DarkColossus {
         this.animations[LOWER_RIGHT_ARM] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_bottom_right_arm.png"), 0, 0, 320, 320, 6, 0.2, 0, true);
         this.animations[LOWER_RIGHT_ARM].yOffset = 0;
         this.animations[LOWER_RIGHT_ARM].xOffset = 0;
-
-
-
     }
 
 }
 
-// class DarkColossusArm {
-//     constructor() {
-//         this.hostile = true;
-//         this.damage = 1;
-//         this.attackRate = 2;
-//         this.elapsedTime = 0;
-//         this.attackDistance = 0;
-//         this.health = 100;
-//         this.currentIFrameTimer = 0;
-//         this.maxIFrameTimer = 42;
-//         this.dead = false;
-//         this.paused = true;
-//         this.updateBB();
-//         this.animationXOffset = 0;
-//         this.animationYOffset = 0;
-//         this.animations = [];
-//         this.loadAnimations();
-//         this.moves = [this.CrossLaser()];
-//         this.maxMoveTimeInterval = 1;
-//         this.currentMoveTimeInterval = 0;
-//     }
 
-//     update() {
-
-//     }
-
-//     draw(ctx) {
-
-//     }
-
-//     CrossLaser() {
-
-//     }
 
         
 //}
