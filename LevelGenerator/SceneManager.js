@@ -6,6 +6,8 @@ class SceneManager {
         this.game = game;
         this.game.camera = this;
         this.gameOver = false;
+        this.gameWin = false;
+        this.winTime = 0;
         this.transition = false;
         this.player = new GameCharacter(this.game, 0, 0);
         player = this.player;
@@ -304,7 +306,7 @@ class SceneManager {
     loadDeathScreen() {
         this.clearLevel();
         params.DARK_ENERGY.currency = Math.floor(params.DARK_ENERGY.currency * 0.5);
-        this.game.addEntityFirst(new Death_Screen_Background(this.game));
+        this.game.addEntityFirst(new End_Screen_Background(this.game, false));
         gameEngine.camera.gameOver = false;
         let timer = 100;
         addEventListener('click', (event) => { });
@@ -319,6 +321,20 @@ class SceneManager {
         };
 
         //gameEngine.camera.loadDeathCutscene();
+    }
+
+    loadWinScreen() {
+        this.clearLevel();
+        this.game.addEntityFirst(new End_Screen_Background(this.game, true));
+        gameEngine.camera.gameOver = false;
+        this.gameWin = false;
+        let timer = 100;
+        
+        addEventListener('click', (event) => { });
+        onclick = (event) => {
+            onclick = null
+           // gameEngine.camera.loadHub();
+        };
     }
 
 
@@ -351,6 +367,9 @@ class SceneManager {
         if (this.gameOver) {
            this.loadDeathScreen();
            player.removeFromWorld = true;
+        } else if (this.gameWin) {
+            this.loadWinScreen();
+            player.removeFromWorld = true;
         }
 
         if (player != null) this.playerCurrentHealth = player.health;
@@ -854,8 +873,9 @@ class Title_Screen_Background {
     }
 }
 
-class Death_Screen_Background {
-    constructor(game) {
+class End_Screen_Background {
+    constructor(game, win) {
+        this.win = win;
         this.game = game;
         this.width = 1920;
         this.height = 1080;
@@ -890,13 +910,21 @@ class Death_Screen_Background {
         ctx.fillStyle = "black";
 
         ctx.font = "60px StrangeDreams";
-        ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2 - 2, 150 - 2);
+        if (this.win) {
+            ctx.font = "40px StrangeDreams";
+            ctx.fillText(NAME + " defeated the Dark Colossus in " + gameEngine.camera.winTime, CANVAS_WIDTH / 2 - 2, 150 - 2);
+        } else {
+            ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2 - 2, 150 - 2);
+        }
         ctx.fillStyle = "white";
         ctx.font = "60px StrangeDreams";
-        ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2, 150);
+        if (this.win) {
+            ctx.font = "40px StrangeDreams";
+            ctx.fillText(NAME + " defeated the Dark Colossus in " + gameEngine.camera.winTime, CANVAS_WIDTH / 2, 150);
+        } else {
+            ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2, 150);
+        }
         ctx.font = "50px StrangeDreams";
-
-
 
         // Draw the Highest Level leaderboard
         ctx.fillStyle = '#fff';
@@ -908,8 +936,8 @@ class Death_Screen_Background {
         for (let i = 0; i < 10; i++) {
           if (ALL_TIME_LEADERBOARD == undefined || ALL_TIME_LEADERBOARD.leaderboard == undefined || ALL_TIME_LEADERBOARD.leaderboard[i] == undefined) continue;
           const entry = ALL_TIME_LEADERBOARD.leaderboard[i];
-          console.log(ALL_TIME_LEADERBOARD);
-          console.log(entry);
+        //   console.log(ALL_TIME_LEADERBOARD);
+        //   console.log(entry);
 
           //AJ EDIT HERE
           ctx.fillStyle = '#fff';
@@ -925,34 +953,35 @@ class Death_Screen_Background {
         ctx.textAlign = 'left';
         xAlign = 1000;
         //put text that says coming soon
-        // for (let i = 0; i < 10; i++) {
-        //     if (DARK_COLOSSUS_LEADERBOARD == undefined || DARK_COLOSSUS_LEADERBOARD.leaderboard == undefined || DARK_COLOSSUS_LEADERBOARD.leaderboard[i] == undefined) continue;
-        //     const entry = DARK_COLOSSUS_LEADERBOARD.leaderboard[i];
-        //     console.log(DARK_COLOSSUS_LEADERBOARD);
-        //     console.log(entry);
+
+        for (let i = 0; i < 10; i++) {
+            if (BOSS_LEADERBOARD == undefined || BOSS_LEADERBOARD.leaderboard == undefined || BOSS_LEADERBOARD.leaderboard[i] == undefined) continue;
+            const entry = ALL_TIME_LEADERBOARD.leaderboard[i];
+            console.log(BOSS_LEADERBOARD);
+            console.log(entry);
     
-        //     //AJ EDIT HERE
-        //     ctx.fillStyle = '#fff';
-        //     ctx.textAlign = 'left';
-        //     let fontSize = 45 
-        //     ctx.font = fontSize + 'px Arial';
-        //     ctx.fillText(`${entry.time} - ${entry.name} Lv${entry.score}`, xAlign, yAlign + i*fontSize*1.5);
-        // }
+            ctx.fillStyle = '#fff';
+            ctx.textAlign = 'left';
+            let fontSize = 25  
+            ctx.font = fontSize + 'px Arial';
+            ctx.fillText(`${entry.time} - ${entry.name}`, xAlign, yAlign+50 + i*fontSize*1.5);
+        }
     }
 
     update() {
         //check if any controls are pressed in game controller
-        if (this.timer > 1 && (isAnyControllerButtonPressed() || isAnyKeyPressed()) ){
+        if (this.timer > 1 && (isAnyControllerButtonPressed() || isAnyKeyPressed()) && !this.win){
             this.game.camera.gameOver = false;
            // this.game.camera.loadHub();
            this.removeFromWorld = true;
            gameEngine.camera.loadDeathCutscene();
+        } else if (this.timer > 1 && (isAnyControllerButtonPressed() || isAnyKeyPressed()) && this.win){
+            this.game.camera.gameWin = false;
+            this.removeFromWorld = true;
+            gameEngine.camera.loadHub();
         }
         this.timer += 0.01
-
     }
-
-    
 }
 
 /*class ControlsBackground {

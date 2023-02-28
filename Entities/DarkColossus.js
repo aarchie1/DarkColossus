@@ -10,7 +10,7 @@ const LOWER_RIGHT_ARM = 8;
 const RING = 9;
 const CROSS = 10;
 
-const MAX_HEALTH = 10;
+const MAX_HEALTH = 500;
 
 
 class DarkColossus {
@@ -50,6 +50,7 @@ class DarkColossus {
         this.elapsedTime = 0;
         this.attackDistance = 0;
         this.health = MAX_HEALTH;
+        this.healthRegen = 0.005; // higher = fast regen
         this.currentIFrameTimer = 0;
         this.velocity = { x: 0, y: 0 };
         
@@ -76,13 +77,19 @@ class DarkColossus {
   }
 
   update() {
+
+
     const TICK = this.game.clockTick;
     this.elapsedTime += this.game.clockTick;
     //Chance
     this.t += 0.01;
     this.bodyT += 0.005;
     if (this.animations[BODY].currentFrame() === 0) {
-        this.animations[BODY].frameDuration = Math.max(this.baseFrameSpeed - (Math.abs(Math.sin(this.bodyT) * 0.25)), 0.05);
+        if (this.state == PHASE_TWO){
+            this.animations[BODY].frameDuration = 0.02;
+        } else {
+            this.animations[BODY].frameDuration = Math.max(this.baseFrameSpeed - (Math.abs(Math.sin(this.bodyT) * 0.25)), 0.05);
+        }
     }
 
     if (this.currentIFrameTimer > 0) {
@@ -102,12 +109,10 @@ class DarkColossus {
         this.fireRate *= 3;
     }
 
-    if (this.health <= 0) {
-        this.dead = true;
-        this.removeFromWorld = true;
-    }
+    if (this.state === PHASE_TWO) {
+        this.health = Math.min(this.health+this.healthRegen, MAX_HEALTH);
 
-    if (this.state != PHASE_TWO) {
+    } else {
         if (this.x > this.player.x) this.velocity.x += -100 * TICK;
         if (this.x < this.player.x && this.velocity.x < 0) {
             this.velocity.x = 0;
@@ -190,8 +195,8 @@ class DarkColossus {
                     //     break;
                     case MOLECULE_PROJECTILE_ATTACK:
                         attack = new MoleculeProjectile(this.game, this.x + 300, this.y+200, entity);
-                        attack.damage = this.projectileDamage/2;
-                        attack.maxSpeed = 400;
+                        attack.damage = this.projectileDamage;
+                        attack.maxSpeed = 300;
                         this.game.camera.game.addEntityFirst(attack);
 
                         break;
@@ -205,21 +210,22 @@ class DarkColossus {
                 }
             }
         });
-
     }
-
-    
-
   }
 
     draw(ctx) {
-        ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_cross.png"), this.x - gameEngine.camera.x + 145, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude - 300, 244, 270);
         this.animations[BODY].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude, 1);
-        this.animations[UPPER_LEFT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x - 700, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude - 190, 1);
-        this.animations[UPPER_RIGHT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x + 475, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude - 190, 1);
-        this.animations[LOWER_LEFT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x - 300, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude +400, 1);
-        this.animations[LOWER_RIGHT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x + 475, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude + 400, 1);
-        ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_ring.png"), this.x - gameEngine.camera.x - 100, this.y - gameEngine.camera.y - 100 + Math.sin(this.t) * this.amplitude, 700, 700);
+
+        if (this.state == PHASE_TWO){
+            ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_ring_healing.png"), this.x - gameEngine.camera.x - 100, this.y - gameEngine.camera.y - 100 + Math.sin(this.t) * this.amplitude, 700, 700);
+        } else {
+            ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_cross.png"), this.x - gameEngine.camera.x + 145, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude - 300, 244, 270);
+            ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_ring.png"), this.x - gameEngine.camera.x - 100, this.y - gameEngine.camera.y - 100 + Math.sin(this.t) * this.amplitude, 700, 700);
+            this.animations[UPPER_LEFT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x - 700, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude - 190, 1);
+            this.animations[UPPER_RIGHT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x + 475, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude - 190, 1);
+            this.animations[LOWER_LEFT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x - 300, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude +400, 1);
+            this.animations[LOWER_RIGHT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x + 475, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude + 400, 1);    
+        }
 
         ctx.strokeStyle = "red";
         ctx.strokeRect(this.BB.x - gameEngine.camera.x, this.BB.y - gameEngine.camera.y, this.BB.width, this.BB.height);

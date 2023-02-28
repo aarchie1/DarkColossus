@@ -158,7 +158,7 @@ class Molecule {
         // console.log(this.currentIFrameTimer);
       }
       //if enemy is dead, remove from game
-      if (this.health <= 0) {
+      if (this.health <= 0 || this.y > GROUND_HEIGHT) {
         this.dead = true;
         params.PARTICLE_SYSTEM.createParticleEffect(this.x + this.width/2 - gameEngine.camera.x, this.y + this.height/2 - gameEngine.camera.y, 50, 14, '#FF3232', 23, 5, 0.55);
         this.removeFromWorld = true;

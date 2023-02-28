@@ -1,5 +1,6 @@
 
 let ALL_TIME_LEADERBOARD = null
+let BOSS_LEADERBOARD = null
 
 async function getLeaderboard(theName, theScore) {
   console.log(theName, theScore)
@@ -16,6 +17,23 @@ async function getLeaderboard(theName, theScore) {
       console.log('parsed json', json) // access json.body here
       ALL_TIME_LEADERBOARD = json;
 
+    })
+}
+
+async function getBossLeaderboard(theName, theTime) {
+  console.log(theName, theTime)
+    fetch("https://dark-colossus.herokuapp.com/submitBossTime", {
+      method: 'POST',
+      body: JSON.stringify({name: theName, time: theTime}),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(json => {
+      console.log('parsed json', json) // access json.body here
+      BOSS_LEADERBOARD = json;
     })
 }
 

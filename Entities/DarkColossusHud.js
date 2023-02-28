@@ -41,22 +41,45 @@ class DarkColossusHud {
         textWidth = ctx.measureText(timerText).width/2;
         ctx.fillText(timerText, xCenter - textWidth, CANVAS_HEIGHT - 30);
 
-        //Draw the boss phase at the top center of the screen
+        //Draw the boss phase at the top center of the  (was for testing)
         ctx.font = "30px Arial";
         textWidth = ctx.measureText("Phase: " + this.boss.state).width/2;
-        ctx.fillText("Phase: " + this.boss.state, xCenter - textWidth, CANVAS_HEIGHT - 60);
+        //ctx.fillText("Phase: " + this.boss.state, xCenter - textWidth, CANVAS_HEIGHT - 60);
     }
 
     update() {
         const seconds = this.bossTimer.gameTime % 60;
-        if (seconds % 5 === 0 && this.boss.state == PHASE_ONE && seconds != this.previousSeconds) {
+        if (seconds % 20 === 0 && this.boss.state == PHASE_ONE && seconds != this.previousSeconds) {
             this.boss.state = PHASE_TWO;
             this.previousSeconds = seconds;
+            let numberOfEnemies = Math.random() * 30 + 5;
+            let enemiesAdded = [];
 
-        } else if (seconds % 5 === 0 && this.boss.state == PHASE_TWO && seconds != this.previousSeconds) {
+            for (let i = 0; i < numberOfEnemies; i++) {
+                let spawnX = Math.random() * 2000 + player.x-1000;
+                let spawnY = Math.random() * 600;
+                enemiesAdded.push({x: spawnX, y: spawnY});
+            }
+
+            this.hordeFightManager = new HordeFightManager(enemiesAdded, player.x - 1200, player.x + 1200);
+
+            gameEngine.addEntityFirst(this.hordeFightManager);
+
+        } else if ( (this.boss.state == PHASE_TWO && this.boss.health == MAX_HEALTH) || (this.hordeFightManager != null && this.hordeFightManager.enemiesRemaining == 0)) {
             this.boss.state = PHASE_ONE;
             this.previousSeconds = seconds;
-
+            this.hordeFightManager.removeFromWorld = true;
+            this.hordeFightManager = null;
         } 
+
+            //Win
+        if (this.boss.health <= 0) {
+            let minutes = Math.floor(this.bossTimer.gameTime / 60);
+            let secs = this.bossTimer.gameTime % 60;
+            let winTime = `${minutes}:${secs.toString().padStart(2, '0')}`;
+            gameEngine.camera.winTime = winTime;
+            gameEngine.camera.gameWin = true;
+            console.log("You win!: " + winTime);
+        }
     }
 }

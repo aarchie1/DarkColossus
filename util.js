@@ -41,6 +41,16 @@ function keyhold(key) {
     }
 };
 
+function clearAllInput() {
+    for (let key in gameEngine.keys) {
+        gameEngine.keys[key] = false;
+    }
+
+    for (let key in gameEngine.keysPressed) {
+        gameEngine.keysPressed[key] = false;
+    }
+}
+
 function equipAbilities(dna){
     console.log("equipping:" + dna);
     if (dna == null) return;

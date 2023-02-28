@@ -240,7 +240,7 @@ class GameCharacter {
             this.game.addEntityFirst(
               new DamageIndicator(this.x+150, this.y, entity.damage)
             );
-            this.brightness = 200;
+            this.brightness = 220;
           }
           if (
             entity instanceof MoleculeProjectile &&
