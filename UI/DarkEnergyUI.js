@@ -4,6 +4,7 @@ class DarkEnergyUI {
         this.game = game;
         this.BROWSE = 1;
         this.state = this.BROWSE;
+        params.STATE = "menu";
 
         //Build menu information
         this.rows = 5;

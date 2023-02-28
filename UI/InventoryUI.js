@@ -193,7 +193,7 @@ class InventoryUI {
     }
 
     equipSlot1() {
-        if ((keypress("Digit1") || this.game.controllerButtonA) && this.state == this.BROWSE && !this.game.PAUSED) {
+        if ((keypress("Digit1") || this.game.controllerButtonA_press) && this.state == this.BROWSE && !this.game.PAUSED) {
             this.game.controllerButtonA = false;
             unequipAbilities(params.INVENTORY.dnaSlot1);
             params.INVENTORY.dnaSlot1 = this.inventory[this.currentDna];
