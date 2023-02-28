@@ -9,7 +9,7 @@ class DamageIndicator {
         this.randomY = Math.random() * this.randomOffset/2 - this.randomOffset;
 
         //have font size expoenetially increase with damage
-        this.fontSize = 25 + (damage+1) + Math.pow(damage, 1.5);
+        this.fontSize = 40;//25 + (damage+1) + Math.pow(damage, 1.5);
 
     }
 

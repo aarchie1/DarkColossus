@@ -23,9 +23,12 @@ class Portal {
         //draw above the portal the name of the modifed level i.e. "No Reapers"
         ctx.font = "30px Arial";
         ctx.fillStyle = "white";
+        //align text to center of portal
+        ctx.textAlign = "center";
         //measure text width
-        if (params.LEVEL != 0 && this.levelModifier >= 0) ctx.fillText(this.levelModifierText, this.x + this.width/5 - this.game.camera.x, this.y - this.game.camera.y - 50);
-        if (this.levelModifier == -1) ctx.fillText(this.levelModifierText, this.x - this.game.camera.x, this.y - this.game.camera.y - 50);
+        let textWidth = ctx.measureText(this.levelModifierText).width;
+        if (params.LEVEL != 0 && this.levelModifier >= 0) ctx.fillText(this.levelModifierText, this.x + textWidth/2 - this.game.camera.x, this.y - this.game.camera.y - 50);
+        if (this.levelModifier < 0) ctx.fillText(this.levelModifierText, this.x - this.game.camera.x + textWidth/2, this.y - this.game.camera.y - 50);
 
     }
 
@@ -34,7 +37,9 @@ class Portal {
         if ((this.game.keys.KeyE || this.game.controllerButtonX) && this.BB.collide(player.BB)) {
             currentLevelModifier = this.levelModifier;
 
-            if (this.levelModifier >= 0) {
+            if (this.levelModifier == -2) {
+                this.game.camera.loadBoss();
+            } else if (this.levelModifier >= 0) {
                 this.game.camera.loadLevel();
             } else {
                 this.game.camera.loadHub();

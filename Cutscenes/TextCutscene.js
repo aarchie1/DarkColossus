@@ -4,6 +4,9 @@ class TextCutscene {
       this.fadeSpeed = fadeSpeed;
       this.opacity = 0;
       this.currentSentence = 0;
+
+      //clear all input
+      clearAllInput();
     }
   
     update() {

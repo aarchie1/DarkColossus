@@ -148,7 +148,7 @@ class Reaper {
       if (this.velocity.x < 0) this.facing = 1;
       if (this.velocity.x > 0) this.facing = 0;
     }
-    if (this.health <= 0) {
+    if (this.health <= 0 || this.y > GROUND_HEIGHT) {
       this.removeFromWorld = true;
        //(x, y, particleCount, particleSize, particleColor, xSpeed, ySpeed, sizeDecrement)
        params.PARTICLE_SYSTEM.createParticleEffect(this.x + this.width/2 - gameEngine.camera.x, this.y + this.height/2 - gameEngine.camera.y, 50, 14, '#FF3232', 23, 5, 0.55);

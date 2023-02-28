@@ -1,4 +1,5 @@
 let currentLevelModifier = 0;
+const BOSS = -2;
 const BACK_TO_HUB = -1;
 const NO_MODIFER = 0;
 const REAPERS_ONLY = 1;
@@ -41,6 +42,8 @@ function getLevelModifierText(modifierNumber) {
             return "Projectile Power Space";
         case DNA_PICKUP_SECTIONS_ONLY:
             return "Lucid Dream";
+        case BOSS:
+            return "A Place You Shouldn't Be";
     }
 }
 
@@ -48,7 +51,7 @@ function getLevelModifierText(modifierNumber) {
 
 
 function getLevel(levelNumber) {
-    let sections = [hordeFightSection, flatSection, ascendingSteppingStonesSection, descendingSteppingStonesSection, dnaPickupSection];//hordeFightSection, , dnaPickupSection, flatSection];verticalSection
+    let sections = [hordeFightSection, flatSection, ascendingSteppingStonesSection, descendingSteppingStonesSection, dnaPickupSection, bossSection];//hordeFightSection, , dnaPickupSection, flatSection];verticalSection
     let easyPlatformingSections = [flatSection, dnaPickupSection, hordeFightSection];
     let luckySections = [dnaPickupSection];
     let view = {x: CANVAS_WIDTH, y: CANVAS_HEIGHT};
@@ -88,6 +91,7 @@ function getLevel(levelNumber) {
         molecule: [],
         hordeFightManager: [],
         growthChaseManager: [],
+        boss: [],
         background: [{x:0, y:0}],
         player: [{x: view.x/2, y: view.y - 256}],
     }
@@ -208,6 +212,10 @@ function getLevel(levelNumber) {
             buildNormalLevel();
             level.reaper.forEach(reaper => reaper.reward = reaper.reward * 2);
             level.molecule.forEach(molecule => molecule.reward = molecule.reward * 2);
+            break;
+        case BOSS:
+            bossSection();
+            return level;
             break;
     }
 
@@ -346,9 +354,28 @@ function getLevel(levelNumber) {
             startX += PLATFORM_LARGE.w + 25;
 
         }
+    }    
+    
+    function bossSection() {
+        //create three large platforms with two small platforms in between each above
+        //create a boss on the top platform
+        startX -= PLATFORM_GROUND.w
+        startX -= PLATFORM_SMALL.w;
+        let bossX = startX + PLATFORM_LARGE.w;
+        let bossY = 300;
+        addPlatform(PLATFORM_SMALL, startX, startY - PLATFORM_SMALL.h, false);
+        addPlatform(PLATFORM_SMALL, startX, startY - PLATFORM_SMALL.h*2.5, false);
+        startX += PLATFORM_SMALL.w + 25;
+        for (let i = 0; i < 3; i++) {
+            addPlatform(PLATFORM_LARGE, startX, startY, false);
+            startX += PLATFORM_LARGE.w + 25;
+            addPlatform(PLATFORM_SMALL, startX, startY - PLATFORM_SMALL.h, false);
+            addPlatform(PLATFORM_SMALL, startX, startY - PLATFORM_SMALL.h*2.5, false);
+            startX += PLATFORM_SMALL.w + 25;
+        }
 
-
-    }        
+        level.boss.push({x: bossX, y: bossY});
+    }
 
     function addEnemies() {
         //iterate through all platforms and have a chance to spawn a reaper or molecule
@@ -359,7 +386,7 @@ function getLevel(levelNumber) {
     }
     level.platformGround.push({x: 0, y: 800});
 
-    if (Math.random() < 0.2) {
+    if (Math.random() < 0.05) {
         growthChaseLevel();
         level.hordeFightManager = [];
     } 
