@@ -109,6 +109,7 @@ ASSET_MANAGER.queueDownload("./Sprites/Boss/boss_cross.png");
 ASSET_MANAGER.queueDownload("./Sprites/Boss/boss_portal.png");
 ASSET_MANAGER.queueDownload("./Sprites/Boss/boss_ring_healing.png");
 ASSET_MANAGER.queueDownload("./Sprites/Boss/boss_ring.png");
+ASSET_MANAGER.queueDownload("./Sprites/Boss/boss_projectile.png");
 
 
 // music

@@ -152,7 +152,7 @@ class Molecule {
       // Update Facing direction
       if (this.velocity.x < 0) this.facing = 1;
       if (this.velocity.x > 0) this.facing = 0;
-
+      
       if (this.currentIFrameTimer > 0) {
         this.currentIFrameTimer -= 1;
         // console.log(this.currentIFrameTimer);

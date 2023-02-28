@@ -3,7 +3,7 @@ function updateGameBalancing() {
   DARK_ENERGY_DROPS_PER_ENEMY = 5; //higher number = less drops
   ENEMY_IFRAME = 30; //higher number = longer invincibility frames
   ENEMY_HEALTH = params.LEVEL + 4; //higher number = more health
-  MOLECULE_FIRE_RATE = 1 + params.LEVEL; //higher number = faster fire rate
+  MOLECULE_FIRE_RATE = 2 / (params.LEVEL*1.5); //lower number = faster fire rate
 }
 
 function dropItems(x, y) {

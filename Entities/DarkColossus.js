@@ -10,13 +10,15 @@ const LOWER_RIGHT_ARM = 8;
 const RING = 9;
 const CROSS = 10;
 
-const MAX_HEALTH = 1000;
+const MAX_HEALTH = 10;
 
 
 class DarkColossus {
     constructor(x, y) {
         this.width = 512;
         this.height = 512;
+        this.player = player;
+        this.game = gameEngine;
         
 
         //PHASE 1/PHASE 2 LOOP
@@ -43,10 +45,13 @@ class DarkColossus {
         this.hostile = true;
         this.damage = 1;
         this.attackRate = 2;
+        this.fireRate = 0.1
+        this.projectileDamage = 5;
         this.elapsedTime = 0;
         this.attackDistance = 0;
         this.health = MAX_HEALTH;
         this.currentIFrameTimer = 0;
+        this.velocity = { x: 0, y: 0 };
         
         this.maxIFrameTimer = 30;
         this.dead = false;
@@ -67,9 +72,12 @@ class DarkColossus {
         this.updateBB();
 
 
+
   }
 
   update() {
+    const TICK = this.game.clockTick;
+    this.elapsedTime += this.game.clockTick;
     //Chance
     this.t += 0.01;
     this.bodyT += 0.005;
@@ -82,10 +90,126 @@ class DarkColossus {
         // console.log(this.currentIFrameTimer);
     }
 
-    console.log("Iframe: " + this.currentIFrameTimer);
+    if (this.state === PHASE_TWO) {
+        this.updatePhase2BB();
+    } else {
+        this.updateBB();
+    }
+    
 
-    this.updateBB();
-     
+    if (this.state != PHASE_THREE && this.health <= MAX_HEALTH * 0.3) {
+        this.state = PHASE_THREE;
+        this.fireRate *= 3;
+    }
+
+    if (this.health <= 0) {
+        this.dead = true;
+        this.removeFromWorld = true;
+    }
+
+    if (this.state != PHASE_TWO) {
+        if (this.x > this.player.x) this.velocity.x += -100 * TICK;
+        if (this.x < this.player.x && this.velocity.x < 0) {
+            this.velocity.x = 0;
+        }
+
+        if (this.y > this.player.y) this.velocity.y += -100 * TICK;
+        if (this.y < this.player.y && this.velocity.y < 0) {
+            this.velocity.y = 0;
+        }
+
+        //if the molecule is to the right of the player
+        if (this.x > this.player.x) {
+            // if the player is facing right
+            if (
+            this.player.facing === 0 &&
+            this.BB.left - this.player.BB.right <= this.attackDistance
+            ) {
+            this.velocity.x = 0;
+            this.velocity.y = 0;
+            } else if (
+            this.player.facing === 1 &&
+            this.BB.left - this.player.BB.right <= this.attackDistance
+            ) {
+            this.velocity.x = 0;
+            this.velocity.y = 0;
+            }
+        }
+
+        
+
+      //if the molecule is to the left of the player
+      if (this.x < this.player.x) {
+        // if the player is facing left
+        if (
+          this.player.facing === 1 &&
+          Math.abs(this.BB.right - this.player.BB.left) <= this.attackDistance
+        ) {
+          this.velocity.x = 0;
+          this.velocity.y = 0;
+        } else if (
+          this.player.facing === 0 &&
+          Math.abs(this.BB.right - this.player.BB.left) <= this.attackDistance
+        ) {
+          this.velocity.x = 0;
+          this.velocity.y = 0;
+        }
+      }
+
+      if (this.x < this.player.x) this.velocity.x += 100 * TICK;
+      if (this.x > this.player.x && this.velocity.x > 0) {
+        this.velocity.x = 0;
+      }
+
+      if (this.y < this.player.y) this.velocity.y += 100 * TICK;
+      if (this.y > this.player.y && this.velocity.y > 0) {
+        this.velocity.y = 0;
+      }
+
+      this.x += this.velocity.x * TICK * 2;
+      this.y += this.velocity.y * TICK * 2;
+
+        //Collisions
+
+        this.game.entities.forEach((entity) => {
+            if (entity instanceof GameCharacter &&
+                this.elapsedTime > this.fireRate) {
+                this.elapsedTime = 0;
+
+                //Different attacks
+                //random number between 0-2
+                const CROSS_ATTACK = 0;
+                const MOLECULE_PROJECTILE_ATTACK = 1;
+                const BOSS_PROJECTILE_ATTACK = 2;
+                let attack = null;
+                switch (Math.floor(Math.random() * 3)) {
+                    // case CROSS_ATTACK:
+                    //     attack = new CrossProjectile(this.game, this.x+300, this.y+200, entity);
+                    //     attack.damage = this.projectileDamage*2;
+                    //     attack.maxSpeed = 200;
+                    //     break;
+                    case MOLECULE_PROJECTILE_ATTACK:
+                        attack = new MoleculeProjectile(this.game, this.x + 300, this.y+200, entity);
+                        attack.damage = this.projectileDamage/2;
+                        attack.maxSpeed = 400;
+                        this.game.camera.game.addEntityFirst(attack);
+
+                        break;
+                    case BOSS_PROJECTILE_ATTACK:
+                        attack = new BossProjectile(this.game, this.x + 200, this.y+200, entity);
+                        attack.damage = this.projectileDamage*3;
+                        attack.maxSpeed = 600;
+                        this.game.camera.game.addEntityFirst(attack);
+
+                        break;
+                }
+            }
+        });
+
+    }
+
+    
+
   }
 
     draw(ctx) {
@@ -127,6 +251,12 @@ class DarkColossus {
         this.lastBB = this.BB;
         this.BB = new BoundingBox(this.x, this.y + Math.sin(this.t) * this.amplitude, 512, 512);
     }
+
+    updatePhase2BB() {
+        this.lastBB = this.BB;
+        this.BB = new BoundingBox(-100, 4000, 1, 1);
+    }
+
 
 }
 
