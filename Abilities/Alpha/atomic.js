@@ -1,14 +1,14 @@
-class CosmicBladeAbility {
+class AtomicAbility {
   constructor(cooldownRarity, effectRarity) {
     //Necessary properties for all abilities
-    this.name = "Cosmic Blade";
+    this.name = "Atomic";
     this.icon = ASSET_MANAGER.getAsset(
-      "./Sprites/Abilities/Icons/cosmic_blade_icon.png"
+      "./Sprites/Abilities/Icons/atomic_icon.png"
     );
     this.inUseIcon = ASSET_MANAGER.getAsset(
-      "./Sprites/Abilities/Icons/cosmic_blade_in_use_icon.png"
+      "./Sprites/Abilities/Icons/atomic_in_use_icon.png"
     );
-    this.dominant = false;
+    this.dominant = true;
     this.effect = this.setEffect(effectRarity);
     this.effectRarity = effectRarity;
     this.cooldownRarity = cooldownRarity;
@@ -18,17 +18,17 @@ class CosmicBladeAbility {
     this.updateDamage();
     //Ability specific properties
     this.updateBB();
+    this.game = gameEngine;
+    this.projectileCount = 0;
     
   }
 
   updateBB() {
     this.lastBB1 = this.BB1;
     if (player.facing === 0) {
-      this.BB1 = new BoundingBox(player.x, player.y - 650, 500, 400);
-      this.BB2 = new BoundingBox(player.x+280, player.y - 600, 450, 1000);
+      this.BB1 = new BoundingBox(player.x+150, player.y, 100, 256);
     } else {
-      this.BB1 = new BoundingBox(player.x-200, player.y - 650, 500, 400);
-      this.BB2 = new BoundingBox(player.x-500, player.y - 600, 500, 1000);
+      this.BB1 = new BoundingBox(player.x+50, player.y, 100, 256);
     }
     
   }
@@ -42,35 +42,35 @@ class CosmicBladeAbility {
     gameEngine.addEntityFirst(new AbilityIndicatorEffect(this.icon));
 
     player.animations[4][0] = new Animator(
-      ASSET_MANAGER.getAsset("./Sprites/Abilities/cosmic_blade.png"),
+      ASSET_MANAGER.getAsset("./Sprites/Abilities/atomic_right.png"),
       0,
       0,
-      1200,
-      1164,
-      4,
+      256,
+      256,
+      3,
       0.115,
       0,
       false
     );
     player.animations[4][1] = new Animator(
-      ASSET_MANAGER.getAsset("./Sprites/Abilities/cosmic_blade_left.png"),
+      ASSET_MANAGER.getAsset("./Sprites/Abilities/atomic_left.png"),
       0,
       0,
-      1200,
-      1164,
-      4,
+      256,
+      256,
+      3,
       0.115,
       0,
       false
     );
 
-    player.animations[4][0].yOffset = -650;
-    player.animations[4][0].xOffset = -450;
-    player.animations[4][1].yOffset = -650;
-    player.animations[4][1].xOffset = -500;
+    player.animations[4][0].yOffset = 0;
+    player.animations[4][0].xOffset = 0;
+    player.animations[4][1].yOffset = 0;
+    player.animations[4][1].xOffset = 0;
     this.inUse = true;
     player.usingAbility = true;
-    console.log("Cosmic Blade started");
+    console.log("Atomic started");
   }
 
   //The ability will call this itself
@@ -79,24 +79,18 @@ class CosmicBladeAbility {
     this.cooldownTimer.startCooldown();
     player.usingAbility = false;
     this.inUse = false;
-    console.log("Cosmic Blade ended");
+    console.log("Atomic ended");
+    this.projectileCount = 0;
   }
 
   //Edit these to change the cooldown of the ability based on rarity
   setCooldown(cooldownRarity) {
     switch (cooldownRarity) {
-      //case 1 cooldown is 1.5 seconds
       case 1:
-        return 1.25;
-      //case 2 cooldown is 1.25 seconds
       case 2:
-        return 1;
-      //case 3 cooldown is 1 second
       case 3:
-        return .75;
-      //case 4 cooldown is 0.75 seconds
       case 4:
-        return 0.5;
+        return 0;
       default:
         console.log("Cooldown rarity not found");
     }
@@ -125,36 +119,21 @@ class CosmicBladeAbility {
   updateDamage() {
     this.damage = Math.round(this.effectRarity * 0.9 * (params.DARK_ENERGY.meleeAttack+1) * 10) / 10;
     this.description =
-      "Attack the enemy with a giant sword dealing " + this.damage + " damage";
+      "Become a gun slinger, shooting orbs that inflict " + this.damage + " damage";
   }
 
   //Required
   update() {
+    //this.elapsedTime += this.game.clockTick;
     this.updateDamage();
     this.cooldownTimer.checkCooldown();
-    if (this.inUse) {
-      gameEngine.entities.forEach((enemy) => {
-        if (enemy.hostile && (this.BB1.collide(enemy.BB) || this.BB2.collide(enemy.BB)) &&
-        (player.animations[4][0].currentFrame() >= 2|| player.animations[4][1].currentFrame() >= 2)) {
-          if (enemy.currentIFrameTimer === 0) {
-            //console.log("Cosmic Blade hit a enemy");
-            enemy.health -= this.damage;
-            console.log(enemy.health);
-            enemy.currentIFrameTimer = enemy.maxIFrameTimer;
-            gameEngine.addEntityFirst(
-              new DamageIndicator(enemy.x+enemy.width/2, enemy.y, this.damage)
-            );
-
-            //(x, y, particleCount, particleSize, particleColor, xSpeed, ySpeed, sizeDecrement)
-            params.PARTICLE_SYSTEM.createParticleEffect(enemy.x + enemy.width/2 - gameEngine.camera.x, enemy.y + enemy.height/2 - gameEngine.camera.y, 50, 14, '#330000', 12, 25, 0.55);
-
-          }
-          // if (enemy instanceof MoleculeProjectile) {
-          //   enemy.removeFromWorld = true;
-          // }
-        }
-      });
+    
+    if (this.inUse && this.projectileCount == 0) {
+      //this.elapsedTime = 0;
+      this.game.camera.game.addEntityFirst(new AtomicProjectile(this.game, this.x, this.y, player.facing));
+      this.projectileCount = 1;
     }
+    
     // if game camera.gameOver is true, then end the ability
     if (this.inUse && gameEngine.camera.gameOver) {
       this.onEnd();
@@ -181,7 +160,6 @@ class CosmicBladeAbility {
   draw(ctx) {
     if (debug && this.inUse && (player.animations[4][0].currentFrame() >= 2|| player.animations[4][1].currentFrame() >= 2)) {
       ctx.strokeRect(this.BB1.x - gameEngine.camera.x, this.BB1.y - gameEngine.camera.y, this.BB1.width, this.BB1.height);
-      ctx.strokeRect(this.BB2.x - gameEngine.camera.x, this.BB2.y - gameEngine.camera.y, this.BB2.width, this.BB2.height);
     }
   }
 }

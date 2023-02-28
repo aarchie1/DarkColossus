@@ -23,6 +23,7 @@ ASSET_MANAGER.queueDownload("./Sprites/Abilities/astral_beam_right.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/astral_beam_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/atomic_left.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/atomic_right.png");
+ASSET_MANAGER.queueDownload("./Sprites/Abilities/atomic_projectile.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/solar_flare.png");
 ASSET_MANAGER.queueDownload("./Sprites/Abilities/solar_flare_hit_box.png");
 

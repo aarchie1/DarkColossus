@@ -29,7 +29,7 @@ class RefreshAbility {
 
     //This runs when the Character presses the ability button
     onUse() {
-        if (this.inUse || (this.cooldownTimer.checkCooldown()) ) return;
+        if (this.inUse || (this.cooldownTimer.checkCooldown()) || player.usingAbility ) return;
         gameEngine.addEntityFirst(new AbilityIndicatorEffect(this.icon));
         this.inUse = true;
         player.usingAbility = true;
