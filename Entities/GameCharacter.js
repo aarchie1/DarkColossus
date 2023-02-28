@@ -231,7 +231,7 @@ class GameCharacter {
           if (
             entity instanceof Reaper &&
             entity.state == 3 &&
-            this.currentIFrameTimer === 0 && !this.usingAbility
+            this.currentIFrameTimer === 0 
           ) {
             // subtract reaper damage from player health
             this.health -= Math.max(0, entity.damage - params.DARK_ENERGY.meleeDefense);
@@ -258,9 +258,9 @@ class GameCharacter {
 
           if (
             entity instanceof BossProjectile &&
-            this.currentIFrameTimer == 0
+            this.currentIFrameTimer == 0 
           ) {
-            // subtract molecule damage from player health
+            // subtract boss projectile damage from player health
             this.health -= Math.max(0, entity.damage - params.DARK_ENERGY.rangedDefense);
             this.currentIFrameTimer = this.maxIFrameTimer;
             entity.removeFromWorld = true;

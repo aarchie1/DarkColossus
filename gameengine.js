@@ -196,21 +196,37 @@ class GameEngine {
         if (gamepad != null) {
 
             // button presses with no cooldown
-            this.controllerButtonA = gamepad.buttons[0].pressed;
-            this.controllerButtonB = gamepad.buttons[1].pressed;
-            this.controllerButtonX = gamepad.buttons[2].pressed;
-            this.controllerButtonY = gamepad.buttons[3].pressed;
-            this.controllerButtonLB = gamepad.buttons[4].pressed;
-            this.controllerButtonRB = gamepad.buttons[5].pressed;
-            this.controllerButtonLT = gamepad.buttons[6].pressed;
-            this.controllerButtonRT = gamepad.buttons[7].pressed;
-            this.controllerButtonSelect = gamepad.buttons[8].pressed;
-            this.controllerButtonStart = gamepad.buttons[9].pressed;
-            this.controllerButtonLeftStick = gamepad.buttons[10].pressed;
-            this.controllerButtonUp = gamepad.buttons[12].pressed || gamepad.axes[0] < -0.3;
-            this.controllerButtonDown = gamepad.buttons[13].pressed || gamepad.axes[0] > 0.3;
-            this.controllerButtonLeft = gamepad.buttons[14].pressed || gamepad.axes[0] < -0.3;
-            this.controllerButtonRight = gamepad.buttons[15].pressed || gamepad.axes[0] > 0.3;
+            if (params.STATE != "menu") {
+                this.controllerButtonA = gamepad.buttons[0].pressed;
+                this.controllerButtonB = gamepad.buttons[1].pressed;
+                this.controllerButtonX = gamepad.buttons[2].pressed;
+                this.controllerButtonY = gamepad.buttons[3].pressed;
+                this.controllerButtonLB = gamepad.buttons[4].pressed;
+                this.controllerButtonRB = gamepad.buttons[5].pressed;
+                this.controllerButtonLT = gamepad.buttons[6].pressed;
+                this.controllerButtonRT = gamepad.buttons[7].pressed;
+                this.controllerButtonSelect = gamepad.buttons[8].pressed;
+                this.controllerButtonStart = gamepad.buttons[9].pressed;
+                this.controllerButtonLeftStick = gamepad.buttons[10].pressed;
+                this.controllerButtonUp = gamepad.buttons[12].pressed || gamepad.axes[0] < -0.3;
+                this.controllerButtonDown = gamepad.buttons[13].pressed || gamepad.axes[0] > 0.3;
+                this.controllerButtonLeft = gamepad.buttons[14].pressed || gamepad.axes[0] < -0.3;
+                this.controllerButtonRight = gamepad.buttons[15].pressed || gamepad.axes[0] > 0.3;
+            } else {
+                this.controllerButtonLeft = false;
+                this.controllerButtonRight = false;
+                this.controllerButtonUp = false;
+                this.controllerButtonDown = false;
+                this.controllerButtonA = false;
+                this.controllerButtonB = false;
+                this.controllerButtonX = false;
+                this.controllerButtonY = false;
+                this.controllerButtonLB = false;
+                this.controllerButtonRB = false;
+                this.controllerButtonRT = false;
+                this.controllerButtonLT = false;
+                this.controllerButtonLogo = false;
+            }
 
             // set interval for button presses
             let currentTime = Date.now() / 1000;
@@ -255,10 +271,10 @@ class GameEngine {
                 this.controllerButtonLT_press = false;
                 this.controllerButtonStart_press = false;
                 this.controllerButtonSelect_press = false;
-            }
+            
 
         }
-    }
+    } }
 
     update() {
         let entitiesCount = this.entities.length;
