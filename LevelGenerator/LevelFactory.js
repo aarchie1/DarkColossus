@@ -51,7 +51,7 @@ function getLevelModifierText(modifierNumber) {
 
 
 function getLevel(levelNumber) {
-    let sections = [hordeFightSection, flatSection, ascendingSteppingStonesSection, descendingSteppingStonesSection, dnaPickupSection, bossSection];//hordeFightSection, , dnaPickupSection, flatSection];verticalSection
+    let sections = [hordeFightSection, flatSection, ascendingSteppingStonesSection, descendingSteppingStonesSection, dnaPickupSection]//, bossSection];//hordeFightSection, , dnaPickupSection, flatSection];verticalSection
     let easyPlatformingSections = [flatSection, dnaPickupSection, hordeFightSection];
     let luckySections = [dnaPickupSection];
     let view = {x: CANVAS_WIDTH, y: CANVAS_HEIGHT};
