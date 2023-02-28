@@ -15,8 +15,8 @@ const MAX_HEALTH = 1000;
 
 class DarkColossus {
     constructor(x, y) {
-        // this.width = 256;
-        // this.height = 256;
+        this.width = 512;
+        this.height = 512;
         
 
         //PHASE 1/PHASE 2 LOOP
@@ -47,9 +47,10 @@ class DarkColossus {
         this.attackDistance = 0;
         this.health = MAX_HEALTH;
         this.currentIFrameTimer = 0;
-        this.maxIFrameTimer = 42;
+        
+        this.maxIFrameTimer = 30;
         this.dead = false;
-        this.paused = true;
+        this.paused = false;
         //this.updateBB();
         this.animations = [];
         this.baseFrameSpeed = 0.25;
@@ -59,25 +60,11 @@ class DarkColossus {
         this.maxMoveTimeInterval = 1;
         this.currentMoveTimeInterval = 0;
 
-        this.upperLeftArm = null;
-        this.upperRightArm = null;
-        this.lowerRightArm = null;
-        this.lowerLeftArm = null;
-
-        this.armHp = 100;
-        this.upperLeftArmHp = this.armHp;
-        this.upperRightArmHp = this.armHp;
-        this.lowerRightArmHp = this.armHp;
-        this.lowerLeftArmHp = this.armHp;
-
-        this.upperLeftArmBB = null;
-        this.upperRightArmBB = null;
-        this.lowerRightArmBB = null;
-        this.lowerLeftArmBB = null;
-
         this.t = 0;
         this.bodyT = 0;
         this.amplitude = 50;
+
+        this.updateBB();
 
 
   }
@@ -89,29 +76,29 @@ class DarkColossus {
     if (this.animations[BODY].currentFrame() === 0) {
         this.animations[BODY].frameDuration = Math.max(this.baseFrameSpeed - (Math.abs(Math.sin(this.bodyT) * 0.25)), 0.05);
     }
+
+    if (this.currentIFrameTimer > 0) {
+        this.currentIFrameTimer -= 1;
+        // console.log(this.currentIFrameTimer);
+    }
+
+    console.log("Iframe: " + this.currentIFrameTimer);
+
+    this.updateBB();
      
   }
 
     draw(ctx) {
-
-
-
-        //draw cross
         ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_cross.png"), this.x - gameEngine.camera.x + 145, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude - 300, 244, 270);
-   
-        //draw body
         this.animations[BODY].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude, 1);
-        //draw upper left arm
         this.animations[UPPER_LEFT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x - 700, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude - 190, 1);
-        //draw upper right arm
         this.animations[UPPER_RIGHT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x + 475, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude - 190, 1);
-        // //draw lower left arm
         this.animations[LOWER_LEFT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x - 300, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude +400, 1);
-        // //draw lower right arm
         this.animations[LOWER_RIGHT_ARM].drawFrame(gameEngine.clockTick, ctx, this.x - gameEngine.camera.x + 475, this.y - gameEngine.camera.y + Math.sin(this.t) * this.amplitude + 400, 1);
-        // //draw ring
         ctx.drawImage(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_ring.png"), this.x - gameEngine.camera.x - 100, this.y - gameEngine.camera.y - 100 + Math.sin(this.t) * this.amplitude, 700, 700);
-    
+
+        ctx.strokeStyle = "red";
+        ctx.strokeRect(this.BB.x - gameEngine.camera.x, this.BB.y - gameEngine.camera.y, this.BB.width, this.BB.height);
     }
 
     loadAnimations() {
@@ -134,6 +121,11 @@ class DarkColossus {
         this.animations[LOWER_RIGHT_ARM] = new Animator(ASSET_MANAGER.getAsset("./Sprites/Boss/boss_bottom_right_arm.png"), 0, 0, 320, 320, 6, 0.2, 0, true);
         this.animations[LOWER_RIGHT_ARM].yOffset = 0;
         this.animations[LOWER_RIGHT_ARM].xOffset = 0;
+    }
+
+    updateBB() {
+        this.lastBB = this.BB;
+        this.BB = new BoundingBox(this.x, this.y + Math.sin(this.t) * this.amplitude, 512, 512);
     }
 
 }

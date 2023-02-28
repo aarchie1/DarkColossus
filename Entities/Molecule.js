@@ -50,7 +50,6 @@ class Molecule {
       this.size = 1;
     }
 
-
     if (this.paused && this.game.camera.player.x > this.x - 1000) {
       this.paused = false;
     }

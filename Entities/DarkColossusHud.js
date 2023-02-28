@@ -3,8 +3,6 @@ class DarkColossusHud {
     constructor(boss) {
         this.boss = boss;
         this.bossMaxHealth = MAX_HEALTH;
-        this.bossCurrentHealth = this.boss.health;
-
         //create a timer to time the boss fight
         this.bossTimer = new Timer();
         this.bossTimer.gameTime = 0;
@@ -24,7 +22,7 @@ class DarkColossusHud {
         ctx.fillStyle = "red";
         ctx.fillRect(460, CANVAS_HEIGHT - 100, 1000, 20);
         ctx.fillStyle = "green";
-        ctx.fillRect(460, CANVAS_HEIGHT - 100, (this.bossCurrentHealth / this.bossMaxHealth) * 1000, 20);
+        ctx.fillRect(460, CANVAS_HEIGHT - 100, (this.boss.health / this.bossMaxHealth) * 1000, 20);
 
         //Draw the boss name at the top center of the screen
         ctx.fillStyle = "white";
