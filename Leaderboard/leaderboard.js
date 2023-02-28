@@ -20,11 +20,11 @@ async function getLeaderboard(theName, theScore) {
     })
 }
 
-async function getBossLeaderboard(theName, theTime) {
-  console.log(theName, theTime)
+async function getBossLeaderboard(theName, bossTime) {
+  console.log(theName, bossTime)
     fetch("https://dark-colossus.herokuapp.com/submitBossTime", {
       method: 'POST',
-      body: JSON.stringify({name: theName, time: theTime}),
+      body: JSON.stringify({name: theName, bossTime: bossTime}),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

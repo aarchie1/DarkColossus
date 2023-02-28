@@ -7,7 +7,7 @@ class SceneManager {
         this.game.camera = this;
         this.gameOver = false;
         this.gameWin = false;
-        this.winTime = 0;
+        this.winTime = "99:99";
         this.transition = false;
         this.player = new GameCharacter(this.game, 0, 0);
         player = this.player;
@@ -37,8 +37,8 @@ class SceneManager {
 
         this.xCameraOffset = 0;
         this.yCameraOffset = 0;
-        this.loadOpening(); //This will replace this.loadHub() when we have a title screen
-        //this.loadWelcomeScreen();
+        //this.loadOpening(); //This will replace this.loadHub() when we have a title screen
+        this.loadWelcomeScreen();
 
     };
 
@@ -885,6 +885,12 @@ class End_Screen_Background {
         this.timer = 0;
         this.image = ASSET_MANAGER.getAsset("./Sprites/UI/leaderboards_screen.png");
         getLeaderboard(NAME, params.LEVEL);
+
+        if (win){
+            getBossLeaderboard(NAME, gameEngine.camera.winTime);
+        } else {
+            getBossLeaderboard(NAME, "99:99");
+        }
     }
 
     draw(ctx) {
@@ -951,20 +957,23 @@ class End_Screen_Background {
         ctx.fillStyle = '#fff';
         ctx.font = 'bold 50px Arial';
         ctx.textAlign = 'left';
-        xAlign = 1000;
+        xAlign = 1310;
         //put text that says coming soon
 
         for (let i = 0; i < 10; i++) {
+          //if (ALL_TIME_LEADERBOARD == undefined || ALL_TIME_LEADERBOARD.leaderboard == undefined || ALL_TIME_LEADERBOARD.leaderboard[i] == undefined) continue;
+
             if (BOSS_LEADERBOARD == undefined || BOSS_LEADERBOARD.leaderboard == undefined || BOSS_LEADERBOARD.leaderboard[i] == undefined) continue;
-            const entry = ALL_TIME_LEADERBOARD.leaderboard[i];
-            console.log(BOSS_LEADERBOARD);
-            console.log(entry);
+            let bossEntry = BOSS_LEADERBOARD.leaderboard[i];
+            //console.log(BOSS_LEADERBOARD);
     
             ctx.fillStyle = '#fff';
             ctx.textAlign = 'left';
             let fontSize = 25  
             ctx.font = fontSize + 'px Arial';
-            ctx.fillText(`${entry.time} - ${entry.name}`, xAlign, yAlign+50 + i*fontSize*1.5);
+            ctx.fillText(`${bossEntry.bossTime} - ${bossEntry.name} ${bossEntry.time}`, xAlign, yAlign+50 + i*fontSize*1.5);
+            //ctx.fillText(`Lv${entry2.score} - ${entry2.name} ${entry2.time}`, xAlign, yAlign+50 + i*fontSize*1.5);
+
         }
     }
 

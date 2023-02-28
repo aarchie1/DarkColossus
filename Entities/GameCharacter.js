@@ -244,7 +244,21 @@ class GameCharacter {
           }
           if (
             entity instanceof MoleculeProjectile &&
-            this.currentIFrameTimer == 0 &&  !this.usingAbility
+            this.currentIFrameTimer == 0
+          ) {
+            // subtract molecule damage from player health
+            this.health -= Math.max(0, entity.damage - params.DARK_ENERGY.rangedDefense);
+            this.currentIFrameTimer = this.maxIFrameTimer;
+            entity.removeFromWorld = true;
+            this.game.camera.game.addEntityFirst(
+              new DamageIndicator(this.x+250, this.y, entity.damage)
+            );
+            this.brightness = 200;
+          }
+
+          if (
+            entity instanceof BossProjectile &&
+            this.currentIFrameTimer == 0
           ) {
             // subtract molecule damage from player health
             this.health -= Math.max(0, entity.damage - params.DARK_ENERGY.rangedDefense);
