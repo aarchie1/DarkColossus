@@ -47,8 +47,8 @@ class AtomicAbility {
       0,
       256,
       256,
-      3,
-      0.115,
+      8,
+      0.03,
       0,
       false
     );
@@ -58,8 +58,8 @@ class AtomicAbility {
       0,
       256,
       256,
-      3,
-      0.115,
+      8,
+      0.03,
       0,
       false
     );
@@ -130,7 +130,10 @@ class AtomicAbility {
     
     if (this.inUse && this.projectileCount == 0) {
       //this.elapsedTime = 0;
-      this.game.camera.game.addEntityFirst(new AtomicProjectile(this.game, this.x, this.y, player.facing));
+
+      for (let i = 0; i < this.effectRarity; i++) {
+        this.game.camera.game.addEntityFirst(new AtomicProjectile(this.game, this.x, this.y, player.facing, this.damage));
+      }
       this.projectileCount = 1;
     }
     
@@ -143,10 +146,12 @@ class AtomicAbility {
         (player.animations[4][0].isDone() || player.animations[4][1].isDone())
       ) {
         player.usingAbility = false;
+
       }
       //if player is not using ability, end the ability
       if (this.inUse && !player.usingAbility) {
         this.onEnd();
+
       }
     }
 
