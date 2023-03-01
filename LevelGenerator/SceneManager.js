@@ -37,7 +37,7 @@ class SceneManager {
 
         this.xCameraOffset = 0;
         this.yCameraOffset = 0;
-        //this.loadOpening(); //This will replace this.loadHub() when we have a title screen
+        //this.loadOpening(); 
         this.loadWelcomeScreen();
 
     };
@@ -1023,6 +1023,8 @@ class WelcomeScreenUI {
         this.option = 1;
         this.controlsImage = false;
         this.leaderboardImage = false;
+        this.loadOpening = false;
+
     };
 
 
@@ -1047,7 +1049,6 @@ class WelcomeScreenUI {
 
 
     update() {
-        console.log("update");
 
         if ((keypress("KeyW") || this.game.controllerButtonUp_press)) {
             if (this.option > 1) {
@@ -1063,8 +1064,9 @@ class WelcomeScreenUI {
             }
         }
 
-        if (keypress("Enter") || this.game.controllerButtonA_press) {
-            if (this.option === 1) {
+        if ( (keypress("Enter") || this.game.controllerButtonA_press)) {
+            if (this.option === 1 && !this.loadOpening) {
+               this.loadOpening = true;
                gameEngine.camera.loadOpening();
             }
             if (this.option === 2) {

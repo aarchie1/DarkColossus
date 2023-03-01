@@ -1,5 +1,5 @@
 class AtomicProjectile {
-  constructor(game, x, y, facing) {
+  constructor(game, x, y, facing, damage) {
     Object.assign(this, {
       game,
       x,
@@ -7,20 +7,24 @@ class AtomicProjectile {
       facing,
     });
     const TICK = this.game.clockTick;
-    
-    this.damage = 2;
-    this.maxSpeed = 1000;
+    this.hostile = true;
+    this.damage = damage;
+    this.maxSpeed = 1800;
 
   
     if (this.facing === 0) {
-      this.velocity = {
-        x: this.maxSpeed,
-      };
+     // let dist = getDistance(this, Math.random() * 1000);
+      this.target = {x: Math.random() * 500  + player.x, y: Math.random() * 300 - 150 + player.y};
     } else {
-      this.velocity = {
-        x: -(this.maxSpeed),
-      };
+      this.target = {x: Math.random() * -500  + player.x, y: Math.random() * 300 - 150 + player.y};
     }
+
+    let dist = getDistance(this, this.target);
+
+    this.velocity = {
+      x: ((this.target.x - this.x) / dist) * this.maxSpeed,
+      y: ((this.target.y - this.y) / dist) * this.maxSpeed,
+    };
     
     this.updateBB();
 
@@ -68,22 +72,20 @@ class AtomicProjectile {
   }
   update() {
     this.x += this.velocity.x * this.game.clockTick;
-
+    this.y += this.velocity.y * this.game.clockTick;
     this.updateBB();
 
     // add check to see if projectile collides with enemy
     for (let i = 0; i < this.game.entities.length; i++) {
-      if (this.game.entities[i].BB && this.game.entities[i].BB.collide(this.BB)) {
-        if (this.game.entities[i].hostile) {
+      if (this.game.entities[i].hostile && !(this.game.entities instanceof AtomicProjectile) &&
+         this.game.entities[i].BB.collide(this.BB)) {
           if (this.game.entities[i].currentIFrameTimer == 0) {
             this.game.entities[i].health -= this.damage;
             this.game.entities[i].currentIFrameTimer = this.game.entities[i].maxIFrameTimer;
+            this.game.addEntityFirst(
+              new DamageIndicator(this.game.entities[i].x, this.game.entities[i].y, this.damage)
+            );
           }
-          this.removeFromWorld = true;
-          // this.game.addEntityFirst(
-          //   new DamageIndicator(this.game.entities[i].x, this.game.entities[i].y, this.damage)
-          // );
-        }
       }
     }
     // add check to see if projectile is off screen
