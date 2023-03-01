@@ -934,7 +934,7 @@ class End_Screen_Background {
 
         // Draw the Highest Level leaderboard
         ctx.fillStyle = '#fff';
-        ctx.font = 'bold 50px Arial';
+        ctx.font = 'bold 50px Agency';
         ctx.textAlign = 'left';
         let xAlign = 297;
         let yAlign = 330;
@@ -949,13 +949,13 @@ class End_Screen_Background {
           ctx.fillStyle = '#fff';
           ctx.textAlign = 'left';
           let fontSize = 25 
-          ctx.font = fontSize + 'px Arial';
+            ctx.font = fontSize + 'px Agency';
           ctx.fillText(`Lv${entry.score} - ${entry.name} ${entry.time}`, xAlign, yAlign+50 + i*fontSize*1.5);
         }
 
         // Draw the Dark Colossus Best Time leaderboard
         ctx.fillStyle = '#fff';
-        ctx.font = 'bold 50px Arial';
+        ctx.font = 'bold 50px Agency';
         ctx.textAlign = 'left';
         xAlign = 1310;
         //put text that says coming soon
@@ -970,7 +970,7 @@ class End_Screen_Background {
             ctx.fillStyle = '#fff';
             ctx.textAlign = 'left';
             let fontSize = 25  
-            ctx.font = fontSize + 'px Arial';
+            ctx.font = fontSize + 'px Agency';
             ctx.fillText(`${bossEntry.bossTime} - ${bossEntry.name} ${bossEntry.time}`, xAlign, yAlign+50 + i*fontSize*1.5);
             //ctx.fillText(`Lv${entry2.score} - ${entry2.name} ${entry2.time}`, xAlign, yAlign+50 + i*fontSize*1.5);
 
