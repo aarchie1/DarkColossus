@@ -48,7 +48,7 @@ class DarkColossus {
         this.projectileDamage = 5;
         this.elapsedTime = 0;
         this.attackDistance = 0;
-        this.health = MAX_HEALTH;
+        this.health =  MAX_HEALTH;
         this.healthRegen = 0.5; // higher = fast regen
         this.currentIFrameTimer = 0;
         this.velocity = { x: 0, y: 0 };
@@ -167,8 +167,15 @@ class DarkColossus {
         this.velocity.y = 0;
       }
 
-      this.x += this.velocity.x * TICK * 2;
-      this.y += this.velocity.y * TICK * 2;
+      if(this.state === PHASE_THREE){
+        this.x += this.velocity.x * TICK * 3;
+        this.y += this.velocity.y * TICK * 3;
+        this.fireRate = 0.03;
+        this.projectileDamage = 10;
+      } else {
+        this.x += this.velocity.x * TICK * 1;
+        this.y += this.velocity.y * TICK * 1;
+      }
 
         //Collisions
 
