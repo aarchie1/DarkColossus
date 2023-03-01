@@ -49,7 +49,7 @@ class DarkColossusHud {
 
     update() {
         const seconds = this.bossTimer.gameTime % 60;
-        if (seconds % 20 === 0 && this.boss.state == PHASE_ONE && seconds != this.previousSeconds) {
+        if (seconds % 15 === 0 && this.boss.state == PHASE_ONE && seconds != this.previousSeconds) {
             this.boss.state = PHASE_TWO;
             this.previousSeconds = seconds;
             let numberOfEnemies = Math.random() * 30 + 5;
@@ -61,7 +61,7 @@ class DarkColossusHud {
                 enemiesAdded.push({x: spawnX, y: spawnY});
             }
 
-            this.hordeFightManager = new HordeFightManager(enemiesAdded, player.x - 1200, player.x + 1200);
+            this.hordeFightManager = new HordeFightManager(enemiesAdded, player.x - 2000, player.x + 2000);
 
             gameEngine.addEntityFirst(this.hordeFightManager);
 

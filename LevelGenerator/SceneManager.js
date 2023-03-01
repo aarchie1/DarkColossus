@@ -262,7 +262,7 @@ class SceneManager {
 
             params.INVENTORY.inventory[0].epsilonAbility = null;
             params.INVENTORY.inventory[0].betaAbility = null;
-            params.INVENTORY.inventory[0].alphaAbility = new CosmicBladeAbility(3, 3);
+            params.INVENTORY.inventory[0].alphaAbility = new CosmicBladeAbility(1, 1);
             params.INVENTORY.inventory[0].sigmaAbility = null;
             params.INVENTORY.dnaSlot1 = params.INVENTORY.inventory[0];
             equipAbilities(params.INVENTORY.dnaSlot1);
@@ -919,6 +919,8 @@ class End_Screen_Background {
         if (this.win) {
             ctx.font = "40px StrangeDreams";
             ctx.fillText(NAME + " defeated the Dark Colossus in " + gameEngine.camera.winTime, CANVAS_WIDTH / 2 - 2, 150 - 2);
+        } else if (currentLevelModifier == BOSS){
+            ctx.fillText(NAME + "could not get revenge", CANVAS_WIDTH / 2 - 2, 150 - 2);
         } else {
             ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2 - 2, 150 - 2);
         }
@@ -927,6 +929,8 @@ class End_Screen_Background {
         if (this.win) {
             ctx.font = "40px StrangeDreams";
             ctx.fillText(NAME + " defeated the Dark Colossus in " + gameEngine.camera.winTime, CANVAS_WIDTH / 2, 150);
+        } else if (currentLevelModifier == BOSS){
+            ctx.fillText(NAME + " could not get revenge", CANVAS_WIDTH / 2, 150);
         } else {
             ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2, 150);
         }

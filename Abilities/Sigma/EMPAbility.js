@@ -105,6 +105,7 @@ class EMPAbility {
                 if ( (enemy instanceof Molecule) && this.BB.collide(enemy.BB)) {
                     console.log('EMP hit a molecule');
                     enemy.frameDuration = 10000
+                    enemy.health = 1;
                     enemy.disabled = true;
                     enemy.loadAnimations();
                     this.moleculesHit.push(enemy);

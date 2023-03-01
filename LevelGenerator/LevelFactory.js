@@ -361,17 +361,19 @@ function getLevel(levelNumber) {
         //create a boss on the top platform
         startX -= PLATFORM_GROUND.w
         startX -= PLATFORM_SMALL.w;
-        let bossX = startX + PLATFORM_LARGE.w;
+        let bossX = startX + PLATFORM_LARGE.w*3;
         let bossY = 300;
         addPlatform(PLATFORM_SMALL, startX, startY - PLATFORM_SMALL.h, false);
         addPlatform(PLATFORM_SMALL, startX, startY - PLATFORM_SMALL.h*2.5, false);
         startX += PLATFORM_SMALL.w + 25;
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 4; i++) {
             addPlatform(PLATFORM_LARGE, startX, startY, false);
             startX += PLATFORM_LARGE.w + 25;
             addPlatform(PLATFORM_SMALL, startX, startY - PLATFORM_SMALL.h, false);
             addPlatform(PLATFORM_SMALL, startX, startY - PLATFORM_SMALL.h*2.5, false);
             startX += PLATFORM_SMALL.w + 25;
+            if (i > 0) addPlatform(PLATFORM_LARGE, startX, startY - (PLATFORM_LARGE.h*2), false);
+
         }
 
         level.boss.push({x: bossX, y: bossY});

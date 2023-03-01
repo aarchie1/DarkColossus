@@ -24,7 +24,7 @@ class AstralBeamAbility {
     }
 
     updateDamage() {
-        this.damage = Math.round(this.effectRarity * 1.5 * (params.DARK_ENERGY.rangedAttack+1) * 10) / 10;
+        this.damage = Math.round(this.effect * (params.DARK_ENERGY.rangedAttack+1) * 10) / 10;
         this.description = 'Eviscerate enemies in a line of sight dealing ' + this.damage + ' dmg';
     }
         
@@ -79,17 +79,13 @@ class AstralBeamAbility {
     setEffect(effectRarity) {
         switch (effectRarity) {
             case 1:
-                // Basic effect 0.5-0.8 per hit
-                return (Math.random() * 0.3) + 0.5;
+                return 3;
             case 2:
-                // Uncommon effect 0.8-1.5 per hit
-                return (Math.random() * 0.7) + 0.8;
+                return 4;
             case 3:
-                // Rare effect 1.5-2.5 per hit
-                return (Math.random() + 1) + 1.5;
+                return 5;
             case 4:
-                // Godlike effect 2-5 per hit
-                return (Math.random() * 3) + 2;
+                return 6;
         }
     }
 

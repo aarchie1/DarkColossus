@@ -103,13 +103,13 @@ class AtomicAbility {
     //damge between 1 and 3
     switch (effectRarity) {
       case 1:
-        return Math.floor(Math.random() * 3) + 1;
+        return 2.5
       case 2:
-        return Math.floor(Math.random() * 3) + 2;
+        return 3.5
       case 3:
-        return Math.floor(Math.random() * 3) + 3;
+        return 4.5
       case 4:
-        return Math.floor(Math.random() * 3) + 4;
+        return 5.5
       default:
         console.log("Effect rarity not found");
         return -1;
@@ -117,9 +117,9 @@ class AtomicAbility {
   }
 
   updateDamage() {
-    this.damage = Math.round(this.effectRarity * 0.9 * (params.DARK_ENERGY.meleeAttack+1) * 10) / 10;
+    this.damage = Math.round(this.effect * (params.DARK_ENERGY.rangedAttack+1) * 10) / 10;
     this.description =
-      "Become a gun slinger, shooting orbs that inflict " + this.damage + " damage";
+      "Become a gun slinger, shooting    " + this.effectRarity + " orb(s) that inflict " + this.damage + " damage.";
   }
 
   //Required
