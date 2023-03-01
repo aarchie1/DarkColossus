@@ -48,7 +48,7 @@ class CosmicBladeAbility {
       1200,
       1164,
       4,
-      0.115,
+      0.08,
       0,
       false
     );
@@ -59,7 +59,7 @@ class CosmicBladeAbility {
       1200,
       1164,
       4,
-      0.115,
+      0.08,
       0,
       false
     );
@@ -84,22 +84,22 @@ class CosmicBladeAbility {
 
   //Edit these to change the cooldown of the ability based on rarity
   setCooldown(cooldownRarity) {
-    switch (cooldownRarity) {
-      //case 1 cooldown is 1.5 seconds
-      case 1:
-        return 1.25;
-      //case 2 cooldown is 1.25 seconds
-      case 2:
-        return 1;
-      //case 3 cooldown is 1 second
-      case 3:
-        return .75;
-      //case 4 cooldown is 0.75 seconds
-      case 4:
-        return 0.5;
-      default:
-        console.log("Cooldown rarity not found");
-    }
+    // switch (cooldownRarity) {
+    //   //case 1 cooldown is 1.5 seconds
+    //   case 1:
+    //     return 1.25;
+    //   //case 2 cooldown is 1.25 seconds
+    //   case 2:
+    //     return 1;
+    //   //case 3 cooldown is 1 second
+    //   case 3:
+    //     return .75;
+    //   //case 4 cooldown is 0.75 seconds
+    //   case 4:
+    //     return 0.5;
+    //   default:
+    //     console.log("Cooldown rarity not found");
+    // }
     return 0;
   }
 
@@ -109,13 +109,13 @@ class CosmicBladeAbility {
     //damge between 1 and 3
     switch (effectRarity) {
       case 1:
-        return Math.floor(Math.random() * 3) + 1;
+        return 2.5;
       case 2:
-        return Math.floor(Math.random() * 3) + 2;
+        return 3.5;
       case 3:
-        return Math.floor(Math.random() * 3) + 3;
+        return 4.5;
       case 4:
-        return Math.floor(Math.random() * 3) + 4;
+        return 5.5;
       default:
         console.log("Effect rarity not found");
         return -1;
@@ -123,7 +123,7 @@ class CosmicBladeAbility {
   }
 
   updateDamage() {
-    this.damage = Math.round(this.effectRarity * 0.9 * (params.DARK_ENERGY.meleeAttack+1) * 10) / 10;
+    this.damage = Math.round(this.effect * (params.DARK_ENERGY.meleeAttack+1) * 10) / 10;
     this.description =
       "Attack the enemy with a giant sword dealing " + this.damage + " damage";
   }
@@ -140,7 +140,7 @@ class CosmicBladeAbility {
             //console.log("Cosmic Blade hit a enemy");
             enemy.health -= this.damage;
             console.log(enemy.health);
-            enemy.currentIFrameTimer = enemy.maxIFrameTimer;
+            enemy.currentIFrameTimer = enemy.maxIFrameTimer/2;
             gameEngine.addEntityFirst(
               new DamageIndicator(enemy.x+enemy.width/2, enemy.y, this.damage)
             );

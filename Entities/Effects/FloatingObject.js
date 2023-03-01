@@ -12,7 +12,7 @@ class FloatingObject {
     }
 
     update() {
-        this.t += this.increment;
+        this.t += this.increment
     }
 
     draw(ctx) {

@@ -69,17 +69,13 @@ class SupersonicAbility{
     setEffect(effectRarity) {
         switch (effectRarity) {
             case 1:
-                // +1-2 dmg per hit
-                return Math.floor(Math.random() * 2) + 1;
+                return 6;
             case 2:
-                // +3-4 dmg per hit
-                return Math.floor(Math.random() * 2) + 3;
+                return 7;
             case 3:
-                // +5-6 dmg per hit
-                return Math.floor(Math.random() * 2) + 5;
+                return 8;
             case 4:
-                // +7-8 dmg per hit
-                return Math.floor(Math.random() * 2) + 7;
+                return 9;
             default:
                 console.log('Effect rarity not found');
                 return -1;
@@ -87,7 +83,7 @@ class SupersonicAbility{
     }
 
     updateDamage() {
-        this.damage = Math.round(this.effectRarity * 0.5 * (params.DARK_ENERGY.meleeAttack+1) * 10) / 10;
+        this.damage = Math.round(this.effect * (params.DARK_ENERGY.meleeAttack+1) * 10) / 10;
         this.description = 'Passive | Increases speed, deals ' + this.damage + ' dmg while moving at max speed';
     }
 

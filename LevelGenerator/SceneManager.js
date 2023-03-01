@@ -198,11 +198,13 @@ class SceneManager {
     loadHub() {
         this.clearLevel();
         params.LEVEL = 0;
-        this.rightXLimit = 2000//4400;
+        this.rightXLimit = 3300//4400;
         this.leftXLimit = 0//-1800;
         //Create Inventory UI
+        this.game.addEntity(new FloatingObject(300, 500, 242, 194, 15, 0.04, "Press Arrow Keys To Use Abilities"));
+
         let inventoryBB = new BoundingBox(1200, 835, 248, 200);
-        this.game.addEntity(new FloatingObject(1320, 835, 242, 194, 5, 0, "Interact for Inventory"));
+        this.game.addEntity(new FloatingObject(1320, 835, 242, 194, 5, 0, "Press E for Inventory"));
         this.game.addEntity(new Interactable(this.game, 1200, 835, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), inventoryBB, () => {
             //check if inventory is already open
             if (params.STATE != "menu") {
@@ -212,7 +214,7 @@ class SceneManager {
         }));
 
         //Create DE UI
-        this.game.addEntity(new FloatingObject(520, 835, 242, 194, 5, 0, "Interact for Dark Energy"));
+        this.game.addEntity(new FloatingObject(520, 835, 242, 194, 5, 0, "Press E for Dark Energy"));
 
         this.game.addEntity(new Interactable(this.game, 400, 835, 242, 194, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/workbench.png"), new BoundingBox(400, 835, 248, 200), () => {
             if (params.STATE != "menu") {
@@ -221,7 +223,11 @@ class SceneManager {
             }
         }));
 
+        this.game.addEntity(new FloatingObject(1900, 500, 242, 194, 10, 0.05, "Press E to go in portals"));
+
         //Create Portal Interactable
+        this.game.addEntity(new FloatingObject(1750, 700, 242, 194, 15, 0, "Go onwards"));
+
         let startingPortal = new Portal(this.game, 1600, 750, this)
         startingPortal.levelModifier = 0;
         startingPortal.levelModifierText = "";
@@ -230,7 +236,7 @@ class SceneManager {
         //Create Boss Portal Interactable
         let bossPortal = new Portal(this.game, 2100, 750, this)
         bossPortal.levelModifier = -2;
-        bossPortal.levelModifierText = "Fight the Dark Colossus";
+        bossPortal.levelModifierText = "        Dark Colossus";
         this.game.addEntity(bossPortal);
 
         //this.game.addEntity(new Platform(this.game, 1, 500, 1600, 400, ASSET_MANAGER.getAsset("./Sprites/LevelAssets/platform_hub.png"), new BoundingBox(0, 830, 1600, 400)));
@@ -262,7 +268,7 @@ class SceneManager {
 
             params.INVENTORY.inventory[0].epsilonAbility = null;
             params.INVENTORY.inventory[0].betaAbility = null;
-            params.INVENTORY.inventory[0].alphaAbility = new CosmicBladeAbility(3, 3);
+            params.INVENTORY.inventory[0].alphaAbility = new CosmicBladeAbility(1, 1);
             params.INVENTORY.inventory[0].sigmaAbility = null;
             params.INVENTORY.dnaSlot1 = params.INVENTORY.inventory[0];
             equipAbilities(params.INVENTORY.dnaSlot1);
@@ -919,6 +925,8 @@ class End_Screen_Background {
         if (this.win) {
             ctx.font = "40px StrangeDreams";
             ctx.fillText(NAME + " defeated the Dark Colossus in " + gameEngine.camera.winTime, CANVAS_WIDTH / 2 - 2, 150 - 2);
+        } else if (currentLevelModifier == BOSS){
+            ctx.fillText(NAME + "could not get revenge", CANVAS_WIDTH / 2 - 2, 150 - 2);
         } else {
             ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2 - 2, 150 - 2);
         }
@@ -927,6 +935,8 @@ class End_Screen_Background {
         if (this.win) {
             ctx.font = "40px StrangeDreams";
             ctx.fillText(NAME + " defeated the Dark Colossus in " + gameEngine.camera.winTime, CANVAS_WIDTH / 2, 150);
+        } else if (currentLevelModifier == BOSS){
+            ctx.fillText(NAME + " could not get revenge", CANVAS_WIDTH / 2, 150);
         } else {
             ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2, 150);
         }

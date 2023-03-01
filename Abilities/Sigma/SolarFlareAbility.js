@@ -80,18 +80,18 @@ class SolarFlareAbility {
     setEffect(effectRarity) {
         switch (effectRarity) {
             case 1:
-                return 0.5;
+                return 2;
             case 2:
-                return 1
+                return 3
             case 3:
-                return 2
-            case 4:
                 return 4
+            case 4:
+                return 5
         }
     }
 
     updateDamage() {
-        this.damage = Math.round(this.effectRarity * 0.3 * ((params.DARK_ENERGY.meleeAttack+1)) *10) / 10;
+        this.damage = Math.round(this.effect * ((params.DARK_ENERGY.meleeAttack+1)) *10) / 10;
         this.description = 'Unleash the power of the sun dealing ' + this.damage + ' dmg per hit';
     }
 
