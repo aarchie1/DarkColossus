@@ -200,8 +200,8 @@ class DarkEnergyUI {
         }
     }
 
-    cost(stat, increaseAmount) {
-        return Math.ceil(stat * increaseAmount);
+    cost(stat) {
+        return Math.ceil( (stat+1) * this.statIncreaseAmount);
     }
 
 
@@ -210,7 +210,7 @@ class DarkEnergyUI {
         if((keypress("Digit1") || this.game.controllerButtonY_press) && this.state == this.BROWSE) {
             switch (this.currentSlot) {
                 case 0:
-                    cost = Math.ceil(this.game.darkEnergy.meleeAttack * this.statIncreaseAmount);
+                    cost = cost(this.game.darkEnergy.meleeAttack);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
                         this.game.darkEnergy.meleeAttack++;
@@ -219,7 +219,7 @@ class DarkEnergyUI {
                         break;
                     }
                 case 1:
-                    cost = Math.ceil(this.game.darkEnergy.rangedAttack * this.statIncreaseAmount);
+                    cost = cost(this.game.darkEnergy.rangedAttack);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
                         this.game.darkEnergy.rangedAttack++;
@@ -228,7 +228,7 @@ class DarkEnergyUI {
                         break;
                     }
                 case 2:
-                    cost = Math.ceil(this.game.darkEnergy.healthDropRate * this.statIncreaseAmount);
+                    cost = cost(this.game.darkEnergy.healthDropRate);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
                         this.game.darkEnergy.healthDropRate++;
@@ -237,7 +237,7 @@ class DarkEnergyUI {
                         break;
                     }
                 case 3:
-                    cost = Math.ceil(this.game.darkEnergy.movementSpeed * this.statIncreaseAmount);
+                    cost = cost(this.game.darkEnergy.movementSpeed);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
                         this.game.darkEnergy.movementSpeed++;
@@ -247,7 +247,7 @@ class DarkEnergyUI {
                         break;
                     }
                 case 4:
-                    cost = Math.ceil((this.game.darkEnergy.jumpHeight + 1) * this.statIncreaseAmount);
+                    cost = cost(this.game.darkEnergy.jumpHeight);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
                         this.game.darkEnergy.jumpHeight++;
@@ -257,7 +257,7 @@ class DarkEnergyUI {
                         break;
                     }
                 case 5:
-                    cost = Math.ceil(this.game.darkEnergy.meleeDefense * this.statIncreaseAmount);
+                    cost = cost(this.game.darkEnergy.meleeDefense);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
                         this.game.darkEnergy.meleeDefense++;
@@ -266,7 +266,7 @@ class DarkEnergyUI {
                         break;
                     }
                 case 6:
-                    cost = Math.ceil(this.game.darkEnergy.rangedDefense * this.statIncreaseAmount);
+                    cost = cost(this.game.darkEnergy.rangedDefense);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
                         this.game.darkEnergy.rangedDefense++;
@@ -275,7 +275,7 @@ class DarkEnergyUI {
                         break;
                     }
                 case 7:
-                    cost = Math.ceil(this.game.darkEnergy.hp * this.statIncreaseAmount);
+                    cost = cost(this.game.darkEnergy.hp);
                     if((this.game.darkEnergy.currency - cost >= 0) && this.game.darkEnergy.hp < 10) {
                         this.game.darkEnergy.currency -= cost;
                         this.game.darkEnergy.hp++;
@@ -285,7 +285,7 @@ class DarkEnergyUI {
                         break;
                     }
                 case 8:
-                    cost = Math.ceil(this.game.darkEnergy.dnaDropRate * this.statIncreaseAmount);
+                    cost = cost(this.game.darkEnergy.dnaDropRate);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
                         this.game.darkEnergy.dnaDropRate++;
@@ -295,7 +295,7 @@ class DarkEnergyUI {
                     }
                 
                 case 9:
-                    cost = Math.ceil(this.game.darkEnergy.darkEnergyChance * this.statIncreaseAmount);
+                    cost =cost(this.game.darkEnergy.darkEnergyChance);
                     if(this.game.darkEnergy.currency - cost >= 0) {
                         this.game.darkEnergy.currency -= cost;
                         this.game.darkEnergy.darkEnergyChance++;
