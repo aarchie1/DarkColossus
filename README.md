@@ -1,9 +1,9 @@
 # DarkColossus  
 
 
-Contributors:
-Kevin Kulman
-Stephen Vanluven  
+Contributors:  
+Kevin Kulman  
+Stephen Vanluven   
 AJ Garcia  
 Anthony Archie 
 
