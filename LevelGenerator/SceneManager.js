@@ -892,6 +892,7 @@ class Title_Screen_Background {
 class End_Screen_Background {
     constructor(game, win) {
         this.win = win;
+        this.leaderboardScreen = false;
         this.game = game;
         this.width = 1920;
         this.height = 1080;
@@ -932,7 +933,9 @@ class End_Screen_Background {
         ctx.fillStyle = "black";
 
         ctx.font = "60px StrangeDreams";
-        if (this.win) {
+        if (this.leaderboardScreen){
+            ctx.fillText("Leaderboards", CANVAS_WIDTH / 2 - 2, 150 - 2);
+        } else if (this.win) {
             ctx.font = "40px StrangeDreams";
             ctx.fillText(NAME + " defeated the Dark Colossus in " + gameEngine.camera.winTime, CANVAS_WIDTH / 2 - 2, 150 - 2);
         } else if (currentLevelModifier == BOSS){
@@ -942,7 +945,9 @@ class End_Screen_Background {
         }
         ctx.fillStyle = "white";
         ctx.font = "60px StrangeDreams";
-        if (this.win) {
+        if (this.leaderboardScreen){
+            ctx.fillText("Leaderboards", CANVAS_WIDTH / 2 - 2, 150 - 2);
+        } else if (this.win) {
             ctx.font = "40px StrangeDreams";
             ctx.fillText(NAME + " defeated the Dark Colossus in " + gameEngine.camera.winTime, CANVAS_WIDTH / 2, 150);
         } else if (currentLevelModifier == BOSS){
@@ -1003,7 +1008,12 @@ class End_Screen_Background {
             this.game.camera.gameOver = false;
            // this.game.camera.loadHub();
            this.removeFromWorld = true;
-           gameEngine.camera.loadDeathCutscene();
+           if (this.leaderboardScreen){
+            gameEngine.camera.loadImportantEntities();
+            gameEngine.camera.loadHub();
+           } else {
+            gameEngine.camera.loadDeathCutscene();
+           }
         } else if (this.timer > 1 && (isAnyControllerButtonPressed() || isAnyKeyPressed()) && this.win){
             this.game.camera.gameWin = false;
             this.removeFromWorld = true;
@@ -1084,7 +1094,8 @@ class WelcomeScreenUI {
             }
         }
 
-        if ( (keypress("Enter") || this.game.controllerButtonA_press)) {
+        if ( keypress("Enter") || this.game.controllerButtonA_press || keypress("Space")
+            || keypress("KeyE")) {
             if (this.option === 1 && !this.loadOpening) {
                this.loadOpening = true;
                gameEngine.camera.loadOpening();
@@ -1097,6 +1108,10 @@ class WelcomeScreenUI {
             if (this.option === 3) {
                 // load leaderboards KEVIN
                 // use leaderboards_screen.png as background
+                let leaderboardScreen = new End_Screen_Background(this.game, false);
+                leaderboardScreen.leaderboardScreen = true;
+                this.game.addEntityFirst(leaderboardScreen);
+                this.removeFromWorld = true;
             }
         }
     }

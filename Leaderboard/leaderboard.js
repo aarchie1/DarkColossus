@@ -92,6 +92,9 @@ inputContainer.addEventListener('submit', (event) => {
     script.type = "text/javascript";
     script.src = "./main.js";
     document.body.appendChild(script);
+    canvas.autofocus = true;
+
+    canvas.focus(); 
   
   }
 });
