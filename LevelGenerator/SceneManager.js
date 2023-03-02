@@ -13,6 +13,7 @@ class SceneManager {
         player = this.player;
         this.playerCurrentHealth = this.player.health;
         this.restoreDarkEnergy(); //restores DE
+        this.hasEnteredLevel = false;
         
 
         // splits the X axis into 5 sections [  |  |  |  |  ] <-- map, playable area --> [  |xx|xx|xx|  ]
@@ -44,6 +45,7 @@ class SceneManager {
 
     loadLevel() {
         this.clearLevel();
+        this.hasEnteredLevel = true;
         gameEngine.addEntityFirst(new HpEffect());
         params.LEVEL += 1;
         updateGameBalancing();
@@ -54,6 +56,8 @@ class SceneManager {
         let yBoundMin = 600;
         let yBoundMax = -800;
         this.rightXLimit = 160000;
+        ASSET_MANAGER.playAssest("./Music/flute.mp3");
+
     
 
         for (let i = 0; i < level.dnaPickup.length; i++) {
@@ -196,6 +200,9 @@ class SceneManager {
     }
 
     loadHub() {
+        if (this.hasEnteredLevel) {
+            ASSET_MANAGER.pauseBackgroundMusic();
+        }
         this.clearLevel();
         params.LEVEL = 0;
         this.rightXLimit = 3300//4400;
@@ -310,6 +317,9 @@ class SceneManager {
     }
 
     loadDeathScreen() {
+        if (this.hasEnteredLevel) {
+            ASSET_MANAGER.pauseBackgroundMusic();
+        }
         this.clearLevel();
         params.DARK_ENERGY.currency = Math.floor(params.DARK_ENERGY.currency * 0.5);
         this.game.addEntityFirst(new End_Screen_Background(this.game, false));

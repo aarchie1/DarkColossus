@@ -81,7 +81,7 @@ class AssetManager {
     playAssest(path) {
         let audio = this.cache[path];
         audio.currentTime = 0;
-        promisePlay = audio.play();
+        audio.play();
     }
 
     muteAudio(mute) {
@@ -95,7 +95,7 @@ class AssetManager {
 
     adjustVolume(volume) {
         for (var key in this.cache) {
-            let assest = this.cache[key];
+            let asset = this.cache[key];
             if (asset instanceof Audio) {
                 asset.volume = volume;
             }
@@ -104,7 +104,7 @@ class AssetManager {
 
     pauseBackgroundMusic() {
         for (var key in this.cache) {
-            let assest = this.cache[key];
+            let asset = this.cache[key];
             if (asset instanceof Audio) {
                 asset.pause();
                 asset.currentTime = 0;
