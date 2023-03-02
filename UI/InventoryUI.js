@@ -89,7 +89,7 @@ class InventoryUI {
         // Draw an "E" on the dna in slot1
         if (dna === params.INVENTORY.dnaSlot1 && dna != null) {
           ctx.fillStyle = "#FFFFFF";
-          ctx.font = "30px Arial";
+          ctx.font = "30px " + params.FONT;
           ctx.fillText("E", x + 10, y + 30);
         }
       }

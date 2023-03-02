@@ -33,7 +33,7 @@ class DnaTester {
     draw(ctx) {
         //draw all the test results in testResults
         // for (let i = 0; i < this.testResults.length; i++) {
-        //     ctx.font = "18px Arial";
+        //     ctx.font = "18px " + params.FONT
         //     ctx.fillText(this.testResults[i], 10, 100 + (i * 20));
         // }
     }

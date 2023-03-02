@@ -166,7 +166,7 @@ function dnaInfoWindow(ctx, x, y, dna) {
     let xDescriptionOffset = 230;
     let yDescriptionOffset = -40;
     let yGap = 30;
-    let fontHeight = 30;
+    let fontHeight = 35;
 
 
     ctx.fillStyle = "#e09fa4"//"#994B50";
@@ -177,14 +177,14 @@ function dnaInfoWindow(ctx, x, y, dna) {
     ctx.lineWidth = 5;
     ctx.strokeRect(x, y, windowWidth, windowHeight);
     ctx.fillStyle = "#FFFFFF";
-    ctx.font = "28px Arial";
+    ctx.font = "32px " + params.FONT;
     //ctx.fillText(getRarityAsString(dna.rarity) + " DNA", x + windowWidth / 2, y);
 
     if (dna.sigmaAbility != null) {
         ctx.drawImage(dna.sigmaAbility.icon, x + xIconOffset, y + yGap - yIconOffset, 98, 98);
         ctx.fillText(dna.sigmaAbility.name, x + xNameOffset, y + yGap * 4 + yNameOffset);
         drawRarityColoredText(ctx, dna.sigmaAbility.cooldown + "s", x + xCooldownOffset, y + yCooldownOffset + yGap * 3, dna.sigmaAbility.cooldownRarity);
-        wrapText(ctx, dna.sigmaAbility.description, x + xDescriptionOffset, y + yDescriptionOffset + yGap * 4, windowWidth/1.5, fontHeight, getRarityColor(dna.sigmaAbility.effectRarity));
+        wrapText(ctx, dna.sigmaAbility.description, x + xDescriptionOffset, y + yDescriptionOffset + yGap * 4, windowWidth/1.7, fontHeight, getRarityColor(dna.sigmaAbility.effectRarity));
     } else {
         ctx.fillText("No Sigma Ability", x + xDescriptionOffset, y + yGap * 4 + yNameOffset);
     }
@@ -193,7 +193,7 @@ function dnaInfoWindow(ctx, x, y, dna) {
         ctx.drawImage(dna.alphaAbility.icon, x + xIconOffset, y + yGap * 6 - yIconOffset, 98, 98);
         ctx.fillText(dna.alphaAbility.name, x + xNameOffset, y + yGap * 9 + yNameOffset);
         drawRarityColoredText(ctx, dna.alphaAbility.cooldown + "s", x + xCooldownOffset, y + yCooldownOffset + yGap * 8, dna.alphaAbility.cooldownRarity);
-        wrapText(ctx, dna.alphaAbility.description, x + xDescriptionOffset, y + yDescriptionOffset + yGap * 9, windowWidth/1.5, fontHeight, getRarityColor(dna.alphaAbility.effectRarity));
+        wrapText(ctx, dna.alphaAbility.description, x + xDescriptionOffset, y + yDescriptionOffset + yGap * 9, windowWidth/1.7, fontHeight, getRarityColor(dna.alphaAbility.effectRarity));
     } else {
         ctx.fillText("No Alpha Ability", x + xDescriptionOffset, y + yGap * 9 + yNameOffset);
     }
@@ -203,7 +203,7 @@ function dnaInfoWindow(ctx, x, y, dna) {
         ctx.drawImage(dna.betaAbility.icon, x + xIconOffset, y + yGap * 11 - yIconOffset, 98, 98);
         ctx.fillText(dna.betaAbility.name, x + xNameOffset, y + yGap * 14 + yNameOffset);
         drawRarityColoredText(ctx, dna.betaAbility.cooldown + "s", x + xCooldownOffset, y + yCooldownOffset + yGap * 13, dna.betaAbility.cooldownRarity);        
-        wrapText(ctx, dna.betaAbility.description, x + xDescriptionOffset, y + yDescriptionOffset + yGap * 14, windowWidth/1.5, fontHeight, getRarityColor(dna.betaAbility.effectRarity));
+        wrapText(ctx, dna.betaAbility.description, x + xDescriptionOffset, y + yDescriptionOffset + yGap * 14, windowWidth/1.7, fontHeight, getRarityColor(dna.betaAbility.effectRarity));
     } else {
         ctx.fillText("No Beta Ability", x + xDescriptionOffset, y + yDescriptionOffset + yGap * 14);
     }
@@ -214,7 +214,7 @@ function dnaInfoWindow(ctx, x, y, dna) {
         ctx.drawImage(dna.epsilonAbility.icon, x + xIconOffset, y + yGap * 16 - yIconOffset, 98, 98);
         ctx.fillText(dna.epsilonAbility.name, x + xNameOffset, y + yGap * 19 + yNameOffset);
         drawRarityColoredText(ctx, dna.epsilonAbility.cooldown + "s", x + xCooldownOffset, y + yCooldownOffset + yGap * 18, dna.epsilonAbility.cooldownRarity);
-        wrapText(ctx, dna.epsilonAbility.description, x + xDescriptionOffset, y + yDescriptionOffset + yGap * 19, windowWidth/1.5, fontHeight, getRarityColor(dna.epsilonAbility.effectRarity));
+        wrapText(ctx, dna.epsilonAbility.description, x + xDescriptionOffset, y + yDescriptionOffset + yGap * 19, windowWidth/1.7, fontHeight, getRarityColor(dna.epsilonAbility.effectRarity));
         //ctx.fillText(dna.epsilonAbility.description, x + xDescriptionOffset, y + yDescriptionOffset + yGap * 19);
     } else {
         ctx.fillText("No Epsilon Ability", x + xDescriptionOffset, y + yGap * 19 + yNameOffset);

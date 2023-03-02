@@ -21,7 +21,7 @@ class DamageIndicator {
     }
 
     draw(ctx) {
-        ctx.font = "bold " + this.fontSize + "pt Roboto";
+        ctx.font = "bold " + this.fontSize + "pt " + params.FONT;
         ctx.fillStyle = "white";
         ctx.globalAlpha = this.timer / this.timerStart;
 

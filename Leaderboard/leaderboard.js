@@ -95,6 +95,14 @@ inputContainer.addEventListener('submit', (event) => {
     canvas.autofocus = true;
 
     canvas.focus(); 
+
+    //load css font
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = './Fonts/fontface.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+
   
   }
 });

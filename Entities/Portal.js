@@ -21,7 +21,7 @@ class Portal {
         ctx.strokeStyle = 'Red';
        // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
         //draw above the portal the name of the modifed level i.e. "No Reapers"
-        ctx.font = "30px Agency";
+        ctx.font = "30px " + params.FONT
         ctx.fillStyle = "white";
         //align text to center of portal
         ctx.textAlign = "center";

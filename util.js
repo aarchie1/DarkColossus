@@ -10,7 +10,7 @@ const params = {
     RESURRECTS: 0,
     PARTICLE_SYSTEM: null,
     LEVEL_MODIFIER: -1,
-    FONT : "StrangeDreams",
+    FONT : "Agency",
 
 };
 

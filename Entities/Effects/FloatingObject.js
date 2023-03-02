@@ -16,7 +16,7 @@ class FloatingObject {
     }
 
     draw(ctx) {
-        ctx.font = "30px Arial";
+        ctx.font = "30px " + params.FONT;
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
         ctx.fillText(this.message, this.x - gameEngine.camera.x, this.y - gameEngine.camera.y + this.amplitude * Math.sin(this.t));

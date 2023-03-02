@@ -203,6 +203,8 @@ class SceneManager {
         // if (this.hasEnteredLevel) {
         //     ASSET_MANAGER.pauseBackgroundMusic();
         // }
+
+        
         this.clearLevel();
         params.LEVEL = 0;
         this.rightXLimit = 3300//4400;
@@ -825,18 +827,18 @@ class Title_Screen_Background {
         ctx.textAlign = "center";
 
         ctx.fillStyle = "black";
-        ctx.font = "60px Angel";
+        ctx.font = "60px  " + params.FONT
         ctx.fillText("New Game", CANVAS_WIDTH / 2 - 2, 500 - 2);
         ctx.fillStyle = "white";
-        ctx.font = "60px Angel";
+        ctx.font = "60px  " + params.FONT
         ctx.fillText("New Game", CANVAS_WIDTH / 2, 500);
 
 
         ctx.fillStyle = "black";
-        ctx.font = "40px Angel";
+        ctx.font = "40px " + params.FONT
         ctx.fillText("Continue", CANVAS_WIDTH / 2 - 2, 600 - 2);
         ctx.fillStyle = "white";
-        ctx.font = "40px Angel";
+        ctx.font = "40px " + params.FONT
         ctx.fillText("Continue", CANVAS_WIDTH / 2, 600);
 
         this.game.addEntity(new Cross_Background(this.game));
@@ -852,17 +854,17 @@ class Title_Screen_Background {
         // Single option to begin game
         ctx.textAlign = "center";
         ctx.fillStyle = "black";
-        ctx.font = "80px Angel";
+        ctx.font = "80px " + params.FONT;
         ctx.fillText("Click to Begin", CANVAS_WIDTH / 2 - 2, 600 - 2);
         ctx.fillStyle = "white";
-        ctx.font = "80px Angel";
+        ctx.font = "80px " + params.FONT
         ctx.fillText("Click to Begin", CANVAS_WIDTH / 2, 600);
 
         ctx.fillStyle = "black";
-        ctx.font = "20px Ariel";
+        ctx.font = "20px  " + params.FONT
         ctx.fillText("ESC to Pause", CANVAS_WIDTH / 2 - 2, 700 - 2);
         ctx.fillStyle = "white";
-        ctx.font = "20px Ariel";
+        ctx.font = "20px  " + params.FONT
         ctx.fillText("ESC to Pause", CANVAS_WIDTH / 2, 700);
 
 
@@ -932,11 +934,11 @@ class End_Screen_Background {
         ctx.textAlign = "center";
         ctx.fillStyle = "black";
 
-        ctx.font = "60px StrangeDreams";
+        ctx.font = "60px " + params.FONT
         if (this.leaderboardScreen){
             ctx.fillText("Leaderboards", CANVAS_WIDTH / 2 - 2, 150 - 2);
         } else if (this.win) {
-            ctx.font = "40px StrangeDreams";
+            ctx.font = "40px " + params.FONT
             ctx.fillText(NAME + " defeated the Dark Colossus in " + gameEngine.camera.winTime, CANVAS_WIDTH / 2 - 2, 150 - 2);
         } else if (currentLevelModifier == BOSS){
             ctx.fillText(NAME + "could not get revenge", CANVAS_WIDTH / 2 - 2, 150 - 2);
@@ -944,18 +946,18 @@ class End_Screen_Background {
             ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2 - 2, 150 - 2);
         }
         ctx.fillStyle = "white";
-        ctx.font = "60px StrangeDreams";
+        ctx.font = "60px " + params.FONT
         if (this.leaderboardScreen){
             ctx.fillText("Leaderboards", CANVAS_WIDTH / 2 - 2, 150 - 2);
         } else if (this.win) {
-            ctx.font = "40px StrangeDreams";
+            ctx.font = "40px " + params.FONT
             ctx.fillText(NAME + " defeated the Dark Colossus in " + gameEngine.camera.winTime, CANVAS_WIDTH / 2, 150);
         } else if (currentLevelModifier == BOSS){
             ctx.fillText(NAME + " could not get revenge", CANVAS_WIDTH / 2, 150);
         } else {
             ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2, 150);
         }
-        ctx.font = "50px StrangeDreams";
+        ctx.font = "50px " + params.FONT
 
         // Draw the Highest Level leaderboard
         ctx.fillStyle = '#fff';

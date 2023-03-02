@@ -41,7 +41,7 @@ class GrowthChaseManager {
     draw(ctx) {
         //draw text that says run at the top of the screen
         if (this.chaseInProgress) {
-            ctx.font = "100px Arial";
+            ctx.font = "100px " + params.FONT;
             ctx.fillStyle = "white";
             ctx.textAlign = "center";
             ctx.globalAlpha = 0.9;
