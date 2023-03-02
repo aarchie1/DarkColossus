@@ -56,7 +56,7 @@ class SceneManager {
         let yBoundMin = 600;
         let yBoundMax = -800;
         this.rightXLimit = 160000;
-        ASSET_MANAGER.playAssest("./Music/flute.mp3");
+        //ASSET_MANAGER.playAssest("./Music/flute.mp3");
 
     
 
@@ -200,9 +200,9 @@ class SceneManager {
     }
 
     loadHub() {
-        if (this.hasEnteredLevel) {
-            ASSET_MANAGER.pauseBackgroundMusic();
-        }
+        // if (this.hasEnteredLevel) {
+        //     ASSET_MANAGER.pauseBackgroundMusic();
+        // }
         this.clearLevel();
         params.LEVEL = 0;
         this.rightXLimit = 3300//4400;
@@ -317,9 +317,9 @@ class SceneManager {
     }
 
     loadDeathScreen() {
-        if (this.hasEnteredLevel) {
-            ASSET_MANAGER.pauseBackgroundMusic();
-        }
+        // if (this.hasEnteredLevel) {
+        //     ASSET_MANAGER.pauseBackgroundMusic();
+        // }
         this.clearLevel();
         params.DARK_ENERGY.currency = Math.floor(params.DARK_ENERGY.currency * 0.5);
         this.game.addEntityFirst(new End_Screen_Background(this.game, false));
