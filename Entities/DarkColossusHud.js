@@ -49,7 +49,7 @@ class DarkColossusHud {
 
     update() {
         const seconds = this.bossTimer.gameTime % 60;
-        if (seconds % 15 === 0 && this.boss.state == PHASE_ONE && seconds != this.previousSeconds) {
+        if (seconds % 10 === 0 && this.boss.state == PHASE_ONE && seconds != this.previousSeconds) {
             this.boss.state = PHASE_TWO;
             this.previousSeconds = seconds;
             let numberOfEnemies = Math.random() * 30 + 5;

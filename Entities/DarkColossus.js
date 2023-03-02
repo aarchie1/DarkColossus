@@ -10,7 +10,7 @@ const LOWER_RIGHT_ARM = 8;
 const RING = 9;
 const CROSS = 10;
 
-const MAX_HEALTH = 700;
+const MAX_HEALTH = 850;
 
 
 class DarkColossus {
