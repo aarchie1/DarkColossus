@@ -311,6 +311,7 @@ class DarkEnergyUI {
 
         }
 
+        updateAbilities();
     }
 
     //NYI
