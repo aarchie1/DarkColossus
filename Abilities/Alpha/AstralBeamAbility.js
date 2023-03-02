@@ -107,11 +107,11 @@ class AstralBeamAbility {
 
         if (this.inUse) {
             //Spawn particles on frame 4
-            if (player.animations[4][0].currentFrame() == 4){
-                params.PARTICLE_SYSTEM.createParticleEffect(player.x + player.width/2 - gameEngine.camera.x+ 128, player.y + player.height/2 - gameEngine.camera.y, 30, 90, '#FF995D', 1000, 1000, 2);
-            } else if (player.animations[4][1].currentFrame() == 4){
-                params.PARTICLE_SYSTEM.createParticleEffect(player.x + player.width/2 - gameEngine.camera.x, player.y + player.height/2 - gameEngine.camera.y, 30, 90, '#FF995D', 1000, 1000, 2);
-            }
+            // if (player.animations[4][0].currentFrame() == 4){
+            //     params.PARTICLE_SYSTEM.createParticleEffect(player.x + player.width/2 - gameEngine.camera.x+ 128, player.y + player.height/2 - gameEngine.camera.y, 30, 90, '#FF995D', 1000, 1000, 2);
+            // } else if (player.animations[4][1].currentFrame() == 4){
+            //     params.PARTICLE_SYSTEM.createParticleEffect(player.x + player.width/2 - gameEngine.camera.x, player.y + player.height/2 - gameEngine.camera.y, 30, 90, '#FF995D', 1000, 1000, 2);
+            // }
 
             gameEngine.entities.forEach((enemy) => {
                 if ( enemy.hostile && 
