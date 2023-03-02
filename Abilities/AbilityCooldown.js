@@ -6,7 +6,7 @@ class AbilityCooldown {
     }
 
     checkCooldown() {
-        this.currentCooldown -= 0.0025//params.TIMER.tick()*30;
+        this.currentCooldown -= 0.003//params.TIMER.tick()*30;
         //I removed params.TIMER.tick()*30 
         //as a bandaid fix for a weird bug
         //where the cooldown would decrease extremely slow randomly
@@ -19,6 +19,8 @@ class AbilityCooldown {
 
     getRemainingSeconds() {
         this.checkCooldown();
-        return Math.max(Math.ceil(this.currentCooldown), 0);
+        //return Math.max(Math.ceil(this.currentCooldown), 0);
+        //round to one decimal place
+        return Math.max(Math.round(this.currentCooldown * 10) / 10, 0);
     }
 }
