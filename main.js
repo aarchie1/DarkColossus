@@ -114,11 +114,11 @@ ASSET_MANAGER.queueDownload("./Sprites/Boss/boss_projectile.png");
 
 
 // music
-ASSET_MANAGER.queueDownload("./Music/flute.mp4");
+ASSET_MANAGER.queueDownload("./Music/flute.mp3");
 
 // sound effect
 ASSET_MANAGER.downloadAll(() => {
-	ASSET_MANAGER.autoRepeat("./Music/flute.mp4");
+	ASSET_MANAGER.autoRepeat("./Music/flute.mp3");
 	
 	const canvas = document.getElementById("gameWorld"); 
 	CANVAS_HEIGHT = canvas.height;
