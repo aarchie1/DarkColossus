@@ -11,7 +11,7 @@ class SoulGrabAbility {
     this.dominant = true;
     this.effect = this.setEffect(effectRarity);
     this.description =
-      "Snatch the soul of a reaper sending him to the grave ";
+      "Snatch the soul(s) of " + this.effect + " reaper(s) sending them to the grave";
     this.effectRarity = effectRarity;
     this.cooldownRarity = cooldownRarity;
     this.cooldown = this.setCooldown(this.cooldownRarity);
@@ -101,10 +101,10 @@ class SoulGrabAbility {
   //Edit these to change the cooldown of the ability based on rarity
   setCooldown(cooldownRarity) {
     switch (cooldownRarity) {
-      case 1: return 4;
-      case 2: return 3;
-      case 3: return 2;
-      case 4: return 1;
+      case 1: return 5;
+      case 2: return 4;
+      case 3: return 3;
+      case 4: return 2;
       default:
         console.log("Cooldown rarity not found");
         return 0;
@@ -114,15 +114,19 @@ class SoulGrabAbility {
   //Edit these to change the effect of the ability based on rarity
   setEffect(effectRarity) {
     switch (effectRarity) {
-      case 1:
+      case 1: 
+        return 2;
+        break;
       case 2:
-      case 3:
-      case 4:
-        //damge between 1 and 3
-        return 5;
-      default:
-        console.log("Effect rarity not found");
-        return -1;
+        return 4;
+        break;
+      case 3: 
+        return 6;
+        break;
+      case 4: 
+        return 8;
+        break;
+
     }
   }
 
@@ -132,8 +136,10 @@ class SoulGrabAbility {
     if (this.inUse) {
       gameEngine.entities.forEach((enemy) => {
         if (enemy.hostile && this.BB.collide(enemy.BB)) {
-          if (enemy instanceof Reaper && this.hitCount < 1) {
-            console.log("Sould Grab hit a enemy");
+          if (enemy instanceof Reaper && this.hitCount < this.effect) {
+            console.log("Soul Grab hit an enemy");
+            params.PARTICLE_SYSTEM.createParticleEffect(enemy.x + enemy.width/2 - gameEngine.camera.x, enemy.y + enemy.height/2 - gameEngine.camera.y, 10, 40, '#330000', 20, 20, 1);
+
             enemy.removeFromWorld = true;
             enemy.currentIFrameTimer = enemy.maxIFrameTimer;
             this.hitCount++;

@@ -75,11 +75,11 @@ class AtomicProjectile {
     this.y += this.velocity.y * this.game.clockTick;
     this.updateBB();
     let projectileColor = (Math.random()) > 0.5 ? '#DF8652' : '#330000';
-    // if (this.facing === 0) {
-    //   params.PARTICLE_SYSTEM.createParticleEffect(this.x - gameEngine.camera.x + 250, this.y - gameEngine.camera.y + 130, 1, 20, projectileColor, 10, 2, 0.4, -1, 1);
-    // } else {
-    //   params.PARTICLE_SYSTEM.createParticleEffect(this.x - gameEngine.camera.x, this.y - gameEngine.camera.y + 130, 1, 20, projectileColor, 10, 2, 0.4, -1, 1);
-    // }
+    if (this.facing === 0) {
+      params.PARTICLE_SYSTEM.createParticleEffect(this.x - gameEngine.camera.x + 250, this.y - gameEngine.camera.y + 130, 1, 10, projectileColor, 10, 2, 0.9, -1, 1);
+    } else {
+      params.PARTICLE_SYSTEM.createParticleEffect(this.x - gameEngine.camera.x, this.y - gameEngine.camera.y + 130, 1, 10, projectileColor, 10, 2, 0.9, -1, 1);
+    }
 
     // add check to see if projectile collides with enemy
     for (let i = 0; i < this.game.entities.length; i++) {
