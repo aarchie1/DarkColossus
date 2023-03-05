@@ -81,6 +81,7 @@ class AtomicProjectile {
          this.game.entities[i].BB.collide(this.BB)) {
           if (this.game.entities[i].currentIFrameTimer == 0) {
             this.game.entities[i].health -= this.damage;
+            this.game.entities[i].health = Math.max(0, this.game.entities[i].health);
             this.game.entities[i].currentIFrameTimer = this.game.entities[i].maxIFrameTimer/2;
             this.game.addEntityFirst(
               new DamageIndicator(this.game.entities[i].x, this.game.entities[i].y, this.damage)
