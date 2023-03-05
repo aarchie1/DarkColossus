@@ -51,7 +51,7 @@ function getLevelModifierText(modifierNumber) {
 
 
 function getLevel(levelNumber) {
-    let sections = [hordeFightSection, flatSection, ascendingSteppingStonesSection, descendingSteppingStonesSection, dnaPickupSection]//, bossSection];//hordeFightSection, , dnaPickupSection, flatSection];verticalSection
+    let sections = [hordeFightSection]//, flatSection, ascendingSteppingStonesSection, descendingSteppingStonesSection, dnaPickupSection]//, bossSection];//hordeFightSection, , dnaPickupSection, flatSection];verticalSection
     let easyPlatformingSections = [flatSection, dnaPickupSection, hordeFightSection];
     let luckySections = [dnaPickupSection];
     let view = {x: CANVAS_WIDTH, y: CANVAS_HEIGHT};
@@ -388,7 +388,7 @@ function getLevel(levelNumber) {
     }
     level.platformGround.push({x: 0, y: 800});
 
-    if (Math.random() < 0.05) {
+    if (Math.random() < 0.01) {
         growthChaseLevel();
         level.hordeFightManager = [];
     } 

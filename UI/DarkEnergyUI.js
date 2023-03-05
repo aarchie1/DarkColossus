@@ -156,9 +156,9 @@ class DarkEnergyUI {
         }
 
         //commented out for live build since leaderboards are up too
-    //    if ((keypress("KeyX") || this.game.controllerButtonB_press) && this.state == this.BROWSE) {
-    //        this.game.darkEnergy.currency += 1000;
-    //     }
+       if ((keypress("KeyX") || this.game.controllerButtonB_press) && this.state == this.BROWSE) {
+           this.game.darkEnergy.currency += 1000;
+        }
 
         // this.deInfo = [
         //     "Melee Attack Bonus: " + this.game.darkEnergy.meleeAttack,
