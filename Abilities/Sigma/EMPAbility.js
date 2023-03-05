@@ -96,7 +96,7 @@ class EMPAbility {
         this.BB = new BoundingBox(player.x - 256 - CANVAS_WIDTH/3, player.y - 156 - CANVAS_HEIGHT/2, CANVAS_WIDTH, CANVAS_HEIGHT*1.5);
 
         this.cooldownTimer.checkCooldown()
-        if (this.inUse) {
+        if (this.inUse && (player.animations[4][0].currentFrame() > 5|| player.animations[4][1].currentFrame() > 5) ) {
             gameEngine.entities.forEach((enemy) => {
                 if ( (enemy instanceof Molecule) && this.BB.collide(enemy.BB)) {
                     enemy.frameDuration = 10000

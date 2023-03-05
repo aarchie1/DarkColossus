@@ -55,16 +55,16 @@ class SlipperyAbility {
         switch (effectRarity) {
             case 1:
                 // Basic effect
-                return Math.floor(Math.random() * 2) + 250;
+                return Math.floor(Math.random() * 2) + 1250;
             case 2:
                 // Uncommon effect
-                return Math.floor(Math.random() * 2) + 500;
+                return Math.floor(Math.random() * 2) + 1500;
             case 3:
                 // Rare effect
-                return Math.floor(Math.random() * 2) + 750;
+                return Math.floor(Math.random() * 2) + 1750;
             case 4:
                 // Godlike effect
-                return Math.floor(Math.random() * 2) + 1000;
+                return Math.floor(Math.random() * 2) + 2000;
             default:
                 console.log('Effect rarity not found');
                 return -1;
