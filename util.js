@@ -10,7 +10,7 @@ const params = {
     RESURRECTS: 0,
     PARTICLE_SYSTEM: null,
     LEVEL_MODIFIER: -1,
-    FONT : "StrangeDreams",
+    FONT : "Agency",
 
 };
 
@@ -68,6 +68,17 @@ function unequipAbilities(dna){
     if (dna.alphaAbility != null) dna.alphaAbility.onUnequip();
     if (dna.betaAbility != null) dna.betaAbility.onUnequip();
     if (dna.epsilonAbility != null) dna.epsilonAbility.onUnequip();
+}
+
+//run the update method once on all abiilties in params.INVENTORY
+function updateAbilities() {
+    for (let i = 0; i < params.INVENTORY.inventory.length; i++) {
+        if (params.INVENTORY.inventory[i] == null) continue;
+            if (params.INVENTORY.inventory[i].sigmaAbility != null) params.INVENTORY.inventory[i].sigmaAbility.update();
+            if (params.INVENTORY.inventory[i].alphaAbility != null) params.INVENTORY.inventory[i].alphaAbility.update();
+            if (params.INVENTORY.inventory[i].betaAbility != null) params.INVENTORY.inventory[i].betaAbility.update();
+            if (params.INVENTORY.inventory[i].epsilonAbility != null) params.INVENTORY.inventory[i].epsilonAbility.update();
+    }
 }    
 
 function wrapText(ctx, text, x, y, maxWidth, lineHeight, color) {

@@ -56,7 +56,6 @@ class SceneManager {
         let yBoundMin = 600;
         let yBoundMax = -800;
         this.rightXLimit = 160000;
-        
         //check if this is a boss level
         if (level.boss.length > 0) {
             //set the boss level music
@@ -67,7 +66,6 @@ class SceneManager {
         ASSET_MANAGER.adjustVolumeAsset(levelMusic, 0.1);
         ASSET_MANAGER.playAssest(levelMusic);
 
-    
 
         for (let i = 0; i < level.dnaPickup.length; i++) {
             let dna = level.dnaPickup[i];
@@ -209,9 +207,11 @@ class SceneManager {
     }
 
     loadHub() {
-        if (this.hasEnteredLevel) {
-            ASSET_MANAGER.pauseBackgroundMusic();
-        }
+        // if (this.hasEnteredLevel) {
+        //     ASSET_MANAGER.pauseBackgroundMusic();
+        // }
+
+        
         this.clearLevel();
         params.LEVEL = 0;
         this.rightXLimit = 3300//4400;
@@ -326,9 +326,9 @@ class SceneManager {
     }
 
     loadDeathScreen() {
-        if (this.hasEnteredLevel) {
-            ASSET_MANAGER.pauseBackgroundMusic();
-        }
+        // if (this.hasEnteredLevel) {
+        //     ASSET_MANAGER.pauseBackgroundMusic();
+        // }
         this.clearLevel();
         params.DARK_ENERGY.currency = Math.floor(params.DARK_ENERGY.currency * 0.5);
         this.game.addEntityFirst(new End_Screen_Background(this.game, false));
@@ -834,18 +834,18 @@ class Title_Screen_Background {
         ctx.textAlign = "center";
 
         ctx.fillStyle = "black";
-        ctx.font = "60px Angel";
+        ctx.font = "60px  " + params.FONT
         ctx.fillText("New Game", CANVAS_WIDTH / 2 - 2, 500 - 2);
         ctx.fillStyle = "white";
-        ctx.font = "60px Angel";
+        ctx.font = "60px  " + params.FONT
         ctx.fillText("New Game", CANVAS_WIDTH / 2, 500);
 
 
         ctx.fillStyle = "black";
-        ctx.font = "40px Angel";
+        ctx.font = "40px " + params.FONT
         ctx.fillText("Continue", CANVAS_WIDTH / 2 - 2, 600 - 2);
         ctx.fillStyle = "white";
-        ctx.font = "40px Angel";
+        ctx.font = "40px " + params.FONT
         ctx.fillText("Continue", CANVAS_WIDTH / 2, 600);
 
         this.game.addEntity(new Cross_Background(this.game));
@@ -861,17 +861,17 @@ class Title_Screen_Background {
         // Single option to begin game
         ctx.textAlign = "center";
         ctx.fillStyle = "black";
-        ctx.font = "80px Angel";
+        ctx.font = "80px " + params.FONT;
         ctx.fillText("Click to Begin", CANVAS_WIDTH / 2 - 2, 600 - 2);
         ctx.fillStyle = "white";
-        ctx.font = "80px Angel";
+        ctx.font = "80px " + params.FONT
         ctx.fillText("Click to Begin", CANVAS_WIDTH / 2, 600);
 
         ctx.fillStyle = "black";
-        ctx.font = "20px Ariel";
+        ctx.font = "20px  " + params.FONT
         ctx.fillText("ESC to Pause", CANVAS_WIDTH / 2 - 2, 700 - 2);
         ctx.fillStyle = "white";
-        ctx.font = "20px Ariel";
+        ctx.font = "20px  " + params.FONT
         ctx.fillText("ESC to Pause", CANVAS_WIDTH / 2, 700);
 
 
@@ -901,6 +901,7 @@ class Title_Screen_Background {
 class End_Screen_Background {
     constructor(game, win) {
         this.win = win;
+        this.leaderboardScreen = false;
         this.game = game;
         this.width = 1920;
         this.height = 1080;
@@ -940,9 +941,11 @@ class End_Screen_Background {
         ctx.textAlign = "center";
         ctx.fillStyle = "black";
 
-        ctx.font = "60px StrangeDreams";
-        if (this.win) {
-            ctx.font = "40px StrangeDreams";
+        ctx.font = "60px " + params.FONT
+        if (this.leaderboardScreen){
+            ctx.fillText("Leaderboards", CANVAS_WIDTH / 2 - 2, 150 - 2);
+        } else if (this.win) {
+            ctx.font = "40px " + params.FONT
             ctx.fillText(NAME + " defeated the Dark Colossus in " + gameEngine.camera.winTime, CANVAS_WIDTH / 2 - 2, 150 - 2);
         } else if (currentLevelModifier == BOSS){
             ctx.fillText(NAME + "could not get revenge", CANVAS_WIDTH / 2 - 2, 150 - 2);
@@ -950,16 +953,18 @@ class End_Screen_Background {
             ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2 - 2, 150 - 2);
         }
         ctx.fillStyle = "white";
-        ctx.font = "60px StrangeDreams";
-        if (this.win) {
-            ctx.font = "40px StrangeDreams";
+        ctx.font = "60px " + params.FONT
+        if (this.leaderboardScreen){
+            ctx.fillText("Leaderboards", CANVAS_WIDTH / 2 - 2, 150 - 2);
+        } else if (this.win) {
+            ctx.font = "40px " + params.FONT
             ctx.fillText(NAME + " defeated the Dark Colossus in " + gameEngine.camera.winTime, CANVAS_WIDTH / 2, 150);
         } else if (currentLevelModifier == BOSS){
             ctx.fillText(NAME + " could not get revenge", CANVAS_WIDTH / 2, 150);
         } else {
             ctx.fillText(NAME + " died on level " + params.LEVEL, CANVAS_WIDTH / 2, 150);
         }
-        ctx.font = "50px StrangeDreams";
+        ctx.font = "50px " + params.FONT
 
         // Draw the Highest Level leaderboard
         ctx.fillStyle = '#fff';
@@ -1012,7 +1017,12 @@ class End_Screen_Background {
             this.game.camera.gameOver = false;
            // this.game.camera.loadHub();
            this.removeFromWorld = true;
-           gameEngine.camera.loadDeathCutscene();
+           if (this.leaderboardScreen){
+            gameEngine.camera.loadImportantEntities();
+            gameEngine.camera.loadHub();
+           } else {
+            gameEngine.camera.loadDeathCutscene();
+           }
         } else if (this.timer > 1 && (isAnyControllerButtonPressed() || isAnyKeyPressed()) && this.win){
             this.game.camera.gameWin = false;
             this.removeFromWorld = true;
@@ -1093,7 +1103,8 @@ class WelcomeScreenUI {
             }
         }
 
-        if ( (keypress("Enter") || this.game.controllerButtonA_press)) {
+        if ( keypress("Enter") || this.game.controllerButtonA_press || keypress("Space")
+            || keypress("KeyE")) {
             if (this.option === 1 && !this.loadOpening) {
                this.loadOpening = true;
                gameEngine.camera.loadOpening();
@@ -1106,6 +1117,10 @@ class WelcomeScreenUI {
             if (this.option === 3) {
                 // load leaderboards KEVIN
                 // use leaderboards_screen.png as background
+                let leaderboardScreen = new End_Screen_Background(this.game, false);
+                leaderboardScreen.leaderboardScreen = true;
+                this.game.addEntityFirst(leaderboardScreen);
+                this.removeFromWorld = true;
             }
         }
     }

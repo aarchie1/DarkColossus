@@ -152,6 +152,7 @@ class GameCharacter {
 
       //Falling
     } else if (this.velocity.y >= 0) {
+      
       if (this.jump() != true) this.state = 2;
       if (this.facing == 0) {
         // this.animationXOffset = 257;
@@ -170,6 +171,10 @@ class GameCharacter {
         (this.game.controllerButtonLeft && !this.game.controllerButtonRight)
       ) {
         this.velocity.x -= RUN_ACC * TICK;
+      }
+
+      if (this.game.keys.KeyS || (this.game.controllerButtonA)) {
+        this.velocity.y += FALL_ACC * TICK*2;
       }
     }
 
@@ -606,7 +611,7 @@ class GameCharacter {
 
     //DEBUG (I probably should have put it all in one if statement oops lmao)
     ctx.fillStyle = "white";
-    ctx.font = "20px Arial";
+    ctx.font = "20px " + params.FONT;
     ctx.textAlign = "left";
     if (debug)
       ctx.strokeRect(

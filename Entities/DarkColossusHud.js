@@ -29,7 +29,7 @@ class DarkColossusHud {
 
         //Draw the boss name at the top center of the screen
         ctx.fillStyle = "white";
-        ctx.font = "50px Agency";
+        ctx.font = "50px " + params.FONT
         let textWidth = ctx.measureText("Dark Colossus").width/2;
         ctx.fillText("Dark Colossus", xCenter - textWidth, CANVAS_HEIGHT - 120);
 
@@ -37,7 +37,7 @@ class DarkColossusHud {
         const minutes = Math.floor(this.bossTimer.gameTime / 60);
         const seconds = this.bossTimer.gameTime % 60;
         const timerText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-        ctx.font = "30px Agency";
+        ctx.font = "30px " + params.FONT
         textWidth = ctx.measureText(timerText).width/2;
         ctx.fillText(timerText, xCenter - textWidth, CANVAS_HEIGHT - 30);
 
@@ -49,7 +49,7 @@ class DarkColossusHud {
 
     update() {
         const seconds = this.bossTimer.gameTime % 60;
-        if (seconds % 15 === 0 && this.boss.state == PHASE_ONE && seconds != this.previousSeconds) {
+        if (seconds % 10 === 0 && this.boss.state == PHASE_ONE && seconds != this.previousSeconds) {
             this.boss.state = PHASE_TWO;
             this.previousSeconds = seconds;
             let numberOfEnemies = Math.random() * 30 + 5;

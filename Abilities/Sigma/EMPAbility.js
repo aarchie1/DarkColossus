@@ -7,7 +7,7 @@ class EMPAbility {
         this.inUseIcon = ASSET_MANAGER.getAsset("./Sprites/Abilities/Icons/emp_icon.png");
         this.dominant = false;
         this.effect = this.setEffect(effectRarity);
-        this.description = 'Nearby Molecules are disabled for ' + this.effect + 's';
+        this.description = 'Nearby Molecules are removed from reality';
         this.effectRarity = effectRarity;
         this.cooldownRarity = cooldownRarity;
         this.cooldown = this.setCooldown(this.cooldownRarity);
@@ -56,17 +56,13 @@ class EMPAbility {
     setCooldown(cooldownRarity) { 
         switch (cooldownRarity) {
             case 1:
-                // Basic cooldown 8-10 seconds
-                return Math.floor(Math.random() * 2) + 8;
+                return 6
             case 2:
-                // Uncommon cooldown 6-8 seconds
-                return Math.floor(Math.random() * 2) + 6;
+                return 5
             case 3:
-                // Rare cooldown 4-6 seconds
-                return Math.floor(Math.random() * 2) + 4;
+                return 4
             case 4:
-                // Godlike cooldown 3-4 seconds
-                return Math.floor(Math.random() * 1) + 3;
+                return 3
             default:
                 console.log('Cooldown rarity not found');
         }
@@ -103,10 +99,9 @@ class EMPAbility {
         if (this.inUse) {
             gameEngine.entities.forEach((enemy) => {
                 if ( (enemy instanceof Molecule) && this.BB.collide(enemy.BB)) {
-                    console.log('EMP hit a molecule');
                     enemy.frameDuration = 10000
-                    enemy.health = 1;
-                    enemy.disabled = true;
+                    enemy.health = 0;
+                    //enemy.disabled = true;
                     enemy.loadAnimations();
                     this.moleculesHit.push(enemy);
                 }

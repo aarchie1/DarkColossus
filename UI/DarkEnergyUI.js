@@ -84,7 +84,7 @@ class DarkEnergyUI {
 
         //Fill in stats
         let m = 0;
-        ctx.font = "25px Arial";
+        ctx.font = "25px " + params.FONT;
         ctx.fillStyle = "#FFFFFF";
         for(let i = 0; i < this.rows; i++) {
             for(let j = 0; j < this.columns; j++) {
@@ -311,6 +311,7 @@ class DarkEnergyUI {
 
         }
 
+        updateAbilities();
     }
 
     //NYI

@@ -6,6 +6,7 @@ class Molecule {
     this.player = this.game.camera.player;
     this.hostile = true;
 
+
     this.width = 256;
     this.height = 256;
     this.facing = 1; // 0 = right, 1 == left
@@ -40,6 +41,15 @@ class Molecule {
   }
 
   update() {
+    //if enemy is dead, remove from game
+    if (this.health <= 0 || this.y > 1000) {
+      this.dead = true;
+      console.log("Molecule " + this.id + " with " + this.health + " hp was removed from the game");
+      params.PARTICLE_SYSTEM.createParticleEffect(this.x + this.width/2 - gameEngine.camera.x, this.y + this.height/2 - gameEngine.camera.y, 50, 14, '#FF3232', 23, 5, 0.55);
+      this.removeFromWorld = true;
+      dropItems(this.x, this.y);
+    }
+
     const TICK = this.game.clockTick;
     this.elapsedTime += this.game.clockTick;
 
@@ -157,13 +167,7 @@ class Molecule {
         this.currentIFrameTimer -= 1;
         // console.log(this.currentIFrameTimer);
       }
-      //if enemy is dead, remove from game
-      if (this.health <= 0 || this.y > 1000) {
-        this.dead = true;
-        params.PARTICLE_SYSTEM.createParticleEffect(this.x + this.width/2 - gameEngine.camera.x, this.y + this.height/2 - gameEngine.camera.y, 50, 14, '#FF3232', 23, 5, 0.55);
-        this.removeFromWorld = true;
-        dropItems(this.x, this.y);
-      }
+
     }
   }
 

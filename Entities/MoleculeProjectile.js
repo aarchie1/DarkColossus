@@ -46,7 +46,7 @@ class MoleculeProjectile {
   update() {
     this.x += this.velocity.x * this.game.clockTick;
     this.y += this.velocity.y * this.game.clockTick;
-
+    params.PARTICLE_SYSTEM.createParticleEffect(this.x - gameEngine.camera.x + 15, this.y - gameEngine.camera.y + 90, 1, 7, 'red', 3, 3, 0.8, -1, 1);
     this.updateBB();
 
     //check for collision with target
