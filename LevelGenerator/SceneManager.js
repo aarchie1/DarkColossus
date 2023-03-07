@@ -56,7 +56,16 @@ class SceneManager {
         let yBoundMin = 600;
         let yBoundMax = -800;
         this.rightXLimit = 160000;
-        ASSET_MANAGER.playAssest("./Music/flute.mp3");
+        
+        //check if this is a boss level
+        if (level.boss.length > 0) {
+            //set the boss level music
+            let levelMusic = "./Music/boss.mp3";
+        } else {
+            let levelMusic = "./Music/flute.mp3";
+        }
+        ASSET_MANAGER.adjustVolumeAsset(levelMusic, 0.1);
+        ASSET_MANAGER.playAssest(levelMusic);
 
     
 
