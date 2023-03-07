@@ -57,14 +57,20 @@ class SceneManager {
         let yBoundMax = -800;
         this.rightXLimit = 160000;
         //check if this is a boss level
-        if (level.boss.length > 0) {
-            //set the boss level music
-            let levelMusic = "./Music/boss.mp3";
-        } else {
-            let levelMusic = "./Music/flute.mp3";
+        let mute = document.getElementById("muteCheckbox").checked;
+        if (!mute) {
+            if (level.boss.length > 0) {
+                //set the boss level music
+                let levelMusic = "./Music/boss.mp3";
+                ASSET_MANAGER.adjustVolumeAsset(levelMusic, .2);
+                ASSET_MANAGER.playAssest(levelMusic);
+            } else {
+                let levelMusic = "./Music/flute.mp3";
+                ASSET_MANAGER.adjustVolumeAsset(levelMusic, 0.1);
+                ASSET_MANAGER.playAssest(levelMusic);
+            }
         }
-        ASSET_MANAGER.adjustVolumeAsset(levelMusic, 0.1);
-        ASSET_MANAGER.playAssest(levelMusic);
+       
 
 
         for (let i = 0; i < level.dnaPickup.length; i++) {
@@ -207,9 +213,9 @@ class SceneManager {
     }
 
     loadHub() {
-        // if (this.hasEnteredLevel) {
-        //     ASSET_MANAGER.pauseBackgroundMusic();
-        // }
+        if (this.hasEnteredLevel) {
+            ASSET_MANAGER.pauseBackgroundMusic();
+        }
 
         
         this.clearLevel();
@@ -326,9 +332,9 @@ class SceneManager {
     }
 
     loadDeathScreen() {
-        // if (this.hasEnteredLevel) {
-        //     ASSET_MANAGER.pauseBackgroundMusic();
-        // }
+        if (this.hasEnteredLevel) {
+            ASSET_MANAGER.pauseBackgroundMusic();
+        }
         this.clearLevel();
         params.DARK_ENERGY.currency = Math.floor(params.DARK_ENERGY.currency * 0.5);
         this.game.addEntityFirst(new End_Screen_Background(this.game, false));
