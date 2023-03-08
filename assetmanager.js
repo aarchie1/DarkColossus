@@ -118,5 +118,14 @@ class AssetManager {
             aud.play();
         });
     };
+
+    //function to adjust volume of specific audio asset
+    adjustVolumeAsset(path, volume) {
+        let asset = this.cache[path];
+        if (asset instanceof Audio) {
+            asset.volume = volume;
+        }
+    }
+
 };
 
